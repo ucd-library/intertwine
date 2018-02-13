@@ -3,6 +3,8 @@ import template from "./inter-wine-app.html"
 
 import "../lib"
 import "./map/app-map"
+import "./header/app-header"
+import "./info-bar/app-info-bar"
 
 export default class InterWineApp extends PolymerElement {
 
