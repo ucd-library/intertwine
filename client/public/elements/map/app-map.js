@@ -7,6 +7,7 @@ import leafletCss from "leaflet/dist/leaflet.css"
 import "./MaskLayer"
 import MapNode from "./MapNode"
 import MapLink from "./MapLink"
+import NodeLayout from "./NodeLayout"
 
 import GraphInterface from "../interfaces/GraphInterface"
 
@@ -26,6 +27,7 @@ export default class AppMap extends Mixin(PolymerElement)
   ready() {
     super.ready();
 
+    this.first = true;
     this.graphData = this._getGraph();
     
     this.map = L.map(this.$.map).setView([51.505, -0.09], 13);
@@ -42,6 +44,9 @@ export default class AppMap extends Mixin(PolymerElement)
 
 
     this.maskLayer._redraw();
+
+    this.map.on('moveend', () => this._layout());
+    this.map.on('zoomend', () => this._layout());
 
     // this.graphData.nodes.forEach(node => this.canvasLayer.addCanvasFeature(node.canvasFeature));
     // this.graphData.links.forEach(link => this.canvasLayer.addCanvasFeature(link.canvasFeature));
@@ -79,6 +84,8 @@ export default class AppMap extends Mixin(PolymerElement)
 
     maskCanvas.width = w;
     maskCanvas.height = h;
+    NodeLayout.setCanvasSize(w, h);
+
     let maskCtx = maskCanvas.getContext('2d');
     
     // This color is the one of the filled shape
@@ -97,7 +104,7 @@ export default class AppMap extends Mixin(PolymerElement)
       r : d/2
     }
     let centerLL = this.map.containerPointToLatLng({x: this.maskArea.x, y: this.maskArea.y});
-
+    NodeLayout.setMaskSize(this.maskArea.r);
 
     // Draw the shape you want to take out
     maskCtx.arc(this.maskArea.x, this.maskArea.y, this.maskArea.r, 0, 2 * Math.PI);
@@ -106,6 +113,7 @@ export default class AppMap extends Mixin(PolymerElement)
     // Draw mask on the image, and done !
     ctx.drawImage(maskCanvas, 0, 0);
 
+    let layoutRequired = false;
     for( let i = 0; i < this.graphData.nodes.length; i++ ) {
       let node = this.graphData.nodes[i];
 
@@ -116,9 +124,15 @@ export default class AppMap extends Mixin(PolymerElement)
       )
 
       if( d < this.maskArea.r ) {
-        node.visible = true;
+        if( !node.visible ) {
+          layoutRequired = true;
+          node.visible = true;
+        }
       } else {
-        node.visible = false;
+        if( node.visible ) {
+          layoutRequired = true;
+          node.visible = false;
+        }
       }
     }
 
@@ -126,20 +140,46 @@ export default class AppMap extends Mixin(PolymerElement)
       if( node.visible ) {
         return node.render();
       }
+    });
 
-      let lx = node.pxPt.x - this.maskArea.x;
-      let ly = node.pxPt.y - this.maskArea.y;
-      let angle = Math.atan2(ly, lx);
-      let x =  this.maskArea.x + (this.maskArea.r + 20) * Math.cos(angle);
-      let y =  this.maskArea.y + (this.maskArea.r + 20) * Math.sin(angle);
+    if( layoutRequired || this.first) {
+      this.first = false;
+      this._layout();
+    } else {
+      this._redraw()
+    }
+  }
 
-      let ll = this.map.containerPointToLatLng({x: Math.floor(x), y: Math.floor(y)});
+  _redraw() {
+    this.graphData.nodes.forEach(node => {
+      if( node.visible ) return;
+
+      let ll = this.map.containerPointToLatLng({
+        x: Math.floor(node.fake.x), 
+        y: Math.floor(node.fake.y)
+      });
       node.render(ll);
     });
 
     this.graphData.links.forEach(link => {
       link.render();
     });
+  }
+
+  _layout() {
+    this.graphData.nodes.forEach(node => {
+      if( node.visible ) return;
+
+      let lx = node.pxPt.x - this.maskArea.x;
+      let ly = node.pxPt.y - this.maskArea.y;
+      let angle = Math.atan2(ly, lx);
+      let x = this.maskArea.x + (this.maskArea.r + 20) * Math.cos(angle);
+      let y = this.maskArea.y + (this.maskArea.r + 20) * Math.sin(angle);
+      node.fake = {id: node.data.label, x, y, r: 40};
+    });
+
+    NodeLayout.layout(this.graphData.nodes);
+    this._redraw();
   }
 
 }
