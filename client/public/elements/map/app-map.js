@@ -5,9 +5,9 @@ import "leaflet/dist/leaflet"
 import leafletCss from "leaflet/dist/leaflet.css"
 // import "leaflet-canvas-geojson/src/layer"
 import "./MaskLayer"
-import MapNode from "./MapNode"
+import AppMapNode from "./app-map-node"
 import MapLink from "./MapLink"
-import NodeLayout from "./NodeLayout"
+import NodeForceLayout from "./NodeForceLayout"
 
 import GraphInterface from "../interfaces/GraphInterface"
 
@@ -27,10 +27,9 @@ export default class AppMap extends Mixin(PolymerElement)
   ready() {
     super.ready();
 
-    this.first = true;
     this.graphData = this._getGraph();
     
-    this.map = L.map(this.$.map).setView([51.505, -0.09], 13);
+    this.map = L.map(this.$.map).setView([38.57, -121.49], 13);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
@@ -39,14 +38,8 @@ export default class AppMap extends Mixin(PolymerElement)
     this._createGeoJson();
     
     this.maskLayer = new L.MaskLayer({});
-    this.maskLayer.redraw = (canvas, ctx) => this.renderMask(canvas, ctx);
+    this.maskLayer.redraw = (canvas, ctx, e) => this._renderMap(canvas, ctx, e);
     this.maskLayer.addTo(this.map);
-
-
-    this.maskLayer._redraw();
-
-    this.map.on('moveend', () => this._layout());
-    this.map.on('zoomend', () => this._layout());
 
     // this.graphData.nodes.forEach(node => this.canvasLayer.addCanvasFeature(node.canvasFeature));
     // this.graphData.links.forEach(link => this.canvasLayer.addCanvasFeature(link.canvasFeature));
@@ -65,7 +58,8 @@ export default class AppMap extends Mixin(PolymerElement)
     this.lookup = {};
 
     this.graphData.nodes = this.graphData.nodes.map(node => {
-      this.lookup[node.label] = new MapNode(node, this.map);
+      this.lookup[node.label] = new AppMapNode(node, this.map);
+      this.$.nodes.appendChild(this.lookup[node.label]);
       return this.lookup[node.label];
     });
 
@@ -74,7 +68,70 @@ export default class AppMap extends Mixin(PolymerElement)
     });
   }
 
-  renderMask(canvas, ctx) {
+  /**
+   * @method _renderMap
+   * @description redraw the canvas layer and update all links/nodes
+   * 
+   * 
+   * @param {Element} canvas canvas element 
+   * @param {Object} ctx canvas 2d context
+   * @param {Object} e Leafet map event that cause render 
+   */
+  _renderMap(canvas, ctx, e) {
+    this._renderMask(canvas, ctx);
+
+    NodeForceLayout.setCanvasSize(canvas.width, canvas.height);
+    NodeForceLayout.setMaskSize(this.maskArea.r);
+
+    // did a node go from visible to not or vise versa
+    // if so we need to re-run our force layout
+    let forceLayoutRequired = false;
+
+    for( let i = 0; i < this.graphData.nodes.length; i++ ) {
+      let node = this.graphData.nodes[i];
+
+      node.pxPt = this.map.latLngToContainerPoint(node.data);
+      let d = Math.sqrt(
+        Math.pow( node.pxPt.x - this.maskArea.x, 2) + 
+        Math.pow( node.pxPt.y - this.maskArea.y, 2)
+      )
+
+      if( d < this.maskArea.r ) {
+        if( !node.visible ) {
+          forceLayoutRequired = true;
+          node.visible = true;
+        }
+      } else {
+        if( node.visible ) {
+          forceLayoutRequired = true;
+          node.visible = false;
+        }
+      }
+    }
+
+    // render all visible nodes
+    this.graphData.nodes.forEach(node => {
+      if( node.visible ) return node.render();
+    });
+
+    // if required, recalc the force layout
+    // this is expensive, so only do when required
+    if( forceLayoutRequired || e.type === 'reset' || e.type === 'moveend' || e.type === 'zoomend' ) {
+      this._calcForceLayout();
+    }
+
+    // redraw all force layout nodes/links
+    this._redrawForceLayout();
+  }
+
+  /**
+   * @method _renderMask
+   * @description mask the non-circle part of the map
+   * 
+   * @param {Element} canvas canvas element
+   * @param {Object} ctx canvas 2d context
+   */
+  _renderMask(canvas, ctx) {
     ctx.imageSmoothingEnabled = true;
     let maskCanvas = document.createElement('canvas');
     maskCanvas.imageSmoothingEnabled = true;
@@ -84,7 +141,6 @@ export default class AppMap extends Mixin(PolymerElement)
 
     maskCanvas.width = w;
     maskCanvas.height = h;
-    NodeLayout.setCanvasSize(w, h);
 
     let maskCtx = maskCanvas.getContext('2d');
     
@@ -104,53 +160,22 @@ export default class AppMap extends Mixin(PolymerElement)
       r : d/2
     }
     let centerLL = this.map.containerPointToLatLng({x: this.maskArea.x, y: this.maskArea.y});
-    NodeLayout.setMaskSize(this.maskArea.r);
-
+    
     // Draw the shape you want to take out
     maskCtx.arc(this.maskArea.x, this.maskArea.y, this.maskArea.r, 0, 2 * Math.PI);
     maskCtx.fill();
     
     // Draw mask on the image, and done !
     ctx.drawImage(maskCanvas, 0, 0);
-
-    let layoutRequired = false;
-    for( let i = 0; i < this.graphData.nodes.length; i++ ) {
-      let node = this.graphData.nodes[i];
-
-      node.pxPt = this.map.latLngToContainerPoint(node.data);
-      let d = Math.sqrt(
-        Math.pow( node.pxPt.x - this.maskArea.x, 2) + 
-        Math.pow( node.pxPt.y - this.maskArea.y, 2)
-      )
-
-      if( d < this.maskArea.r ) {
-        if( !node.visible ) {
-          layoutRequired = true;
-          node.visible = true;
-        }
-      } else {
-        if( node.visible ) {
-          layoutRequired = true;
-          node.visible = false;
-        }
-      }
-    }
-
-    this.graphData.nodes.forEach(node => {
-      if( node.visible ) {
-        return node.render();
-      }
-    });
-
-    if( layoutRequired || this.first) {
-      this.first = false;
-      this._layout();
-    } else {
-      this._redraw()
-    }
   }
 
-  _redraw() {
+  /**
+   * @method _redrawForceLayout
+   * @description redraw the nodes that are set via force layout
+   */
+  _redrawForceLayout() {
+    // for all node that have a fake (force layout), calc the 
+    // the lat/lng
     this.graphData.nodes.forEach(node => {
       if( node.visible ) return;
 
@@ -158,7 +183,8 @@ export default class AppMap extends Mixin(PolymerElement)
         x: Math.floor(node.fake.x), 
         y: Math.floor(node.fake.y)
       });
-      node.render(ll);
+
+      node.render(ll, node.fake);
     });
 
     this.graphData.links.forEach(link => {
@@ -166,20 +192,32 @@ export default class AppMap extends Mixin(PolymerElement)
     });
   }
 
-  _layout() {
+  /**
+   * @method _calcForceLayout
+   * @description rerun the D3 force layout calculation for all nodes outside visible
+   * radius of the map mask
+   */
+  _calcForceLayout() {
     this.graphData.nodes.forEach(node => {
-      if( node.visible ) return;
+      if( node.visible ) return; // inside radius, ignore
 
+      // first we calculate the point where a line between the center of
+      // the map and the node intersects to mask radius (circle).  This
+      // point will be the fake node we tether our actual node for the force
+      // layout
       let lx = node.pxPt.x - this.maskArea.x;
       let ly = node.pxPt.y - this.maskArea.y;
       let angle = Math.atan2(ly, lx);
       let x = this.maskArea.x + (this.maskArea.r + 20) * Math.cos(angle);
       let y = this.maskArea.y + (this.maskArea.r + 20) * Math.sin(angle);
+
+      // TODO: set the real radius
       node.fake = {id: node.data.label, x, y, r: 40};
     });
 
-    NodeLayout.layout(this.graphData.nodes);
-    this._redraw();
+    // now that we have set all our fake node positions, lets run the D3 
+    // force simulation
+    NodeForceLayout.layout(this.graphData.nodes);
   }
 
 }

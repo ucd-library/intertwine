@@ -137,11 +137,11 @@ L.MaskLayer = L.Layer.extend({
     this._canvas.width = size.x;
     this._canvas.height = size.y;
 
-    this._redraw();
+    this._redraw({type: 'reset'});
   },
 
 
-  _redraw() {
+  _redraw(e) {
     var topLeft = this._map.containerPointToLayerPoint([0, 0]);
     L.DomUtil.setPosition(this._canvas, topLeft);
 
@@ -149,12 +149,12 @@ L.MaskLayer = L.Layer.extend({
     this._canvas.width = size.x;
     this._canvas.height = size.y;
 
-    this.redraw(this._canvas, this._ctx);
+    this.redraw(this._canvas, this._ctx, e);
   },
 
   // redraw all features.  This does not handle clearing the canvas or setting
   // the canvas correct position.  That is handled by render
-  redraw: function(canvas, ctx) {
+  redraw: function(canvas, ctx, event) {
     
   }
 

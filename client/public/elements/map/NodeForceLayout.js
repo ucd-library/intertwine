@@ -1,7 +1,7 @@
 import {forceSimulation, forceCollide, forceLink, forceManyBody} from 'd3-force';
 
-
-class NodeLayout {
+// runs the D3 force layout simulation 
+class NodeForceLayout {
 
   constructor() {
     this.iterations = 300;
@@ -33,6 +33,7 @@ class NodeLayout {
   /**
    * @method setMaskSize
    * @description set the size of the map mask.  This is used by the root node.
+   * No node will be allowed inside as we are applying the 'collision' force.
    * 
    * @param {Number} radius radius of the mask
    */
@@ -41,28 +42,53 @@ class NodeLayout {
   }
 
   layout(nodes) {
+    // create a D3 graph based on given nodes with the 'fake' attribute
     var {links, nodes} = this._prepare(nodes);
     
+    // setup the D3 simulation
     let simulation = forceSimulation(nodes)
+      // the forceCollide makes sure nodes don't overlap eachother.
+      // basically it treats nodes as circles rather than points
       .force("collision", forceCollide().radius(d => d.r || 50))
+      // forceLink applies a force to each link in the graph
       .force("link", forceLink()
-        .distance(d =>  d.source.id === 'root' ? 0 : 10)
+        .distance(d =>  d.source.id === 'root' ? this.rootNode.r : 30)
+        .strength(d =>  d.source.id === 'root' ? 1 : 0.25)
         .id((d) =>  d.id)
       )
+      // forceManyBody is the 'charge' strength for each node (think partical charge)
+      // positive charges will attract, negative will repel 
       .force("charge", forceManyBody().strength((d) => {
         if( d.id === 'root' ) return d.r * -10; 
         if( d.group === 1 ) return 0; 
         return d.r * -10;
       }))
+      // stop the simulation, we are going to run all at once below.  ie we don't want
+      // to run in real time and show animation, we just want to run all at once and
+      // render the result
       .stop();
 
+    // add the links to the link force
     simulation.force("link").links(links);
+
+    // for the given number of iterations, run the force layout... this is currently
+    // 300, a number from stack overflow but it's open to investigation.
     for (var i = 0; i < this.iterations; i++) {
+      // run one 'tick' of the force simulation
       simulation.tick();
+      // after each tick, bound the nodes to canvas.  ie, don't let nodes move outside
+      // the bounds of the given canvas
       nodes.forEach((node) => this._boundNode(node));
     }
   }
 
+  /**
+   * @method _prepare
+   * @description given an array of nodes, create a new set of nodes and links.
+   * For each node add line from the root (center) to the fake node (the node 
+   * that anchors to the mask radius circle).  Then add a line from the fake
+   * node to the real node.  Finally add the real node.
+   */
   _prepare(nodes) {
     let links = [];
     let fakeNodes = [];
@@ -116,4 +142,4 @@ class NodeLayout {
   }
 }
 
-export default new NodeLayout();
+export default new NodeForceLayout();
