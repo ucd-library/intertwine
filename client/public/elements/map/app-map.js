@@ -20,7 +20,7 @@ export default class AppMap extends Mixin(PolymerElement)
 
   static get properties() {
     return {
-      
+
     }
   }
 
@@ -28,7 +28,7 @@ export default class AppMap extends Mixin(PolymerElement)
     super.ready();
 
     this.graphData = this._getGraph();
-    
+
     this.map = L.map(this.$.map).setView([38.57, -121.49], 13);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -36,7 +36,7 @@ export default class AppMap extends Mixin(PolymerElement)
 
 
     this._createGeoJson();
-    
+
     this.maskLayer = new L.MaskLayer({});
     this.maskLayer.redraw = (canvas, ctx, e) => this._renderMap(canvas, ctx, e);
     this.maskLayer.addTo(this.map);
@@ -71,11 +71,11 @@ export default class AppMap extends Mixin(PolymerElement)
   /**
    * @method _renderMap
    * @description redraw the canvas layer and update all links/nodes
-   * 
-   * 
-   * @param {Element} canvas canvas element 
+   *
+   *
+   * @param {Element} canvas canvas element
    * @param {Object} ctx canvas 2d context
-   * @param {Object} e Leafet map event that cause render 
+   * @param {Object} e Leafet map event that cause render
    */
   _renderMap(canvas, ctx, e) {
     this._renderMask(canvas, ctx);
@@ -92,7 +92,7 @@ export default class AppMap extends Mixin(PolymerElement)
 
       node.pxPt = this.map.latLngToContainerPoint(node.data);
       let d = Math.sqrt(
-        Math.pow( node.pxPt.x - this.maskArea.x, 2) + 
+        Math.pow( node.pxPt.x - this.maskArea.x, 2) +
         Math.pow( node.pxPt.y - this.maskArea.y, 2)
       )
 
@@ -127,7 +127,7 @@ export default class AppMap extends Mixin(PolymerElement)
   /**
    * @method _renderMask
    * @description mask the non-circle part of the map
-   * 
+   *
    * @param {Element} canvas canvas element
    * @param {Object} ctx canvas 2d context
    */
@@ -143,16 +143,16 @@ export default class AppMap extends Mixin(PolymerElement)
     maskCanvas.height = h;
 
     let maskCtx = maskCanvas.getContext('2d');
-    
+
     // This color is the one of the filled shape
     maskCtx.fillStyle = "#888888";
     // Fill the mask
     maskCtx.fillRect(0, 0, w, h);
     // Set xor operation
-    maskCtx.globalCompositeOperation = 'xor';    
+    maskCtx.globalCompositeOperation = 'xor';
 
     let p = 0.8;
-    let d = (w > h) ? h * p : w * p; 
+    let d = (w > h) ? h * p : w * p;
 
     this.maskArea = {
       x : w/2,
@@ -160,11 +160,11 @@ export default class AppMap extends Mixin(PolymerElement)
       r : d/2
     }
     let centerLL = this.map.containerPointToLatLng({x: this.maskArea.x, y: this.maskArea.y});
-    
+
     // Draw the shape you want to take out
     maskCtx.arc(this.maskArea.x, this.maskArea.y, this.maskArea.r, 0, 2 * Math.PI);
     maskCtx.fill();
-    
+
     // Draw mask on the image, and done !
     ctx.drawImage(maskCanvas, 0, 0);
   }
@@ -174,13 +174,13 @@ export default class AppMap extends Mixin(PolymerElement)
    * @description redraw the nodes that are set via force layout
    */
   _redrawForceLayout() {
-    // for all node that have a fake (force layout), calc the 
+    // for all node that have a fake (force layout), calc the
     // the lat/lng
     this.graphData.nodes.forEach(node => {
       if( node.visible ) return;
 
       let ll = this.map.containerPointToLatLng({
-        x: Math.floor(node.fake.x), 
+        x: Math.floor(node.fake.x),
         y: Math.floor(node.fake.y)
       });
 
@@ -201,21 +201,25 @@ export default class AppMap extends Mixin(PolymerElement)
     this.graphData.nodes.forEach(node => {
       if( node.visible ) return; // inside radius, ignore
 
+				let c=this.maskArea;
       // first we calculate the point where a line between the center of
       // the map and the node intersects to mask radius (circle).  This
       // point will be the fake node we tether our actual node for the force
-      // layout
-      let lx = node.pxPt.x - this.maskArea.x;
-      let ly = node.pxPt.y - this.maskArea.y;
-      let angle = Math.atan2(ly, lx);
-      let x = this.maskArea.x + (this.maskArea.r + 20) * Math.cos(angle);
-      let y = this.maskArea.y + (this.maskArea.r + 20) * Math.sin(angle);
-
+				// layout
+				let lx = node.pxPt.x - c.x;
+				let ly = node.pxPt.y - c.y;
+				let dr = Math.sqrt(lx**2+ly**2)-c.r;
+				let angle = Math.atan2(ly, lx);
+				let cx = c.x + c.r * Math.cos(angle);
+				let cy = c.y + c.r * Math.sin(angle);
+				let x = c.x + (c.r + (dr/1000) ) * Math.cos(angle);
+				let y = c.y + (c.r + (dr/1000) ) * Math.sin(angle);
+				let vx=0,vy=0;
       // TODO: set the real radius
-      node.fake = {id: node.data.label, x, y, r: 40};
+				node.fake = {id: node.data.label, circle: {cx, cy }, r: 0 ,x,y,vx,vy};
     });
 
-    // now that we have set all our fake node positions, lets run the D3 
+    // now that we have set all our fake node positions, lets run the D3
     // force simulation
     NodeForceLayout.layout(this.graphData.nodes);
   }
