@@ -5,14 +5,25 @@
     height: 74px;
     width: 74px;
     border-radius: 80px;
-    background-color: white;
-    border: 2px solid blue;
+    font-size: 14px;
+    color: var(--secondary-text-color);
+    background-color: var(--color-smoke);
+    border: 3px solid var(--color-slate);
     z-index: 2000;
   }
 
   .label {
     padding: 10px;
+    text-align: center;
+  }
+
+  .name {
+    word-wrap: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 </style>
 
-<div class="label">[[label]]</div>
+<div class="label">
+  <div class="name">[[label]]</div>
+</div>

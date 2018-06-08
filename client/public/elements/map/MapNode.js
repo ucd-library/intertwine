@@ -15,10 +15,10 @@ class MapNode {
     });
 
     this.fakedFeature = L.circleMarker(data, {
-      color: 'blue',
-      fillColor: '#888',
-      fillOpacity: 0.5,
-      radius: 40
+      color: '#C3C9CB',
+      weight: 3,
+      fillColor: '#F3F2F0',
+      radius: 80
     });
 
     this.rendered = null;
@@ -26,7 +26,7 @@ class MapNode {
 
   render(ll) {
     if( this.visible ) {
-      if( this.render === 'normal' ) return;
+      if( this.rendered === 'normal' ) return;
 
       this.map.removeLayer(this.fakedFeature);
       this.normalFeature.addTo(this.map);

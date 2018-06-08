@@ -1,4 +1,4 @@
-import {Element as PolymerElement} from "@polymer/polymer/polymer-element"
+import {PolymerElement, html} from "@polymer/polymer"
 import template from "./app-map.html"
 
 import "leaflet/dist/leaflet"
@@ -15,7 +15,7 @@ export default class AppMap extends Mixin(PolymerElement)
   .with(EventInterface, GraphInterface) {
 
   static get template() {
-    return template+`<style>${leafletCss}</style>`;
+    return html([template+`<style>${leafletCss}</style>`]);
   }
 
   static get properties() {
