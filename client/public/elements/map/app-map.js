@@ -3,8 +3,10 @@ import template from "./app-map.html"
 
 import "leaflet/dist/leaflet"
 import leafletCss from "leaflet/dist/leaflet.css"
+import "leaflet-polylinedecorator"
 // import "leaflet-canvas-geojson/src/layer"
 import "./MaskLayer"
+import "./MarkerOverlayLayer"
 import AppMapNode from "./app-map-node"
 import MapLink from "./MapLink"
 import NodeForceLayout from "./NodeForceLayout"
@@ -24,6 +26,12 @@ export default class AppMap extends Mixin(PolymerElement)
     }
   }
 
+  constructor() {
+    super();
+    this.maskLayer = new L.MaskLayer({});
+    this.markerOverlayLayer = new L.MarkerOverlayLayer({});
+  }
+
   ready() {
     super.ready();
 
@@ -37,9 +45,10 @@ export default class AppMap extends Mixin(PolymerElement)
 
     this._createGeoJson();
     
-    this.maskLayer = new L.MaskLayer({});
     this.maskLayer.redraw = (canvas, ctx, e) => this._renderMap(canvas, ctx, e);
     this.maskLayer.addTo(this.map);
+
+    this.markerOverlayLayer.addTo(this.map);
 
     // this.graphData.nodes.forEach(node => this.canvasLayer.addCanvasFeature(node.canvasFeature));
     // this.graphData.links.forEach(link => this.canvasLayer.addCanvasFeature(link.canvasFeature));
@@ -58,8 +67,8 @@ export default class AppMap extends Mixin(PolymerElement)
     this.lookup = {};
 
     this.graphData.nodes = this.graphData.nodes.map(node => {
-      this.lookup[node.label] = new AppMapNode(node, this.map);
-      this.$.nodes.appendChild(this.lookup[node.label]);
+      this.lookup[node.label] = new AppMapNode(node, this.map, this.markerOverlayLayer);
+      // this.$.nodes.appendChild(this.lookup[node.label]);
       return this.lookup[node.label];
     });
 
@@ -145,7 +154,7 @@ export default class AppMap extends Mixin(PolymerElement)
     let maskCtx = maskCanvas.getContext('2d');
     
     // This color is the one of the filled shape
-    maskCtx.fillStyle = "#888888";
+    maskCtx.fillStyle = "#4E4E4E";
     // Fill the mask
     maskCtx.fillRect(0, 0, w, h);
     // Set xor operation
