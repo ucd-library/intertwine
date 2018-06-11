@@ -41,43 +41,43 @@ class NodeForceLayout {
     this.center.r = radius;
   }
 
-		layout(in_nodes) {
-				let simulation=forceSimulation();
+	layout(inNodes) {
+		let simulation=forceSimulation();
     // create a D3 graph based on given nodes with the 'fake' attribute
-				var {links, nodes} = this._prepare(in_nodes);
-				simulation.nodes(nodes);
-				if (false) ( simulation.nodes().forEach(n=>console.log(n)) );
+		var {links, nodes} = this._prepare(inNodes);
+		simulation.nodes(nodes);
+		if (false) ( simulation.nodes().forEach(n=>console.log(n)) );
     // setup the D3 simulation
-			simulation.velocityDecay(0.2)
-      // the forceCollide makes sure nodes don't overlap eachother.
-      // basically it treats nodes as circles rather than points
-						.force("collision", forceCollide()
-									 .radius(d => { console.log(d); return (d.r || 0)+1})
-									 .strength(1)
-									 .iterations(40))
-      // forceLink applies a force to each link in the graph
-					.force("pull-to-edge", forceLink()
-								 .distance( d => { console.log(d); return 25; })
-								 .strength(d => (d<1) ? 1 : 1/d*d )
-								 .id((d) =>  d.id)
-								)
-      // stop the simulation, we are going to run all at once below.  ie we don't want
-      // to run in real time and show animation, we just want to run all at once and
-      // render the result
-//					.on("tick",ticked).iterations(
+		simulation.velocityDecay(0.2)
+    // the forceCollide makes sure nodes don't overlap eachother.
+    // basically it treats nodes as circles rather than points
+			.force("collision", forceCollide()
+						 .radius(d => { false && console.log(d); return (d.r || 0)+1})
+						 .strength(1)
+						 .iterations(40))
+    // forceLink applies a force to each link in the graph
+			.force("pull-to-edge", forceLink()
+						 .distance( d => { false && console.log(d); return 25; })
+						 .strength(d => (d<1) ? 1 : 1/d*d )
+						 .id((d) =>  d.id)
+						)
+    // stop the simulation, we are going to run all at once below.  ie we don't want
+    // to run in real time and show animation, we just want to run all at once and
+    // render the result
+    //					.on("tick",ticked).iterations(
       .stop();
 
     // for the given number of iterations, run the force layout... this is currently
-			// 300, a number from stack overflow but it's open to investigation.
-				this.iterations=100;
-				for (var i = 0; i < this.iterations; i++) {
-						console.log(`iteration ${i}`);
-						// run one 'tick' of the force simulation
-						simulation.tick();
-						// after each tick, bound the nodes to canvas.  ie, don't let nodes move outside
-						// the bounds of the given canvas
-//						simulation.nodes().forEach((node) => this._boundNode(node));
-				}
+		// 300, a number from stack overflow but it's open to investigation.
+		this.iterations=100;
+		for (var i = 0; i < this.iterations; i++) {
+			// console.log(`iteration ${i}`);
+			// run one 'tick' of the force simulation
+			simulation.tick();
+			// after each tick, bound the nodes to canvas.  ie, don't let nodes move outside
+			// the bounds of the given canvas
+      //						simulation.nodes().forEach((node) => this._boundNode(node));
+		}
   }
 
   /**
@@ -87,42 +87,42 @@ class NodeForceLayout {
    * that anchors to the mask radius circle).  Then add a line from the fake
    * node to the real node.  Finally add the real node.
    */
-		_prepare(in_nodes) {
-				let links = [];
-				let nodes = [];
+	_prepare(inNodes) {
+		let links = [];
+		let nodes = [];
 
-			in_nodes.forEach(node => {
+		inNodes.forEach(node => {
       if( !node.fake ) return;
       node = node.fake;
       let fid = node.id+'-fake'
 
       nodes.push({
         id : fid,
-					group : 1,
-					r:0,
+				group : 1,
+				r:0,
         fx : node.circle.cx,
         fy : node.circle.cy
       });
 
-//      links.push({
-//        id : 'center:'+fid,
-//        source : 'center',
-//        target : fid
-//      });
+      //      links.push({
+      //        id : 'center:'+fid,
+      //        source : 'center',
+      //        target : fid
+      //      });
 
       links.push({
         id : fid+':'+node.id,
         source : fid,
         target : node.id
       });
-				// Real Node
-					node.group = 2;
-					node.r=12;
-					nodes.push(node);
+			// Real Node
+			node.group = 2;
+			node.r=12;
+			nodes.push(node);
     });
 
     nodes.push(this.center);
-				return {nodes,links};
+		return {nodes,links};
   }
 
   /**
