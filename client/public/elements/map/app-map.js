@@ -1,10 +1,12 @@
-import {Element as PolymerElement} from "@polymer/polymer/polymer-element"
+import {PolymerElement, html} from "@polymer/polymer"
 import template from "./app-map.html"
 
 import "leaflet/dist/leaflet"
 import leafletCss from "leaflet/dist/leaflet.css"
+import "leaflet-polylinedecorator"
 // import "leaflet-canvas-geojson/src/layer"
 import "./MaskLayer"
+import "./MarkerOverlayLayer"
 import AppMapNode from "./app-map-node"
 import MapLink from "./MapLink"
 import NodeForceLayout from "./NodeForceLayout"
@@ -14,9 +16,9 @@ import GraphInterface from "../interfaces/GraphInterface"
 export default class AppMap extends Mixin(PolymerElement)
   .with(EventInterface, GraphInterface) {
 
-    static get template() {
-      return template+`<style>${leafletCss}</style>`;
-    }
+  static get template() {
+    return html([template+`<style>${leafletCss}</style>`]);
+  }
 
     static get properties() {
       return {
@@ -24,8 +26,14 @@ export default class AppMap extends Mixin(PolymerElement)
       }
     }
 
-    ready() {
-      super.ready();
+  constructor() {
+    super();
+    this.maskLayer = new L.MaskLayer({});
+    this.markerOverlayLayer = new L.MarkerOverlayLayer({});
+  }
+
+  ready() {
+    super.ready();
 
       this.graphData = this._getGraph();
 
@@ -34,8 +42,16 @@ export default class AppMap extends Mixin(PolymerElement)
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(this.map);
 
+    this._createGeoJson();
+    
+    this.maskLayer.redraw = (canvas, ctx, e) => this._renderMap(canvas, ctx, e);
+    this.maskLayer.addTo(this.map);
 
-      this._createGeoJson();
+    this.markerOverlayLayer.addTo(this.map);
+
+    // this.graphData.nodes.forEach(node => this.canvasLayer.addCanvasFeature(node.canvasFeature));
+    // this.graphData.links.forEach(link => this.canvasLayer.addCanvasFeature(link.canvasFeature));
+    // this.canvasLayer.render();
 
       this.maskLayer = new L.MaskLayer({});
       this.maskLayer.redraw = (canvas, ctx, e) => this._renderMap(canvas, ctx, e);
@@ -55,11 +71,9 @@ export default class AppMap extends Mixin(PolymerElement)
     }
 
     _createGeoJson() {
-      this.lookup = {};
-
       this.graphData.nodes = this.graphData.nodes.map(node => {
-        this.lookup[node.label] = new AppMapNode(node, this.map);
-        this.$.nodes.appendChild(this.lookup[node.label]);
+        this.lookup[node.label] = new AppMapNode(node, this.map, this.markerOverlayLayer);
+        // this.$.nodes.appendChild(this.lookup[node.label]);
         return this.lookup[node.label];
       });
 
@@ -124,10 +138,10 @@ export default class AppMap extends Mixin(PolymerElement)
       this._redrawForceLayout();
     }
 
-    /**
+     /**
      * @method _renderMask
      * @description mask the non-circle part of the map
-     *
+     * 
      * @param {Element} canvas canvas element
      * @param {Object} ctx canvas 2d context
      */
@@ -143,16 +157,16 @@ export default class AppMap extends Mixin(PolymerElement)
       maskCanvas.height = h;
 
       let maskCtx = maskCanvas.getContext('2d');
-
+      
       // This color is the one of the filled shape
-      maskCtx.fillStyle = "#888888";
+      maskCtx.fillStyle = "#4E4E4E";
       // Fill the mask
       maskCtx.fillRect(0, 0, w, h);
       // Set xor operation
-      maskCtx.globalCompositeOperation = 'xor';
+      maskCtx.globalCompositeOperation = 'xor';    
 
       let p = 0.8;
-      let d = (w > h) ? h * p : w * p;
+      let d = (w > h) ? h * p : w * p; 
 
       this.maskArea = {
         x : w/2,
@@ -160,11 +174,11 @@ export default class AppMap extends Mixin(PolymerElement)
         r : d/2
       }
       let centerLL = this.map.containerPointToLatLng({x: this.maskArea.x, y: this.maskArea.y});
-
+      
       // Draw the shape you want to take out
       maskCtx.arc(this.maskArea.x, this.maskArea.y, this.maskArea.r, 0, 2 * Math.PI);
       maskCtx.fill();
-
+      
       // Draw mask on the image, and done !
       ctx.drawImage(maskCanvas, 0, 0);
     }

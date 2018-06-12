@@ -1,17 +1,5 @@
-/**
-  A Feature should have the following:
-
-  feature = {
-    visible : Boolean,
-    size : Number, // points only, used for mouse interactions
-    geojson : {}
-    render : function(context, coordinatesInXY, map) {} // called in feature scope
-  }
-
-  geoXY and leaflet will be assigned
-**/
 var count = 0;
-L.MaskLayer = L.Layer.extend({
+L.MarkerOverlayLayer = L.Layer.extend({
 
 
   // include events
@@ -21,37 +9,23 @@ L.MaskLayer = L.Layer.extend({
   // initialize layer
   initialize: function (options) {
     this.showing = true;
+    this.markers = [];
+    this.pending = [];
 
     // set options
     options = options || {};
     L.Util.setOptions(this, options);
-
-    // set canvas and canvas context shortcuts
-    this._canvas = this._createCanvas();
-    this._ctx = this._canvas.getContext('2d');
   },
 
   hide : function() {
-    this._canvas.style.display = 'none';
+    this._container.style.display = 'none';
     this.showing = false;
   },
 
   show : function() {
-    this._canvas.style.display = 'block';
+    this._container.style.display = 'block';
     this.showing = true;
     this.redraw();
-  },
-
-  _createCanvas: function() {
-    var canvas = document.createElement('canvas');
-    canvas.style.position = 'absolute';
-    canvas.style.top = 0;
-    canvas.style.left = 0;
-    canvas.style.pointerEvents = "none";
-    canvas.style.zIndex = this.options.zIndex || 0;
-    var className = 'leaflet-tile-container leaflet-zoom-animated';
-    canvas.setAttribute('class', className);
-    return canvas;
   },
 
   onAdd: function (map) {
@@ -63,14 +37,14 @@ L.MaskLayer = L.Layer.extend({
     //var tilePane = this._map._panes.tilePane;
     // var tilePane = this._map._panes.markerPane;
     var tilePane = this._map._panes.overlayPane;
-    var _container = L.DomUtil.create('div', 'leaflet-mask-layer-'+count);
+
+    this._container = L.DomUtil.create('div', 'leaflet-marker-overlay-layer-'+count);
     count++;
 
-    _container.appendChild(this._canvas);
-    tilePane.appendChild(_container);
+    this._container.style.position = 'absolute';
+    this._container.style.zIndex = 100;
 
-    this._container = _container;
-
+    tilePane.appendChild(this._container);
 
     map.on({
       'move' : this._redraw,
@@ -86,6 +60,9 @@ L.MaskLayer = L.Layer.extend({
     if( this.zIndex !== undefined ) {
       this.setZIndex(this.zIndex);
     }
+
+    this.pending.forEach(marker => this._appendMarker(marker));
+    this.pending = [];
   },
 
   setZIndex : function(index) {
@@ -104,10 +81,6 @@ L.MaskLayer = L.Layer.extend({
     this._canvas.style.visibility = 'visible';
     this.zooming = false;
     setTimeout(this.render.bind(this), 50);
-  },
-
-  getCanvas: function() {
-    return this._canvas;
   },
 
   draw: function() {
@@ -132,32 +105,66 @@ L.MaskLayer = L.Layer.extend({
   },
 
   _reset: function () {
-    // reset actual canvas size
-    var size = this._map.getSize();
-    this._canvas.width = size.x;
-    this._canvas.height = size.y;
-
     this._redraw({type: 'reset'});
   },
 
-
-  _redraw(e) {
-    var topLeft = this._map.containerPointToLayerPoint([0, 0]);
-    L.DomUtil.setPosition(this._canvas, topLeft);
-
-    var size = this._map.getSize();
-    this._canvas.width = size.x;
-    this._canvas.height = size.y;
-
-    this.redraw(this._canvas, this._ctx, e);
+  addMarker: function(marker) {
+    this.markers.push(marker);
+    this._appendMarker(marker);
   },
+
+  _appendMarker: function(marker) {
+    if( this._container ) {
+      this._container.appendChild(marker);
+      this._redrawMarker(marker);
+      return;
+    }
+
+    if( this.pending.indexOf(marker) === -1 ) {
+      this.pending.push(marker);
+    }
+  },
+
+
+  removeMarker: function(marker) {
+    let index = this.markers.findIndex(marker);
+    if( index > -1 ) this.markers.splice(index, 1);
+    this._container.removeChild(marker._container);
+  },
+
+  _redraw: function(e) {
+    var topLeft = this._map.containerPointToLayerPoint([0, 0]);
+    // L.DomUtil.setPosition(this._canvas, topLeft);
+
+    // var size = this._map.getSize();
+    // this._canvas.width = size.x;
+    // this._canvas.height = size.y;
+
+    // this.redraw(this._canvas, this._ctx, e);
+
+    this.markers.forEach(marker => this._redrawMarker(marker));
+  },
+
+  _redrawMarker: function(marker) {
+    let ll = marker.fakeData;
+
+    if( !ll || marker.visible ) {
+      marker.style.display = 'none';
+      return;
+    }
+    marker.style.display = 'block';
+
+    let pt = this._map.latLngToLayerPoint(ll);
+
+    marker.style.position = 'absolute';
+    marker.style.left = (pt.x-37)+'px';
+    marker.style.top = (pt.y-37)+'px';
+  }
 
   // redraw all features.  This does not handle clearing the canvas or setting
   // the canvas correct position.  That is handled by render
-  redraw: function(canvas, ctx, event) {
+  // redraw: function(canvas, ctx, event) {
     
-  }
-
-
+  // }
 
 });
