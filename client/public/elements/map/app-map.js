@@ -65,6 +65,10 @@ export default class AppMap extends Mixin(PolymerElement)
     this.resize();
   }
 
+  resize() {
+    if( !this.map ) return;
+    setTimeout(() => this.map.invalidateSize(), 0);
+  }
 
   // TODO: this becomes main render method when map node/links change
   // Do not call when viewport changes
@@ -249,8 +253,6 @@ export default class AppMap extends Mixin(PolymerElement)
     for( let id in nodeManager.externalNodes ) {
       let node = nodeManager.externalNodes[id];
       if( !node.visible ) continue; // inside radius, ignore
-
-      console.log(this.maskArea);
 
       // first we calculate the point where a line between the center of
       // the map and the node intersects to mask radius (circle).  This

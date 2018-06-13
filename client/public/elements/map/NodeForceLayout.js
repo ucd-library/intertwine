@@ -138,7 +138,7 @@ class NodeForceLayout {
    * that anchors to the mask radius circle).  Then add a line from the fake
    * node to the real node.  Finally add the real node.
    */
-  _qprepare(inNodes) {
+  _prepare(inNodes) {
     let links = [];
 		let nodes = [];
 
