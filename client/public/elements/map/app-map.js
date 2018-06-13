@@ -146,8 +146,8 @@ export default class AppMap extends Mixin(PolymerElement)
     //if( forceLayoutRequired || e.type === 'reset' || e.type === 'moveend' || e.type === 'zoomend' ) {
       
       // JM: Quinn, toggle this to switch to your layout.
-      // this._qcalcForceLayout();
-      this._calcForceLayout();
+      this._qcalcForceLayout();
+      // this._calcForceLayout();
     //}
 
     nodeManager.links.forEach(link => link.render());
@@ -239,7 +239,7 @@ export default class AppMap extends Mixin(PolymerElement)
     NodeForceLayout.qlayout(nodes);
 
     nodes.forEach(node => {
-      node.setPosition(node.data.forceLayout.y, node.data.forceLayout.y);
+      node.setPosition(node.data.forceLayout.y, node.data.forceLayout.x);
     });
   }
 
