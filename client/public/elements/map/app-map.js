@@ -32,11 +32,11 @@ export default class AppMap extends Mixin(PolymerElement)
     `]);
   }
 
-  static get properties() {
-    return {
-      
+    static get properties() {
+      return {
+
+      }
     }
-  }
 
   constructor() {
     super();
@@ -47,12 +47,11 @@ export default class AppMap extends Mixin(PolymerElement)
 
   ready() {
     super.ready();
-    
+
     this.map = L.map(this.$.map).setView([38.57, -121.49], 13);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
-
 
     this._createGeoJson();
     
@@ -66,10 +65,6 @@ export default class AppMap extends Mixin(PolymerElement)
     this.resize();
   }
 
-  resize() {
-    if( !this.map ) return;
-    setTimeout(() => this.map.invalidateSize(), 0);
-  }
 
   // TODO: this becomes main render method when map node/links change
   // Do not call when viewport changes
@@ -189,6 +184,7 @@ export default class AppMap extends Mixin(PolymerElement)
       y : h/2,
       r : d/2
     }
+    let centerLL = this.map.containerPointToLatLng({x: this.maskArea.x, y: this.maskArea.y});
     
     // Draw the shape you want to take out
     maskCtx.arc(this.maskArea.x, this.maskArea.y, this.maskArea.r, 0, 2 * Math.PI);
@@ -281,7 +277,7 @@ export default class AppMap extends Mixin(PolymerElement)
     });
   }
 
-
 }
+
 
 customElements.define('app-map', AppMap);

@@ -20,7 +20,11 @@
     "css-loader": "^0.28.9",
     "html-loader": "^0.5.5",
     "to-string-loader": "^1.1.5",
-    "url-loader": "^0.6.2",
-    "webpack": "^3.10.0"
+    "url-loader": "^0.6.2"
+  },
+  "dependencies": {
+    "ajv": "^6.4.0",
+    "file-loader": "^1.1.11",
+    "webpack": "^3.11.0"
   }
 }
