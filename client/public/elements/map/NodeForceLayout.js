@@ -5,9 +5,9 @@ class NodeForceLayout {
 
   constructor() {
     this.iterations = 300;
-    this.rootNode = {
-      id: "root", 
-      group: 1, 
+    this.center = {
+      id: "center",
+      group: 1,
       r: 150,
       fx : 250,
       fy : 250
@@ -26,8 +26,8 @@ class NodeForceLayout {
   setCanvasSize(width, height) {
     this.width = width;
     this.height = height;
-    this.rootNode.fx = width / 2;
-    this.rootNode.fy = height / 2;
+    this.center.fx = width / 2;
+    this.center.fy = height / 2;
   }
 
   /**
@@ -38,13 +38,62 @@ class NodeForceLayout {
    * @param {Number} radius radius of the mask
    */
   setMaskSize(radius) {
-    this.rootNode.r = radius;
+    this.center.r = radius;
+  }
+
+  qlayout(nodes) {
+    // create a D3 graph based on given nodes 
+    var {links, nodes} = this._qprepare(nodes);
+    
+    // setup the D3 simulation
+    let simulation = forceSimulation(nodes);
+    simulation.nodes(nodes);
+    
+    // if (false) ( simulation.nodes().forEach(n=>console.log(n)) );
+    
+    // setup the D3 simulation
+		simulation.velocityDecay(0.2)
+      // the forceCollide makes sure nodes don't overlap eachother.
+      // basically it treats nodes as circles rather than points
+      .force("collision", 
+        forceCollide()
+          .radius(d => { false && console.log(d); return (d.r || 0)+1})
+          .strength(1)
+          .iterations(40)
+      )
+      
+       // forceLink applies a force to each link in the graph
+      .force("pull-to-edge", 
+        forceLink()
+          .distance( d => { false && console.log(d); return 25; })
+          .strength(d => (d<1) ? 1 : 1/d*d )
+          .id((d) =>  d.id)
+      )
+      
+      // stop the simulation, we are going to run all at once below.  ie we don't want
+      // to run in real time and show animation, we just want to run all at once and
+      // render the result
+      // .on("tick",ticked).iterations(
+      .stop();
+
+    // for the given number of iterations, run the force layout... this is currently
+		// 300, a number from stack overflow but it's open to investigation.
+		this.iterations=100;
+		for (var i = 0; i < this.iterations; i++) {
+			// console.log(`iteration ${i}`);
+			// run one 'tick' of the force simulation
+      simulation.tick();
+      
+			// after each tick, bound the nodes to canvas.  ie, don't let nodes move outside
+			// the bounds of the given canvas
+      // simulation.nodes().forEach((node) => this._boundNode(node.data.forceLayout));
+		}
   }
 
   layout(nodes) {
     // create a D3 graph based on given nodes with the 'fake' attribute
     var {links, nodes} = this._prepare(nodes);
-    
+
     // setup the D3 simulation
     let simulation = forceSimulation(nodes)
       // the forceCollide makes sure nodes don't overlap eachother.
@@ -52,7 +101,7 @@ class NodeForceLayout {
       .force("collision", forceCollide().radius(d => d.r || 50))
       // forceLink applies a force to each link in the graph
       .force("link", forceLink()
-        .distance(d =>  d.source.id === 'root' ? this.rootNode.r : 30)
+        .distance(d =>  d.source.id === 'root' ? this.center.r : 30)
         .strength(d =>  d.source.id === 'root' ? 1 : 0.25)
         .id((d) =>  d.id)
       )
@@ -89,56 +138,106 @@ class NodeForceLayout {
    * that anchors to the mask radius circle).  Then add a line from the fake
    * node to the real node.  Finally add the real node.
    */
-  _prepare(nodes) {
+  _qprepare(inNodes) {
     let links = [];
-    let fakeNodes = [];
+		let nodes = [];
 
-    nodes.forEach(node => {
-      if( !node.fake ) return;
-      node = node.fake;
+		inNodes.forEach(node => {
+      node = node.data;
 
+      let layout = node.forceLayout;
       let fid = node.id+'-fake'
 
-      fakeNodes.push({
+      // nodes.push({
+      //   id : fid,
+      //   group : 1,
+      //   r : 0,
+      //   fx : layout.circle.cx,
+      //   fy : layout.circle.cy
+      // });
+
+      nodes.push({
         id : fid,
         group : 1,
-        fx : node.x,
-        fy : node.y
+        fx : layout.x,
+        fy : layout.y
       });
 
       links.push({
-        id : 'root:'+fid,
-        source : 'root',
+        id : 'center:'+fid,
+        source : 'center',
         target : fid
       });
-      
+
+
       links.push({
         id : fid+':'+node.id,
         source : fid,
         target : node.id
       });
 
-      node.group = 2;
-      delete node.x;
-      delete node.y;
-      fakeNodes.push(node);
+      // Real Node
+      layout.id = node.id;
+      layout.group = 2;
+      layout.r = 12;
+      
+			nodes.push(layout);
     });
 
-    fakeNodes.push(this.rootNode);
-    return {links, nodes: fakeNodes};
+    nodes.push(Object.assign({}, this.center));
+		return {nodes, links};
+  }
+
+  _qprepare(inNodes) {
+		let links = [];
+		let nodes = [];
+
+		inNodes.forEach(node => {
+      node = node.data;
+
+      let layout = node.forceLayout;
+      let fid = node.id+'-fake'
+
+      nodes.push({
+        id : fid,
+				group : 1,
+				r:0,
+        fx : layout.circle.cx,
+        fy : layout.circle.cy
+      });
+
+      //      links.push({
+      //        id : 'center:'+fid,
+      //        source : 'center',
+      //        target : fid
+      //      });
+
+      links.push({
+        id : fid+':'+node.id,
+        source : fid,
+        target : node.id
+      });
+			// Real Node
+			node.group = 2;
+			node.r=12;
+			nodes.push(node);
+    });
+
+    nodes.push(this.center);
+		return {nodes,links};
   }
 
   /**
    * @method _boundNode
    * @description ensure nodes do not render outside the given canvas size
    * 
-   * @param {Object} node
+   * @param {Object} forceLayout
    */
-  _boundNode(node) {
-    if( node.group === 1 ) return;
+  _boundNode(forceLayout) {
+    if( forceLayout.group === 1 ) return;
   
-    node.x = Math.max(node.r + 5, Math.min(this.width - node.r - 5, node.x));
-    node.y = Math.max(node.r + 5, Math.min(this.height - node.r - 5, node.y));
+    forceLayout.x = Math.max(forceLayout.r + 5, Math.min(this.width - forceLayout.r - 5, forceLayout.x));
+    forceLayout.y = Math.max(forceLayout.r + 5, Math.min(this.height - forceLayout.r - 5, forceLayout.y));
   }
 }
 

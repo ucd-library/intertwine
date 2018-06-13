@@ -127,13 +127,13 @@ L.MarkerOverlayLayer = L.Layer.extend({
 
 
   removeMarker: function(marker) {
-    let index = this.markers.findIndex(marker);
+    let index = this.markers.indexOf(marker);
     if( index > -1 ) this.markers.splice(index, 1);
-    this._container.removeChild(marker._container);
+    this._container.removeChild(marker);
   },
 
   _redraw: function(e) {
-    var topLeft = this._map.containerPointToLayerPoint([0, 0]);
+    // var topLeft = this._map.containerPointToLayerPoint([0, 0]);
     // L.DomUtil.setPosition(this._canvas, topLeft);
 
     // var size = this._map.getSize();
@@ -146,9 +146,9 @@ L.MarkerOverlayLayer = L.Layer.extend({
   },
 
   _redrawMarker: function(marker) {
-    let ll = marker.fakeData;
+    let ll = marker.latLng;
 
-    if( !ll || marker.visible ) {
+    if( !ll || !marker.visible ) {
       marker.style.display = 'none';
       return;
     }
