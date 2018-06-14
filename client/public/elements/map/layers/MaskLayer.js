@@ -120,12 +120,12 @@ L.MaskLayer = L.Layer.extend({
   onRemove: function (map) {
     this._container.parentNode.removeChild(this._container);
     map.off({
-      'viewreset' : this.redraw,
-      'resize'    : this.redraw,
-      'movestart' : this.redraw,
-      'moveend'   : this.redraw,
-      'zoomstart' : this.redraw,
-      'zoomend'   : this.redraw
+      'viewreset' : this._redraw,
+      'resize'    : this._redraw,
+      'movestart' : this._redraw,
+      'moveend'   : this._redraw,
+      'zoomstart' : this._redraw,
+      'zoomend'   : this._redraw
     }, this);
   },
 

@@ -34,6 +34,12 @@ export default class AppSvgLayer extends PolymerElement {
         this.ele.setAttribute('y2', dst.y);
 
         this.arrow.setAttribute('d', this._createArrowPath(this));
+
+        this.arrow.setAttribute('visibility', this._isEqual() ? 'hidden' : '');
+        this.ele.setAttribute('visibility', this._isEqual() ? 'hidden' : '');
+      },
+      _isEqual() {
+        return ( this.src.x === this.dst.x && this.src.y === this.dst.y );
       },
       _createArrowPath(line) {
         var headlen = 10;

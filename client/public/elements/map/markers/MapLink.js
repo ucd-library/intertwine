@@ -2,7 +2,7 @@ import nodeManager from "./NodeManager"
 
 export default class MapLink {
 
-  constructor(data, layer) {
+  constructor(data, layer, clusterLayer) {
     this.layer = layer;
     this.data = data;
     this.attached = false;
@@ -21,6 +21,8 @@ export default class MapLink {
     this.rendered = null;
 
     nodeManager.addLink(this);
+
+    clusterLayer.on('animationend', () => this.render());
   }
 
   destroy()  {
@@ -35,21 +37,10 @@ export default class MapLink {
     let src = nodeManager.getMap(this.data.src);
     let dst = nodeManager.getMap(this.data.dst);
 
-    // TODO: check if things have changed, if not quit
-    
     this.feature.setPoints(
       src.getPoint(),
       dst.getPoint()
     );
-
-    // if( !this.attached ) {
-    //   this.attached = true;
-
-    //   this.feature.addTo(this.map); 
-    // }
-    
-    // this.feature.bringToFront();
-    // this.renderArrow(this.feature);
   }
 
   renderArrow(line) {

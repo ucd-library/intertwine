@@ -55,13 +55,15 @@ export default class AppMap extends Mixin(PolymerElement)
       attribution: '&copy; <a href="http://osm.org/copyright" target="_blank">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution/" target="_blank">CARTO</a>'
     }).addTo(this.map);
 
-    this._createGeoJson();
+    
     
     this.maskLayer.redraw = (canvas, ctx, e) => this._renderMap(canvas, ctx, e);
     this.maskLayer.addTo(this.map);
 
     this.clusterLayer.addTo(this.map);
     // this.markerOverlayLayer.addTo(this.map);
+
+    this._createGeoJson();
 
     window.addEventListener('resize', () => this.resize());
     this.resize();
@@ -95,7 +97,7 @@ export default class AppMap extends Mixin(PolymerElement)
     });
 
     graphData.links.forEach(link => {
-      new MapLink(link, this.$.svgLayer);
+      new MapLink(link, this.$.svgLayer, this.clusterLayer);
     });
   }
 
@@ -157,7 +159,10 @@ export default class AppMap extends Mixin(PolymerElement)
       this._calcForceLayout();
     }
 
-    nodeManager.links.forEach(link => link.render());
+    requestAnimationFrame(() => {
+      nodeManager.links.forEach(link => link.render());
+    });
+    
   }
 
   /**

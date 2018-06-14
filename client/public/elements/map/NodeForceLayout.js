@@ -4,7 +4,7 @@ import {forceSimulation, forceCollide, forceLink, forceManyBody} from 'd3-force'
 class NodeForceLayout {
 
   constructor() {
-    this.iterations = 300;
+    this.iterations = 100;
     this.center = {
       id: "center",
       group: 1,

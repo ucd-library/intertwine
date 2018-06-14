@@ -29,8 +29,22 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  .nodes {
+    text-align: left;
+  }
+
+  .node {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    background-color: var(--color-scarlet);
+  }
 </style>
 
 <div class="label">
   <div class="name">[[label]]</div>
+  <div class="nodes" id="nodes"></div>
 </div>

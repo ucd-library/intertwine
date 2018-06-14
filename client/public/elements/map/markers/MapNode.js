@@ -66,7 +66,7 @@ export default class MapNode {
   }
 
   /**
-   * @method getLatLng
+   * @method getPoint
    * @description return the lat/lng for this node.  lat/lng will
    * represent one of the following:
    * - node lat/lng

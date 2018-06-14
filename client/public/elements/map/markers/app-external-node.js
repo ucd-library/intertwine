@@ -2,6 +2,18 @@ import {PolymerElement, html} from "@polymer/polymer"
 import template from "./app-external-node.html"
 import nodeManager from "./NodeManager"
 
+const SIZES = {
+  small : 80
+}
+
+for( var key in SIZES ) {
+  SIZES[key] = {
+    size : SIZES[key],
+    offset : SIZES[key]/2
+  }
+}
+
+
 export default class AppExternalNode extends PolymerElement {
 
   static get template() {
@@ -23,7 +35,6 @@ export default class AppExternalNode extends PolymerElement {
 
   constructor(data, layer) {
     super();
-
     this.layer = layer;
     this.data = data;
     this.label = data.label;
@@ -33,7 +44,26 @@ export default class AppExternalNode extends PolymerElement {
     // register external node
     nodeManager.addExternal(data.id, this);
 
+    this.setSize('small');
+
     this.addEventListener('click', e => console.log('click'));
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    if( this.pendingRender ) {
+      this.pendingRender = false;
+      this.renderChildNodes();
+    }
+  }
+
+  setSize(size) {
+    size = SIZES[size];
+    this.style.top = (-1 * size.offset-4)+'px';
+    this.style.left = (-1 * size.offset-4)+'px';
+    this.style.width = (size.size-4)+'px';
+    this.style.left = (size.size-4)+'px';
+    this.style.borderRadius = size.size+'px';
   }
 
   destroy() {
@@ -42,12 +72,24 @@ export default class AppExternalNode extends PolymerElement {
 
   addNode(node) {
     this.nodes.push(node);
+    this.renderChildNodes();
   }
 
   removeNode(node) {
     let index = this.nodes.indexOf(node);
     if( index === -1 ) return;
     this.nodes.splice(index, 1);
+    this.renderChildNodes();
+  }
+
+  renderChildNodes() {
+    if( !this.$ ) {
+      this.pendingRender = true;
+      return;
+    }
+    this.$.nodes.innerHTML = this.nodes.map((node, index) => {
+      return `<div class="node" index="${index}"></div>`;
+    });
   }
 
   setPosition(top, left) {
@@ -57,31 +99,23 @@ export default class AppExternalNode extends PolymerElement {
     this.style.position = 'absolute';
     this.style.top = (top-37)+'px';
     this.style.left = (left-37)+'px';
-
-    // if( !this.layer._map ) return;
-    
-    // this.initMapPos = this.layer._map._mapPane._leaflet_pos;
-    // this.latLng = this.layer._map.containerPointToLatLng([left, top]);
   }
 
-  updateLayerPoint() {
-    // if( this.top === undefined || this.left === undefined ) return;
-    // if( !this.initMapPos ) return;
-
-    // let pt = this.layer._map._mapPane._leaflet_pos;
-    // let diffX = this.initMapPos.x - pt.x;
-    // let diffY = this.initMapPos.y - pt.y;
-
-    // this.style.position = 'absolute';
-    // this.style.left = (this.left+diffX-37)+'px';
-    // this.style.top = (this.top+diffY-37)+'px';
-
-    // this.latLng = this.layer._map.containerPointToLatLng([this.left+diffX,this.top+diffY]);
-  }
 
   getNodePoint(node) {
-    // TODO: Add diff 
-    return {x:this.left, y:this.top};
+    if( this.left === undefined || this.top === undefined ) {
+      return {x:0,y:0};
+    }
+
+    let index = this.nodes.indexOf(node);
+    if( index === -1 ) return {x: this.left, y: this.top};
+    let ele = this.shadowRoot.querySelector(`.node[index="${index}"]`);
+    if( !ele ) return {x: this.left, y: this.top};
+
+    return {
+      x: this.left+ele.offsetLeft-37+7, 
+      y: this.top+ele.offsetTop-37+7
+    };
   }
 
   get visible() {
