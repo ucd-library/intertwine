@@ -4,14 +4,26 @@
     position: relative;
   }
 
+  #svgLayer {
+    position: absolute;
+    z-index: 1000;
+  }
+
+  #externalNodeLayer {
+    position: absolute;
+    z-index: 900;
+  }
+
   #map {
     position: absolute;
     top : 0;
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: 800;
   }
 </style>
 
-<div id="nodes"></div>
+<app-svg-layer id="svgLayer"></app-svg-layer>
+<div id="externalNodeLayer"></div>
 <div id="map"></div>

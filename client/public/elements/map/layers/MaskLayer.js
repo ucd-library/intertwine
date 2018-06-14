@@ -60,10 +60,13 @@ L.MaskLayer = L.Layer.extend({
     // add container with the canvas to the tile pane
     // the container is moved in the oposite direction of the
     // map pane to keep the canvas always in (0, 0)
-    //var tilePane = this._map._panes.tilePane;
+    var tilePane = this._map._panes.tilePane;
     // var tilePane = this._map._panes.markerPane;
-    var tilePane = this._map._panes.overlayPane;
+    // var tilePane = this._map._panes.overlayPane;
     var _container = L.DomUtil.create('div', 'leaflet-mask-layer-'+count);
+    _container.style.zIndex = 100;
+    _container.style.position = 'absolute';
+
     count++;
 
     _container.appendChild(this._canvas);

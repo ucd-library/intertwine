@@ -133,6 +133,7 @@ L.MarkerOverlayLayer = L.Layer.extend({
   },
 
   _redraw: function(e) {
+    
     // var topLeft = this._map.containerPointToLayerPoint([0, 0]);
     // L.DomUtil.setPosition(this._canvas, topLeft);
 
@@ -154,7 +155,8 @@ L.MarkerOverlayLayer = L.Layer.extend({
     }
     marker.style.display = 'block';
 
-    let pt = this._map.latLngToLayerPoint(ll);
+    let pt = this._map.containerPointToLayerPoint([marker.left, marker.top]);
+    
 
     marker.style.position = 'absolute';
     marker.style.left = (pt.x-37)+'px';

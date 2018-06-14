@@ -79,20 +79,22 @@ export default class MapNode {
    * 
    * @returns {Object} latlng
    */
-  getLatLng() {
+  getPoint() {
     // if node is visible on the map
     if( this.visible ) {
+      if( !this.layer._map ) return [0,0];
+
       // ask the cluster layer to return node location
       // this will either be node lat/lng or cluster lat/lng (if part of cluster)
       let clusterFeature = this.layer.getVisibleParent(this.feature);
-      if( clusterFeature ) return clusterFeature.getLatLng();
-      return this.feature.getLatLng();
+      if( clusterFeature ) return this.layer._map.latLngToContainerPoint(clusterFeature.getLatLng());
+      return this.layer._map.latLngToContainerPoint(this.feature.getLatLng());
     }
 
     // node is attached to external node, ask for lat/lng from
     // external node.  this lat/lng will be relative to main map but
     // will include offset for node
     let externalNode = nodeManager.getExternal(this.data.externalId);
-    return externalNode.getNodeLatLng(this)
+    return externalNode.getNodePoint(this)
   }
 }

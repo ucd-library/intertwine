@@ -53,16 +53,35 @@ export default class AppExternalNode extends PolymerElement {
   setPosition(top, left) {
     this.top = top;
     this.left = left;
-    this.style.top = top+'px';
-    this.style.left = left+'px';
 
-    if( !this.layer._map ) return;
-    this.latLng = this.layer._map.containerPointToLatLng([left, top]);
+    this.style.position = 'absolute';
+    this.style.top = (top-37)+'px';
+    this.style.left = (left-37)+'px';
+
+    // if( !this.layer._map ) return;
+    
+    // this.initMapPos = this.layer._map._mapPane._leaflet_pos;
+    // this.latLng = this.layer._map.containerPointToLatLng([left, top]);
   }
 
-  getNodeLatLng(node) {
+  updateLayerPoint() {
+    // if( this.top === undefined || this.left === undefined ) return;
+    // if( !this.initMapPos ) return;
+
+    // let pt = this.layer._map._mapPane._leaflet_pos;
+    // let diffX = this.initMapPos.x - pt.x;
+    // let diffY = this.initMapPos.y - pt.y;
+
+    // this.style.position = 'absolute';
+    // this.style.left = (this.left+diffX-37)+'px';
+    // this.style.top = (this.top+diffY-37)+'px';
+
+    // this.latLng = this.layer._map.containerPointToLatLng([this.left+diffX,this.top+diffY]);
+  }
+
+  getNodePoint(node) {
     // TODO: Add diff 
-    return this.latLng;
+    return {x:this.left, y:this.top};
   }
 
   get visible() {
@@ -72,7 +91,7 @@ export default class AppExternalNode extends PolymerElement {
   render() {
     if( !this.visible ) {
       if( this.rendered === false ) return;
-      this.layer.removeMarker(this);
+      this.layer.removeChild(this);
       this.rendered = false;
       return;
     }
@@ -81,7 +100,7 @@ export default class AppExternalNode extends PolymerElement {
     // this.style.left = (fake.x-37)+'px';
 
     if( this.rendered !== true ) {
-      this.layer.addMarker(this);
+      this.layer.appendChild(this);
       this.rendered = true;
     }
   }

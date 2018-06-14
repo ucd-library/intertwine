@@ -11,12 +11,14 @@ import leafletClusterDefaultCss from "leaflet.markercluster/dist/MarkerCluster.D
 
 // custom layers and markers
 import "./layers/MaskLayer"
-import "./layers/MarkerOverlayLayer"
+// import "./layers/MarkerOverlayLayer"
+import "./layers/app-svg-layer"
 import ExternalNode from "./markers/app-external-node"
 import MapLink from "./markers/MapLink"
 import MapNode from "./markers/MapNode"
 import NodeForceLayout from "./NodeForceLayout"
 
+import config from "../../lib/config"
 import GraphInterface from "../interfaces/GraphInterface"
 import nodeManager from "./markers/NodeManager";
 
@@ -41,16 +43,16 @@ export default class AppMap extends Mixin(PolymerElement)
   constructor() {
     super();
     this.maskLayer = new L.MaskLayer({});
-    this.markerOverlayLayer = new L.MarkerOverlayLayer({});
+    // this.markerOverlayLayer = new L.MarkerOverlayLayer({});
     this.clusterLayer = L.markerClusterGroup({});
   }
 
   ready() {
     super.ready();
 
-    this.map = L.map(this.$.map).setView([38.57, -121.49], 13);
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    this.map = L.map(this.$.map).setView(config.map.init.center, config.map.init.zoom);
+    L.tileLayer(config.map.basemap, {
+      attribution: '&copy; <a href="http://osm.org/copyright" target="_blank">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution/" target="_blank">CARTO</a>'
     }).addTo(this.map);
 
     this._createGeoJson();
@@ -59,14 +61,20 @@ export default class AppMap extends Mixin(PolymerElement)
     this.maskLayer.addTo(this.map);
 
     this.clusterLayer.addTo(this.map);
-    this.markerOverlayLayer.addTo(this.map);
+    // this.markerOverlayLayer.addTo(this.map);
 
     window.addEventListener('resize', () => this.resize());
     this.resize();
+
+    setTimeout(() => {
+      this.maskLayer._reset();
+    }, 100);
   }
 
   resize() {
     if( !this.map ) return;
+
+    this.$.svgLayer.setSize(this.$.map.offsetWidth, this.$.map.offsetHeight);
     setTimeout(() => this.map.invalidateSize(), 0);
   }
 
@@ -80,14 +88,14 @@ export default class AppMap extends Mixin(PolymerElement)
     let external = {};
     graphData.nodes.forEach(node => {
       if( !external[node.externalId] ) {
-        new ExternalNode(node, this.markerOverlayLayer);
+        new ExternalNode(node, this.$.externalNodeLayer);
         external[node.externalId] = true;
       }
       new MapNode(node, this.clusterLayer);
     });
 
     graphData.links.forEach(link => {
-      new MapLink(link, this.map);
+      new MapLink(link, this.$.svgLayer);
     });
   }
 
@@ -143,12 +151,11 @@ export default class AppMap extends Mixin(PolymerElement)
 
     // if required, recalc the force layout
     // this is expensive, so only do when required
-    //if( forceLayoutRequired || e.type === 'reset' || e.type === 'moveend' || e.type === 'zoomend' ) {
-      
+    if( forceLayoutRequired || e.type === 'reset' || e.type === 'moveend' || e.type === 'zoomend' ) {
       // JM: Quinn, toggle this to switch to your layout.
       // this._qcalcForceLayout();
       this._calcForceLayout();
-    //}
+    }
 
     nodeManager.links.forEach(link => link.render());
   }

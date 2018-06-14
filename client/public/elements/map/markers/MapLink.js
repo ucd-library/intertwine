@@ -2,26 +2,21 @@ import nodeManager from "./NodeManager"
 
 export default class MapLink {
 
-  constructor(data, map) {
-    this.map = map;
+  constructor(data, layer) {
+    this.layer = layer;
     this.data = data;
     this.attached = false;
 
-    this.arrowHeadSymbol = L.Symbol.arrowHead({
-      pixelSize: 8, 
-      pathOptions: {
-        fillOpacity: 1, 
-        weight: 0
-      }
-    })
+    // this.arrowHeadSymbol = L.Symbol.arrowHead({
+    //   pixelSize: 8, 
+    //   pathOptions: {
+    //     fillOpacity: 1, 
+    //     weight: 0
+    //   }
+    // })
 
-    let options = {
-      weight: 1,
-      opacity: 0.7,
-      color: '#6697B2'
-    };
 
-    this.feature = L.polyline([0, 0], options);
+    this.feature = this.layer.addLine({x:0,y:0}, {x:0,y:0});
 
     this.rendered = null;
 
@@ -29,10 +24,10 @@ export default class MapLink {
   }
 
   destroy()  {
-    if( this.arrowHead ) {
-      this.map.removeLayer(this.arrowHead);
-    }
-    this.layer.removeLayer(this.feature);
+    // if( this.arrowHead ) {
+    //   this.map.removeLayer(this.arrowHead);
+    // }
+    this.layer.removeLine(this.feature);
     nodeManager.removeLink(this);
   }
 
@@ -42,18 +37,19 @@ export default class MapLink {
 
     // TODO: check if things have changed, if not quit
     
-    this.feature.setLatLngs([
-      src.getLatLng(),
-      dst.getLatLng()
-    ]);
+    this.feature.setPoints(
+      src.getPoint(),
+      dst.getPoint()
+    );
 
-    if( !this.attached ) {
-      this.attached = true;
-      this.feature.addTo(this.map); 
-    }
+    // if( !this.attached ) {
+    //   this.attached = true;
+
+    //   this.feature.addTo(this.map); 
+    // }
     
-    this.feature.bringToFront();
-    this.renderArrow(this.feature);
+    // this.feature.bringToFront();
+    // this.renderArrow(this.feature);
   }
 
   renderArrow(line) {
