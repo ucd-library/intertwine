@@ -9,18 +9,21 @@ import "leaflet.markercluster"
 import leafletClusterCss from "leaflet.markercluster/dist/MarkerCluster.css"
 import leafletClusterDefaultCss from "leaflet.markercluster/dist/MarkerCluster.Default.css"
 
-// custom layers and markers
-import "./layers/MaskLayer"
-// import "./layers/MarkerOverlayLayer"
+// custom layers
+import "./layers/mask-layer"
 import "./layers/app-svg-layer"
+
+// custom markers
 import ExternalNode from "./markers/app-external-node"
-import MapLink from "./markers/MapLink"
-import MapNode from "./markers/MapNode"
-import NodeForceLayout from "./NodeForceLayout"
+import MapLink from "./markers/map-link"
+import MapNode from "./markers/map-node"
+
+// external node for laout
+import NodeForceLayout from "./node-force-layout"
 
 import config from "../../lib/config"
 import GraphInterface from "../interfaces/GraphInterface"
-import nodeManager from "./markers/NodeManager";
+import nodeStore from "../../lib/stores/NodeStore";
 
 export default class AppMap extends Mixin(PolymerElement)
   .with(EventInterface, GraphInterface) {
@@ -34,16 +37,10 @@ export default class AppMap extends Mixin(PolymerElement)
     `]);
   }
 
-    static get properties() {
-      return {
-
-      }
-    }
-
   constructor() {
     super();
-    this.maskLayer = new L.MaskLayer({});
-    // this.markerOverlayLayer = new L.MarkerOverlayLayer({});
+
+    this.maskLayer = new L.MaskLayer({}); // circle mask
     this.clusterLayer = L.markerClusterGroup({});
   }
 
@@ -54,20 +51,22 @@ export default class AppMap extends Mixin(PolymerElement)
     L.tileLayer(config.map.basemap, {
       attribution: '&copy; <a href="http://osm.org/copyright" target="_blank">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution/" target="_blank">CARTO</a>'
     }).addTo(this.map);
-
     
     
+    // we use the redraw function to kick of all layout
+    // operations for the map view (see _renderMap)
     this.maskLayer.redraw = (canvas, ctx, e) => this._renderMap(canvas, ctx, e);
+    
     this.maskLayer.addTo(this.map);
-
     this.clusterLayer.addTo(this.map);
-    // this.markerOverlayLayer.addTo(this.map);
 
+    // TODO: should be come query function
     this._createGeoJson();
 
     window.addEventListener('resize', () => this.resize());
     this.resize();
 
+    // first draw
     setTimeout(() => {
       this.maskLayer._reset();
     }, 100);
@@ -76,23 +75,25 @@ export default class AppMap extends Mixin(PolymerElement)
   resize() {
     if( !this.map ) return;
 
-    this.$.svgLayer.setSize(this.$.map.offsetWidth, this.$.map.offsetHeight);
-    setTimeout(() => this.map.invalidateSize(), 0);
+    setTimeout(() => {
+      this.map.invalidateSize();
+      this.$.svgLayer.setSize(this.$.map.offsetWidth, this.$.map.offsetHeight);
+    }, 0);
   }
 
   // TODO: this becomes main render method when map node/links change
   // Do not call when viewport changes
   _createGeoJson() {
-    nodeManager.reset();
+    nodeStore.reset();
 
     let graphData = this._getGraph();
 
-    let external = {};
+
+    graphData.externalNodes.forEach((node) => {
+      new ExternalNode(node, this.$.externalNodeLayer);
+    });
+
     graphData.nodes.forEach(node => {
-      if( !external[node.externalId] ) {
-        new ExternalNode(node, this.$.externalNodeLayer);
-        external[node.externalId] = true;
-      }
       new MapNode(node, this.clusterLayer);
     });
 
@@ -120,8 +121,8 @@ export default class AppMap extends Mixin(PolymerElement)
     // if so we need to re-run our force layout
     let forceLayoutRequired = false;
 
-    for( let id in nodeManager.mapNodes ) {
-      let node = nodeManager.mapNodes[id];
+    for( let id in nodeStore.mapNodes ) {
+      let node = nodeStore.mapNodes[id];
 
       node.pxPt = this.map.latLngToContainerPoint(node.data);
       let d = Math.sqrt(
@@ -145,8 +146,8 @@ export default class AppMap extends Mixin(PolymerElement)
     }
 
     // always needs to be called after map nodes render (above)
-    for( let id in nodeManager.externalNodes ) {
-      let node = nodeManager.externalNodes[id];
+    for( let id in nodeStore.externalNodes ) {
+      let node = nodeStore.externalNodes[id];
       node.pxPt = this.map.latLngToContainerPoint(node.data);
       node.render();
     }
@@ -160,7 +161,7 @@ export default class AppMap extends Mixin(PolymerElement)
     }
 
     requestAnimationFrame(() => {
-      nodeManager.links.forEach(link => link.render());
+      nodeStore.links.forEach(link => link.render());
     });
     
   }
@@ -217,8 +218,8 @@ export default class AppMap extends Mixin(PolymerElement)
    */
   _qcalcForceLayout() {
     let nodes = [];
-    for( let id in nodeManager.externalNodes ) {
-      let node = nodeManager.externalNodes[id];
+    for( let id in nodeStore.externalNodes ) {
+      let node = nodeStore.externalNodes[id];
       if( !node.visible ) continue; // no attached children
 
       let c = this.maskArea;
@@ -262,8 +263,8 @@ export default class AppMap extends Mixin(PolymerElement)
    */
   _calcForceLayout() {
     let nodes = [];
-    for( let id in nodeManager.externalNodes ) {
-      let node = nodeManager.externalNodes[id];
+    for( let id in nodeStore.externalNodes ) {
+      let node = nodeStore.externalNodes[id];
       if( !node.visible ) continue; // inside radius, ignore
 
       // first we calculate the point where a line between the center of

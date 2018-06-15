@@ -1,4 +1,4 @@
-import nodeManager from "./NodeManager"
+import nodeStore from "../../../lib/stores/NodeStore"
 
 export default class MapNode {
 
@@ -28,12 +28,12 @@ export default class MapNode {
     // so rendered = false means node is part of a cluster layer
     this.rendered = null;
 
-    nodeManager.addMap(data.id, this);
+    nodeStore.addMap(data.id, this);
   }
 
   destroy() {
     this.layer.removeLayer(this.feature);
-    nodeManager.removeMap(this.data.id);
+    nodeStore.removeMap(this.data.id);
   }
 
   /**
@@ -49,7 +49,7 @@ export default class MapNode {
 
       // add feature to cluster layer
       this.layer.addLayer(this.feature);
-      nodeManager.getExternal(this.data.externalId).removeNode(this);
+      nodeStore.getExternal(this.data.externalId).removeNode(this);
       this.rendered = true;
       return;
     }
@@ -60,41 +60,52 @@ export default class MapNode {
     // NOTE: getLatLng() below will not be correct until render() is called
     if( this.rendered !== false ) {
       this.layer.removeLayer(this.feature);
-      nodeManager.getExternal(this.data.externalId).addNode(this);
+      nodeStore.getExternal(this.data.externalId).addNode(this);
       this.rendered = false;
     }
   }
 
   /**
    * @method getPoint
-   * @description return the lat/lng for this node.  lat/lng will
+   * @description return the map view x/y for this node.  x/y will
    * represent one of the following:
-   * - node lat/lng
-   * - nodes cluster lat/lng (if in cluster)
-   * - external nodes lat/lng (including specific offset within external node)
+   * - node lat/lng on map projected to x/y
+   * - nodes cluster lat/lng (if in cluster) projected to x/y
+   * - external nodes x/y (including specific offset within external node)
    * 
    * Note: this method will not return correct location until render() is called.
    * That's when then node registers itself with either the cluster layer or the
    * external node.
    * 
-   * @returns {Object} latlng
+   * @returns {Object} 
    */
   getPoint() {
     // if node is visible on the map
     if( this.visible ) {
-      if( !this.layer._map ) return [0,0];
+      if( !this.layer._map ) return {x:0,y:0,type:'unknown'};
 
       // ask the cluster layer to return node location
       // this will either be node lat/lng or cluster lat/lng (if part of cluster)
       let clusterFeature = this.layer.getVisibleParent(this.feature);
-      if( clusterFeature ) return this.layer._map.latLngToContainerPoint(clusterFeature.getLatLng());
-      return this.layer._map.latLngToContainerPoint(this.feature.getLatLng());
+
+      let pt;
+      if( clusterFeature ) {
+        pt = this.layer._map.latLngToContainerPoint(clusterFeature.getLatLng());
+        pt.type = 'cluster'
+      } else {
+        pt = this.layer._map.latLngToContainerPoint(this.feature.getLatLng());
+        pt.type = 'node';
+      }
+      return pt;
     }
 
     // node is attached to external node, ask for lat/lng from
     // external node.  this lat/lng will be relative to main map but
     // will include offset for node
-    let externalNode = nodeManager.getExternal(this.data.externalId);
-    return externalNode.getNodePoint(this)
+    let externalNode = nodeStore.getExternal(this.data.externalId);
+    let pt = externalNode.getNodePoint(this);
+    pt.type = 'external';
+
+    return pt;
   }
 }

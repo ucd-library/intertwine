@@ -5,6 +5,10 @@ mockData.nodes.forEach(node => {
   node.id = node.label;
   node.externalId = node.label;
 });
+mockData.externalNodes.forEach(node => {
+  node.id = node.label;
+  node.externalId = node.label;
+});
 
 class GraphStore extends BaseStore {
 

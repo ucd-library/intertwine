@@ -1,6 +1,6 @@
 import {PolymerElement, html} from "@polymer/polymer"
 import template from "./app-external-node.html"
-import nodeManager from "./NodeManager"
+import nodeStore from "../../../lib/stores/NodeStore"
 
 const SIZES = {
   small : 80
@@ -42,7 +42,7 @@ export default class AppExternalNode extends PolymerElement {
     this.latLng = [data.lat, data.lng];
 
     // register external node
-    nodeManager.addExternal(data.id, this);
+    nodeStore.addExternal(data.id, this);
 
     this.setSize('small');
 
@@ -67,7 +67,7 @@ export default class AppExternalNode extends PolymerElement {
   }
 
   destroy() {
-    nodeManager.removeExternal(this.data.id);
+    nodeStore.removeExternal(this.data.id);
   }
 
   addNode(node) {

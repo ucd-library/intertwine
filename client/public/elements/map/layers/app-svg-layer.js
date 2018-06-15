@@ -9,65 +9,14 @@ export default class AppSvgLayer extends PolymerElement {
     return html([template]);
   }
 
-  static get properties() {
-    return {
-      
-    }
-  }
-
   constructor() {
     super();
     this.lines = [];
   }
 
   addLine(srcPt, dstPt, style = {}) {
-    let line = {
-      ele : document.createElementNS(SVG_NS,'line'),
-      arrow : document.createElementNS(SVG_NS,'path'),
-      setPoints : function(src, dst) {
-        this.src = src;
-        this.dst = dst;
-
-        this.ele.setAttribute('x1', src.x);
-        this.ele.setAttribute('y1', src.y);
-        this.ele.setAttribute('x2', dst.x);
-        this.ele.setAttribute('y2', dst.y);
-
-        this.arrow.setAttribute('d', this._createArrowPath(this));
-
-        this.arrow.setAttribute('visibility', this._isEqual() ? 'hidden' : '');
-        this.ele.setAttribute('visibility', this._isEqual() ? 'hidden' : '');
-      },
-      _isEqual() {
-        return ( this.src.x === this.dst.x && this.src.y === this.dst.y );
-      },
-      _createArrowPath(line) {
-        var headlen = 10;
-        var angle = Math.atan2(line.dst.y - line.src.y, line.dst.x - line.src.x);
-    
-        let path = `M ${line.dst.x} ${line.dst.y} `;
-        path += 'L '+
-          (line.dst.x-headlen*Math.cos(angle-Math.PI/6))+' '+
-          (line.dst.y-headlen*Math.sin(angle-Math.PI/6))+' ';
-    
-        path += 'L '+
-          (line.dst.x-headlen*Math.cos(angle+Math.PI/6))+' '+
-          (line.dst.y-headlen*Math.sin(angle+Math.PI/6))+' ';
-
-        path += `L ${line.dst.x} ${line.dst.y} `;
-    
-        return path;
-      }
-    }
-
+    let line = new Line(style);
     line.setPoints(srcPt, dstPt);
-
-    line.ele.setAttribute('pointer-events', 'auto');
-    line.arrow.setAttribute('pointer-events', 'auto');
-    for( let key in style ) {
-      line.ele.style[key] = style[key];
-      line.arrow.style[key] = style[key];
-    }
 
     this.$.svg.appendChild(line.ele);
     this.$.svg.appendChild(line.arrow);
@@ -89,8 +38,84 @@ export default class AppSvgLayer extends PolymerElement {
     this.$.svg.setAttribute('height', height);
   }
 
+}
 
+class Line {
 
+  constructor(style = {}) {
+    this.ARROW_SIZE = 10;
+
+    this.ele = document.createElementNS(SVG_NS,'line');
+    this.arrow = document.createElementNS(SVG_NS,'path');
+
+    this.ele.setAttribute('pointer-events', 'auto');
+    this.arrow.setAttribute('pointer-events', 'auto');
+
+    for( let key in style ) {
+      this.ele.style[key] = style[key];
+      this.arrow.style[key] = style[key];
+    }
+  }
+
+  setPoints(src, dst) {
+    // shorten lines based on node type
+    this.dst = this.shorten(dst, src, this.getShortenDistance(dst.type));
+    this.src = this.shorten(src, dst, this.getShortenDistance(src.type));
+
+    this.m = this._calcSlope();
+    this.b = this.src.y - (this.m * this.src.x);
+
+    this.ele.setAttribute('x1', this.src.x);
+    this.ele.setAttribute('y1', this.src.y);
+    this.ele.setAttribute('x2', this.dst.x);
+    this.ele.setAttribute('y2', this.dst.y);
+
+    this.arrow.setAttribute('d', this._createArrowPath());
+
+    this.arrow.setAttribute('visibility', this._isEqual() ? 'hidden' : '');
+    this.ele.setAttribute('visibility', this._isEqual() ? 'hidden' : '');
+  }
+
+  getShortenDistance(type) {
+    if( type === 'cluster' ) return 15;
+    if( type === 'node' ) return 20;
+    return 5;
+  }
+
+  shorten(pt1, pt2, distance) {
+    let lx = pt2.x - pt1.x;
+    let ly = pt2.y - pt1.y;
+    let angle = Math.atan2(ly, lx);
+    let x = pt1.x + distance * Math.cos(angle);
+    let y = pt1.y + distance * Math.sin(angle);
+    return {x, y};
+  }
+
+  _isEqual() {
+    return ( this.src.x === this.dst.x && this.src.y === this.dst.y );
+  }
+
+  _createArrowPath() {
+    var angle = Math.atan2(this.dst.y - this.src.y, this.dst.x - this.src.x);
+
+    let path = `M ${this.dst.x} ${this.dst.y} `;
+    path += 'L '+
+      (this.dst.x-this.ARROW_SIZE*Math.cos(angle-Math.PI/6))+' '+
+      (this.dst.y-this.ARROW_SIZE*Math.sin(angle-Math.PI/6))+' ';
+
+    path += 'L '+
+      (this.dst.x-this.ARROW_SIZE*Math.cos(angle+Math.PI/6))+' '+
+      (this.dst.y-this.ARROW_SIZE*Math.sin(angle+Math.PI/6))+' ';
+
+    path += `L ${this.dst.x} ${this.dst.y} `;
+
+    return path;
+  }
+
+  _calcSlope() {
+    if( this.dst.x === this.src.x ) return 0;
+    return (this.dst.y - this.src.y) / (this.dst.x - this.src.x);
+  }
 }
 
 customElements.define('app-svg-layer', AppSvgLayer);

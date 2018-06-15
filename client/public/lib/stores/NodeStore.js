@@ -1,4 +1,4 @@
-class NodeManager {
+class NodeStore {
 
   constructor() {
     this.reset();
@@ -60,4 +60,4 @@ class NodeManager {
 
 }
 
-export default new NodeManager();
+export default new NodeStore();
