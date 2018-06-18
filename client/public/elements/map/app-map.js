@@ -41,18 +41,19 @@ export default class AppMap extends Mixin(PolymerElement)
     super();
 
     this.maskLayer = new L.MaskLayer({}); // circle mask
-    this.clusterLayer = L.markerClusterGroup({});
+    this.clusterLayer = L.markerClusterGroup(config.map.clusterOptions);
   }
 
   ready() {
     super.ready();
 
-    this.map = L.map(this.$.map).setView(config.map.init.center, config.map.init.zoom);
+    this.map = L.map(this.$.map, config.map.options)
+                .setView(config.map.init.center, config.map.init.zoom);
     L.tileLayer(config.map.basemap, {
       attribution: '&copy; <a href="http://osm.org/copyright" target="_blank">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution/" target="_blank">CARTO</a>'
     }).addTo(this.map);
     
-    
+
     // we use the redraw function to kick of all layout
     // operations for the map view (see _renderMap)
     this.maskLayer.redraw = (canvas, ctx, e) => this._renderMap(canvas, ctx, e);
@@ -124,7 +125,7 @@ export default class AppMap extends Mixin(PolymerElement)
     for( let id in nodeStore.mapNodes ) {
       let node = nodeStore.mapNodes[id];
 
-      node.pxPt = this.map.latLngToContainerPoint(node.data);
+      node.pxPt = this.map.latLngToContainerPoint(node.latLng);
       let d = Math.sqrt(
         Math.pow( node.pxPt.x - this.maskArea.x, 2) + 
         Math.pow( node.pxPt.y - this.maskArea.y, 2)
@@ -148,7 +149,7 @@ export default class AppMap extends Mixin(PolymerElement)
     // always needs to be called after map nodes render (above)
     for( let id in nodeStore.externalNodes ) {
       let node = nodeStore.externalNodes[id];
-      node.pxPt = this.map.latLngToContainerPoint(node.data);
+      node.pxPt = this.map.latLngToContainerPoint(node.latLng);
       node.render();
     }
 
@@ -187,7 +188,7 @@ export default class AppMap extends Mixin(PolymerElement)
     let maskCtx = maskCanvas.getContext('2d');
     
     // This color is the one of the filled shape
-    maskCtx.fillStyle = "#4E4E4E";
+    maskCtx.fillStyle = APP_STYLE.COLOR.charcoal;
     // Fill the mask
     maskCtx.fillRect(0, 0, w, h);
     // Set xor operation

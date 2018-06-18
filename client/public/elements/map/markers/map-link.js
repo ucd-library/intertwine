@@ -23,6 +23,9 @@ export default class MapLink {
     let src = nodeStore.getMap(this.data.src);
     let dst = nodeStore.getMap(this.data.dst);
 
+    // TODO: remove 
+    if( !src || !dst ) return;
+
     this.feature.setPoints(
       src.getPoint(),
       dst.getPoint()

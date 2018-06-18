@@ -37,12 +37,12 @@ export default class AppExternalNode extends PolymerElement {
     super();
     this.layer = layer;
     this.data = data;
-    this.label = data.label;
+    this.label = data.properties.name;
     this.rendered = false;
-    this.latLng = [data.lat, data.lng];
+    this.latLng = [data.geometry.coordinates[1], data.geometry.coordinates[0]];
 
     // register external node
-    nodeStore.addExternal(data.id, this);
+    nodeStore.addExternal(data.properties.id, this);
 
     this.setSize('small');
 
@@ -67,7 +67,7 @@ export default class AppExternalNode extends PolymerElement {
   }
 
   destroy() {
-    nodeStore.removeExternal(this.data.id);
+    nodeStore.removeExternal(this.data.properties.id);
   }
 
   addNode(node) {
@@ -89,7 +89,7 @@ export default class AppExternalNode extends PolymerElement {
     }
     this.$.nodes.innerHTML = this.nodes.map((node, index) => {
       return `<div class="node" index="${index}"></div>`;
-    });
+    }).join('');
   }
 
   setPosition(top, left) {

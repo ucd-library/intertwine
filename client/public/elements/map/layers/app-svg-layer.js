@@ -58,9 +58,9 @@ class Line {
   }
 
   setPoints(src, dst) {
-    // shorten lines based on node type
-    this.dst = this.shorten(dst, src, this.getShortenDistance(dst.type));
-    this.src = this.shorten(src, dst, this.getShortenDistance(src.type));
+    // shorten lines based on node radius
+    this.dst = this.shorten(dst, src, this.getPtRadiusDistance(dst.radius));
+    this.src = this.shorten(src, dst, this.getPtRadiusDistance(src.radius));
 
     this.m = this._calcSlope();
     this.b = this.src.y - (this.m * this.src.x);
@@ -76,9 +76,8 @@ class Line {
     this.ele.setAttribute('visibility', this._isEqual() ? 'hidden' : '');
   }
 
-  getShortenDistance(type) {
-    if( type === 'cluster' ) return 15;
-    if( type === 'node' ) return 20;
+  getPtRadiusDistance(radius) {
+    if( radius !== undefined) return radius;
     return 5;
   }
 
