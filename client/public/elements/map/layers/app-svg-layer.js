@@ -69,8 +69,11 @@ class Line {
 
   setPoints(src, dst) {
     // shorten lines based on node radius
-    this.dst = this.shorten(dst, src, this.getPtRadiusDistance(dst.radius));
-    this.src = this.shorten(src, dst, this.getPtRadiusDistance(src.radius));
+    this.arrowDst = this.shorten(dst, src, this.getPtRadiusDistance(dst.radius));
+    this.dst = this.shorten(dst, src, this.getPtRadiusDistance(dst.radius)+2);
+    this.src = this.shorten(src, dst, this.getPtRadiusDistance(src.radius)+2);
+
+    
 
     this.m = this._calcSlope();
     this.b = this.src.y - (this.m * this.src.x);
@@ -105,8 +108,17 @@ class Line {
     return {x, y};
   }
 
+  select(select) {
+    if( select ) {
+      this.label.classList.add('selected');
+      this.ele.classList.add('selected');
+    } else {
+      this.label.classList.remove('selected');
+      this.ele.classList.remove('selected');
+    }
+  }
+
   half() {
-    
     let lx = this.dst.x - this.src.x;
     let ly = this.dst.y - this.src.y;
     let distance = Math.sqrt(Math.pow(lx,2)+Math.pow(ly, 2));
@@ -123,18 +135,18 @@ class Line {
   }
 
   _createArrowPath() {
-    var angle = Math.atan2(this.dst.y - this.src.y, this.dst.x - this.src.x);
+    var angle = Math.atan2(this.arrowDst.y - this.src.y, this.arrowDst.x - this.src.x);
 
-    let path = `M ${this.dst.x} ${this.dst.y} `;
+    let path = `M ${this.arrowDst.x} ${this.arrowDst.y} `;
     path += 'L '+
-      (this.dst.x-this.ARROW_SIZE*Math.cos(angle-Math.PI/6))+' '+
-      (this.dst.y-this.ARROW_SIZE*Math.sin(angle-Math.PI/6))+' ';
+      (this.arrowDst.x-this.ARROW_SIZE*Math.cos(angle-Math.PI/6))+' '+
+      (this.arrowDst.y-this.ARROW_SIZE*Math.sin(angle-Math.PI/6))+' ';
 
     path += 'L '+
-      (this.dst.x-this.ARROW_SIZE*Math.cos(angle+Math.PI/6))+' '+
-      (this.dst.y-this.ARROW_SIZE*Math.sin(angle+Math.PI/6))+' ';
+      (this.arrowDst.x-this.ARROW_SIZE*Math.cos(angle+Math.PI/6))+' '+
+      (this.arrowDst.y-this.ARROW_SIZE*Math.sin(angle+Math.PI/6))+' ';
 
-    path += `L ${this.dst.x} ${this.dst.y} `;
+    path += `L ${this.arrowDst.x} ${this.arrowDst.y} `;
 
     return path;
   }

@@ -21,6 +21,10 @@ export default class AppInfoBar extends Mixin(PolymerElement)
       place : {
         type : String,
         value : ''
+      },
+      date : {
+        type : String,
+        value : ''
       }
     }
   }
@@ -36,17 +40,19 @@ export default class AppInfoBar extends Mixin(PolymerElement)
     this.place = '';
     this.description = '';
     this.category = '';
+    this.date = 'unknown';
   }
 
   _onSelectedNodeUpdate(e) {
     this.selected = e;
-    let props = e.data.properties;
+    let props = e.data.properties ? e.data.properties : e.data;
 
     this.title = props.title || '';
     this.place = props.location || '';
     this.description = props.description || '';
     this.category = props.type || '';
     this.$.category.style.color = APP_STYLE.COLOR_BY_TYPE[props.type.toLowerCase()];
+    this.date = props.date || 'unknown';
   }
 
 

@@ -17,6 +17,7 @@ export default class MapNode extends Mixin(BaseMixin)
   constructor(data, layer) {
     super();
 
+    this.type = 'node';
     this.data = data;
     this.layer = layer;
     this.latLng = [data.geometry.coordinates[1], data.geometry.coordinates[0]];
@@ -139,10 +140,10 @@ export default class MapNode extends Mixin(BaseMixin)
       let pt;
       if( clusterFeature ) {
         pt = this.layer._map.latLngToContainerPoint(clusterFeature.getLatLng());
-        pt.radius = 15;
+        pt.radius = 20;
       } else {
         pt = this.layer._map.latLngToContainerPoint(this.feature.getLatLng());
-        pt.type = 5;
+        pt.radius = this.selected ? 10 : 5;
       }
       return pt;
     }
@@ -151,9 +152,6 @@ export default class MapNode extends Mixin(BaseMixin)
     // external node.  this lat/lng will be relative to main map but
     // will include offset for node
     let externalNode = nodeStore.getExternal(this.data.properties.externalId);
-    let pt = externalNode.getNodePoint(this);
-    pt.type = 5;
-
-    return pt;
+    return externalNode.getNodePoint(this);
   }
 }

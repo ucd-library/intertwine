@@ -19,12 +19,24 @@
     font-style: italic;
     font-size: 14px;
     text-shadow: var(--default-text-shadow);
+    cursor: pointer;
+    text-transform: capitalize;
+  }
+
+  #labels > div.selected {
+    font-size: 16px;
   }
 
   line {
+    cursor: pointer;
     stroke: #6697B2;
-    stroke-opacity: 0.7;
-    stroke-width: 1;
+    stroke-opacity: 0.4;
+    stroke-width: 2;
+  }
+
+  line.selected {
+    stroke-width: 3;
+    stroke-opacity: 1;
   }
 
   path {
