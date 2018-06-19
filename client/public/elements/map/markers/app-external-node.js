@@ -33,7 +33,7 @@ export default class AppExternalNode extends PolymerElement {
     }
   }
 
-  constructor(data, layer) {
+  constructor(data, layer, map) {
     super();
     this.layer = layer;
     this.data = data;
@@ -46,7 +46,9 @@ export default class AppExternalNode extends PolymerElement {
 
     this.setSize('small');
 
-    this.addEventListener('click', e => console.log('click'));
+    this.addEventListener('click',() => {
+      map.setView(this.latLng);
+    });
   }
 
   connectedCallback() {
@@ -87,8 +89,20 @@ export default class AppExternalNode extends PolymerElement {
       this.pendingRender = true;
       return;
     }
+
+    if( this.nodes.length > 6 ) {
+      this.clusterMode = true;
+      this.$.nodes.innerHTML = '';
+      this.$.cluster.innerHTML = this.nodes.length;
+      this.$.clusterRoot.style.display = 'inline-block';
+      return;
+    }
+
+    this.clusterMode = false;
+    this.$.clusterRoot.style.display = 'none';
     this.$.nodes.innerHTML = this.nodes.map((node, index) => {
-      return `<div class="node" index="${index}"></div>`;
+      let color = APP_STYLE.COLOR_BY_TYPE[node.data.properties.type.toLowerCase()];
+      return `<div class="node" index="${index}" style="background-color:${color}"></div>`;
     }).join('');
   }
 
@@ -105,6 +119,14 @@ export default class AppExternalNode extends PolymerElement {
   getNodePoint(node) {
     if( this.left === undefined || this.top === undefined ) {
       return {x:0,y:0};
+    }
+
+    if( this.clusterMode ) {
+      return {
+        x: this.offsetLeft+this.$.clusterRoot.offsetLeft+20, 
+        y: this.offsetTop+this.$.clusterRoot.offsetTop+20,
+        radius: 20
+      };
     }
 
     let index = this.nodes.indexOf(node);

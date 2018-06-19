@@ -6,6 +6,20 @@
     z-index: 1000;
   }
 
+  #labels {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+  }
+
+  #labels > div {
+    color: var(--color-label-blue);
+    font-weight: var(--font-weight-bold);
+    font-style: italic;
+    font-size: 14px;
+  }
+
   line {
     stroke: #6697B2;
     stroke-opacity: 0.7;
@@ -17,5 +31,5 @@
   }
 </style>
 
-<svg pointer-events="none" id="svg">
-</svg>
+<svg pointer-events="none" id="svg"></svg>
+<div id="labels"></div>

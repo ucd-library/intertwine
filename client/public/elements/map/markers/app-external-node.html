@@ -32,6 +32,7 @@
 
   .nodes {
     text-align: left;
+    margin: 0 -4px;
   }
 
   .node {
@@ -42,9 +43,41 @@
     border-radius: 10px;
     background-color: var(--color-scarlet);
   }
+
+  .cluster {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-clip: padding-box;
+    border-radius: 20px;
+    background-color:rgba(24, 119, 155, 0.5);
+    position: relative;
+  }
+
+  .cluster > div {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 5px;
+    left: 5px;
+    text-align: center;
+    border-radius: 15px;
+    background-color: var(--color-interface-blue);
+  }
+
+  #cluster {
+    line-height: 30px;
+    color: black;
+  }
+
 </style>
 
 <div class="label">
   <div class="name">[[label]]</div>
   <div class="nodes" id="nodes"></div>
+  <div class="cluster" id="clusterRoot">
+    <div>
+      <span id="cluster"></span>
+    </div>
+  </div>
 </div>

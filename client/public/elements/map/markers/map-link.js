@@ -6,6 +6,7 @@ export default class MapLink {
     this.layer = layer;
     this.data = data;
     this.feature = this.layer.addLine({x:0,y:0}, {x:0,y:0});
+    this.feature.setLabel(data.type);
 
     nodeStore.addLink(this);
 

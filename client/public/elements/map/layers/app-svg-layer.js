@@ -20,6 +20,7 @@ export default class AppSvgLayer extends PolymerElement {
 
     this.$.svg.appendChild(line.ele);
     this.$.svg.appendChild(line.arrow);
+    this.$.labels.appendChild(line.label);
 
     this.lines.push(line);
     return line;
@@ -28,8 +29,11 @@ export default class AppSvgLayer extends PolymerElement {
   removeLine(line) {
     let index = this.lines.indexOf(line);
     if( index === -1 ) return;
+
     this.$.svg.removeChild(line.ele);
     this.$.svg.removeChild(line.arrow);
+    this.$.labels.removeChild(line.label);
+    
     this.lines.splice(index, 1);
   }
 
@@ -47,6 +51,8 @@ class Line {
 
     this.ele = document.createElementNS(SVG_NS,'line');
     this.arrow = document.createElementNS(SVG_NS,'path');
+    this.label = document.createElement('div');
+    this.label.style.position = 'absolute';
 
     this.ele.setAttribute('pointer-events', 'auto');
     this.arrow.setAttribute('pointer-events', 'auto');
@@ -55,6 +61,10 @@ class Line {
       this.ele.style[key] = style[key];
       this.arrow.style[key] = style[key];
     }
+  }
+
+  setLabel(label) {
+    this.label.innerHTML = label;
   }
 
   setPoints(src, dst) {
@@ -74,6 +84,11 @@ class Line {
 
     this.arrow.setAttribute('visibility', this._isEqual() ? 'hidden' : '');
     this.ele.setAttribute('visibility', this._isEqual() ? 'hidden' : '');
+
+    let half = this.half();
+    this.label.style.display = this._isEqual() ? 'none' : 'block';
+    this.label.style.top = half.y+'px';
+    this.label.style.left = half.x+'px';
   }
 
   getPtRadiusDistance(radius) {
@@ -87,6 +102,19 @@ class Line {
     let angle = Math.atan2(ly, lx);
     let x = pt1.x + distance * Math.cos(angle);
     let y = pt1.y + distance * Math.sin(angle);
+    return {x, y};
+  }
+
+  half() {
+    
+    let lx = this.dst.x - this.src.x;
+    let ly = this.dst.y - this.src.y;
+    let distance = Math.sqrt(Math.pow(lx,2)+Math.pow(ly, 2));
+    distance = distance / 2;
+
+    let angle = Math.atan2(ly, lx);
+    let x = this.src.x + distance * Math.cos(angle);
+    let y = this.src.y + distance * Math.sin(angle);
     return {x, y};
   }
 

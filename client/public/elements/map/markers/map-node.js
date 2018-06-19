@@ -1,6 +1,12 @@
 import nodeStore from "../../../lib/stores/NodeStore"
 
-export default class MapNode {
+const SIZES = {
+  selected : 10,
+  unselected : 5
+}
+
+export default class MapNode extends Mixin(BaseMixin)
+  .with(EventInterface) {
 
   /**
    * Create the map node wrapper
@@ -9,6 +15,8 @@ export default class MapNode {
    * @param {Object} layer leaflet cluster layer
    */
   constructor(data, layer) {
+    super();
+
     this.data = data;
     this.layer = layer;
     this.latLng = [data.geometry.coordinates[1], data.geometry.coordinates[0]];
@@ -18,11 +26,22 @@ export default class MapNode {
     this.visible = null;
 
     this.feature = L.circleMarker(this.latLng, {
-      color: 'red',
-      fillColor: APP_STYLE.COLOR.scarlet,
+      fillColor: APP_STYLE.COLOR_BY_TYPE[data.properties.type.toLowerCase()],
       fillOpacity: 1,
       weight: 0,
-      radius: 5
+      radius: SIZES.unselected
+    });
+
+
+    let labelIcon = L.divIcon({
+      html : `<div class="node-label">${data.properties.title}</div>`
+    });  
+    this.label = L.marker(this.latLng, {icon: labelIcon});
+
+
+    this.feature.on('click', () => {
+      if( this.selected ) this.GraphModel.unselect(this);
+      else this.GraphModel.select(this);
     });
 
     // rendered state means are we rendered in the main map
@@ -30,11 +49,32 @@ export default class MapNode {
     this.rendered = null;
 
     nodeStore.addMap(data.properties.id, this);
+
+
+    this._injectModel('GraphModel');
+
+    // bind to model events
+    this.ready();
   }
 
   destroy() {
     this.layer.removeLayer(this.feature);
+    this.layer._map.removeLayer(this.label);
     nodeStore.removeMap(this.data.properties.id);
+  }
+
+  _onUnselectNode(e) {
+    if( e !== this ) return;
+    this.selected = false;
+    this.feature.setRadius(SIZES.unselected);
+    this.layer._map.removeLayer(this.label);
+  }
+
+  _onSelectedNodeUpdate(e) {
+    if( e !== this ) return;
+    this.selected = true;
+    this.feature.setRadius(SIZES.selected);
+    this.layer._map.addLayer(this.label);
   }
 
   /**
@@ -50,6 +90,10 @@ export default class MapNode {
 
       // add feature to cluster layer
       this.layer.addLayer(this.feature);
+      if( this.selected ) {
+        this.layer._map.addLayer(this.label);
+      }
+
       nodeStore.getExternal(this.data.properties.externalId).removeNode(this);
       this.rendered = true;
       return;
@@ -61,6 +105,9 @@ export default class MapNode {
     // NOTE: getLatLng() below will not be correct until render() is called
     if( this.rendered !== false ) {
       this.layer.removeLayer(this.feature);
+      if( this.selected ) {
+        this.layer._map.removeLayer(this.label);
+      }
       nodeStore.getExternal(this.data.properties.externalId).addNode(this);
       this.rendered = false;
     }

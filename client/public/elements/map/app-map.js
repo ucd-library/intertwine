@@ -91,7 +91,7 @@ export default class AppMap extends Mixin(PolymerElement)
 
 
     graphData.externalNodes.forEach((node) => {
-      new ExternalNode(node, this.$.externalNodeLayer);
+      new ExternalNode(node, this.$.externalNodeLayer, this.map);
     });
 
     graphData.nodes.forEach(node => {

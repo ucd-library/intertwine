@@ -21,3 +21,13 @@ window.APP_STYLE = {
     charcoal:       '#4E4E4E'
   }
 } 
+
+// map to types
+APP_STYLE.COLOR_BY_TYPE = {
+  people : APP_STYLE.COLOR.scarlet,
+  person : APP_STYLE.COLOR.scarlet,
+  technology : APP_STYLE.COLOR.gold,
+  place : APP_STYLE.COLOR.vine,
+  event : APP_STYLE.COLOR.rose,
+  object : APP_STYLE.COLOR.grape
+}

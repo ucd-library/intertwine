@@ -61,6 +61,22 @@
   .marker-cluster span {
     line-height: 30px;
   }
+
+  .leaflet-div-icon {
+    height: 0 !important;
+    width: 0 !important;
+    background-color: transparent;
+    border: none;
+  }
+
+  .leaflet-div-icon .node-label {
+    color: var(--color-interface-blue);
+    margin-left: 20px;
+    margin-top: -4px;
+    font-size: 14px;
+    white-space: nowrap;
+    text-shadow: 0 0 2px white;
+  }
 </style>
 
 <app-svg-layer id="svgLayer"></app-svg-layer>

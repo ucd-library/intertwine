@@ -11,7 +11,8 @@ module.exports = {
     },
     clusterOptions : {
       animate: false,
-      showCoverageOnHover : false
+      showCoverageOnHover : false,
+      disableClusteringAtZoom : 12
     }
   }
 }

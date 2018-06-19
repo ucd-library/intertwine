@@ -17,6 +17,14 @@ class GraphModel extends BaseModel {
     return this.store.get();
   }
 
+  select(node) {
+    this.store.select(node);
+  }
+
+  unselect(node) {
+    this.store.unselect(node);
+  }
+
 }
 
 module.exports = new GraphModel();
