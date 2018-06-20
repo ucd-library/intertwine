@@ -13,7 +13,8 @@ export default class MapLink extends Mixin(BaseMixin)
     this.feature.setLabel(data.type);
 
     this.feature.ele.addEventListener('click', () => this._onClick());
-    this.feature.label.addEventListener('click', () => this._onClick());
+    this.feature.ele.addEventListener('mouseover', () => this._onMouseover());
+    this.feature.ele.addEventListener('mouseout', () => this._onMouseout());
 
     nodeStore.addLink(this);
 
@@ -29,6 +30,15 @@ export default class MapLink extends Mixin(BaseMixin)
   _onClick() {
     if( this.selected ) this.GraphModel.unselect(this);
     else this.GraphModel.select(this);
+  }
+
+  _onMouseover() {
+    this.feature.label.style.display = 'block';
+  }
+
+  _onMouseout() {
+    if( this.selected ) return;
+    this.feature.label.style.display = 'none';
   }
 
   _onUnselectNode(e) {

@@ -12,7 +12,8 @@ module.exports = {
     clusterOptions : {
       animate: false,
       showCoverageOnHover : false,
-      disableClusteringAtZoom : 12
+      disableClusteringAtZoom : 11,
+      maxClusterRadius : 15
     }
   }
 }

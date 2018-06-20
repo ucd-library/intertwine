@@ -53,6 +53,7 @@ class Line {
     this.arrow = document.createElementNS(SVG_NS,'path');
     this.label = document.createElement('div');
     this.label.style.position = 'absolute';
+    this.label.style.display = 'none';
 
     this.ele.setAttribute('pointer-events', 'auto');
     this.arrow.setAttribute('pointer-events', 'auto');
@@ -89,7 +90,7 @@ class Line {
     this.ele.setAttribute('visibility', this._isEqual() ? 'hidden' : '');
 
     let half = this.half();
-    this.label.style.display = this._isEqual() ? 'none' : 'block';
+    // this.label.style.display = this._isEqual() ? 'none' : 'block';
     this.label.style.top = half.y+'px';
     this.label.style.left = half.x+'px';
   }
@@ -111,9 +112,11 @@ class Line {
   select(select) {
     if( select ) {
       this.label.classList.add('selected');
+      this.label.style.display = 'block';
       this.ele.classList.add('selected');
     } else {
       this.label.classList.remove('selected');
+      this.label.style.display = 'none';
       this.ele.classList.remove('selected');
     }
   }
