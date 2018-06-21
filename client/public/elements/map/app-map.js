@@ -162,7 +162,8 @@ export default class AppMap extends Mixin(PolymerElement)
     }
 
     requestAnimationFrame(() => {
-      nodeStore.links.forEach(link => link.render());
+      nodeStore.links.forEach(link => link.setPoints());
+      this.$.svgLayer.render();
     });
     
   }

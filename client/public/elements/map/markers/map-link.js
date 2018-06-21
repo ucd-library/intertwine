@@ -18,10 +18,6 @@ export default class MapLink extends Mixin(BaseMixin)
 
     nodeStore.addLink(this);
 
-    // make sure line is in correct location after the
-    // cluster layer finished animation
-    clusterLayer.on('animationend', () => this.render());
-
     this._injectModel('GraphModel');
     // bind to model events
     this.ready();
@@ -34,23 +30,47 @@ export default class MapLink extends Mixin(BaseMixin)
 
   _onMouseover() {
     this.feature.label.style.display = 'block';
+    this.feature.arrow.setAttribute('visibility', '');
   }
 
   _onMouseout() {
     if( this.selected ) return;
     this.feature.label.style.display = 'none';
+    this.feature.arrow.setAttribute('visibility', 'hidden');
   }
 
   _onUnselectNode(e) {
     if( e !== this ) return;
     this.selected = false;
     this.feature.select(false);
+
+    let src = nodeStore.getMap(this.data.src);
+    let dst = nodeStore.getMap(this.data.dst);
+
+    // TODO: remove 
+    if( !src || !dst ) return;
+
+    src._onUnselectNode(src);
+    src.render();
+    dst._onUnselectNode(dst);
+    dst.render();
   }
 
   _onSelectedNodeUpdate(e) {
     if( e !== this ) return;
     this.selected = true;
     this.feature.select(true);
+
+    let src = nodeStore.getMap(this.data.src);
+    let dst = nodeStore.getMap(this.data.dst);
+
+    // TODO: remove 
+    if( !src || !dst ) return;
+
+    src._onSelectedNodeUpdate(src);
+    src.render();
+    dst._onSelectedNodeUpdate(dst);
+    dst.render();
   }
 
   destroy()  {
@@ -58,7 +78,7 @@ export default class MapLink extends Mixin(BaseMixin)
     nodeStore.removeLink(this);
   }
 
-  render() {
+  setPoints() {
     let src = nodeStore.getMap(this.data.src);
     let dst = nodeStore.getMap(this.data.dst);
 

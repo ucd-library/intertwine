@@ -69,6 +69,9 @@ export default class MapNode extends Mixin(BaseMixin)
     this.selected = false;
     this.feature.setRadius(SIZES.unselected);
     this.layer._map.removeLayer(this.label);
+
+    let external = nodeStore.getExternal(this.data.properties.externalId);
+    external.removeLabel(this);
   }
 
   _onSelectedNodeUpdate(e) {
@@ -76,6 +79,23 @@ export default class MapNode extends Mixin(BaseMixin)
     this.selected = true;
     this.feature.setRadius(SIZES.selected);
     this.layer._map.addLayer(this.label);
+    
+    let external = nodeStore.getExternal(this.data.properties.externalId);
+    if( this.visible === true ) {
+      external.removeLabel(this);
+    } else {
+      external.addLabel(this, 'selected');
+    }
+  }
+
+  _onLineMouseover() {
+    let external = nodeStore.getExternal(this.data.properties.externalId);
+    external.addLabel(this, 'mouseover');
+  }
+
+  _onLineMouseout() {
+    if( this.selected ) external.addLabel(this, 'selected');
+    else external.removeLabel(this);
   }
 
   /**
@@ -95,7 +115,9 @@ export default class MapNode extends Mixin(BaseMixin)
         this.layer._map.addLayer(this.label);
       }
 
-      nodeStore.getExternal(this.data.properties.externalId).removeNode(this);
+      let external = nodeStore.getExternal(this.data.properties.externalId)
+      external.removeNode(this);
+
       this.rendered = true;
       return;
     }
@@ -106,10 +128,13 @@ export default class MapNode extends Mixin(BaseMixin)
     // NOTE: getLatLng() below will not be correct until render() is called
     if( this.rendered !== false ) {
       this.layer.removeLayer(this.feature);
+
+      let external = nodeStore.getExternal(this.data.properties.externalId);
+      external.addNode(this);
       if( this.selected ) {
         this.layer._map.removeLayer(this.label);
       }
-      nodeStore.getExternal(this.data.properties.externalId).addNode(this);
+     
       this.rendered = false;
     }
   }
@@ -153,5 +178,13 @@ export default class MapNode extends Mixin(BaseMixin)
     // will include offset for node
     let externalNode = nodeStore.getExternal(this.data.properties.externalId);
     return externalNode.getNodePoint(this);
+  }
+
+  _isClustered() {
+    if( this.visible ) {
+      if( !this.layer._map ) return false;
+      if( this.layer.getVisibleParent(this.feature) ) return true;
+    }
+    return false;
   }
 }

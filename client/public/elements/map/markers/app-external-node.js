@@ -41,6 +41,11 @@ export default class AppExternalNode extends PolymerElement {
     this.rendered = false;
     this.latLng = [data.geometry.coordinates[1], data.geometry.coordinates[0]];
 
+    this.labels = {
+      mouseover : [],
+      selected : []
+    }
+
     // register external node
     nodeStore.addExternal(data.properties.id, this);
 
@@ -82,6 +87,33 @@ export default class AppExternalNode extends PolymerElement {
     if( index === -1 ) return;
     this.nodes.splice(index, 1);
     this.renderChildNodes();
+  }
+
+  addLabel(node, type) {
+    if( this.labels[type].indexOf(node) > -1 ) return;
+    this.labels[type].push(node);
+    this.renderLabel();
+  }
+
+  removeLabel(node) {
+    for( var type in this.labels ) {
+      let index = this.labels[type].indexOf(node);
+      if( index === -1 ) continue;
+      this.labels[type].splice(index, 1);
+    }
+    
+    this.renderLabel();
+  }
+
+  renderLabel() {
+    if( !this.$ ) return;
+    if( this.labels.mouseover.length > 0 ) {
+      return this.$.selectedLabel.innerHTML = this.labels.mouseover[0].data.properties.title;
+    }
+    if( this.labels.selected.length > 0 ) {
+      return this.$.selectedLabel.innerHTML = this.labels.selected[0].data.properties.title;
+    }
+    this.$.selectedLabel.innerHTML = '';
   }
 
   renderChildNodes() {
