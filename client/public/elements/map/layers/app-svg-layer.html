@@ -21,23 +21,27 @@
     text-shadow: var(--default-text-shadow);
     cursor: pointer;
     text-transform: capitalize;
-
   }
 
   #labels > div.selected {
     font-size: 16px;
+    font-style: normal;
   }
 
   .line {
     cursor: pointer;
     stroke: var(--color-slate);
     stroke-opacity: 0.4;
-    stroke-width: 2;
+    stroke-width: 3;
     fill: none;
+    stroke-linecap : round;
+  }
+
+  .line:hover {
+    stroke-width: 8;
   }
 
   .line.selected {
-    stroke-width: 3;
     stroke-opacity: 1;
     stroke: var(--color-line-blue);
   }

@@ -5,6 +5,8 @@ const SIZES = {
   unselected : 5
 }
 
+let ID = 0;
+
 export default class MapNode extends Mixin(BaseMixin)
   .with(EventInterface) {
 
@@ -17,10 +19,19 @@ export default class MapNode extends Mixin(BaseMixin)
   constructor(data, layer) {
     super();
 
+    this.id = ID;
+    ID++;
+
     this.type = 'node';
     this.data = data;
     this.layer = layer;
     this.latLng = [data.geometry.coordinates[1], data.geometry.coordinates[0]];
+
+    // keep track of rendered state
+    this.rendered = {
+      node : '',
+      label : ''
+    }
 
     // are we visible inside the map, so this flag
     // is false if the node is inside an external marker
@@ -34,20 +45,15 @@ export default class MapNode extends Mixin(BaseMixin)
     });
 
 
-    let labelIcon = L.divIcon({
-      html : `<div class="node-label">${data.properties.title}</div>`
+    this.labelIcon = L.divIcon({
+      html : `<div class="node-label" id="node-label-${this.id}">${data.properties.title}</div>`
     });  
-    this.label = L.marker(this.latLng, {icon: labelIcon});
-
+    this.label = L.marker(this.latLng, {icon: this.labelIcon});
 
     this.feature.on('click', () => {
-      if( this.selected ) this.GraphModel.unselect(this);
+      if( this.state === 'selected' ) this.GraphModel.unselect(this);
       else this.GraphModel.select(this);
     });
-
-    // rendered state means are we rendered in the main map
-    // so rendered = false means node is part of a cluster layer
-    this.rendered = null;
 
     nodeStore.addMap(data.properties.id, this);
 
@@ -59,43 +65,61 @@ export default class MapNode extends Mixin(BaseMixin)
   }
 
   destroy() {
+    this.clearState();
     this.layer.removeLayer(this.feature);
-    this.layer._map.removeLayer(this.label);
     nodeStore.removeMap(this.data.properties.id);
   }
 
   _onUnselectNode(e) {
     if( e !== this ) return;
-    this.selected = false;
-    this.feature.setRadius(SIZES.unselected);
-    this.layer._map.removeLayer(this.label);
-
-    let external = nodeStore.getExternal(this.data.properties.externalId);
-    external.removeLabel(this);
+    this.clearState();
   }
 
   _onSelectedNodeUpdate(e) {
     if( e !== this ) return;
-    this.selected = true;
-    this.feature.setRadius(SIZES.selected);
-    this.layer._map.addLayer(this.label);
-    
-    let external = nodeStore.getExternal(this.data.properties.externalId);
-    if( this.visible === true ) {
-      external.removeLabel(this);
+    this.setSelected();
+  }
+
+  clearState(force) {
+    if( force ) {
+      this.state = '';
+    } else if( this.state === 'mouseover' && this._lastState ) {
+      this.state = this._lastState;
+      this._lastState = '';
     } else {
-      external.addLabel(this, 'selected');
+      this.state = '';
     }
   }
 
-  _onLineMouseover() {
-    let external = nodeStore.getExternal(this.data.properties.externalId);
-    external.addLabel(this, 'mouseover');
+  setSelected() {
+    this.state = 'selected';
   }
 
-  _onLineMouseout() {
-    if( this.selected ) external.addLabel(this, 'selected');
-    else external.removeLabel(this);
+  setMouseover() {
+    this.state = 'mouseover';
+  }
+
+  setLinkSelected() {
+    this.state = 'linkselected';
+  }
+
+  set state(value) {
+    if( this._state === value ) return;
+
+    this._lastState = this._state;
+    this._state = value;
+
+    if( value !== 'selected' ) {
+      this.feature.setRadius(SIZES.unselected);
+    } else {
+      this.feature.setRadius(SIZES.selected);
+    }
+
+    this.render(true); 
+  }
+
+  get state() {
+    return this._state;
   }
 
   /**
@@ -103,39 +127,77 @@ export default class MapNode extends Mixin(BaseMixin)
    * @description register node with either the cluster layer or the 
    * external node for this node.
    */
-  render() {
-    // if node is visible, this means node should be
-    // part of clustered layer 
+  render(force=false) {
     if( this.visible === true ) {
-      if( this.rendered === true ) return;
+      // if node is visible, this means node should be
+      // part of clustered layer 
+      this._renderOnMap(force);
+    } else {
+      // node is part of external node, if rendered in cluster layer
+      // now is the time to remove from cluster layer and register with
+      // external node.
+      // NOTE: getLatLng() below will not be correct until render() is called
+      this._renderOnExternal(force);
+    }
+  }
+
+  _renderOnMap(force) {
+    let external = nodeStore.getExternal(this.data.properties.externalId);
+
+    if( this.rendered.node !== 'map' || force) {
 
       // add feature to cluster layer
       this.layer.addLayer(this.feature);
-      if( this.selected ) {
-        this.layer._map.addLayer(this.label);
-      }
-
-      let external = nodeStore.getExternal(this.data.properties.externalId)
       external.removeNode(this);
-
-      this.rendered = true;
-      return;
+      
+      this.rendered.node = 'map';
     }
 
-    // node is part of external node, if rendered in cluster layer
-    // now is the time to remove from cluster layer and register with
-    // external node.
-    // NOTE: getLatLng() below will not be correct until render() is called
-    if( this.rendered !== false ) {
-      this.layer.removeLayer(this.feature);
-
-      let external = nodeStore.getExternal(this.data.properties.externalId);
-      external.addNode(this);
-      if( this.selected ) {
+    if( this.rendered.label !== 'map' || force) {
+      if( this.state ) {
+        this.layer._map.addLayer(this.label);
+      } else {
         this.layer._map.removeLayer(this.label);
       }
+
+      external.removeLabel(this);
+      this.rendered.label = 'map';
+    }
+
+    requestAnimationFrame(() => {
+      this._labelEle = this.layer._map._container.querySelector('#node-label-'+this.id);
+      
+      if( this._labelEle ) {
+        if( this.state === 'mouseover' ) {
+          this._labelEle.classList.add('mouseover');
+        } else {
+          this._labelEle.classList.remove('mouseover');
+        }
+      }
+    }, 50);
+    
+  }
+
+  _renderOnExternal(force) {
+    let external = nodeStore.getExternal(this.data.properties.externalId);
+
+    if( this.rendered.node !== 'external' || force ) {
+      this.layer.removeLayer(this.feature);
+      external.addNode(this);
      
-      this.rendered = false;
+      this.rendered.node = 'external';
+    }
+
+    if( this.rendered.label !== 'external' || force ) {
+      this.layer._map.removeLayer(this.label);
+
+      if( this.state ) {
+        external.addLabel(this, this.state);
+      } else {
+        external.removeLabel(this);
+      }
+     
+      this.rendered.label = 'external';
     }
   }
 
@@ -168,7 +230,7 @@ export default class MapNode extends Mixin(BaseMixin)
         pt.radius = 20;
       } else {
         pt = this.layer._map.latLngToContainerPoint(this.feature.getLatLng());
-        pt.radius = this.selected ? 10 : 5;
+        pt.radius = this.state === 'selected' ? 10 : 5;
       }
       return pt;
     }

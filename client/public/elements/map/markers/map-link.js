@@ -29,14 +29,17 @@ export default class MapLink extends Mixin(BaseMixin)
   }
 
   _onMouseover() {
+    if( this.selected ) return;
     this.feature.label.style.display = 'block';
     this.feature.arrow.setAttribute('visibility', '');
+    this._setEndNodeStates('setMouseover');
   }
 
   _onMouseout() {
     if( this.selected ) return;
     this.feature.label.style.display = 'none';
     this.feature.arrow.setAttribute('visibility', 'hidden');
+    this._setEndNodeStates('clearState');
   }
 
   _onUnselectNode(e) {
@@ -44,16 +47,7 @@ export default class MapLink extends Mixin(BaseMixin)
     this.selected = false;
     this.feature.select(false);
 
-    let src = nodeStore.getMap(this.data.src);
-    let dst = nodeStore.getMap(this.data.dst);
-
-    // TODO: remove 
-    if( !src || !dst ) return;
-
-    src._onUnselectNode(src);
-    src.render();
-    dst._onUnselectNode(dst);
-    dst.render();
+    this._setEndNodeStates('clearState', true);
   }
 
   _onSelectedNodeUpdate(e) {
@@ -61,15 +55,20 @@ export default class MapLink extends Mixin(BaseMixin)
     this.selected = true;
     this.feature.select(true);
 
+    this._setEndNodeStates('setLinkSelected');
+  }
+
+  _setEndNodeStates(method, param) {
     let src = nodeStore.getMap(this.data.src);
     let dst = nodeStore.getMap(this.data.dst);
 
     // TODO: remove 
     if( !src || !dst ) return;
 
-    src._onSelectedNodeUpdate(src);
+    src[method](param);
     src.render();
-    dst._onSelectedNodeUpdate(dst);
+
+    dst[method](param);
     dst.render();
   }
 

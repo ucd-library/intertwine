@@ -40,9 +40,10 @@ export default class AppExternalNode extends PolymerElement {
     this.label = data.properties.name;
     this.rendered = false;
     this.latLng = [data.geometry.coordinates[1], data.geometry.coordinates[0]];
-
+    this.map = map;
     this.labels = {
       mouseover : [],
+      linkselected : [],
       selected : []
     }
 
@@ -51,9 +52,7 @@ export default class AppExternalNode extends PolymerElement {
 
     this.setSize('small');
 
-    this.addEventListener('click',() => {
-      map.setView(this.latLng);
-    });
+    this.addEventListener('click',() => this._zoomTo());
   }
 
   connectedCallback() {
@@ -78,6 +77,7 @@ export default class AppExternalNode extends PolymerElement {
   }
 
   addNode(node) {
+    if( this.nodes.indexOf(node) > -1 ) return;
     this.nodes.push(node);
     this.renderChildNodes();
   }
@@ -90,30 +90,86 @@ export default class AppExternalNode extends PolymerElement {
   }
 
   addLabel(node, type) {
-    if( this.labels[type].indexOf(node) > -1 ) return;
-    this.labels[type].push(node);
+    this.removeLabel(node);
+    this.labels[type].unshift(node);
     this.renderLabel();
   }
 
-  removeLabel(node) {
-    for( var type in this.labels ) {
-      let index = this.labels[type].indexOf(node);
-      if( index === -1 ) continue;
-      this.labels[type].splice(index, 1);
+  removeLabel(node, type, norender = false) {
+    if( type ) {
+      this._removeLabel(node, type);
+    } else {
+      for( var type in this.labels ) {
+        this._removeLabel(node, type);
+      }
     }
-    
-    this.renderLabel();
+
+    if( !norender ) this.renderLabel();
+  }
+
+  _removeLabel(node, type) {
+    let index = this.labels[type].indexOf(node);
+    if( index > -1 ) {
+      this.labels[type].splice(index, 1);
+      this._removeLabel(node, type);
+    }
+  }
+
+  _zoomTo() {
+    let zoom = this.map.map.getZoom();    
+    let max = this.nodes[0].latLng;
+    let min = max.slice(0);
+
+    // console.log(JSON.stringify(min), JSON.stringify(max));
+    for( let i = 1; i < this.nodes.length; i++ ) {
+      let ll = this.nodes[i].latLng;
+      // console.log(ll);
+      if( ll[0] < min[0] ) min[0] = ll[0];
+      if( ll[1] < min[1] ) min[1] = ll[1];
+      if( ll[0] > max[0] ) max[0] = ll[0];
+      if( ll[1] > max[1] ) max[1] = ll[1];
+    }
+    // console.log(JSON.stringify(min), JSON.stringify(max));
+    let x = this.map.maskArea.x - this.map.maskArea.r;
+    let y = this.map.maskArea.y - this.map.maskArea.r;
+
+    // console.log(x,y);
+    this.map.map.fitBounds(
+      [min, max], 
+      {
+        maxZoom: zoom,
+        padding: [x, y]
+      }
+    );
   }
 
   renderLabel() {
     if( !this.$ ) return;
+
+    // this._debugLabels();
+
     if( this.labels.mouseover.length > 0 ) {
+      this.$.selectedLabel.classList.add('mouseover');
       return this.$.selectedLabel.innerHTML = this.labels.mouseover[0].data.properties.title;
+    }
+
+    this.$.selectedLabel.classList.remove('mouseover');
+    if( this.labels.linkselected.length > 0 ) {
+      return this.$.selectedLabel.innerHTML = this.labels.linkselected[0].data.properties.title;
     }
     if( this.labels.selected.length > 0 ) {
       return this.$.selectedLabel.innerHTML = this.labels.selected[0].data.properties.title;
     }
     this.$.selectedLabel.innerHTML = '';
+  }
+
+  _debugLabels() {
+    if( this.label !== 'California' ) return;
+    let t = {};
+    for( let key in this.labels ) {
+      t[key] = this.labels[key].map(i => i.data.properties.title);
+    }
+    console.log(this.label, JSON.stringify(t, '  ', '  '));
   }
 
   renderChildNodes() {

@@ -317,20 +317,6 @@ module.exports = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -0.608611900000028,
-          44.8166517
-        ]
-      },
-      "properties": {
-        "id": "Bordeaux",
-        "name": "Bordeaux"
-      }
-    },
-    {
-      "type": "feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           -77.0260654,
           38.8912662
         ]
@@ -533,12 +519,12 @@ module.exports = {
       },
       "properties": {
         "name": "Christian Vannequé / Tour d'Argent",
-        "description": "On July 26, 2011, Vannequé set a record for the highest price paid for a bottle of white wine, purchasing a bottle of Chateau d'Yquem, vintage 1811, for £75,000 (US$123,000) from The Antique Wine Company.[1]",
+        "description": "Christian Vannequé (20 August 1949 – 9 January 2015) was a French sommelier and restauranteur. In 1967, he began at the three star Tour d'Argent restaurant in Paris as an assistant cellar man. He rose to become the restaurant's head sommelier, at 20 years old the youngest head sommelier in France. He served as an expert wine taster at the Paris Wine Tasting of 1976, and also participated in The Judgment of Paris 30th Anniversary. In later years, Vannequé opened restaurants of his own in France, the United States, and Bali. On July 26, 2011, Vannequé set a record for the highest price paid for a bottle of white wine, purchasing a bottle of Chateau d'Yquem, vintage 1811, for £75,000 (US$123,000) from The Antique Wine Company.",
         "id": "cvanneque",
         "title": "Christian Vannequé",
         "location": "Paris, France",
-        "type": "1949 - 2015",
-        "date": "Christian Vannequé (20 August 1949 – 9 January 2015) was a French sommelier and restauranteur. In 1967, he began at the three star Tour d'Argent restaurant in Paris as an assistant cellar man. He rose to become the restaurant's head sommelier, at 20 years old the youngest head sommelier in France. He served as an expert wine taster at the Paris Wine Tasting of 1976, and also participated in The Judgment of Paris 30th Anniversary. In later years, Vannequé opened restaurants of his own in France, the United States, and Bali.",
+        "type": "Person",
+        "date": "1949 - 2015",
         "groupId": "France"
       }
     },
@@ -776,10 +762,10 @@ module.exports = {
         "description": "Château Haut-Brion (French: [ʃɑto obʁijɔ̃]) is a French wine, rated a Premier Cru Classé (First Growth), produced in Pessac just outside the city of Bordeaux. It differs from the other wines on the list in its geographic location in the north of the wine-growing region of Graves. Of the five first growths, it is the only wine with the Pessac-Léognan appellation and is in some sense the ancestor of a classification that remains the benchmark to this day. In addition to the grand vin, Haut-Brion produces a red second wine. Formerly named Château Bahans Haut-Brion, beginning with the 2007 vintage, it was renamed Le Clarence de Haut Brion. The vineyard also produces a dry white wine named Château Haut-Brion Blanc, with a limited release of the second dry white wine, Les Plantiers du Haut-Brion, renamed La Clarté de Haut-Brion for the 2008 vintage. Since 2003, Domaine Clarence Dillon's daughter company, Clarence Dillon Wines, has also released the Bordeaux brand wine named Clarendelle. Although grapes are thought to have been grown on the property since Roman times, the earliest document indicating cultivation of a parcel of land dates from 1423. In 1976, the 1970 vintage of Haut-Brion ranked fourth among the ten French and California red wines in the historic \"Judgment of Paris\" wine competition.",
         "id": "chathautbri",
         "title": "Château Haut-Brion",
-        "location": "Pessac, Bordeaux, France",
+        "location": "Pessac, France",
         "type": "Place",
         "date": "1423 - Present",
-        "groupId": "Bordeaux"
+        "groupId": "France"
       }
     },
     {
@@ -793,13 +779,13 @@ module.exports = {
       },
       "properties": {
         "name": "Château Léoville-Las Cases",
-        "description": "In 1976, the 1971 vintage ranked number six among the ten French and California red wines in the historic \"Judgment of Paris\" wine competition.",
+        "description": "Château Léoville-Las Cases is a winery in the Saint-Julien appellation of the Bordeaux region of France. Château Léoville-Las Cases is also the name of the red wine produced by this property. The wine produced here was classified as one of fifteen Deuxièmes Crus (Second Growths) in the original Bordeaux Wine Official Classification of 1855. The vineyard area in total extends 97 hectares (240 acres) planted with a grape variety distribution of 65% Cabernet Sauvignon, 19% Merlot, 13% Cabernet Franc and 3% Petit Verdot. The vineyard underwent major replanting during the 1950s, and today the vines average 30 years of age. Léoville-Las Cases produces two wines, its grand vin, and a second wine called Clos du Marquis that has been in production since 1902. In 1976, the 1971 vintage ranked number six among the ten French and California red wines in the historic \"Judgment of Paris\" wine competition.",
         "id": "chatleoville",
         "title": "Château Léoville-Las Cases",
-        "location": "Château Léoville-Las Cases is a winery in the Saint-Julien appellation of the Bordeaux region of France. Château Léoville-Las Cases is also the name of the red wine produced by this property. The wine produced here was classified as one of fifteen Deuxièmes Crus (Second Growths) in the original Bordeaux Wine Official Classification of 1855.",
-        "type": "The vineyard area in total extends 97 hectares (240 acres) planted with a grape variety distribution of 65% Cabernet Sauvignon, 19% Merlot, 13% Cabernet Franc and 3% Petit Verdot. The vineyard underwent major replanting during the 1950s, and today the vines average 30 years of age.",
-        "date": "Léoville-Las Cases produces two wines, its grand vin, and a second wine called Clos du Marquis that has been in production since 1902.",
-        "groupId": "California"
+        "location": "Saint-Julien-Beychevelle, France",
+        "type": "Place",
+        "date": "1840 - Present",
+        "groupId": "France"
       }
     },
     {
@@ -820,6 +806,26 @@ module.exports = {
         "type": "Place",
         "date": "1939 - Present",
         "groupId": "California"
+      }
+    },
+    {
+      "type": "feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.761769500000014,
+          45.2465895
+        ]
+      },
+      "properties": {
+        "name": "Chateau Montrose",
+        "description": "Château Montrose is a winery in the Saint-Estèphe appellation of the Bordeaux region of France. The wine produced here was classified as one of fourteen Deuxièmes Crus (Second Growths) in the original Bordeaux Wine Official Classification of 1855. The vineyard is in Saint-Estèphe, the northernmost of the great Médoc communes. The soil in Montrose's 168 acres (0.68 km2) consists of gravel and black sand with a subsoil of clay and marl.[1] They are planted with 65% Cabernet Sauvignon, 25% Merlot, and 10% Cabernet Franc. Château Montrose produces two red wines: its eponymous grand vin, and a second wine named La Dame de Montrose. The 1970 vintage placed third among the ten California and French red wines at the historic Judgment of Paris wine competition, which was won by the Americans. Montrose wines tend to be deeply tannic and during excellent vintages can take up to 20 years to mature. The 1990, 2009, and 2010 vintages were rated 100 points by Robert M. Parker, Jr.",
+        "id": "chatmontrose",
+        "title": "Château Montrose",
+        "location": "Saint-Estèphe, France",
+        "type": "Place",
+        "date": "1815 - Present",
+        "groupId": "France"
       }
     },
     {
