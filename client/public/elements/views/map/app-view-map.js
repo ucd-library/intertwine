@@ -18,13 +18,17 @@ export default class AppViewMap extends Mixin(LitElement)
     super();
     this.render = render.bind(this);
 
-    window.mapView = this;
-
     this.infoPanelOpen = true;
+
+    this._injectModel('MomentModel');
   }
 
   firstUpdated() {
     this.mapEle = this.shadowRoot.querySelector('#map');
+  }
+
+  _onGraphUpdate(e) {
+    console.log(e);
   }
 
   toggleInfoPanel() {

@@ -1,5 +1,6 @@
 import { LitElement } from 'lit-element';
 import render from "./app-map-info-panel.tpl.js"
+import {markdown} from "markdown"
 
 import "@polymer/iron-icons"
 
@@ -10,16 +11,34 @@ export default class AppMapInfoPanel extends LitElement {
       open : {
         type: Boolean,
         reflect: true
-      }
+      },
+      data : {type : Object},
+      date : {type : String},
+      connections : {type: Array}
     }
   }
 
   constructor() {
     super();
+    
     this.open = true;
+    this.data = {};
+    this.date = '';
+    this.connections = [];
+
     this.render = render.bind(this);
   }
 
+
+  firstUpdated() {
+    this.descriptionEle = this.shadowRoot.querySelector('#description');
+  }
+
+  renderData(data) {
+    if( data ) this.data = data;
+
+    this.descriptionEle.innerHTML = markdown.toHTML(this.data.description || '');
+  }
 
   /**
    * @method _onToggleKeyUp

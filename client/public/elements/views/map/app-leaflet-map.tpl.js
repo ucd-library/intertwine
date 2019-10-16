@@ -17,8 +17,19 @@ ${leafletCss}
   #map {
     height: 100%;
   }
-</style>  
 
+  .border-top {
+    position: absolute;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .8);
+    top: -1px;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    height: 1px;
+  }
+</style>
+
+<div class="border-top"></div>
 <div id="map"></div>
 
 `;}

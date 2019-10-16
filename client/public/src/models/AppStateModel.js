@@ -14,7 +14,7 @@ class AppStateModelImpl extends AppStateModel {
   set(update) {
     if( update.location ) {
       let page = update.location.path ? update.location.path[0] : 'map';
-      update.location.page = page;
+      update.page = page || 'map';
     }
 
     return super.set(update);

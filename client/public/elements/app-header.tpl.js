@@ -9,6 +9,7 @@ return html`
     height: 60px;
     background-color: black;
     color: white;
+    z-index: 10000;
   }
   .layout {
     margin: 0 20px;

@@ -18,7 +18,8 @@ export default class IntertWine extends Mixin(LitElement)
 
   static get properties() {
     return {
-      view : {type: String}
+      view : {type: String},
+      appRoutes : {type: Array}
     }
   }
 
@@ -26,6 +27,8 @@ export default class IntertWine extends Mixin(LitElement)
     super();
 
     this.view = 'map';
+    this.appRoutes = APP_CONFIG.appRoutes;
+
     this.render = render.bind(this);
 
     this._injectModel('AppStateModel');

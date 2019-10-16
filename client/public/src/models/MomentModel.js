@@ -9,8 +9,28 @@ class MomentModel extends BaseModel {
 
     this.store = MomentStore;
     this.service = MomentService;
+
+    this.EventBus.on('app-state-update', e => {
+      if( e.page === 'map' ) this.get();
+    })
       
     this.register('MomentModel');
+  }
+
+  async get() {
+    let state = this.store.data;
+
+    try {
+      if( state && state.request ) {
+        await state.request;
+      } else if( state.state !== 'loaded' ) {
+        await this.service.get();
+      }
+    } catch(e) {
+      console.error(e);
+    }
+
+    return this.store.data;
   }
 
 }
