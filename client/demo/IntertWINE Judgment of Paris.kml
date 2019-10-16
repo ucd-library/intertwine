@@ -5,10 +5,9 @@
     <description/>
     <Style id="icon-1739-0F9D58-normal">
       <IconStyle>
-        <color>ff589d0f</color>
         <scale>1</scale>
         <Icon>
-          <href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+          <href>images/icon-3.png</href>
         </Icon>
       </IconStyle>
       <LabelStyle>
@@ -17,10 +16,9 @@
     </Style>
     <Style id="icon-1739-0F9D58-highlight">
       <IconStyle>
-        <color>ff589d0f</color>
         <scale>1</scale>
         <Icon>
-          <href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+          <href>images/icon-3.png</href>
         </Icon>
       </IconStyle>
       <LabelStyle>
@@ -39,10 +37,9 @@
     </StyleMap>
     <Style id="icon-1739-9C27B0-normal">
       <IconStyle>
-        <color>ffb0279c</color>
         <scale>1</scale>
         <Icon>
-          <href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+          <href>images/icon-4.png</href>
         </Icon>
       </IconStyle>
       <LabelStyle>
@@ -51,10 +48,9 @@
     </Style>
     <Style id="icon-1739-9C27B0-highlight">
       <IconStyle>
-        <color>ffb0279c</color>
         <scale>1</scale>
         <Icon>
-          <href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+          <href>images/icon-4.png</href>
         </Icon>
       </IconStyle>
       <LabelStyle>
@@ -73,10 +69,9 @@
     </StyleMap>
     <Style id="icon-1739-C2185B-normal">
       <IconStyle>
-        <color>ff5b18c2</color>
         <scale>1</scale>
         <Icon>
-          <href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+          <href>images/icon-1.png</href>
         </Icon>
       </IconStyle>
       <LabelStyle>
@@ -85,10 +80,9 @@
     </Style>
     <Style id="icon-1739-C2185B-highlight">
       <IconStyle>
-        <color>ff5b18c2</color>
         <scale>1</scale>
         <Icon>
-          <href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+          <href>images/icon-1.png</href>
         </Icon>
       </IconStyle>
       <LabelStyle>
@@ -107,10 +101,9 @@
     </StyleMap>
     <Style id="icon-1739-FF5252-normal">
       <IconStyle>
-        <color>ff5252ff</color>
         <scale>1</scale>
         <Icon>
-          <href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+          <href>images/icon-2.png</href>
         </Icon>
       </IconStyle>
       <LabelStyle>
@@ -119,10 +112,9 @@
     </Style>
     <Style id="icon-1739-FF5252-highlight">
       <IconStyle>
-        <color>ff5252ff</color>
         <scale>1</scale>
         <Icon>
-          <href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+          <href>images/icon-2.png</href>
         </Icon>
       </IconStyle>
       <LabelStyle>
@@ -345,7 +337,7 @@
       </Placemark>
       <Placemark>
         <name><![CDATA[Mayacamas Vineyards & Winery]]></name>
-        <description><![CDATA[mayacamas<br>Myacamus Vineyards<br>Napa, California<br>Place<br>1889 - Present<br>Mayacamas Vineyards is a California wine producer located in the Mt. Veeder AVA in the Mayacamas Mountains within the Napa Valley AVA, bordering the Sonoma Valley AVA. The estate is known for producing wine of a more traditional style than the Napa trends of recent years that emphasizes power, weight, high levels of alcohol and extravagance. <br>The winery was built in 1889 by John Henry Fisher a German immigrant who went bankrupt in the early 1900s. It then fell into disuse for several years although bootleggers are said to have made wine in the old stone cellar during the early years of the Prohibition. During the late 1920s and 1930s the property was owned by the Brandlin family. British chemist Jack Taylor and his wife Mary bought the property in 1941, and the estate received its current name. In 1968 the winery was bought by its present owner, Robert Travers and his wife Elinor. Under their direction, the aging facilities was enlarged, neighboring land purchased, and vineyard clearing, planting and replanting are an ongoing process. <br>The winery received international recognition after its Cabernet Sauvignon was selected for competition in the 1976 "Judgment of Paris" wine competition. Robert Travers had agreed to sell three bottles of the still unreleased 1971 vintage for the event, although he did not consider it ready to drink. In the Wine Spectator Wine Tasting of 1986, blind tasters evaluated how the Cabernet Sauvignon wines had aged ten years after the Paris event. The 1971 Mayacamas Vineyards was ranked second. On the 30th anniversary of the Paris event, two panels of expert wine tasters tasted all the original red entries to assess how the wines had aged. Mayacamas Vineyards tied for third place (with Heitz Wine Cellars) in the field of ten.]]></description>
+        <description><![CDATA[mayacamas<br>Mayacamas Vineyards<br>Napa, California<br>Place<br>1889 - Present<br>Mayacamas Vineyards is a California wine producer located in the Mt. Veeder AVA in the Mayacamas Mountains within the Napa Valley AVA, bordering the Sonoma Valley AVA. The estate is known for producing wine of a more traditional style than the Napa trends of recent years that emphasizes power, weight, high levels of alcohol and extravagance. <br>The winery was built in 1889 by John Henry Fisher a German immigrant who went bankrupt in the early 1900s. It then fell into disuse for several years although bootleggers are said to have made wine in the old stone cellar during the early years of the Prohibition. During the late 1920s and 1930s the property was owned by the Brandlin family. British chemist Jack Taylor and his wife Mary bought the property in 1941, and the estate received its current name. In 1968 the winery was bought by its present owner, Robert Travers and his wife Elinor. Under their direction, the aging facilities was enlarged, neighboring land purchased, and vineyard clearing, planting and replanting are an ongoing process. <br>The winery received international recognition after its Cabernet Sauvignon was selected for competition in the 1976 "Judgment of Paris" wine competition. Robert Travers had agreed to sell three bottles of the still unreleased 1971 vintage for the event, although he did not consider it ready to drink. In the Wine Spectator Wine Tasting of 1986, blind tasters evaluated how the Cabernet Sauvignon wines had aged ten years after the Paris event. The 1971 Mayacamas Vineyards was ranked second. On the 30th anniversary of the Paris event, two panels of expert wine tasters tasted all the original red entries to assess how the wines had aged. Mayacamas Vineyards tied for third place (with Heitz Wine Cellars) in the field of ten.]]></description>
         <styleUrl>#icon-1739-0F9D58</styleUrl>
         <Point>
           <coordinates>
