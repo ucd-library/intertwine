@@ -1,4 +1,4 @@
-# inter-wine
+# intert-wine
 California's modern wine network
 
 

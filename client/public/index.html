@@ -1,26 +1,26 @@
-<html>
+<!doctype html>
+<html lang="en">
+  <!--[if lte IE 10]>
+  <script type="text/javascript">
+    if ( document.URL.indexOf( 'ie' ) === -1 ) {
+      window.location = '/ie.html';
+    }
+  </script>
+  <![endif]-->
   <head>
-    <title>IntertWINE</title>
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+    <title>InterWine</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1">
 
-    <script src="bundle.js"></script>
-
-    <style>
-      head, body {
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-    <script>
-      function t1() {
-        console.log('click')
-      }
-      function t2() {
-        console.log('mouseover');
-      }
-    </script>
+    <!-- from spa-router-middleware -->
+    {{bundle}}
+    {{config}}
   </head>
   <body>
-    <inter-wine-app></inter-wine-app>
+    <noscript>
+      IntertWINE requires JavaScript to
+      be enabled to view.  You have either disabled JavaScript or your
+      browser does not support it.
+    </noscript>
+    <intert-wine></intert-wine>
   </body>
 </html>
