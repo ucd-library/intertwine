@@ -22,10 +22,11 @@ module.exports = (app) => {
     app: app, // pass the express app
     htmlFile : path.join(assetsDir, 'index.html'), // pass the file you want to use
     isRoot : true, // are we serving from host root (/)?
-    appRoutes : config.appRoutes, // array of root paths.  ie appRoutes = ['foo', 'bar'] to server /foo/* /bar/*
+    appRoutes : config.server.appRoutes, // array of root paths.  ie appRoutes = ['foo', 'bar'] to server /foo/* /bar/*
     getConfig : async (req, res, next) => {
       next({
-        appRoutes : config.appRoutes
+        appRoutes : config.server.appRoutes,
+        gaCode : config.client.gaCode
       });
     },
     template : async (req, res, next) => {
