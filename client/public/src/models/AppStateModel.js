@@ -11,13 +11,28 @@ class AppStateModelImpl extends AppStateModel {
     this._sendGA();
   }
 
-  set(update) {
-    if( update.location ) {
-      let page = update.location.path ? update.location.path[0] : 'map';
-      update.page = page || 'map';
+  set(state) {
+    // parse out page
+    if( state.location ) {
+      let page = state.location.path ? state.location.path[0] : 'map';
+      state.page = page || 'map';
     }
 
-    return super.set(update);
+    // parse out selected object(s)
+    if( state.page === 'map' && state.location.path.length >= 3 ) {
+      state.selected = {
+        type : state.location.path[1]
+      }
+      if( state.location.path[1] === 'cluster' ) {
+        state.selected.ids = state.location.path[2].split(',');
+      } else {
+        state.selected.id = state.location.path[2];
+      }
+    } else {
+      state.selected = null;
+    }
+
+    return super.set(state);
   }
 
   /**

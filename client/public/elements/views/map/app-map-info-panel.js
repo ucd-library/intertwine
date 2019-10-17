@@ -4,7 +4,8 @@ import {markdown} from "markdown"
 
 import "@polymer/iron-icons"
 
-export default class AppMapInfoPanel extends LitElement {
+export default class AppMapInfoPanel extends Mixin(LitElement)
+  .with(LitCorkUtils) {
 
   static get properties() {
     return {
@@ -27,8 +28,13 @@ export default class AppMapInfoPanel extends LitElement {
     this.connections = [];
 
     this.render = render.bind(this);
+
+    this._injectModel('AppStateModel');
   }
 
+  _onAppStateUpdate(e) {
+    console.log(e);
+  }
 
   firstUpdated() {
     this.descriptionEle = this.shadowRoot.querySelector('#description');

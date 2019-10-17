@@ -65,7 +65,13 @@ return html`
 </style>  
 
 <app-map-info-panel ?open="${this.infoPanelOpen}" @toggle="${this.toggleInfoPanel}"></app-map-info-panel>
-<app-leaflet-map ?info-open="${this.infoPanelOpen}" ?active="${this.visible}" id="map"></app-leaflet-map>
+<app-leaflet-map 
+  ?info-open="${this.infoPanelOpen}" 
+  ?active="${this.visible}" 
+  id="map"
+  @node-click="${this._onNodeClick}"
+  @cluster-click="${this._onClusterClick}">
+</app-leaflet-map>
 
 
 `;}

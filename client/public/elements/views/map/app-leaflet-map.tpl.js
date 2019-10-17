@@ -1,13 +1,15 @@
 import { html } from 'lit-element';
-
-import "leaflet"
 import leafletCss from "leaflet/dist/leaflet.css"
+import markerClusterCss from "leaflet.markercluster/dist/MarkerCluster.css"
+import markerClusterDefaultCss from "leaflet.markercluster/dist/MarkerCluster.Default.css"
 
 export default function render() { 
 return html`
 
 <style>
 ${leafletCss}
+${markerClusterCss}
+${markerClusterDefaultCss}
 </style>
 <style>
   :host {

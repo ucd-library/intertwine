@@ -24,13 +24,39 @@ class MomentModel extends BaseModel {
       if( state && state.request ) {
         await state.request;
       } else if( state.state !== 'loaded' ) {
-        await this.service.get();
+        await this.service.get(this.transformMockLinks);
       }
     } catch(e) {
       console.error(e);
     }
 
     return this.store.data;
+  }
+
+  transformMockLinks(data) {
+    let nodes = {};
+    let links = {};
+    let item;
+
+    for( item of data ) {
+      if( item.type === 'connection' ) {
+        item.id = item.src+'-'+item.dst;
+        links[item.id] = item;
+      } else {
+        item.coordinates = item.coordinates.reverse();
+        nodes[item.id] = item;
+      }
+    }
+
+    for( let id in links ) {
+      item = links[id];
+      item.coordinates = {
+        src : nodes[item.src].coordinates,
+        dst : nodes[item.dst].coordinates
+      }
+    }
+
+    return {nodes, links}
   }
 
 }

@@ -20,15 +20,32 @@ export default class AppViewMap extends Mixin(LitElement)
 
     this.infoPanelOpen = true;
 
-    this._injectModel('MomentModel');
+    this._injectModel('MomentModel', 'AppStateModel');
   }
 
   firstUpdated() {
     this.mapEle = this.shadowRoot.querySelector('#map');
   }
 
+  /**
+   * @method _onGraphUpdate
+   * @description bound to graph-update events from the MomentModel
+   * 
+   * @param {*} e 
+   */
   _onGraphUpdate(e) {
-    console.log(e);
+    if( e.state !== 'loaded' ) return;
+    this.data = e.payload;
+    this.mapEle.setData(e.payload);
+  }
+
+  _onNodeClick(e) {
+    let node = this.data.nodes[e.detail.id];
+    this.AppStateModel.setLocation('/map/'+node.type+'/'+node.id);
+  }
+
+  _onClusterClick(e) {
+    this.AppStateModel.setLocation('/map/cluster/'+encodeURI(e.detail.ids.join(',')));
   }
 
   toggleInfoPanel() {
