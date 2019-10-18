@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "watch": "cd client && webpack --config webpack-watch.config.js --watch",
-    "dist": "cd client && webpack --config webpack-dist.config.js",
+    "dist": "cd client && ./dist.sh",
     "create-icons": "cd client/public/elements && cork-icon-set-generator intert-wine-icons ../icons" 
   },
   "author": "jrmerz@ucdavis.edu",
