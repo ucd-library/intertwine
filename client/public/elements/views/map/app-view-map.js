@@ -19,12 +19,29 @@ export default class AppViewMap extends Mixin(LitElement)
     this.render = render.bind(this);
 
     this.infoPanelOpen = true;
+    this.firstAppStateUpdate = true;
 
     this._injectModel('MomentModel', 'AppStateModel');
   }
 
   firstUpdated() {
     this.mapEle = this.shadowRoot.querySelector('#map');
+  }
+
+  /**
+   * @method _onAppStateUpdate
+   * @description bound to AppStateModel app-state-update events
+   * 
+   * @param {Object} e 
+   */
+  _onAppStateUpdate(e) {
+    if( this.firstAppStateUpdate ) {
+      this.firstAppStateUpdate = false;
+
+      if( e.selected && e.selected.type === 'cluster' ) {
+        this.mapEle.map.setView(e.selected.latlng, e.selected.zoom);
+      }
+    }
   }
 
   /**
@@ -39,13 +56,29 @@ export default class AppViewMap extends Mixin(LitElement)
     this.mapEle.setData(e.payload);
   }
 
+  /**
+   * @method _onNodeClick
+   * @description bound to app-leaflet-map node-click events
+   * 
+   * @param {Object} e 
+   */
   _onNodeClick(e) {
     let node = this.data.nodes[e.detail.id];
     this.AppStateModel.setLocation('/map/'+node.type+'/'+node.id);
   }
 
+  /**
+   * @method _onClusterClick
+   * @description bound to app-leaflet-map cluster-click events
+   * 
+   * @param {Object} e 
+   */
   _onClusterClick(e) {
-    this.AppStateModel.setLocation('/map/cluster/'+encodeURI(e.detail.ids.join(',')));
+    this.AppStateModel.setLocation('/map/cluster/'+
+      encodeURI(e.detail.latLng.join(','))+'/'+
+      e.detail.zoom+'/'+
+      encodeURI(e.detail.ids.join(','))
+    );
   }
 
   toggleInfoPanel() {

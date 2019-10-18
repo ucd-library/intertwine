@@ -29,6 +29,31 @@ ${markerClusterDefaultCss}
     z-index: 1000;
     height: 1px;
   }
+
+  .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large  {
+    background-color: var(--app-color-interface-blue-alpha);
+  }
+  .marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div {
+    background-color: var(--app-color-interface-blue);
+    color: var(--app-color-white)
+  }
+
+  .leaflet-intertwine-icon {
+    border-radius: 10px;
+  }
+
+  .leaflet-person-icon {
+    background-color: var(--app-color-scarlet); 
+  }
+  .leaflet-place-icon {
+    background-color: var(--app-color-vine); 
+  }
+  .leaflet-event-icon {
+    background-color: var(--app-color-rose); 
+  }
+  .leaflet-object-icon {
+    background-color: var(--app-color-grape); 
+  }
 </style>
 
 <div class="border-top"></div>

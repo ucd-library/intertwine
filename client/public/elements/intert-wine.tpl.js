@@ -31,7 +31,7 @@ ${sharedStyles}
   }
 </style>
 
-<app-route .app-routes="${APP_CONFIG.appRoutes}"></app-route>
+<app-route .appRoutes="${this.appRoutes}"></app-route>
 
 <div class="layout">
   <app-header></app-header>

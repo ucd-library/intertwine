@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "watch": "cd client && webpack --config webpack-watch.config.js --watch",
-    "dist": "cd client && webpack --config webpack-dist.config.js"
+    "dist": "cd client && webpack --config webpack-dist.config.js",
+    "create-icons": "cd client/public/elements && cork-icon-set-generator intert-wine-icons ../icons" 
   },
   "author": "jrmerz@ucdavis.edu",
   "license": "MIT",
   "devDependencies": {
     "@ucd-lib/cork-app-build": "^0.1.5",
+    "@ucd-lib/cork-icon-set-generator": "git+https://github.com/UCDavisLibrary/cork-icon-set-generator.git",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9"
   },

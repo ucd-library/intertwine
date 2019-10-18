@@ -5,7 +5,7 @@ module.exports = {
   server : {
     assets : (env === 'prod') ? 'dist' : 'public',
     appRoutes : ['map', 'moment', 'about'],
-    port : process.env.APP_PORT || 3000
+    port : process.env.APP_PORT || process.env.PORT || 3000
   },
   
   client : {

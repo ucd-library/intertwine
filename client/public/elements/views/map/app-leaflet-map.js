@@ -35,7 +35,7 @@ export default class AppLeafletMap extends LitElement {
   }
 
   initMap() {
-    this.map = L.map(this.shadowRoot.querySelector('#map')).setView([51.505, -0.09], 4);
+    this.map = L.map(this.shadowRoot.querySelector('#map')).setView([0, 0], 3);
     L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
@@ -50,11 +50,18 @@ export default class AppLeafletMap extends LitElement {
 
     this.map.addLayer(this.clusters);
     this.map.on('zoomend', () => this.updateLinks());
+
+    this.lineColor = getComputedStyle(document.documentElement)
+      .getPropertyValue('--app-color-interface-blue')
+      .trim();
   }
 
   onClusterClicked(e) {
+    let center = e.layer.getBounds().getCenter();
     let event = new CustomEvent('cluster-click', {detail : {
-      ids : e.layer.getAllChildMarkers().map(l => l.inertWineId)
+      ids : e.layer.getAllChildMarkers().map(l => l.inertWineId),
+      latLng : [parseFloat(center.lat.toFixed(4)), parseFloat(center.lng.toFixed(4))],
+      zoom : this.map.getZoom()
     }});
     this.dispatchEvent(event);
   }
@@ -85,12 +92,18 @@ export default class AppLeafletMap extends LitElement {
     this.clusters.clearLayers();
 
     for( let id in data.nodes ) {
-      let layer = L.circle(data.nodes[id].coordinates, {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 100
+      let icon = L.divIcon({
+        className: `leaflet-intertwine-icon leaflet-${data.nodes[id].type}-icon`,
+        iconSize: [15, 15]
       });
+      let layer = L.marker(data.nodes[id].coordinates, {icon});
+
+      // let layer = L.circle(data.nodes[id].coordinates, {
+      //   color: 'red',
+      //   fillColor: '#f03',
+      //   fillOpacity: 0.5,
+      //   radius: 100
+      // });
       layer.on('click', e => this.onNodeClicked(e));
       layer.inertWineId = id;
       this.nodeLayers[id] = layer;
@@ -127,7 +140,7 @@ export default class AppLeafletMap extends LitElement {
       let lid = src.lat+'-'+src.lng+'-'+dst.lat+'-'+dst.lng;
       if( this.linkLayers[lid] ) continue;
       this.linkLayers[lid] = L.polyline([src, dst], {
-            color: 'red',
+        color: this.lineColor,
       }).addTo(this.map);
     }
   }

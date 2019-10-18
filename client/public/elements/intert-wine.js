@@ -10,6 +10,7 @@ import "../src"
 import "@polymer/iron-pages"
 
 // local imports
+import "./intert-wine-icons"
 import "./app-header"
 import "./views/map/app-view-map"
 
