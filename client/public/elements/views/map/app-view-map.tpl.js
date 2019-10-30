@@ -16,11 +16,11 @@ return html`
   app-map-info-panel {
     position: absolute;
     z-index: 5000;
-    width: 350px;
+    width: 400px;
     left: 0;
     top: 0;
     bottom: 0;
-    transform: translateX(-350px);
+    transform: translateX(-400px);
     transition: transform 200ms ease-out;
   }
   app-map-info-panel[open] {
@@ -36,7 +36,7 @@ return html`
     transition: left 200ms ease-out;
   }
   app-leaflet-map[info-open] {
-    left: 350px;
+    left: 400px;
   }
 
   @media(max-width: 600px) {
@@ -70,7 +70,8 @@ return html`
   ?active="${this.visible}" 
   id="map"
   @node-click="${this._onNodeClick}"
-  @cluster-click="${this._onClusterClick}">
+  @cluster-click="${this._onClusterClick}"
+  @selected-cluster-ids="${this._onSelectedClusterIds}">
 </app-leaflet-map>
 
 

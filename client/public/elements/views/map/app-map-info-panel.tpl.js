@@ -1,8 +1,10 @@
 import { html } from 'lit-element';
+import sharedStyles from './../../styles/shared-styles'
 
 export default function render() { 
 return html`
 
+${sharedStyles}
 <style>
   :host {
     background: white;
@@ -36,24 +38,32 @@ return html`
   }
 
   .content-padding {
-    padding: 20px;
+    padding: 30px 25px;
   }
 
-  h2 {
-    font-size: 16px;
-    margin: 0 0 5px 0;
+  h3 {
+    margin-bottom: 5px;
   }
 
   .image {
-    height: 250px;
+    background-color: var(--app-color-smoke);
+    height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   .image iron-icon {
-    background-color: white !important;
-    --iron-icon-height: 128px;
-    --iron-icon-width: 128px;
+    background-color: var(--app-color-smoke) !important;
+    --iron-icon-height: 150px;
+    --iron-icon-width: 150px;
+  }
+
+  .subject-type {
+    margin-bottom: 10px;
+  }
+
+  #description > p {
+    padding: 14px 0 18px 9;
   }
 
   .location, .date {
@@ -61,12 +71,6 @@ return html`
   }
 
   .sub-title {
-    font-weight: bold;
-  }
-
-  .type-label {
-    padding-bottom: 15px;
-    text-transform: uppercase;
     font-weight: bold;
   }
 
@@ -83,13 +87,13 @@ return html`
 
   .color-break iron-icon {
     position: absolute;
-    --iron-icon-height: 32px;
-    --iron-icon-width: 32px;
-    top: -18px;
+    --iron-icon-height: 38px;
+    --iron-icon-width: 38px;
+    border-radius: 50px;
+    padding: 6px;
+    top: -21px;
     right: 32px;
     color: var(--app-color-white);
-    padding: 5px;
-    border-radius: 32px;
   }
 
   .dot {
@@ -192,18 +196,18 @@ return html`
 
       <!-- START CLUSTER -->
       <div id="cluster">
-        <div class="sub-title">Select a Subject</div>
+        <h3>Select a Subject</h3>
 
         ${this.clusterSubjectTypes.map(type => html`
           <div ?hidden="${!this.clusterSubjects[type].enabled}">
             <div class="subject-label">
               <iron-icon icon="intert-wine-icons:${type}" type="${type}"></iron-icon>
-              <span class="type-label type-color" type="${type}">${this.clusterSubjects[type].label}</span>
+              <span class="subject-type type-color" type="${type}">${this.clusterSubjects[type].label}</span>
             </div>
             ${this.clusterSubjects[type].nodes.map(node => html`
               <div>
                 <div class="dot" type="${type}"></div>
-                <span><a href="/map/${type}/${node.id}">${node.title}</a></span>
+                <span><a href="/map/${this.moment}/${type}/${node.id}">${node.title}</a></span>
               </div>
             `)}
           </div>
@@ -213,38 +217,38 @@ return html`
 
       <!-- START ITEM -->
       <div id="item">
-        <div class="type-label type-color" type="${this.type}">${this.type}</div>
+        <div class="subject-type type-color" type="${this.type}">${this.type}</div>
 
         <div ?hidden="${!this.isLink}">
-          <div class="sub-title">About the Connection</div>
-          <div class="location">${this.title}</div>
+          <h3>About the Connection</h3>
+          <h2>${this.title}</h2>
         </div>
 
         <div ?hidden="${!this.isNode}">
-          <h2>${this.title}</h2>
-          <div class="location">${this.location}</div>
-          <div class="date">${this.date}</div>
+          <h1 style="margin-bottom: 3px">${this.title}</h1>
+          <h2 style="margin: 0">${this.location}</h2>
+          <h2 style="margin: 0 0 14px 0">${this.date}</h2>
         </div>
 
         <div id="description"></div>
 
         <div ?hidden="${!this.isNode}">
-          <div class="sub-title" style="margin-bottom: 5px">Explore Connections</div>
+          <h3 style="margin: 0 0 5px 0">Explore Connections</h3>
           <div>
             ${this.connections.map(item => html`
               <div>
                 <div class="dot" type="${item.node.type}"></div>
-                <span><a href="/map/connection/${item.link.id}">${item.node.title}</a></span>
+                <span><a href="/map/${this.moment}/connection/${item.link.id}">${item.node.title}</a></span>
               </div>
             `)}
           </div>
         </div>
         <div ?hidden="${!this.isLink}">
-          <div class="sub-title" style="margin-bottom: 5px">Connections Subjects</div>
+          <h3>Connections Subjects</h3>
           ${this.connectionSubjects.map(node => html`
             <div>
               <div class="dot" type="${node.type}"></div>
-              <span><a href="/map/${node.type}/${node.id}">${node.title}</a></span>
+              <span><a href="/map/${this.moment}/${node.type}/${node.id}">${node.title}</a></span>
             </div>
           `)}
         </div>

@@ -11,29 +11,32 @@ class MomentStore extends BaseStore {
     };
   }
 
-  onGraphLoading(request) {
+  onGraphLoading(moment, request) {
     this._setGraphState({
+      id: moment,
       state : this.STATE.LOADING,
       request
     });
   }
 
-  onGraphLoaded(payload) {
+  onGraphLoaded(moment, payload) {
     this._setGraphState({
+      id: moment,
       state : this.STATE.LOADED,
       payload
     });
   }
 
-  onGraphError(error) {
+  onGraphError(moment, error) {
     this._setGraphState({
+      id: moment,
       state : this.STATE.ERROR,
       error
     });
   }
 
   _setGraphState(state) {
-    this.data = state;
+    this.data[state.id] = state;
     this.emit(this.events.GRAPH_UPDATE, state);
   }
 

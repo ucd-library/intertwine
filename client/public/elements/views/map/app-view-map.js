@@ -35,13 +35,8 @@ export default class AppViewMap extends Mixin(LitElement)
    * @param {Object} e 
    */
   _onAppStateUpdate(e) {
-    if( this.firstAppStateUpdate ) {
-      this.firstAppStateUpdate = false;
-
-      if( e.selected && e.selected.type === 'cluster' ) {
-        this.mapEle.map.setView(e.selected.latlng, e.selected.zoom);
-      }
-    }
+    this.selectedMoment = e.moment;
+    if( e.selected ) this.mapEle.renderSelectedState(e);
   }
 
   /**
@@ -64,7 +59,7 @@ export default class AppViewMap extends Mixin(LitElement)
    */
   _onNodeClick(e) {
     let node = this.data.nodes[e.detail.id];
-    this.AppStateModel.setLocation('/map/'+node.type+'/'+node.id);
+    this.AppStateModel.setLocation('/map/'+this.selectedMoment+'/'+node.type+'/'+node.id);
   }
 
   /**
@@ -74,11 +69,20 @@ export default class AppViewMap extends Mixin(LitElement)
    * @param {Object} e 
    */
   _onClusterClick(e) {
-    this.AppStateModel.setLocation('/map/cluster/'+
-      encodeURI(e.detail.latLng.join(','))+'/'+
-      e.detail.zoom+'/'+
-      encodeURI(e.detail.ids.join(','))
+    this.AppStateModel.setLocation('/map/'+this.selectedMoment+'/cluster/'+
+      encodeURI(e.detail.latLng.join(','))+'/'+e.detail.zoom
     );
+  }
+
+  /**
+   * @method _onSelectedClusterIds
+   * @description bound tp app-leaflet-map selected-cluster-ids event.  This is fired
+   * when a cluster zoom/latlng is set.  After which the map makes sure it is rendered
+   * then looks up the closest rendered cluster to the latlng at the zoom level.  Finally
+   * the map fires the selected-cluster-ids containing the ids inside the cluster
+   */
+  _onSelectedClusterIds(e) {
+    this.AppStateModel.setSelectedClusterIds(e.detail);
   }
 
   toggleInfoPanel() {

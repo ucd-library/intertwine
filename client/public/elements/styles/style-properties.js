@@ -9,12 +9,10 @@ html {
   --app-color-grape : #BA5B93;
   --app-color-interface-blue : #18779B;
   --app-color-interface-blue-alpha : rgba(24, 119, 155, 0.6);
-  --app-color-line-blue : #6697B2;
+  --app-color-secondary-blue : #6697B2;
   --app-color-smoke : #F3F2F0;
-  --app-color-slate : #C3C9CB;
-  --app-color-label-gray : #969696;
-  --app-color-charcoal : #4E4E4E;
-  --app-color-soot : #333333;
+  --app-color-pewter : #D4DADC;
+  --app-color-charcoal : #333333;
   --app-color-black : #000000;
   --app-color-white : #FFFFFF;
 
@@ -36,7 +34,7 @@ html {
 
 body, html {
   /* @apply --paper-font-common-base; */
-  font-family      : proxima-nova,"Lucida Grande","Lucida Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size        : var(--app-font-size);
   font-weight      : var(--app-font-weight);
   line-height      : calc(var(--app-font-size) * 1.625);

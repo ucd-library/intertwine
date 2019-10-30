@@ -13,6 +13,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         type: Boolean,
         reflect: true
       },
+      moment : {type: String},
       type : {type : String},
       view : {type : String},
       title : {type : String},
@@ -57,6 +58,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   _onAppStateUpdate(e) {
+    this.moment = e.moment;
     this.selected = e.selected;
     this.renderState();
   }
@@ -80,7 +82,9 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.type = this.selected.type;
 
     if( this.type === 'cluster' ) {
-      this.renderCluster(this.selected.ids.map(id => this.graph.nodes[id]));
+      if( this.selected.ids ) {
+        this.renderCluster(this.selected.ids.map(id => this.graph.nodes[id]));
+      }
     } else if( this.type === 'connection' ) {
       this.isLink = true;
       this.renderItem(this.graph.links[this.selected.id]);
@@ -107,7 +111,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   renderItem(node) {
-    console.log(node);
     this.view = 'item'
 
     this.title = node.title || '';

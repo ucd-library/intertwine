@@ -54,6 +54,14 @@ ${markerClusterDefaultCss}
   .leaflet-object-icon {
     background-color: var(--app-color-grape); 
   }
+
+  .leaflet-intertwine-node-label div {
+    color: var(--app-color-white);
+    background: var(--app-color-charcoal);
+    padding: 10px;
+    position: absolute;
+    white-space: nowrap;
+  }
 </style>
 
 <div class="border-top"></div>
