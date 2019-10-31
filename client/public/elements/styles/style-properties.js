@@ -8,8 +8,9 @@ html {
   --app-color-rose : #ED77A5;
   --app-color-grape : #BA5B93;
   --app-color-interface-blue : #18779B;
-  --app-color-interface-blue-alpha : rgba(24, 119, 155, 0.6);
-  --app-color-secondary-blue : #6697B2;
+  --app-color-secondary-blue : #015E80;
+  --app-color-cluster-blue : var(--app-color-secondary-blue);
+  --app-color-cluster-blue-alpha : rgba(1, 94, 128, 0.5);
   --app-color-smoke : #F3F2F0;
   --app-color-pewter : #D4DADC;
   --app-color-charcoal : #333333;

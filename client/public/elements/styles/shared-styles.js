@@ -43,9 +43,10 @@ export default html`
 
   a {
     cursor: pointer;
+    font-size: 15px;
   }
 
-  a.internal {
+  a.internal, a.internal:visited {
     color: var(--color-charcoal);
   }
 

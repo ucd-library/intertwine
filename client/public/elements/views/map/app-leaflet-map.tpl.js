@@ -31,10 +31,10 @@ ${markerClusterDefaultCss}
   }
 
   .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large  {
-    background-color: var(--app-color-interface-blue-alpha);
+    background-color: var(--app-color-cluster-blue-alpha);
   }
   .marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div {
-    background-color: var(--app-color-interface-blue);
+    background-color: var(--app-color-cluster-blue);
     color: var(--app-color-white)
   }
 
@@ -55,12 +55,69 @@ ${markerClusterDefaultCss}
     background-color: var(--app-color-grape); 
   }
 
-  .leaflet-intertwine-node-label div {
+  .intertwine-arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 5px 25px 5px;
+    border-color: transparent transparent var(--app-color-charcoal) transparent;
+    top: 12px;
+    position: absolute;
+    z-index: 10001;
+    left: -5px;
+  }
+  .intertwine-arrow.top {
+    transform: rotate(180deg);
+    bottom: 12px;
+    top: initial;
+  }
+  .intertwine-arrow.top.point {
+    bottom: 6px;
+  }
+  .intertwine-arrow.bottom.point {
+    top: 6px;
+  }
+
+  .leaflet-intertwine-node-label > div:first-child {
     color: var(--app-color-white);
     background: var(--app-color-charcoal);
-    padding: 10px;
+    padding: 4px 8px;
     position: absolute;
     white-space: nowrap;
+    font-size: 13px;
+  }
+
+  .leaflet-intertwine-node-label > div.fixed-width:first-child {
+    white-space: initial;
+    width: 150px;
+    left: -83px;
+    text-align: center;
+  }
+
+  .leaflet-intertwine-node-label > div.top:first-child {
+    bottom: 34px;
+  }
+  .leaflet-intertwine-node-label > div.top.point:first-child {
+    bottom: 28px;
+  }
+
+  .leaflet-intertwine-node-label > div.bottom:first-child {
+    top : 32px;
+  }
+  .leaflet-intertwine-node-label > div.bottom.point:first-child {
+    top : 26px;
+  }
+
+  .leaflet-intertwine-connection-label > div:first-child {
+    color: var(--app-color-white);
+    background: var(--app-color-interface-blue);
+    padding: 4px 8px;
+    position: absolute;
+    white-space: nowrap;
+    left: -42px;
+    top: -16px;
+    font-size: 13px;
+    font-style: italic;
   }
 </style>
 

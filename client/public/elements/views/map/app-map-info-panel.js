@@ -15,6 +15,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       },
       moment : {type: String},
       type : {type : String},
+      srctype : {type: String},
+      dsttype : {type: String},
       view : {type : String},
       title : {type : String},
       date : {type : String},
@@ -34,6 +36,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.date = '';
     this.view = '';
     this.type = '';
+    this.srctype = '';
+    this.dsttype = '';
     this.connections = [];
     this.isLink = false;
     this.isNode = false;
@@ -123,6 +127,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         this.graph.nodes[node.src],
         this.graph.nodes[node.dst]
       ];
+      this.srctype = this.connectionSubjects[0].type;
+      this.dsttype = this.connectionSubjects[1].type;
     } else {
       // find connections
       let connections = [];

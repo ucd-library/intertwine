@@ -9,7 +9,6 @@ ${sharedStyles}
   :host {
     background: white;
     display: block;
-    border-right: 1px solid #333;
     box-shadow: 0 0 5px rgba(0, 0, 0, .5);
   }
 
@@ -113,11 +112,6 @@ ${sharedStyles}
     vertical-align: bottom;
   }
 
-  a {
-    color: var(--app-color-black);
-    font-size: 13px;
-  }
-
   .type-color[type="cluster"], .type-color[type="connection"] {
     color: var(--app-color-interface-blue); 
   }
@@ -157,6 +151,19 @@ ${sharedStyles}
     background-color: var(--app-color-grape); 
   }
 
+  .connection-image-layout {
+    display: flex;
+  }
+  .connection-image-layout > div {
+    flex: 1;
+  }
+  .connection-image-layout > div:first-child {
+    border-right: 2px solid var(--app-color-white);
+  }
+  .connection-image-layout > div:nth-child(2) {
+    border-left: 2px solid var(--app-color-white);
+  }
+
   @media(max-width: 600px) {
     .toggle[open] {
       display: none;
@@ -178,8 +185,21 @@ ${sharedStyles}
     <iron-icon icon="close"></iron-icon>
   </div>
 
-  <div class="image" type="${this.type}">
-    <iron-icon class="type-color" type="${this.type}" icon="intert-wine-icons:${this.type}"></iron-icon>
+  <div ?hidden="${this.isLink}">
+    <div class="image" type="${this.type}">
+      <iron-icon class="type-color" type="${this.type}" icon="intert-wine-icons:${this.type}"></iron-icon>
+    </div>
+  </div>
+
+  <div ?hidden="${!this.isLink}">
+    <div class="connection-image-layout">
+      <div class="image" type="${this.srctype}">
+        <iron-icon class="type-color" type="${this.srctype}" icon="intert-wine-icons:${this.srctype}"></iron-icon>
+      </div>
+      <div class="image" type="${this.dsttype}">
+        <iron-icon class="type-color" type="${this.dsttype}" icon="intert-wine-icons:${this.dsttype}"></iron-icon>
+      </div>
+    </div>
   </div>
 
   <div class="color-break" type="${this.type}">
@@ -207,7 +227,7 @@ ${sharedStyles}
             ${this.clusterSubjects[type].nodes.map(node => html`
               <div>
                 <div class="dot" type="${type}"></div>
-                <span><a href="/map/${this.moment}/${type}/${node.id}">${node.title}</a></span>
+                <span><a class="internal" href="/map/${this.moment}/${type}/${node.id}">${node.title}</a></span>
               </div>
             `)}
           </div>
@@ -238,7 +258,7 @@ ${sharedStyles}
             ${this.connections.map(item => html`
               <div>
                 <div class="dot" type="${item.node.type}"></div>
-                <span><a href="/map/${this.moment}/connection/${item.link.id}">${item.node.title}</a></span>
+                <span><a class="internal" href="/map/${this.moment}/connection/${item.link.id}">${item.node.title}</a></span>
               </div>
             `)}
           </div>
@@ -248,7 +268,7 @@ ${sharedStyles}
           ${this.connectionSubjects.map(node => html`
             <div>
               <div class="dot" type="${node.type}"></div>
-              <span><a href="/map/${this.moment}/${node.type}/${node.id}">${node.title}</a></span>
+              <span><a class="internal" href="/map/${this.moment}/${node.type}/${node.id}">${node.title}</a></span>
             </div>
           `)}
         </div>

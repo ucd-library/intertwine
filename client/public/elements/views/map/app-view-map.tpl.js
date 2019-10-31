@@ -35,9 +35,6 @@ return html`
     right: 0;
     transition: left 200ms ease-out;
   }
-  app-leaflet-map[info-open] {
-    left: 400px;
-  }
 
   @media(max-width: 600px) {
     app-map-info-panel {
@@ -58,15 +55,12 @@ return html`
       top: 0;
       right: 0;
     }
-    app-leaflet-map[info-open] {
-      left: 0px;
-    }
   }
 </style>  
 
 <app-map-info-panel ?open="${this.infoPanelOpen}" @toggle="${this.toggleInfoPanel}"></app-map-info-panel>
 <app-leaflet-map 
-  ?info-open="${this.infoPanelOpen}" 
+  ?infoOpen="${this.infoPanelOpen}"
   ?active="${this.visible}" 
   id="map"
   @node-click="${this._onNodeClick}"
