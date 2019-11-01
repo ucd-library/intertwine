@@ -9,27 +9,36 @@ export default html`
   h1 {
     font-size: 20px;
     font-weight: bold;
-    color: var(--color-charcoal);
+    color: var(--app-color-charcoal);
     line-height: 24px;
+  }
+  h1.inverse {
+    color: var(--app-color-white);
   }
 
   h2 {
     font-size: 17px;
     font-style: italic;
-    color: var(--color-charcoal);
+    color: var(--app-color-charcoal);
     line-height: 22px;
     font-weight: normal;
+  }
+  h2.inverse {
+    color: var(--app-color-white);
   }
 
   h3 {
     font-size: 17px;
     font-weight: bold;
-    color: var(--color-charcoal);
+    color: var(--app-color-charcoal);
     line-height: 22px;
+  }
+  h3.inverse {
+    color: var(--app-color-white);
   }
 
   p {
-    color: var(--color-charcoal);
+    color: var(--app-color-charcoal);
     font-size: 15px;
     line-height: 22px;
     padding-bottom: 10px;
@@ -44,10 +53,12 @@ export default html`
   a {
     cursor: pointer;
     font-size: 15px;
+    display: inline-flex;
+    align-items: center;
   }
 
   a.internal, a.internal:visited {
-    color: var(--color-charcoal);
+    color: var(--app-color-charcoal);
   }
 
   a.external {
@@ -58,8 +69,8 @@ export default html`
   button, .btn {
     height: 44px;
     padding: 0 15px;
-    color: var(--color-white);
-    background-color: var(--color-interface-blue);
+    color: var(--app-color-white);
+    background-color: var(--app-color-interface-blue);
     cursor: pointer;
     text-transform: uppercase;
     font-size: 16px;
@@ -67,8 +78,8 @@ export default html`
   }
 
   button.inverse, .btn.inverse {
-    background-color: var(--color-white);
-    color: var(--color-interface-blue);
+    background-color: var(--app-color-white);
+    color: var(--app-color-interface-blue);
   }
 
   a.btn {
@@ -76,12 +87,16 @@ export default html`
   }
 
   button:hover, .btn:hover {
-    background-color: var(--color-secondary-blue);
+    background-color: var(--app-color-secondary-blue);
   }
+  button.inverse:hover, .btn.inverse:hover {
+    background-color: var(--app-color-smoke);
+  }
+
 
   button[disabled], .btn[disabled] {
     cursor: not-allowed;
-    background-color: var(--color-pewter) !important;
+    background-color: var(--app-color-pewter) !important;
   }
 
 </style>

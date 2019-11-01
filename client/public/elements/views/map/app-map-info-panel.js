@@ -14,6 +14,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         reflect: true
       },
       moment : {type: String},
+      momentInfo : {type: Object},
+      momentEntryPointUrl : {type: String},
       type : {type : String},
       srctype : {type: String},
       dsttype : {type: String},
@@ -23,6 +25,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       connections : {type: Array},
       isNode : {type: Boolean},
       isLink : {type: Boolean},
+      isMoment : {type: Boolean},
       connectionSubjects : {type: Array},
       clusterSubjects : {type: Object},
       clusterSubjectTypes : {type: Array}
@@ -41,7 +44,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.connections = [];
     this.isLink = false;
     this.isNode = false;
-    
+    this.isMoment = false;
+    this.moment = '';
+    this.momentInfo = {};
+    this.momentEntryPointUrl = '';
+
     this.connectionSubjects = [];
     this.clusterSubjectTypes = ['person', 'place', 'object', 'event'];
     this.resetClusterSubjects();
@@ -51,12 +58,12 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   /**
-   * @method _onGraphUpdate
+   * @method _onMomentGraphUpdate
    * @description bound to graph-update events from the MomentModel
    * 
    * @param {*} e 
    */
-  _onGraphUpdate(e) {
+  _onMomentGraphUpdate(e) {
     if( e.state !== 'loaded' ) return;
     this.renderState(e.payload);
   }
@@ -69,13 +76,30 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
   firstUpdated() {
     this.descriptionEle = this.shadowRoot.querySelector('#description');
+    this.momentDescEle = this.shadowRoot.querySelector('#momentDescription');
   }
 
-  renderState(graph) {
-    if( graph ) this.graph = graph;
+  renderState(moment) {
+    if( moment ) {
+      this.momentInfo = moment;
+      this.momentDescEle.innerHTML = markdown.toHTML(moment.description || '');
+
+      this.momentEntryPointUrl = '';
+      if( moment.entryPoint ) {
+        for( let id in moment.graph.nodes ) {
+          let node = moment.graph.nodes[id];
+          if( node.id !== moment.entryPoint ) continue;
+          this.momentEntryPointUrl = `/map/${this.moment}/${node.type}/${node.id}`;
+          break;
+        }
+      }
+
+      this.graph = moment.graph;
+    }
 
     this.isLink = false;
     this.isNode = false;
+    this.isMoment = false;
 
     if( !this.selected ) {
       this.renderEmpty();
@@ -99,8 +123,15 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   renderEmpty() {
-    this.view = 'empty'
-    this.type = 'empty';
+    if( !this.moment ) {
+      this.view = 'empty'
+      this.type = 'empty';
+      return;
+    }
+
+    this.type = 'moment';
+    this.view = 'moment';
+    this.isMoment = true;
   }
 
   renderCluster(nodes) {
@@ -147,6 +178,13 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
           });
         }
       }
+
+      connections.sort((a, b) => {
+        if( a.node.title < b.node.title ) return -1;
+        if( a.node.title > b.node.title ) return 1;
+        return 0;
+      })
+
       this.connections = connections;
     }
 

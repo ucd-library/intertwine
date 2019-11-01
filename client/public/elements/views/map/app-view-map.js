@@ -19,7 +19,6 @@ export default class AppViewMap extends Mixin(LitElement)
     this.render = render.bind(this);
 
     this.infoPanelOpen = true;
-    this.firstAppStateUpdate = true;
 
     this._injectModel('MomentModel', 'AppStateModel');
   }
@@ -37,18 +36,19 @@ export default class AppViewMap extends Mixin(LitElement)
   _onAppStateUpdate(e) {
     this.selectedMoment = e.moment;
     if( e.selected ) this.mapEle.renderSelectedState(e);
+    else this.mapEle.renderSelectedState();
   }
 
   /**
-   * @method _onGraphUpdate
-   * @description bound to graph-update events from the MomentModel
+   * @method _onMomentGraphUpdate
+   * @description bound to moment-graph-update events from the MomentModel
    * 
    * @param {*} e 
    */
-  _onGraphUpdate(e) {
+  _onMomentGraphUpdate(e) {
     if( e.state !== 'loaded' ) return;
-    this.data = e.payload;
-    this.mapEle.setData(e.payload);
+    this.data = e.payload.graph;
+    this.mapEle.setData(e.payload.graph);
   }
 
   /**

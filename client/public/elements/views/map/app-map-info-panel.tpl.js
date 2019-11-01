@@ -26,14 +26,32 @@ ${sharedStyles}
     align-items: center;
   }
 
-  .toggle-sm {
+  /* .toggle-sm {
     display: none;
-  }
+  } */
 
   .content {
     overflow: auto;
     height: 100%;
     position: relative;
+  }
+
+  .content[moment-view] {
+    color: var(--app-color-white);
+    background-color: var(--app-color-interface-blue);
+  }
+
+  .moment-break {
+    margin-top: 50px;
+    border-bottom: 1px solid white;
+    margin-bottom: 18px;
+  }
+
+  #momentDescription {
+    padding-bottom: 18px;
+  }
+  #momentDescription p {
+    color: var(--app-color-white);
   }
 
   .content-padding {
@@ -165,52 +183,72 @@ ${sharedStyles}
   }
 
   @media(max-width: 600px) {
-    .toggle[open] {
-      display: none;
+    .toggle {
+      /* display: none; */
+      width: 50px;
+      height: 35px;
+      position: absolute;
+      right: initial;
+      top: -35px;
+      left: 35px;
     }
-    .toggle-sm {
+    .toggle iron-icon {
+      transform: rotate(-90deg);
+    }
+    /* .toggle-sm {
       display: block;
-    }
-    :host {
-      background: white;
-      display: block;
-      border-right: none;
-      box-shadow: none;
-    }
+    } */
+
   }
 </style>  
 
-<div class="content">
-  <div class="toggle-sm" tabindex="0" @click="${this._fireToggleEvent}" @key-up="${this._onToggleKeyUp}">
+<div class="content" ?moment-view="${this.isMoment}">
+  <!-- <div class="toggle-sm" tabindex="0" @click="${this._fireToggleEvent}" @key-up="${this._onToggleKeyUp}">
     <iron-icon icon="close"></iron-icon>
-  </div>
+  </div> -->
 
-  <div ?hidden="${this.isLink}">
-    <div class="image" type="${this.type}">
-      <iron-icon class="type-color" type="${this.type}" icon="intert-wine-icons:${this.type}"></iron-icon>
-    </div>
-  </div>
+  <div ?hidden="${this.isMoment}">
 
-  <div ?hidden="${!this.isLink}">
-    <div class="connection-image-layout">
-      <div class="image" type="${this.srctype}">
-        <iron-icon class="type-color" type="${this.srctype}" icon="intert-wine-icons:${this.srctype}"></iron-icon>
-      </div>
-      <div class="image" type="${this.dsttype}">
-        <iron-icon class="type-color" type="${this.dsttype}" icon="intert-wine-icons:${this.dsttype}"></iron-icon>
+    <div ?hidden="${this.isLink}">
+      <div class="image" type="${this.type}">
+        <iron-icon class="type-color" type="${this.type}" icon="intert-wine-icons:${this.type}"></iron-icon>
       </div>
     </div>
-  </div>
 
-  <div class="color-break" type="${this.type}">
-    <iron-icon icon="intert-wine-icons:${this.type}" type="${this.type}"></iron-icon>
+    <div ?hidden="${!this.isLink}">
+      <div class="connection-image-layout">
+        <div class="image" type="${this.srctype}">
+          <iron-icon class="type-color" type="${this.srctype}" icon="intert-wine-icons:${this.srctype}"></iron-icon>
+        </div>
+        <div class="image" type="${this.dsttype}">
+          <iron-icon class="type-color" type="${this.dsttype}" icon="intert-wine-icons:${this.dsttype}"></iron-icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-break" type="${this.type}">
+      <iron-icon icon="intert-wine-icons:${this.type}" type="${this.type}"></iron-icon>
+    </div>
+
   </div>
 
   <div class="content-padding">
     <iron-pages selected="${this.view}" attr-for-selected="id">
       <!-- START EMPTY -->
-      <div id="empty">
+      <div id="moment">
+        <div class="subject-type">Explore</div>
+        <h1 style="margin-bottom: 3px" class="inverse">${this.momentInfo.title}</h1>
+        <h2 style="margin: 0 0 14px 0" class="inverse">${this.momentInfo.date}</h2>
+        <div>
+          Select a subject on the map to learn about their
+          connections to California wine history.
+        </div>
 
+        <div class="moment-break"></div>
+        <h3 class="inverse">Connections in Context</h3>
+        <div id="momentDescription"></div>
+
+        <a class="btn inverse" ?hidden="${!this.momentEntryPointUrl}" href="${this.momentEntryPointUrl}" >Read Story</a>
       </div>
       <!-- END EMPTY -->
 

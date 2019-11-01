@@ -7,7 +7,7 @@ class MomentStore extends BaseStore {
 
     this.data = {};
     this.events = {
-      GRAPH_UPDATE : 'graph-update'
+      GRAPH_UPDATE : 'moment-graph-update'
     };
   }
 

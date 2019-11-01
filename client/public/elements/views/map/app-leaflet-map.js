@@ -10,7 +10,10 @@ export default class AppLeafletMap extends LitElement {
   static get properties() {
     return {
       active : {type: Boolean},
-      infoOpen : {type: Boolean}
+      infoOpen : {
+        type: Boolean,
+        attribute: 'info-open'
+      }
     }
   }
 
@@ -68,6 +71,7 @@ export default class AppLeafletMap extends LitElement {
       spiderfyOnMaxZoom : false
     });
     this.map.addLayer(this.clusters);
+    this.map.zoomControl.setPosition('bottomright');
 
     // wire up layer and map events
     this.clusters.on('clusterclick', e => this.onClusterClicked(e));
@@ -91,6 +95,15 @@ export default class AppLeafletMap extends LitElement {
    * @param {Object} e app-state-update event object
    */
   renderSelectedState(e) {
+    if( !e ) {
+      if( this.firstRender ) {
+        if( Object.keys(this.nodes).length === 0 ) this.zoomToClusters = true;
+        else this.map.fitBounds(this.clusters.getBounds());
+      }
+      this.firstRender = false;
+      return;
+    }
+
     // reset state, remove current markers
     if( this.selectedNodeIcon ) {
       for( let type in this.selectedNodeIcon ) {
@@ -115,8 +128,6 @@ export default class AppLeafletMap extends LitElement {
 
     // make sure our links are rendered correctly
     this.updateLinks();
-
-    this.firstRender = false;
   }
 
   /**
@@ -404,6 +415,9 @@ export default class AppLeafletMap extends LitElement {
     } else if( this.pendingLinkSelect ) {
       this.selectLink(this.pendingLinkSelect);
       this.pendingLinkSelect = null;
+    } else if( this.zoomToClusters ) {
+      this.map.fitBounds(this.clusters.getBounds());
+      this.zoomToClusters = false;
     }
 
     this.updateLinks();
@@ -462,11 +476,11 @@ export default class AppLeafletMap extends LitElement {
     if( this.map ) {
 
       // adjust center by 500 px
-      if( this.infoOpen ) {
-        latlng = this.map.latLngToContainerPoint(latlng);
-        latlng.x -= 400;
-        latlng = this.map.containerPointToLatLng(latlng);
-      }
+      // if( this.infoOpen ) {
+      //   latlng = this.map.latLngToContainerPoint(latlng);
+      //   latlng.x -= 400;
+      //   latlng = this.map.containerPointToLatLng(latlng);
+      // }
 
       this.map.setView(latlng, zoom, {animate: false});
     } else {

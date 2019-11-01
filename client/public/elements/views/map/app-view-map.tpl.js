@@ -21,7 +21,7 @@ return html`
     top: 0;
     bottom: 0;
     transform: translateX(-400px);
-    transition: transform 200ms ease-out;
+    transition: transform 200ms ease-out, top 200ms ease-out;
   }
   app-map-info-panel[open] {
     transform: translateX(0);
@@ -33,19 +33,24 @@ return html`
     bottom : 0;
     top: 0;
     right: 0;
-    transition: left 200ms ease-out;
+    transition: left 200ms ease-out, bottom 200ms ease-out;
+  }
+  app-leaflet-map[info-open] {
+    left: 400px;
   }
 
   @media(max-width: 600px) {
     app-map-info-panel {
       width: 100vw;
       left: 0;
-      top: 0;
+      top: 100%;
       bottom: 0;
-      transform: translateX(-100vw);
+      right: 0;
+      height: 50%;
+      transform: initial;
     }
     app-map-info-panel[open] {
-      transform: translateX(0);
+      top: 50%;
     }
 
     app-leaflet-map {
@@ -55,12 +60,17 @@ return html`
       top: 0;
       right: 0;
     }
+    app-leaflet-map[info-open] {
+      left: 0;
+      top: 0;
+      bottom: 50%;
+    }
   }
 </style>  
 
 <app-map-info-panel ?open="${this.infoPanelOpen}" @toggle="${this.toggleInfoPanel}"></app-map-info-panel>
 <app-leaflet-map 
-  ?infoOpen="${this.infoPanelOpen}"
+  ?info-open="${this.infoPanelOpen}"
   ?active="${this.visible}" 
   id="map"
   @node-click="${this._onNodeClick}"

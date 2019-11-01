@@ -14,7 +14,10 @@ class MomentService extends BaseService {
       // url : `/api/graph/${moment}`,
       url : '/api/graph/mock',
       onLoading : request => this.store.onGraphLoading(moment, request),
-      onLoad : resp => this.store.onGraphLoaded(moment, transform(resp.body)),
+      onLoad : resp => {
+        resp.body.graph = transform(resp.body.graph);
+        this.store.onGraphLoaded(moment, resp.body);
+      },
       onError : e => this.store.onGraphError(moment, e)
     })
   }
