@@ -19,6 +19,6 @@ setup in the `package.json` file at the project's root.
 npm run watch
 ```
 
-Next run `node server.js`.
+Next navigate to the root directory and run `node server.js`.
 
 And you are now running your development setup on `localhost`.
