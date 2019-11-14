@@ -1,4 +1,4 @@
-# intert-wine
+# intertWINE
 California's modern wine network
 
 
@@ -10,25 +10,15 @@ In the root, let's install our dependancies needed to construct our code.
 npm install
 ```
 
-In addition, we need to install modules for the client as well.
-
-```
-(cd client/public; yarn install)
-```
-
+Next, navigate to ./client/public and once again run `npm install`.
 
 Set up webpack to continuously update it's bundles.  This command is
-setup in the `package.json`.
+setup in the `package.json` file at the project's root.
 
 ```bash
 npm run watch
 ```
 
-Then, start an httpserver in the public space
-
-```bash
-cd client/public
-httpserver
-```
+Next run `node server.js`.
 
 And you are now running your development setup on `localhost`.
