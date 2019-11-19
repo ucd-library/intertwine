@@ -39,7 +39,6 @@ export default class IntertWine extends Mixin(LitElement)
     this.view = e.page;
   }
 
-
 }
 
 customElements.define('intert-wine', IntertWine);

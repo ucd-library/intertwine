@@ -202,10 +202,10 @@ ${sharedStyles}
     .toggle iron-icon {
       transform: rotate(-90deg);
     }
+
     /* .toggle-sm {
       display: block;
     } */
-
   }
 </style>
 

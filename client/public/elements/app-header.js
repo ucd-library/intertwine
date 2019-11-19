@@ -2,7 +2,7 @@ import { LitElement } from 'lit-element';
 import render from "./app-header.tpl.js"
 
 import "./views/map/app-map-info-panel"
-import { isArray } from 'util';
+import "./views/app-about"
 
 export default class AppHeader extends Mixin(LitElement)
   .with(LitCorkUtils){
@@ -42,9 +42,10 @@ export default class AppHeader extends Mixin(LitElement)
    * @description ...
    * @param {Object} e
   */
- _onAboutClick() {
-  console.log("_onAboutClick");
-}
+  _onAboutClick() {
+    console.log("_onAboutClick");
+    this.AppStateModel.setLocation('/about/');
+  }
 }
 
 customElements.define('app-header', AppHeader);

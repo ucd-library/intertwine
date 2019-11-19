@@ -76,7 +76,6 @@ class AppStateModelImpl extends AppStateModel {
     });
   }
 
-
 }
 
 module.exports = new AppStateModelImpl();

@@ -1,6 +1,6 @@
 import { html } from 'lit-element';
 
-export default function render() { 
+export default function render() {
 return html`
 
 <style>
@@ -66,17 +66,16 @@ return html`
       bottom: 50%;
     }
   }
-</style>  
+</style>
 
 <app-map-info-panel ?open="${this.infoPanelOpen}" @toggle="${this.toggleInfoPanel}"></app-map-info-panel>
-<app-leaflet-map 
+<app-leaflet-map
   ?info-open="${this.infoPanelOpen}"
-  ?active="${this.visible}" 
+  ?active="${this.visible}"
   id="map"
   @node-click="${this._onNodeClick}"
   @cluster-click="${this._onClusterClick}"
   @selected-cluster-ids="${this._onSelectedClusterIds}">
 </app-leaflet-map>
-
 
 `;}
