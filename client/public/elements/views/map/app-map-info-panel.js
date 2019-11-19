@@ -70,17 +70,19 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.renderState(e.payload);
   }
 
-  _onAppStateUpdate(e) {
-    this.moment = e.moment;
+  async _onAppStateUpdate(e) {
+    this.moment   = e.moment;
     this.selected = e.selected;
+
+    // This is a temp loader until we get the real data
+    this.moments = await this.TestModel.copyMockData(4);
+
     this.renderState();
   }
 
-  async firstUpdated() {
+  firstUpdated() {
     this.descriptionEle = this.shadowRoot.querySelector('#description');
-    this.momentDescEle = this.shadowRoot.querySelector('#momentDescription');
-
-    this.moments = await this.TestModel.copyMockData(4);
+    this.momentDescEle  = this.shadowRoot.querySelector('#momentDescription');
   }
 
   renderState(moment) {
@@ -109,13 +111,16 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       this.renderEmpty();
       return;
     }
+
     if( !this.graph ) return;
 
     this.type = this.selected.type;
 
-    if( this.type === 'cluster' ) {
+    if( this.type === 'cluster' || this.type === 'moments' ) {
       if( this.selected.ids ) {
         this.renderCluster(this.selected.ids.map(id => this.graph.nodes[id]));
+      } else {
+        this.renderMoments();
       }
     } else if( this.type === 'connection' ) {
       this.isLink = true;
@@ -149,8 +154,14 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     });
   }
 
+  renderMoments() {
+    this.view = 'moments';
+    this.type = 'moments';
+    this.moments = this.moments.map(el => el[Object.keys(el)[0]]['payload']);
+  }
+
   renderItem(node) {
-    this.view = 'item'
+    this.view = 'item';
 
     this.title = node.title || '';
     this.location = node.location || '';

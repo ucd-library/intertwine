@@ -11,6 +11,7 @@ return html`
     color: white;
     z-index: 10000;
   }
+
   .layout {
     margin: 0 0 0 20px;
     display: flex;
@@ -24,15 +25,20 @@ return html`
     padding: 0;
     flex: 1;
   }
+
   .title-extra {
     font-weight: 200;
   }
 
   a {
-    cursor: pointer;
-    text-transform: capitalize;
-    display: inline-block;
     margin: 0 10px;
+    display: inline-block;
+
+    cursor: pointer;
+
+    color: white;
+    text-transform: capitalize;
+    text-decoration: none;
   }
 
   .image {
@@ -53,7 +59,8 @@ return html`
 
 <div class="layout">
   <h1>
-    <span>intertWINE</span> <span class="title-extra">//  California's Modern Wine Network<span>
+    <span><a href="${this.baseUrl}">intertWINE</a></span>
+    <span class="title-extra">//  California's Modern Wine Network<span>
   </h1>
   <div style="padding-right: 20px">
     <a @click="${this._onMomentsClick}">Moments</a>

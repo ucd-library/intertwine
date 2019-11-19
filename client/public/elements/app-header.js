@@ -9,6 +9,7 @@ export default class AppHeader extends Mixin(LitElement)
 
   static get properties() {
     return {
+      baseUrl: { type: String },
       currentTopic: { type: String }
     }
   }
@@ -16,6 +17,8 @@ export default class AppHeader extends Mixin(LitElement)
   constructor() {
     super();
     this.render = render.bind(this);
+
+    this.baseUrl = window.location.protocol + '//' + window.location.host;
 
     this._injectModel('MomentModel', 'AppStateModel');
   }
@@ -31,7 +34,7 @@ export default class AppHeader extends Mixin(LitElement)
    * @param {Object} e
   */
   _onMomentsClick() {
-    this.AppStateModel.setLocation('/map/' + this.currentTopic);
+    this.AppStateModel.setLocation('/map/' + this.currentTopic + '/moments/');
   }
 
   /**
