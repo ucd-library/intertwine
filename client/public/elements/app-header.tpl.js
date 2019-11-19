@@ -1,6 +1,6 @@
 import { html } from 'lit-element';
 
-export default function render() { 
+export default function render() {
 return html`
 
 <style>
@@ -17,7 +17,7 @@ return html`
     height: 100%;
     align-items: center;
   }
-  
+
   h1 {
     font-weight: 400;
     margin: 0;
@@ -49,14 +49,18 @@ return html`
       display: none;
     }
   }
-</style>  
+</style>
 
 <div class="layout">
-  <h1><span>intertWINE</span> <span class="title-extra">//  California's Modern Wine Network<span></h1>
-  <div style="padding-right: 20px"><a>About</a></div>
+  <h1>
+    <span>intertWINE</span> <span class="title-extra">//  California's Modern Wine Network<span>
+  </h1>
+  <div style="padding-right: 20px">
+    <a @click="${this._onMomentsClick}">Moments</a>
+    <a @click="${this._onAboutClick}">About</a>
+  </div>
   <div class="image">
     <img src="/images/ucd-lib-logo-white.png" />
   </div>
 </div>
-
 `;}

@@ -13,7 +13,7 @@ class MomentModel extends BaseModel {
     this.EventBus.on('app-state-update', e => {
       if( e.page === 'map' ) this.get(e.moment);
     })
-      
+
     this.register('MomentModel');
   }
 

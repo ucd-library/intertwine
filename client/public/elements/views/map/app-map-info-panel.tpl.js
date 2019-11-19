@@ -1,7 +1,7 @@
 import { html } from 'lit-element';
 import sharedStyles from './../../styles/shared-styles'
 
-export default function render() { 
+export default function render() {
 return html`
 
 ${sharedStyles}
@@ -131,42 +131,42 @@ ${sharedStyles}
   }
 
   .type-color[type="cluster"], .type-color[type="connection"] {
-    color: var(--app-color-interface-blue); 
+    color: var(--app-color-interface-blue);
   }
   .color-break[type="cluster"], iron-icon[type="cluster"],
   .color-break[type="connection"], iron-icon[type="connection"] {
-    background-color: var(--app-color-interface-blue); 
+    background-color: var(--app-color-interface-blue);
   }
   .image[type="cluster"] {
     height: 200px
   }
 
   .type-color[type="person"] {
-    color: var(--app-color-scarlet); 
+    color: var(--app-color-scarlet);
   }
   .color-break[type="person"], iron-icon[type="person"], .dot[type="person"] {
-    background-color: var(--app-color-scarlet); 
+    background-color: var(--app-color-scarlet);
   }
 
   .type-color[type="place"] {
-    color: var(--app-color-vine); 
+    color: var(--app-color-vine);
   }
   .color-break[type="place"], iron-icon[type="place"], .dot[type="place"] {
-    background-color: var(--app-color-vine); 
+    background-color: var(--app-color-vine);
   }
 
   .type-color[type="event"] {
-    color: var(--app-color-rose); 
+    color: var(--app-color-rose);
   }
   .color-break[type="event"], iron-icon[type="event"], .dot[type="event"] {
-    background-color: var(--app-color-rose); 
+    background-color: var(--app-color-rose);
   }
 
   .type-color[type="object"] {
-    color: var(--app-color-grape); 
+    color: var(--app-color-grape);
   }
   .color-break[type="object"], iron-icon[type="object"], .dot[type="object"] {
-    background-color: var(--app-color-grape); 
+    background-color: var(--app-color-grape);
   }
 
   .connection-image-layout {
@@ -200,12 +200,14 @@ ${sharedStyles}
     } */
 
   }
-</style>  
+</style>
 
 <div class="content" ?moment-view="${this.isMoment}">
-  <!-- <div class="toggle-sm" tabindex="0" @click="${this._fireToggleEvent}" @key-up="${this._onToggleKeyUp}">
+  <!--
+  <div class="toggle-sm" tabindex="0" @click="${this._fireToggleEvent}" @key-up="${this._onToggleKeyUp}">
     <iron-icon icon="close"></iron-icon>
-  </div> -->
+  </div>
+  -->
 
   <div ?hidden="${this.isMoment}">
 

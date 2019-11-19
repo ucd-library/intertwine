@@ -13,6 +13,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         type: Boolean,
         reflect: true
       },
+      moments: {type: Array},
       moment : {type: String},
       momentInfo : {type: Object},
       momentEntryPointUrl : {type: String},
@@ -34,7 +35,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
   constructor() {
     super();
-    
+
     this.open = true;
     this.date = '';
     this.view = '';
@@ -45,6 +46,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.isLink = false;
     this.isNode = false;
     this.isMoment = false;
+    this.moments = [];
     this.moment = '';
     this.momentInfo = {};
     this.momentEntryPointUrl = '';
@@ -54,14 +56,14 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.resetClusterSubjects();
     this.render = render.bind(this);
 
-    this._injectModel('AppStateModel', 'MomentModel');
+    this._injectModel('AppStateModel', 'MomentModel', 'TestModel');
   }
 
   /**
    * @method _onMomentGraphUpdate
    * @description bound to graph-update events from the MomentModel
-   * 
-   * @param {*} e 
+   *
+   * @param {*} e
    */
   _onMomentGraphUpdate(e) {
     if( e.state !== 'loaded' ) return;
@@ -74,9 +76,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.renderState();
   }
 
-  firstUpdated() {
+  async firstUpdated() {
     this.descriptionEle = this.shadowRoot.querySelector('#description');
     this.momentDescEle = this.shadowRoot.querySelector('#momentDescription');
+
+    this.moments = await this.TestModel.copyMockData(4);
   }
 
   renderState(moment) {
@@ -106,7 +110,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       return;
     }
     if( !this.graph ) return;
-    
+
     this.type = this.selected.type;
 
     if( this.type === 'cluster' ) {
@@ -137,7 +141,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   renderCluster(nodes) {
     this.view = 'cluster';
     this.resetClusterSubjects();
-    
+
     nodes.forEach(node => {
       if( !this.clusterSubjects[node.type] ) return;
       this.clusterSubjects[node.type].enabled = true;
