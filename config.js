@@ -4,10 +4,10 @@ let clientPackage = require('./client/public/package.json');
 module.exports = {
   server : {
     assets : (env === 'prod') ? 'dist' : 'public',
-    appRoutes : ['map', 'moment', 'about'],
+    appRoutes : ['about', 'map', 'moment', 'moments'],
     port : process.env.APP_PORT || process.env.PORT || 3000
   },
-  
+
   client : {
     gaCode : process.env.GOOGLE_ANALYTICS || '',
     versions : {

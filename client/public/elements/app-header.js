@@ -3,6 +3,7 @@ import render from "./app-header.tpl.js"
 
 import "./views/map/app-map-info-panel"
 import "./views/app-about"
+import "./views/app-moments"
 
 export default class AppHeader extends Mixin(LitElement)
   .with(LitCorkUtils){
@@ -34,7 +35,7 @@ export default class AppHeader extends Mixin(LitElement)
    * @param {Object} e
   */
   _onMomentsClick() {
-    this.AppStateModel.setLocation('/map/' + this.currentTopic + '/moments/');
+    this.AppStateModel.setLocation('/moments/');
   }
 
   /**
@@ -43,7 +44,6 @@ export default class AppHeader extends Mixin(LitElement)
    * @param {Object} e
   */
   _onAboutClick() {
-    console.log("_onAboutClick");
     this.AppStateModel.setLocation('/about/');
   }
 }

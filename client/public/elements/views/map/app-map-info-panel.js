@@ -13,7 +13,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         type: Boolean,
         reflect: true
       },
-      moments: {type: Array},
       moment : {type: String},
       momentInfo : {type: Object},
       momentEntryPointUrl : {type: String},
@@ -46,7 +45,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.isLink = false;
     this.isNode = false;
     this.isMoment = false;
-    this.moments = [];
     this.moment = '';
     this.momentInfo = {};
     this.momentEntryPointUrl = '';
@@ -56,7 +54,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.resetClusterSubjects();
     this.render = render.bind(this);
 
-    this._injectModel('AppStateModel', 'MomentModel', 'TestModel');
+    this._injectModel('AppStateModel', 'MomentModel');
   }
 
   /**
@@ -73,10 +71,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   async _onAppStateUpdate(e) {
     this.moment   = e.moment;
     this.selected = e.selected;
-
-    // This is a temp loader until we get the real data
-    this.moments = await this.TestModel.copyMockData(4);
-
     this.renderState();
   }
 
@@ -116,11 +110,9 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
     this.type = this.selected.type;
 
-    if( this.type === 'cluster' || this.type === 'moments' ) {
+    if( this.type === 'cluster' ) {
       if( this.selected.ids ) {
         this.renderCluster(this.selected.ids.map(id => this.graph.nodes[id]));
-      } else {
-        this.renderMoments();
       }
     } else if( this.type === 'connection' ) {
       this.isLink = true;
@@ -152,12 +144,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       this.clusterSubjects[node.type].enabled = true;
       this.clusterSubjects[node.type].nodes.push(node);
     });
-  }
-
-  renderMoments() {
-    this.view = 'moments';
-    this.type = 'moments';
-    this.moments = this.moments.map(el => el[Object.keys(el)[0]]['payload']);
   }
 
   renderItem(node) {

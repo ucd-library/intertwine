@@ -58,7 +58,6 @@ class MomentModel extends BaseModel {
 
     return {nodes, links}
   }
-
 }
 
 module.exports = new MomentModel();

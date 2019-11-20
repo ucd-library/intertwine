@@ -7,8 +7,8 @@ return html`
 ${sharedStyles}
 <style>
   :host {
-    background: white;
     display: block;
+    background: white;
     box-shadow: 0 0 5px rgba(0, 0, 0, .5);
   }
 
@@ -141,13 +141,6 @@ ${sharedStyles}
     height: 200px;
   }
 
-  .type-color[type="moments"] {
-    color: var(--app-color-scarlet);
-  }
-  .color-break[type="moments"], iron-icon[type="moments"], .dot[type="moments"] {
-    background-color: var(--app-color-scarlet);
-  }
-
   .type-color[type="person"] {
     color: var(--app-color-scarlet);
   }
@@ -255,20 +248,9 @@ ${sharedStyles}
         <h3 class="inverse">Connections in Context</h3>
         <div id="momentDescription"></div>
 
-        <a class="btn inverse" ?hidden="${!this.momentEntryPointUrl}" href="${this.momentEntryPointUrl}" >Read Story</a>
+        <a class="btn inverse" ?hidden="${!this.momentEntryPointUrl}" href="${this.momentEntryPointUrl}">Read Story</a>
       </div>
       <!-- END EMPTY -->
-
-      <!-- START MOMENTS -->
-      <div id="moments">
-        <div class="subject-type">Explore Moments</div>
-        ${this.moments.map(element => html`
-          <h1>${element.title}</h1>
-          <p>${element.description}</p>
-          <div class="dot" type="${this.type}"></div>
-          <span><a class="internal" href="/map/${this.moment}/event/${element.entryPoint}">Learn More</a></span>
-        `)}
-      </div>
 
       <!-- START CLUSTER -->
       <div id="cluster">
