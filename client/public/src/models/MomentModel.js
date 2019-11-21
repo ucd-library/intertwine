@@ -24,13 +24,64 @@ class MomentModel extends BaseModel {
       if( state.request ) {
         await state.request;
       } else if( state.state !== 'loaded' ) {
-        await this.service.get(moment, this.transformMockLinks);
+        //await this.service.get(moment, this.transformMockLinks);
+        await this.service.get(moment, this.transformLDPLinks);
       }
     } catch(e) {
       console.error(e);
     }
 
     return this.store.data[moment];
+  }
+
+  transformLDPLinks(data) {
+    function getType(types, item) {
+      let type;
+      if ( Array.isArray(types) ) {
+        types.find(element => {
+          // Remove the protocol (ie: http://) from each string and then split on the remaining / and #
+          let _type = element.replace(/^\/\/|^.*?:(\/\/)?/, '').split(/[/#]+/);
+          type = _type[_type.length - 1].toLowerCase();
+        });
+      } else {
+        console.log(types);
+      }
+      //console.log(type, item);
+    }
+
+    function traverse(item) {
+      if (Array.isArray(item)) {
+        item.forEach(element => {
+          //console.log('el: ', element);
+          traverse(element);
+        });
+      } else if ((typeof item === 'object') && (item !== null)) {
+        for (let key in item) {
+          if ( key === '@type' && key !== undefined ) getType(item[key], item);
+          //console.log(traverse(getType(item[key])));
+          if ( typeof item[key] === 'string' && key === '@value' ) console.log(key, item[key]);
+          traverse(item[key]);
+        }
+      }
+    }
+
+    traverse(data);
+
+    for ( let id in data ) {
+      //traverse(data[id]);
+    }
+  }
+
+  getHashes() {
+    let hash = [];
+
+    data.forEach((el, index) => {
+      console.log(index, "el: ", el);
+      let test = el['@id'].split('#')[1];
+      if ( test !== undefined ) hash.push(test);
+    });
+
+    return hash;
   }
 
   transformMockLinks(data) {
