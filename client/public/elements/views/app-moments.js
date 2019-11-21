@@ -22,7 +22,7 @@ export default class AppMoments extends Mixin(LitElement)
   async _onAppStateUpdate(e) {
     let _moments = await this.MomentModel.get(e.moment);
     this.moments = [_moments.payload];
-    this.moments = this._copyMockData(10);
+    this.moments = this._copyMockData(6);
   }
 
   _copyMockData(numCopies) {
@@ -36,6 +36,7 @@ export default class AppMoments extends Mixin(LitElement)
     for ( let i = 0; i < numCopies; i++ ) {
       result = [...result, ...nestedCopy];
     }
+
     return result;
   }
 }
