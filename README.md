@@ -10,10 +10,11 @@ In the root, let's install our dependancies needed to construct our code.
 npm install
 ```
 
-Next, navigate to ./client/public and once again run `npm install`.
+Navigate to ./client/public and once again run `npm install`.
 
-Set up webpack to continuously update it's bundles.  This command is
-setup in the `package.json` file at the project's root.
+Run `ln -s node_modules/@ucd-lib/cork-app-load/lib loader`.  This command should create a *loader* directory which contains the required polyfills.
+
+Set up webpack to continuously update its bundles.  This command is setup in the `package.json` file at the project's root.
 
 ```bash
 npm run watch
