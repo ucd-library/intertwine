@@ -35,31 +35,48 @@ class MomentModel extends BaseModel {
   }
 
   transformLDPLinks(data) {
-    function getType(types, item) {
-      let type;
+    let finalArray = [], array = [];
+
+    // Helper Functions
+    function isEmpty(obj) {
+      return Object.getOwnPropertyNames(obj).length === 0;
+    }
+
+    function cleanType(type) {
+      return type.replace(/^\/\/|^.*?:(\/\/)?/, '').split(/[/#]+/).pop().toLowerCase();
+    }
+
+    function getSimpleType(types, item) {
+      let obj = {};
+
       if ( Array.isArray(types) ) {
         types.find(element => {
-          // Remove the protocol (ie: http://) from each string and then split on the remaining / and #
-          let _type = element.replace(/^\/\/|^.*?:(\/\/)?/, '').split(/[/#]+/);
-          type = _type[_type.length - 1].toLowerCase();
+          obj = {
+            type: cleanType(element),
+            data: item
+          }
         });
+        return obj;
+      } else if ( typeof types === 'string' && typeof item === 'object' ) {
+        obj = {
+          type: cleanType(types),
+          data: item
+        }
+        return obj;
       } else {
-        console.log(types);
+        return cleanType(types);
       }
-      //console.log(type, item);
     }
 
     function traverse(item) {
       if (Array.isArray(item)) {
-        item.forEach(element => {
-          //console.log('el: ', element);
-          traverse(element);
-        });
+        item.forEach(element => traverse(element));
       } else if ((typeof item === 'object') && (item !== null)) {
         for (let key in item) {
-          if ( key === '@type' && key !== undefined ) getType(item[key], item);
-          //console.log(traverse(getType(item[key])));
-          if ( typeof item[key] === 'string' && key === '@value' ) console.log(key, item[key]);
+          if ( key === '@type' && key !== undefined ) {
+            let object = getSimpleType(item[key], item);
+            if ( !isEmpty(object) ) finalArray.push(object);
+          }
           traverse(item[key]);
         }
       }
@@ -67,9 +84,19 @@ class MomentModel extends BaseModel {
 
     traverse(data);
 
-    for ( let id in data ) {
-      //traverse(data[id]);
-    }
+    finalArray.forEach(el => {      
+      let obj = {};
+      for ( let key in el.data ) {
+        if ( key !== '@type' && key !== '@id' ) {
+          let simpleKey = getSimpleType(key);          
+          obj[simpleKey] = el.data[key];
+        }
+      }
+      el['data'] = obj;
+      array.push(el);
+    });
+   
+    console.log(finalArray);
   }
 
   getHashes() {
