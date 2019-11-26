@@ -41,7 +41,7 @@ export default class AppLeafletMap extends LitElement {
   /**
    * @method initMap
    * @description called when the element is first rendered.  Sets up the map
-   * and the clister laters.  Checks if there is a pending view state and sets the
+   * and the cluster layers.  Checks if there is a pending view state and sets the
    * map to that location, otherwise renders at 0,0
    */
   initMap() {

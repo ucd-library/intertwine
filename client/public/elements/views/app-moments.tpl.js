@@ -28,7 +28,7 @@ export default function render() {
       .card-wrapper {
         display: flex;
         flex-flow: row wrap;
-        align-items: center;
+        align-items: stretch;
         justify-content: space-around;
       }
 
@@ -40,6 +40,13 @@ export default function render() {
         box-shadow: 0 0 5px rgba(0, 0, 0, .5);
         border-radius: 5px;
       }
+
+      img {
+        display: block;
+        max-width: 60%;
+        max-height: 150px;
+        border-radius: 5px;
+      }
     </style>
 
     <section class="content" role="main">
@@ -48,13 +55,21 @@ export default function render() {
       <div class="card-wrapper">
         ${this.moments.map(element => html`
           <div class="card">
-            <h1>${element.title}</h1>
-            <h2 style="margin-bottom: 3px">City, Country</h2>
-            <h2 style="margin: 0 0 14px 0">Month XX, XXXX</h2>
+            <!--
+            <h1>${element.name}</h1>
+            <h2 style="margin-bottom: 3px">${element.spatial}</h2>
+            <h2 style="margin: 0 0 14px 0">${element.temporal}</h2>
+            ${element.mainTopicOfPage ? html`<a href="${element.mainTopicOfPage}" target="_blank">External Link</a>` : ''}
+            ${element.thumbnailUrl ? html`<img src="${element.thumbnailUrl}" />` : ''}
+
+            ${this.moment}
+
             <p>${element.description}</p>
+
             <div style="width: 100%; padding-top: 5px; text-align: center; border-top: 1px solid gray;">
-                <a class="internal" href="/map/${this.moment}/event/${element.entryPoint}">Learn More</a>
+                <a class="internal" href="/map/${this.moment}/event/${element.mainTopicOfPage}">Learn More</a>
             </div>
+            -->
           </div>
         `)}
       </div>

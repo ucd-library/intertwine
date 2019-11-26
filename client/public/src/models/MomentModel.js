@@ -24,98 +24,86 @@ class MomentModel extends BaseModel {
       if( state.request ) {
         await state.request;
       } else if( state.state !== 'loaded' ) {
-        //await this.service.get(moment, this.transformMockLinks);
-        await this.service.get(moment, this.transformLDPLinks);
+        await this.service.get(moment, this.transformMockLinks);
+        //await this.service.get(moment, this.transformLDPLinks);
       }
-    } catch(e) {
-      console.error(e);
-    }
+    } catch(e) { console.error(e) };
 
     return this.store.data[moment];
   }
 
+  // My beautiful useless function (;_;)
   transformLDPLinks(data) {
-    let finalArray = [], array = [];
-
-    // Helper Functions
-    function isEmpty(obj) {
-      return Object.getOwnPropertyNames(obj).length === 0;
-    }
+    let finalArray = [];
 
     function cleanType(type) {
       return type.replace(/^\/\/|^.*?:(\/\/)?/, '').split(/[/#]+/).pop().toLowerCase();
     }
 
-    function getSimpleType(types, item) {
-      let obj = {};
-
-      if ( Array.isArray(types) ) {
-        types.find(element => {
-          obj = {
-            type: cleanType(element),
-            data: item
+    function simplifyArray(array) {
+      array.filter(element => {
+        Object.keys(element).map(key => {
+          if ( Array.isArray(element[key]) ) {
+            if ( element[key].length === 1 ) element[key].forEach(i => element[key] = Object.values(i)[0]);
+            else {
+              element[key].filter(i => typeof i === 'object').forEach(el => {
+                element[key] = element[Object.keys(el)[0]] = Object.values(el)[0];
+              });
+            }
           }
         });
-        return obj;
-      } else if ( typeof types === 'string' && typeof item === 'object' ) {
-        obj = {
-          type: cleanType(types),
-          data: item
-        }
-        return obj;
-      } else {
-        return cleanType(types);
-      }
+      });
     }
 
     function traverse(item) {
+      let obj = {};
       if (Array.isArray(item)) {
         item.forEach(element => traverse(element));
       } else if ((typeof item === 'object') && (item !== null)) {
-        for (let key in item) {
-          if ( key === '@type' && key !== undefined ) {
-            let object = getSimpleType(item[key], item);
-            if ( !isEmpty(object) ) finalArray.push(object);
-          }
-          traverse(item[key]);
-        }
+        Object.keys(item).forEach(i => {
+          obj[cleanType(i)] = item[i];
+          if ( obj['@type'] ) obj['@type'] = obj['@type'].map(el => cleanType(el));
+        });
+        finalArray.push(obj);
       }
+      simplifyArray(finalArray);
     }
-
     traverse(data);
 
-    finalArray.forEach(el => {      
-      let obj = {};
-      for ( let key in el.data ) {
-        if ( key !== '@type' && key !== '@id' ) {
-          let simpleKey = getSimpleType(key);          
-          obj[simpleKey] = el.data[key];
-        }
-      }
-      el['data'] = obj;
-      array.push(el);
-    });
-   
-    console.log(finalArray);
-  }
-
-  getHashes() {
-    let hash = [];
-
-    data.forEach((el, index) => {
-      console.log(index, "el: ", el);
-      let test = el['@id'].split('#')[1];
-      if ( test !== undefined ) hash.push(test);
-    });
-
-    return hash;
+    return finalArray;
   }
 
   transformMockLinks(data) {
     let nodes = {};
     let links = {};
-    let item;
+    let linkArray = [], nodeArray = [];
 
+    let lookup = {};
+    data.forEach(item => {
+      lookup[item['@id'].replace(/.*:/, '')] = item;
+    });
+
+    for( let id in lookup ) {
+      let container = lookup[id];
+
+      for( let attr in container ) {
+        if( lookup[attr] ) {
+          let link = lookup[attr];
+          linkArray.push(link);
+          link.src = container['@id'];
+          link.dst = container[attr];
+          link.isLink = true;
+        }
+      }
+    }
+
+    for( let id in lookup ) {
+      if( !lookup[id].isLink ) {
+        nodeArray.push(lookup[id]);
+      }
+    }
+
+    /*
     for( item of data ) {
       if( item.type === 'connection' ) {
         item.id = item.src+'-'+item.dst;
@@ -134,7 +122,11 @@ class MomentModel extends BaseModel {
       }
     }
 
-    return {nodes, links}
+    return { nodes, links }
+    */
+
+    //console.log(nodeArray, linkArray);
+    return { nodeArray, linkArray }
   }
 }
 

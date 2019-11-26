@@ -21,10 +21,15 @@ export default class AppMoments extends Mixin(LitElement)
 
   async _onAppStateUpdate(e) {
     let _moments = await this.MomentModel.get(e.moment);
-    this.moments = [_moments.payload];
-    this.moments = this._copyMockData(6);
+    this.moments = _moments.payload.graph.nodeArray;
+
+    // The moment => Chardonnay
+    console.log(this.moments);
+
+    //this.moments = this._copyMockData(6);
   }
 
+  // TODO: remove, outdated
   _copyMockData(numCopies) {
     const nestedArray = this.moments;
     let nestedCopy = [...nestedArray];
