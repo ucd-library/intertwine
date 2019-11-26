@@ -41,11 +41,11 @@ export default function render() {
         border-radius: 5px;
       }
 
-      img {
-        display: block;
-        max-width: 60%;
-        max-height: 150px;
-        border-radius: 5px;
+      .image {
+        height: 150px;
+        width: 150px;
+        background-size: contain;
+        border: 1px solid red;
       }
     </style>
 
@@ -55,12 +55,15 @@ export default function render() {
       <div class="card-wrapper">
         ${this.moments.map(element => html`
           <div class="card">
-            <!--
             <h1>${element.name}</h1>
+            <p>${element['schema:description']}</p>
+            <div class="image" style="background-image: url('${element.image}')"></div>
+
+            <!--
             <h2 style="margin-bottom: 3px">${element.spatial}</h2>
             <h2 style="margin: 0 0 14px 0">${element.temporal}</h2>
             ${element.mainTopicOfPage ? html`<a href="${element.mainTopicOfPage}" target="_blank">External Link</a>` : ''}
-            ${element.thumbnailUrl ? html`<img src="${element.thumbnailUrl}" />` : ''}
+
 
             ${this.moment}
 

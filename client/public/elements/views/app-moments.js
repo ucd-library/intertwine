@@ -6,7 +6,6 @@ export default class AppMoments extends Mixin(LitElement)
 
   static get properties() {
     return {
-      moment: { type: String },
       moments: { type: Array }
     }
   }
@@ -15,7 +14,6 @@ export default class AppMoments extends Mixin(LitElement)
     super();
     this.render = render.bind(this);
 
-    this.moment  = '';
     this.moments = [];
 
     this._injectModel('MomentModel', 'AppStateModel');
@@ -23,36 +21,14 @@ export default class AppMoments extends Mixin(LitElement)
 
   async _onAppStateUpdate(e) {
     let data = await this.MomentModel.get(e.moment);
-    this.moment  = data.id;
-    console.log(this.moment);
 
     if ( data.state === 'loaded' ) {
       let payload = data.payload;
-      console.log(payload);
+      let moment = payload['@graph'].filter(data => data['@type'].includes('ldp:Container'));
+
+      this.moments = moment;
+      console.log(this.moments);
     }
-
-    //this.moments = _moments.payload.graph.nodeArray;
-
-    // The moment => Chardonnay
-    //console.log(this.moments);
-
-    //this.moments = this._copyMockData(6);
-  }
-
-  // TODO: remove, outdated
-  _copyMockData(numCopies) {
-    const nestedArray = this.moments;
-    let nestedCopy = [...nestedArray];
-
-    // If not specified send back 1 copy
-    if (!numCopies || numCopies === 0 || numCopies === 1) return [...nestedArray, ...nestedCopy];
-
-    let result = [];
-    for ( let i = 0; i < numCopies; i++ ) {
-      result = [...result, ...nestedCopy];
-    }
-
-    return result;
   }
 }
 
