@@ -6,6 +6,7 @@ export default class AppMoments extends Mixin(LitElement)
 
   static get properties() {
     return {
+      moment: { type: String },
       moments: { type: Array }
     }
   }
@@ -14,17 +15,26 @@ export default class AppMoments extends Mixin(LitElement)
     super();
     this.render = render.bind(this);
 
+    this.moment  = '';
     this.moments = [];
 
     this._injectModel('MomentModel', 'AppStateModel');
   }
 
   async _onAppStateUpdate(e) {
-    let _moments = await this.MomentModel.get(e.moment);
-    this.moments = _moments.payload.graph.nodeArray;
+    let data = await this.MomentModel.get(e.moment);
+    this.moment  = data.id;
+    console.log(this.moment);
+
+    if ( data.state === 'loaded' ) {
+      let payload = data.payload;
+      console.log(payload);
+    }
+
+    //this.moments = _moments.payload.graph.nodeArray;
 
     // The moment => Chardonnay
-    console.log(this.moments);
+    //console.log(this.moments);
 
     //this.moments = this._copyMockData(6);
   }

@@ -1,10 +1,11 @@
 const express = require('express');
 const app     = express();
 const config  = require('./config');
+
+/*
 const fetch   = require('node-fetch');
 const fs      = require('fs');
 
-/*
 // https://www.freecodecamp.org/news/a-practical-es6-guide-on-how-to-perform-http-requests-using-the-fetch-api-594c3d91a547/
 const endpoint = "https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/chardonnay";
 const store_data = async (url) => {
@@ -17,7 +18,7 @@ const store_data = async (url) => {
     });
     console.log("response: ", response);
     const json = await response.json();
-    return fs.writeFile('./mock/live-graph.json', JSON.stringify(json, null, 2), (err) => {
+    return fs.writeFile('./mock/data.json', JSON.stringify(json, null, 2), (err) => {
       if (err) {
         console.log(err);
         return;

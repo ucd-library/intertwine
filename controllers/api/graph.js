@@ -7,8 +7,8 @@ router.get('/mock', (req, res) => {
   res.json(JSON.parse(data));
 });
 
-router.get('/live', (req, res) => {
-  let data = fs.readFileSync(path.join(__dirname, '..', '..', 'mock', 'live-graph.json'), 'utf-8');
+router.get('/chardonnay', (req, res) => {
+  let data = fs.readFileSync(path.join(__dirname, '..', '..', 'mock', 'chardonnay.json'), 'utf-8');
   res.json(JSON.parse(data));
 });
 
