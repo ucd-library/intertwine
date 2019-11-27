@@ -11,9 +11,7 @@ class MomentService extends BaseService {
   get(moment, transform) {
     if( !transform ) transform = data => data;
     return this.request({
-      // url : `/api/graph/${moment}`,
-      // url : '/api/graph/mock',
-      url : '/api/graph/chardonnay',
+      url : `/api/graph/${moment}`,
       onLoading : request => this.store.onGraphLoading(moment, request),
       onLoad : resp => {
         //resp.body.graph = transform(resp.body.graph);
