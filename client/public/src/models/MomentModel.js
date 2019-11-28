@@ -74,12 +74,67 @@ class MomentModel extends BaseModel {
   }
 
   transformMockLinks(data) {
-    let nodes = {};
-    let links = {};
-    let linkArray = [], nodeArray = [];
+    let links = [], nodes = [];
 
+    function cleanType(type) {
+      if ( Array.isArray(type) ) {
+        type = type.filter(t => t.includes('ucdlib:'));
+        return type[0].replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();
+      } else {
+        return type.replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();
+      }
+    }
+
+    function formatCoords(array) {
+      let final = [];
+  
+      if ( Array.isArray(array) ) {
+        let coords = array.filter(a => /([0-9])/.test(a) === true);
+                  
+        coords.forEach(el => {
+          let split = el.split(', ');
+          let lat = parseFloat(split[0]);
+          let lng = parseFloat(split[1]);
+  
+          final.push(lat, lng);
+        });
+  
+        return final;
+      }
+  
+      return false;
+    }
+
+    function formatLocation(array) {
+      let final = [];
+  
+      if ( Array.isArray(array) ) {
+        let fullLocation = array.filter(a => /([a-zA-Z])/.test(a) === true);
+                 
+        fullLocation.forEach(el => {
+          let split = el.split(', ');
+          let city  = split[0];
+          let state = split[1];
+ 
+          final.push({ 'city': city, 'place': state });
+        });
+  
+        return final;
+      }
+  
+      return false;
+    }
+     
     let lookup = {};
     data.forEach(item => {
+      if ( !item['schema:description'] ) {
+        item.description = false;
+      } else {
+        item.description = item['schema:description'];
+      }
+
+      // Reformat the types
+      item['type'] = cleanType(item['@type']);
       lookup[item['@id'].replace(/.*:/, '')] = item;
     });
 
@@ -89,21 +144,30 @@ class MomentModel extends BaseModel {
       for( let attr in container ) {
         if( lookup[attr] ) {
           let link = lookup[attr];
-          linkArray.push(link);
+          links.push(link);
           link.src = container['@id'];
           link.dst = container[attr];
           link.isLink = true;
         }
       }
-    }
+    }  
 
     for( let id in lookup ) {
       if( !lookup[id].isLink ) {
-        nodeArray.push(lookup[id]);
+        // Reformat to lat/lng and location
+        if ( lookup[id]['spatial'] ) {
+          lookup[id]['coordinates'] = formatCoords(lookup[id]['spatial']);
+          lookup[id]['location']    = formatLocation(lookup[id]['spatial']);
+        }
+
+        nodes.push(lookup[id]);
       }
-    }
+    }  
 
     /*
+    let nodes = {};
+    let links = {};
+
     for( item of data ) {
       if( item.type === 'connection' ) {
         item.id = item.src+'-'+item.dst;
@@ -124,9 +188,8 @@ class MomentModel extends BaseModel {
 
     return { nodes, links }
     */
-
-    //console.log(nodeArray, linkArray);
-    return { nodeArray, linkArray }
+   
+    return { nodes, links }
   }
 }
 

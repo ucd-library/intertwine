@@ -212,6 +212,7 @@ export default class AppLeafletMap extends LitElement {
       iconSize: [0, 0],
       html : '<div>'+this.nodes[id].title+'</div><div class="intertwine-arrow"></div>'
     });
+    
     this.selectedNodeIcon[type] = L.marker(layer.getLatLng(), {icon});
     this.map.addLayer(this.selectedNodeIcon[type]);
     this.selectedNodeIcon[type].setZIndexOffset(5000);
@@ -390,17 +391,20 @@ export default class AppLeafletMap extends LitElement {
 
     this.clusters.clearLayers();
 
-    for( let id in data.nodes ) {
+    for( let id in data.nodes ) {      
       let icon = L.divIcon({
         className: `leaflet-intertwine-icon leaflet-${data.nodes[id].type}-icon`,
         iconSize: [15, 15]
       });
-      let layer = L.marker(data.nodes[id].coordinates, {icon});
 
-      layer.on('click', e => this.onNodeClicked(e));
-      layer.inertWineId = id;
-      this.nodeLayers[id] = layer;
-      this.clusters.addLayer(layer);
+      if (data.nodes[id].coordinates) {
+        let layer = L.marker(data.nodes[id].coordinates, {icon});
+
+        layer.on('click', e => this.onNodeClicked(e));
+        layer.inertWineId = id;
+        this.nodeLayers[id] = layer;
+        this.clusters.addLayer(layer);
+      }
     }
 
     if( this.pendingClusterSelect ) {
@@ -443,6 +447,8 @@ export default class AppLeafletMap extends LitElement {
 
     for( let id in this.links ) {
       let item = this.links[id];
+      
+      // TODO: Stuck here
       let src = this.getMarkerLatLng(item.src);
       let dst = this.getMarkerLatLng(item.dst);
 
@@ -467,6 +473,7 @@ export default class AppLeafletMap extends LitElement {
         weight: selected ? 2: 1,
         opacity : selected ? 1 : 0.3
       }).addTo(this.map);
+
       this.linkLayers[lid].selected = selected;
     }
   }
@@ -495,6 +502,7 @@ export default class AppLeafletMap extends LitElement {
   getMarkerLatLng(id) {
     let clusterLayer = this.clusters.getVisibleParent(this.nodeLayers[id]);
     if( clusterLayer ) return clusterLayer.getLatLng();
+
     return L.latLng(this.nodes[id].coordinates);
   }
 

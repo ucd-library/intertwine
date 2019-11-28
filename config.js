@@ -4,7 +4,7 @@ let clientPackage = require('./client/public/package.json');
 module.exports = {
   server : {
     assets : (env === 'prod') ? 'dist' : 'public',
-    appRoutes : ['about', 'data/:id', 'map', 'moment', 'moments'],
+    appRoutes : ['about', 'map', 'moment', 'moments'],
     port : process.env.APP_PORT || process.env.PORT || 3000
   },
 

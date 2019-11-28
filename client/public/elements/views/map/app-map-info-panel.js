@@ -36,6 +36,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     super();
 
     this.open = true;
+    this.title = '';
     this.date = '';
     this.view = '';
     this.type = '';
@@ -65,6 +66,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
    */
   _onMomentGraphUpdate(e) {
     if( e.state !== 'loaded' ) return;
+
     this.renderState(e.payload);
   }
 
@@ -82,8 +84,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   renderState(moment) {
     if( moment ) {
       this.momentInfo = moment;
+     
       this.momentDescEle.innerHTML = markdown.toHTML(moment.description || '');
-
       this.momentEntryPointUrl = '';
       if( moment.entryPoint ) {
         for( let id in moment.graph.nodes ) {
@@ -119,7 +121,9 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       this.renderItem(this.graph.links[this.selected.id]);
     } else {
       this.isNode = true;
-      this.renderItem(this.graph.nodes[this.selected.id]);
+
+      let selectedNode = this.graph.nodes.filter(node => node['@id'] === this.selected.id);
+      this.renderItem(selectedNode[0]);
     }
   }
 
@@ -136,6 +140,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   renderCluster(nodes) {
+    console.log("renderCluster: ", nodes);
     this.view = 'cluster';
     this.resetClusterSubjects();
 
@@ -146,13 +151,22 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     });
   }
 
-  renderItem(node) {
+  renderItem(node) {  
+    console.log("renderItem: ", node);
     this.view = 'item';
+   
+    this.title = node.name || '';
+    if ( Array.isArray(node.location ) ) {
+      node.location = node.location[0].city + ', ' + node.location[0].place;
+    }
 
-    this.title = node.title || '';
     this.location = node.location || '';
-    this.date = node.date || '';
-    this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');
+    this.date = node.temporal || '';
+
+    if ( node.description !== false ) {
+      console.log("node.description: ", node.description);
+      this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');
+    }
 
     if( node.type === 'connection' ) {
       this.connectionSubjects = [
@@ -167,31 +181,33 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       let link;
       for( let id in this.graph.links ) {
         link = this.graph.links[id];
-        if( link.src === node.id ) {
+        if( link.src === node['@id'] ) {
           connections.push({
             link,
-            node : this.graph.nodes[link.dst]
+            node : this.graph.nodes.filter(node => node['@id'] === link.dst)[0]
+            //node : this.graph.nodes[link.dst]
           });
-        } else if ( link.dst === node.id ) {
+        } else if ( link.dst === node['@id'] ) {         
           connections.push({
             link,
-            node : this.graph.nodes[link.src]
+            node : this.graph.nodes.filter(node => node['@id'] === link.src)[0]
+            //node : this.graph.nodes[link.src]
           });
         }
       }
 
       connections.sort((a, b) => {
-        if( a.node.title < b.node.title ) return -1;
-        if( a.node.title > b.node.title ) return 1;
+        if( a.node.name < b.node.name ) return -1;
+        if( a.node.name > b.node.name ) return 1;
         return 0;
       })
 
       this.connections = connections;
     }
-
   }
 
   renderLink(node) {
+    console.log("renderLink: ", node);
     this.type = 'item'
     this.title = node.title;
     this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');

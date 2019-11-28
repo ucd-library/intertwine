@@ -59,7 +59,8 @@ export default class AppViewMap extends Mixin(LitElement)
    */
   _onNodeClick(e) {
     let node = this.data.nodes[e.detail.id];
-    this.AppStateModel.setLocation('/map/'+this.selectedMoment+'/'+node.type+'/'+node.id);
+    let id   = node['@id'];
+    this.AppStateModel.setLocation('/map/'+this.selectedMoment+'/'+node.type+'/'+id);
   }
 
   /**

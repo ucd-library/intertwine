@@ -265,7 +265,9 @@ ${sharedStyles}
             ${this.clusterSubjects[type].nodes.map(node => html`
               <div>
                 <div class="dot" type="${type}"></div>
-                <span><a class="internal" href="/map/${this.moment}/${type}/${node.id}">${node.title}</a></span>
+                <span>
+                  <a class="internal" href="/map/${this.moment}/${type}/${node['@id']}">${node.name}</a>
+                </span>
               </div>
             `)}
           </div>
@@ -296,7 +298,9 @@ ${sharedStyles}
             ${this.connections.map(item => html`
               <div>
                 <div class="dot" type="${item.node.type}"></div>
-                <span><a class="internal" href="/map/${this.moment}/connection/${item.link.id}">${item.node.title}</a></span>
+                <span>
+                  <a class="internal" href="/map/${this.moment}/connection/${item.link['@id']}">${item.node.name}</a>
+                </span>
               </div>
             `)}
           </div>

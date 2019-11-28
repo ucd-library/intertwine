@@ -27,7 +27,6 @@ export default class AppMoments extends Mixin(LitElement)
       let moment = payload['@graph'].filter(data => data['@type'].includes('ldp:Container'));
 
       this.moments = moment;
-      console.log(this.moments);
     }
   }
 }
