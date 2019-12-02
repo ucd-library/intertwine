@@ -47,7 +47,7 @@ export default class AppViewMap extends Mixin(LitElement)
    */
   _onMomentGraphUpdate(e) {
     if( e.state !== 'loaded' ) return;
-    this.data = e.payload.graph;
+    this.data = e.payload;
     this.mapEle.setData(e.payload.graph);
   }
 

@@ -75,7 +75,7 @@ class MomentModel extends BaseModel {
   transformMockLinks(data) {
     let links = [], nodes = [];
 
-    // Helper Function - START
+    // Helper Functions - START
     function cleanType(type) {
       if ( Array.isArray(type) ) {
         type = type.find(t => t.includes('ucdlib:'));
@@ -108,7 +108,7 @@ class MomentModel extends BaseModel {
 
       return false;
     }
-    // Helper Function - END
+    // Helper Functions - END
 
     let lookup = {};
     data.forEach(item => {
@@ -139,10 +139,9 @@ class MomentModel extends BaseModel {
 
     for( let id in lookup ) {
       if( !lookup[id].isLink ) {
-
         if ( lookup[id]['spatial'] ) {
           let _coords = getCoords(lookup[id]['spatial']);
-          lookup[id]['location']    = _coords.name;
+          lookup[id]['location'] = _coords.name;
 
           // Check for missing lat & long values and replace them with zeros
           if ( isNaN(_coords.longitude) || isNaN(_coords.latitude) ) {

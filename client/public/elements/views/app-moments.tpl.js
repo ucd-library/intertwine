@@ -64,7 +64,6 @@ export default function render() {
             <h2 style="margin: 0 0 14px 0">${element.temporal}</h2>
             ${element.mainTopicOfPage ? html`<a href="${element.mainTopicOfPage}" target="_blank">External Link</a>` : ''}
 
-
             ${this.moment}
 
             <p>${element.description}</p>

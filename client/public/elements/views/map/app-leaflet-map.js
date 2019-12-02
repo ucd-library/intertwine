@@ -446,35 +446,35 @@ export default class AppLeafletMap extends LitElement {
 
     for( let id in this.links ) {
       let item = this.links[id];
+      //console.log(item);
+
+      /*
+      let src = this.getMarkerLatLng(item.src);
+      let dst = this.getMarkerLatLng(item.dst);
+
       let selected = false;
       if( this.selectedNodeLayer && this.selectedNodeLayer.src && this.selectedNodeLayer.dst ) {
-        if( item.src === this.selectedNodeLayer.src.intertWineId && item.dst === this.selectedNodeLayer.dst.intertWineId ) {
+        if( item.src === this.selectedNodeLayer.src.inertWineId && item.dst === this.selectedNodeLayer.dst.inertWineId ) {
           selected = true;
         }
       }
 
-      let _src = this.links.find(link => link['@id'] === item['@id']);
-      if ( _src.hasOwnProperty('coordinates') === true ) {
-        let src = this.getMarkerLatLng(item.src);
-        let dst = this.getMarkerLatLng(item.dst);
-
-        let lid = src.lat+'-'+src.lng+'-'+dst.lat+'-'+dst.lng;
-        if( this.linkLayers[lid] ) {
-          if( selected && !this.linkLayers[lid].selected ) {
-            this.linkLayers[lid].selected = true;
-            this.linkLayers[lid].setStyle({opacity: 1, weight: 2});
-          }
-          continue;
+      let lid = src.lat+'-'+src.lng+'-'+dst.lat+'-'+dst.lng;
+      if( this.linkLayers[lid] ) {
+        if( selected && !this.linkLayers[lid].selected ) {
+          this.linkLayers[lid].selected = true;
+          this.linkLayers[lid].setStyle({opacity: 1, weight: 2});
         }
-
-        this.linkLayers[lid] = L.polyline([src, dst], {
-          color: this.lineColor,
-          weight: selected ? 2: 1,
-          opacity : selected ? 1 : 0.3
-        }).addTo(this.map);
-
-        this.linkLayers[lid].selected = selected;
+        continue;
       }
+
+      this.linkLayers[lid] = L.polyline([src, dst], {
+        color: this.lineColor,
+        weight: selected ? 2: 1,
+        opacity : selected ? 1 : 0.3
+      }).addTo(this.map);
+      this.linkLayers[lid].selected = selected;
+      */
     }
   }
 
