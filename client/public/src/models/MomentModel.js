@@ -25,7 +25,6 @@ class MomentModel extends BaseModel {
         await state.request;
       } else if( state.state !== 'loaded' ) {
         await this.service.get(moment, this.transformMockLinks);
-        //await this.service.get(moment, this.transformLDPLinks);
       }
     } catch(e) { console.error(e) };
 
@@ -76,6 +75,7 @@ class MomentModel extends BaseModel {
   transformMockLinks(data) {
     let links = [], nodes = [];
 
+    // Helper Function - START
     function cleanType(type) {
       if ( Array.isArray(type) ) {
         type = type.filter(t => t.includes('ucdlib:'));
@@ -85,46 +85,31 @@ class MomentModel extends BaseModel {
       }
     }
 
-    function formatCoords(array) {
-      let final = [];
-  
-      if ( Array.isArray(array) ) {
-        let coords = array.filter(a => /([0-9])/.test(a) === true);
-                  
-        coords.forEach(el => {
-          let split = el.split(', ');
-          let lat = parseFloat(split[0]);
-          let lng = parseFloat(split[1]);
-  
-          final.push(lat, lng);
-        });
-  
-        return final;
-      }
-  
-      return false;
+    function getCoords(id) {
+      return data.find(record => record['@id'] === id);
     }
 
     function formatLocation(array) {
       let final = [];
-  
+
       if ( Array.isArray(array) ) {
         let fullLocation = array.filter(a => /([a-zA-Z])/.test(a) === true);
-                 
+
         fullLocation.forEach(el => {
           let split = el.split(', ');
           let city  = split[0];
           let state = split[1];
- 
+
           final.push({ 'city': city, 'place': state });
         });
-  
+
         return final;
       }
-  
+
       return false;
     }
-     
+    // Helper Function - END
+
     let lookup = {};
     data.forEach(item => {
       if ( !item['schema:description'] ) {
@@ -150,45 +135,35 @@ class MomentModel extends BaseModel {
           link.isLink = true;
         }
       }
-    }  
+    }
 
     for( let id in lookup ) {
       if( !lookup[id].isLink ) {
-        // Reformat to lat/lng and location
+
         if ( lookup[id]['spatial'] ) {
-          lookup[id]['coordinates'] = formatCoords(lookup[id]['spatial']);
-          lookup[id]['location']    = formatLocation(lookup[id]['spatial']);
+          let _coords = getCoords(lookup[id]['spatial']);
+          lookup[id]['location']    = _coords.name;
+
+          // Check for missing lat & long values and replace them with zeros
+          if ( isNaN(_coords.longitude) || isNaN(_coords.latitude) ) {
+            _coords.longitude = 0;
+            _coords.latitude  = 0;
+          }
+
+          let coords = [
+            {
+              lat: parseFloat(_coords.latitude),
+              lng: parseFloat(_coords.longitude)
+            }
+          ]
+
+          lookup[id]['coordinates'] = coords;
         }
 
         nodes.push(lookup[id]);
       }
-    }  
-
-    /*
-    let nodes = {};
-    let links = {};
-
-    for( item of data ) {
-      if( item.type === 'connection' ) {
-        item.id = item.src+'-'+item.dst;
-        links[item.id] = item;
-      } else {
-        item.coordinates = item.coordinates.reverse();
-        nodes[item.id] = item;
-      }
     }
 
-    for( let id in links ) {
-      item = links[id];
-      item.coordinates = {
-        src : nodes[item.src].coordinates,
-        dst : nodes[item.dst].coordinates
-      }
-    }
-
-    return { nodes, links }
-    */
-   
     return { nodes, links }
   }
 }

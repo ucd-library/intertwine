@@ -22,8 +22,8 @@ export default class IntertWine extends Mixin(LitElement)
 
   static get properties() {
     return {
-      view : {type: String},
-      appRoutes : {type: Array}
+      view : { type: String },
+      appRoutes : { type: Array }
     }
   }
 

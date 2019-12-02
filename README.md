@@ -6,7 +6,7 @@ California's modern wine network
 
 In the root, let's install our dependancies needed to construct our code.
 
-```
+```bash
 npm install
 ```
 
@@ -23,3 +23,22 @@ npm run watch
 Next navigate to the root directory and run `node server.js`.
 
 And you are now running your development setup on `localhost`.
+
+### Notes
+
+1. When making requests to Fedora be sure to include the following header in your get requests:
+
+  ```bash
+  "Content-Type": "application/json, charset=utf-8"
+  "Accept": "application/ld+json; profile=\"http:///www.w3.org/ns/json-ld#compacted\""
+  ```
+
+  Using Fin
+
+  ```bash
+  fin http get -H "Accept: application/ld+json; profile=\"http://www.w3.org/ns/json-ld#compacted\"" -P b /collection/chardonnay2 > chardonnay2.json
+  ```
+
+### Documentation
+
+(Fedora 4.7.5 RESTful HTTP API)<https://wiki.lyrasis.org/display/FEDORA475/RESTful+HTTP+API>

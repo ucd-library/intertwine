@@ -181,7 +181,7 @@ export default class AppLeafletMap extends LitElement {
     // find the marker layer based on id in the cluster
     let layer = this.clusters
       .getLayers()
-      .find(layer => layer.inertWineId === id);
+      .find(layer => layer.intertWineId === id);
 
     // if not found, assume either graph hasn't loaded or the layer hasn't rendered
     // set the pendingNodeSelect attribute which will be cheched when the graph
@@ -212,7 +212,7 @@ export default class AppLeafletMap extends LitElement {
       iconSize: [0, 0],
       html : '<div>'+this.nodes[id].title+'</div><div class="intertwine-arrow"></div>'
     });
-    
+
     this.selectedNodeIcon[type] = L.marker(layer.getLatLng(), {icon});
     this.map.addLayer(this.selectedNodeIcon[type]);
     this.selectedNodeIcon[type].setZIndexOffset(5000);
@@ -241,9 +241,9 @@ export default class AppLeafletMap extends LitElement {
         arrow.classList.add('top');
       }
 
-      // the point markers have inertWineIds
+      // the point markers have intertWineIds
       // these have different label top/bottom offsets based on cluster vs point
-      if( layer.inertWineId ) {
+      if( layer.intertWineId ) {
         markerEle.classList.add('point');
         arrow.classList.add('point');
       }
@@ -299,7 +299,7 @@ export default class AppLeafletMap extends LitElement {
       let layer = this.clusters.getVisibleParent(this.selectedNodeLayer[type]) || this.selectedNodeLayer[type];
       this.selectedNodeIcon[type].setLatLng(layer.getLatLng());
 
-      if( layer.inertWineId ) {
+      if( layer.intertWineId ) {
         this.selectedNodeIcon[type].getElement().firstChild.classList.add('point');
         this.selectedNodeIcon[type].getElement().children[1].classList.add('point');
       } else {
@@ -330,7 +330,7 @@ export default class AppLeafletMap extends LitElement {
 
     for( let layer of clusterMarkers ) {
       // HACK.  Is there better type checking for this?
-      if( layer.inertWineId ) continue;
+      if( layer.intertWineId ) continue;
       if( !layer._group ) continue;
 
       let ll = layer.getBounds().getCenter();
@@ -344,7 +344,7 @@ export default class AppLeafletMap extends LitElement {
     if( !selectedCluster ) return console.warn('no clusters found to selected');
 
     let event = new CustomEvent('selected-cluster-ids', {
-      detail: selectedCluster.getAllChildMarkers().map(l => l.inertWineId)
+      detail: selectedCluster.getAllChildMarkers().map(l => l.intertWineId)
     })
     this.dispatchEvent(event);
   }
@@ -368,14 +368,14 @@ export default class AppLeafletMap extends LitElement {
    */
   onNodeClicked(e) {
     let event = new CustomEvent('node-click', {detail : {
-      id : e.target.inertWineId
+      id : e.target.intertWineId
     }});
     this.dispatchEvent(event);
   }
 
   onLinkClicked(e) {
     let event = new CustomEvent('link-click', {detail : {
-      id : e.layer.inertWineId
+      id : e.layer.intertWineId
     }});
     this.dispatchEvent(event);
   }
@@ -391,17 +391,16 @@ export default class AppLeafletMap extends LitElement {
 
     this.clusters.clearLayers();
 
-    for( let id in data.nodes ) {      
+    for( let id in data.nodes ) {
       let icon = L.divIcon({
         className: `leaflet-intertwine-icon leaflet-${data.nodes[id].type}-icon`,
         iconSize: [15, 15]
       });
 
       if (data.nodes[id].coordinates) {
-        let layer = L.marker(data.nodes[id].coordinates, {icon});
-
+        let layer = L.marker(data.nodes[id].coordinates[0], {icon});
         layer.on('click', e => this.onNodeClicked(e));
-        layer.inertWineId = id;
+        layer.intertWineId = id;
         this.nodeLayers[id] = layer;
         this.clusters.addLayer(layer);
       }
@@ -447,34 +446,35 @@ export default class AppLeafletMap extends LitElement {
 
     for( let id in this.links ) {
       let item = this.links[id];
-      
-      // TODO: Stuck here
-      let src = this.getMarkerLatLng(item.src);
-      let dst = this.getMarkerLatLng(item.dst);
-
       let selected = false;
       if( this.selectedNodeLayer && this.selectedNodeLayer.src && this.selectedNodeLayer.dst ) {
-        if( item.src === this.selectedNodeLayer.src.inertWineId && item.dst === this.selectedNodeLayer.dst.inertWineId ) {
+        if( item.src === this.selectedNodeLayer.src.intertWineId && item.dst === this.selectedNodeLayer.dst.intertWineId ) {
           selected = true;
         }
       }
 
-      let lid = src.lat+'-'+src.lng+'-'+dst.lat+'-'+dst.lng;
-      if( this.linkLayers[lid] ) {
-        if( selected && !this.linkLayers[lid].selected ) {
-          this.linkLayers[lid].selected = true;
-          this.linkLayers[lid].setStyle({opacity: 1, weight: 2});
+      let _src = this.links.find(link => link['@id'] === item['@id']);
+      if ( _src.hasOwnProperty('coordinates') === true ) {
+        let src = this.getMarkerLatLng(item.src);
+        let dst = this.getMarkerLatLng(item.dst);
+
+        let lid = src.lat+'-'+src.lng+'-'+dst.lat+'-'+dst.lng;
+        if( this.linkLayers[lid] ) {
+          if( selected && !this.linkLayers[lid].selected ) {
+            this.linkLayers[lid].selected = true;
+            this.linkLayers[lid].setStyle({opacity: 1, weight: 2});
+          }
+          continue;
         }
-        continue;
+
+        this.linkLayers[lid] = L.polyline([src, dst], {
+          color: this.lineColor,
+          weight: selected ? 2: 1,
+          opacity : selected ? 1 : 0.3
+        }).addTo(this.map);
+
+        this.linkLayers[lid].selected = selected;
       }
-
-      this.linkLayers[lid] = L.polyline([src, dst], {
-        color: this.lineColor,
-        weight: selected ? 2: 1,
-        opacity : selected ? 1 : 0.3
-      }).addTo(this.map);
-
-      this.linkLayers[lid].selected = selected;
     }
   }
 

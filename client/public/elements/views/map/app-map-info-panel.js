@@ -84,7 +84,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   renderState(moment) {
     if( moment ) {
       this.momentInfo = moment;
-     
+
       this.momentDescEle.innerHTML = markdown.toHTML(moment.description || '');
       this.momentEntryPointUrl = '';
       if( moment.entryPoint ) {
@@ -140,7 +140,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   renderCluster(nodes) {
-    console.log("renderCluster: ", nodes);
     this.view = 'cluster';
     this.resetClusterSubjects();
 
@@ -151,10 +150,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     });
   }
 
-  renderItem(node) {  
-    console.log("renderItem: ", node);
+  renderItem(node) {
+    let num = 1;
+    console.log(node, num+=1)
     this.view = 'item';
-   
+
     this.title = node.name || '';
     if ( Array.isArray(node.location ) ) {
       node.location = node.location[0].city + ', ' + node.location[0].place;
@@ -164,11 +164,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.date = node.temporal || '';
 
     if ( node.description !== false ) {
-      console.log("node.description: ", node.description);
       this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');
     }
 
     if( node.type === 'connection' ) {
+      console.log("connection type")
       this.connectionSubjects = [
         this.graph.nodes[node.src],
         this.graph.nodes[node.dst]
@@ -184,14 +184,12 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         if( link.src === node['@id'] ) {
           connections.push({
             link,
-            node : this.graph.nodes.filter(node => node['@id'] === link.dst)[0]
-            //node : this.graph.nodes[link.dst]
+            node : this.graph.nodes.find(node => node['@id'] === link.dst)
           });
-        } else if ( link.dst === node['@id'] ) {         
+        } else if ( link.dst === node['@id'] ) {
           connections.push({
             link,
-            node : this.graph.nodes.filter(node => node['@id'] === link.src)[0]
-            //node : this.graph.nodes[link.src]
+            node : this.graph.nodes.find(node => node['@id'] === link.src)
           });
         }
       }
@@ -200,9 +198,10 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         if( a.node.name < b.node.name ) return -1;
         if( a.node.name > b.node.name ) return 1;
         return 0;
-      })
+      });
 
       this.connections = connections;
+      //console.log("x: ", this.connections);
     }
   }
 
