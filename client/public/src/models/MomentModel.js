@@ -78,8 +78,8 @@ class MomentModel extends BaseModel {
     // Helper Function - START
     function cleanType(type) {
       if ( Array.isArray(type) ) {
-        type = type.filter(t => t.includes('ucdlib:'));
-        return type[0].replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();
+        type = type.find(t => t.includes('ucdlib:'));
+        return type.replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();
       } else {
         return type.replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();
       }

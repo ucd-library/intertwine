@@ -118,12 +118,12 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       }
     } else if( this.type === 'connection' ) {
       this.isLink = true;
-      this.renderItem(this.graph.links[this.selected.id]);
+      let selectedNode = this.graph.links.find(link => link['@id'] === this.selected.id);
+      this.renderItem(selectedNode);
     } else {
       this.isNode = true;
-
-      let selectedNode = this.graph.nodes.filter(node => node['@id'] === this.selected.id);
-      this.renderItem(selectedNode[0]);
+      let selectedNode = this.graph.nodes.find(node => node['@id'] === this.selected.id);
+      this.renderItem(selectedNode);
     }
   }
 
@@ -151,11 +151,10 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   renderItem(node) {
-    let num = 1;
-    console.log(node, num+=1)
     this.view = 'item';
 
     this.title = node.name || '';
+
     if ( Array.isArray(node.location ) ) {
       node.location = node.location[0].city + ', ' + node.location[0].place;
     }
@@ -168,7 +167,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     }
 
     if( node.type === 'connection' ) {
-      console.log("connection type")
       this.connectionSubjects = [
         this.graph.nodes[node.src],
         this.graph.nodes[node.dst]
@@ -182,15 +180,21 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       for( let id in this.graph.links ) {
         link = this.graph.links[id];
         if( link.src === node['@id'] ) {
-          connections.push({
-            link,
-            node : this.graph.nodes.find(node => node['@id'] === link.dst)
-          });
+          let selectedNode = this.graph.nodes.find(node => node['@id'] === link.dst);
+          if ( selectedNode ) {
+            connections.push({
+              link,
+              node: selectedNode
+            });
+          }
         } else if ( link.dst === node['@id'] ) {
-          connections.push({
-            link,
-            node : this.graph.nodes.find(node => node['@id'] === link.src)
-          });
+          let selectedNode = this.graph.nodes.find(node => node['@id'] === link.src);
+          if ( selectedNode ) {
+            connections.push({
+              link,
+              node: selectedNode
+            });
+          }
         }
       }
 
@@ -201,12 +205,10 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       });
 
       this.connections = connections;
-      //console.log("x: ", this.connections);
     }
   }
 
   renderLink(node) {
-    console.log("renderLink: ", node);
     this.type = 'item'
     this.title = node.title;
     this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');

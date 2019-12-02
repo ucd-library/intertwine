@@ -299,7 +299,9 @@ ${sharedStyles}
               <div>
                 <div class="dot" type="${item.node.type}"></div>
                 <span>
-                  <a class="internal" href="/map/${this.moment}/connection/${item.link['@id']}">${item.node.name}</a>
+                  <a class="internal" href="/map/${this.moment}/connection/${item.link['@id']}">
+                    ${item.node.name}
+                  </a>
                 </span>
               </div>
             `)}
@@ -310,7 +312,11 @@ ${sharedStyles}
           ${this.connectionSubjects.map(node => html`
             <div>
               <div class="dot" type="${node.type}"></div>
-              <span><a class="internal" href="/map/${this.moment}/${node.type}/${node.id}">${node.title}</a></span>
+              <span>
+                <a class="internal" href="/map/${this.moment}/${node.type}/${node.id}">
+                  ${node.name}
+                </a>
+              </span>
             </div>
           `)}
         </div>
