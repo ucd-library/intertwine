@@ -112,11 +112,8 @@ class MomentModel extends BaseModel {
 
     let lookup = {};
     data.forEach(item => {
-      if ( !item['schema:description'] ) {
-        item.description = false;
-      } else {
-        item.description = item['schema:description'];
-      }
+      if ( !item['schema:description'] ) item.description = false;
+      else item.description = item['schema:description'];
 
       // Reformat the types
       item['type'] = cleanType(item['@type']);
@@ -125,7 +122,6 @@ class MomentModel extends BaseModel {
 
     for( let id in lookup ) {
       let container = lookup[id];
-
       for( let attr in container ) {
         if( lookup[attr] ) {
           let link = lookup[attr];
@@ -137,6 +133,8 @@ class MomentModel extends BaseModel {
       }
     }
 
+    // Build the nodes
+    // Data Structure => coordinates = [0,0]
     for( let id in lookup ) {
       if( !lookup[id].isLink ) {
         if ( lookup[id]['spatial'] ) {
@@ -150,16 +148,37 @@ class MomentModel extends BaseModel {
           }
 
           let coords = [
-            {
-              lat: parseFloat(_coords.latitude),
-              lng: parseFloat(_coords.longitude)
-            }
+            parseFloat(_coords.latitude),
+            parseFloat(_coords.longitude)
           ]
 
           lookup[id]['coordinates'] = coords;
         }
 
         nodes.push(lookup[id]);
+      }
+    }
+
+    /** Links Data Structure
+     *  coordinates {
+          dst: [lat,lng]
+          src: [lat,lng]
+        }
+    */
+    for ( let id in links ) {
+      let item = links[id];
+      let src, dst;
+      let src_id = item.src;
+      let dst_id = item.dst;
+
+      nodes.find(node => {
+        if (node['@id'] === dst_id) dst = node.coordinates;
+        if (node['@id'] === src_id) src = node.coordinates;
+      });
+
+      item.coordinates = {
+        src: src,
+        dst: dst
       }
     }
 

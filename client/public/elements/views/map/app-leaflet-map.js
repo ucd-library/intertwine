@@ -398,7 +398,7 @@ export default class AppLeafletMap extends LitElement {
       });
 
       if (data.nodes[id].coordinates) {
-        let layer = L.marker(data.nodes[id].coordinates[0], {icon});
+        let layer = L.marker(data.nodes[id].coordinates, {icon});
         layer.on('click', e => this.onNodeClicked(e));
         layer.intertWineId = id;
         this.nodeLayers[id] = layer;
@@ -446,8 +446,6 @@ export default class AppLeafletMap extends LitElement {
 
     for( let id in this.links ) {
       let item = this.links[id];
-      //console.log(item);
-
       /*
       let src = this.getMarkerLatLng(item.src);
       let dst = this.getMarkerLatLng(item.dst);
@@ -502,7 +500,6 @@ export default class AppLeafletMap extends LitElement {
   getMarkerLatLng(id) {
     let clusterLayer = this.clusters.getVisibleParent(this.nodeLayers[id]);
     if( clusterLayer ) return clusterLayer.getLatLng();
-
     return L.latLng(this.nodes[id].coordinates);
   }
 
