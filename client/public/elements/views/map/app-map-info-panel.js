@@ -86,12 +86,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
       this.momentEntryPointUrl = '';
 
-      let entryPoints = moment.graph.nodes.filter(node => node.type === 'event');
-      if( entryPoints ) {
-        for( let id in entryPoints ) {
-          let node = entryPoints[id];
-          if( node['@id'] !== entryPoints[id]['@id'] ) continue;
-          this.momentEntryPointUrl = `/map/${this.moment}/${node.type}/${node['@id']}`;
+      if( moment.entryPoint ) {
+        for( let id in moment.graph.nodes ) {
+          let node = moment.graph.nodes[id];
+          if( node.id !== moment.entryPoint ) continue;
+          this.momentEntryPointUrl = `/map/${this.moment}/${node.type}/${node.id}`;
           break;
         }
       }
@@ -118,11 +117,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       }
     } else if( this.type === 'connection' ) {
       this.isLink = true;
-      let selectedNode = this.graph.links.find(link => link['@id'] === this.selected.id);
+      let selectedNode = this.graph.links[this.selected.id];
       this.renderItem(selectedNode);
     } else {
       this.isNode = true;
-      let selectedNode = this.graph.nodes.find(node => node['@id'] === this.selected.id);
+      let selectedNode = this.graph.nodes[this.selected.id];
       this.renderItem(selectedNode);
     }
   }
@@ -152,17 +151,20 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
   renderItem(node) {
     this.view = 'item';
+
     this.title = node.name || '';
     this.location = node.location || '';
     this.date = node.temporal || '';
+
     if ( node.description !== false ) {
       this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');
     }
 
     if( node.type === 'connection' ) {
-      let src = this.graph.nodes.find(n => n['@id'] === node.src);
-      let dst = this.graph.nodes.find(n => n['@id'] === node.dst);
-      this.connectionSubjects = [ src, dst ];
+      this.connectionSubjects = [
+        this.graph.nodes[node.src],
+        this.graph.nodes[node.dst]
+      ];
       this.srctype = this.connectionSubjects[0].type;
       this.dsttype = this.connectionSubjects[1].type;
     } else {
@@ -171,22 +173,16 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       let link;
       for( let id in this.graph.links ) {
         link = this.graph.links[id];
-        if( link.src === node['@id'] ) {
-          let selectedNode = this.graph.nodes.find(node => node['@id'] === link.dst);
-          if ( selectedNode ) {
-            connections.push({
-              link,
-              node: selectedNode
-            });
-          }
-        } else if ( link.dst === node['@id'] ) {
-          let selectedNode = this.graph.nodes.find(node => node['@id'] === link.src);
-          if ( selectedNode ) {
-            connections.push({
-              link,
-              node: selectedNode
-            });
-          }
+        if( link.src === node.id ) {
+          connections.push({
+            link,
+            node : this.graph.nodes[link.dst]
+          });
+        } else if ( link.dst === node.id ) {
+          connections.push({
+            link,
+            node : this.graph.nodes[link.src]
+          });
         }
       }
 
@@ -201,6 +197,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   renderLink(node) {
+    console.log("renderLink: ", node);
     this.type = 'item'
     this.title = node.title;
     this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');

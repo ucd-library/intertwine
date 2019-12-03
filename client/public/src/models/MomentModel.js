@@ -73,7 +73,7 @@ class MomentModel extends BaseModel {
   }
 
   transformMockLinks(data) {
-    let links = [], nodes = [];
+    let places = {}, links = {}, nodes = {}, lookup = {}, item;
 
     // Helper Functions - START
     function cleanType(type) {
@@ -81,8 +81,7 @@ class MomentModel extends BaseModel {
         type = type.find(t => t.includes('ucdlib:'));
         return type.replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();
       } else {
-        return type.replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();
-      }
+        return type.replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();      }
     }
 
     function getCoords(id) {
@@ -90,7 +89,6 @@ class MomentModel extends BaseModel {
     }
     // Helper Functions - END
 
-    let lookup = {};
     data.forEach(item => {
       item['type'] = cleanType(item['@type']);
       lookup[item['@id'].replace(/.*:/, '')] = item;
@@ -99,15 +97,27 @@ class MomentModel extends BaseModel {
       if ( item.type === 'significantlink' ) item.type = 'connection';
     });
 
-    for( let id in lookup ) {
+    // Removing any schema:Places in the main location objects that are missing lat/lng
+    // Just a safety name
+    for ( let id in lookup ) {
+      if ( typeof lookup[id]['@type'] === 'string' && lookup[id]['@type'].includes('Place') ) {
+        if ( !lookup[id]['latitude'] ) {
+          delete lookup[id];
+        }
+      }
+    }
+
+    // Create lookup table
+    for ( let id in lookup ) {
       let container = lookup[id];
-      for( let attr in container ) {
-        if( lookup[attr] ) {
+      for ( let attr in container ) {
+        if ( lookup[attr] ) {
           let link = lookup[attr];
-          links.push(link);
           link.src = container['@id'];
           link.dst = container[attr];
           link.isLink = true;
+
+          links[id] = link;
         }
       }
     }
@@ -115,47 +125,55 @@ class MomentModel extends BaseModel {
     // Nodes
     for( let id in lookup ) {
       if( !lookup[id].isLink ) {
-        if ( lookup[id]['spatial'] ) {
-          let _coords = getCoords(lookup[id]['spatial']);
-          lookup[id]['location'] = _coords.name;
 
-          // Check for missing lat & lng values and replace them with zeros
-          if ( isNaN(_coords.longitude) || isNaN(_coords.latitude) ) {
-            _coords.longitude = 0;
-            _coords.latitude  = 0;
+        if ( lookup[id]['type'] === 'connection' ) {
+          links[lookup[id]['@id']] = lookup[id];
+        } else {
+          console.log(lookup[id])
+
+          /*
+          if ( lookup[id]['spatial'] ) {
+            let _spatialId = lookup[id]['spatial'].replace('_:', '');
+            if ( lookup[_spatialId] ) {
+              let _coords = getCoords(lookup[id]['spatial']);
+              lookup[id]['location'] = _coords.name;
+              let coords = [
+                parseFloat(_coords.latitude),
+                parseFloat(_coords.longitude)
+              ]
+              lookup[id]['coordinates'] = coords;
+            }
+          } else if (lookup[id].type === 'place' ) {
+            if ( lookup[id]['latitude'] && lookup[id]['longitude'] ) {
+              lookup[id]['coordinates'] = [
+                parseFloat(lookup[id]['latitude']),
+                parseFloat(lookup[id]['longitude'])
+              ]
+            } else {
+              lookup[id]['coordinates'] = [0,0];
+            }
+          } else {
+            lookup[id]['coordinates'] = [0,0];
           }
 
-          let coords = [
-            parseFloat(_coords.latitude),
-            parseFloat(_coords.longitude)
-          ]
-
-          lookup[id]['coordinates'] = coords;
-        } else if (lookup[id].type === 'place' ) {
-          if ( lookup[id]['latitude'] ) {
-            lookup[id]['coordinates'] = [
-              parseFloat(lookup[id]['latitude']),
-              parseFloat(lookup[id]['longitude'])
-            ]
-          }
+          nodes[lookup[id]['@id']] = lookup[id];
+          */
         }
-
-        nodes.push(lookup[id]);
       }
     }
 
     // Links
     for ( let id in links ) {
       let item = links[id];
-      let src, dst;
-
-      nodes.find(node => {
-        if (node['@id'] === item.dst) dst = node.coordinates;
-        if (node['@id'] === item.dst) src = node.coordinates;
-      });
-
-      item.coordinates = { src: src, dst: dst }
+      /*
+      item.coordinates = {
+        src: nodes[item.src].coordinates,
+        dst: nodes[item.dst].coordinates
+      }
+      */
     }
+
+    console.log(nodes, links);
 
     return { nodes, links }
   }
