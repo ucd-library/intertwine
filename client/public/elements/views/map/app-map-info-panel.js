@@ -153,11 +153,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   renderItem(node) {
     this.view = 'item';
     this.title = node.name || '';
-
-    if ( Array.isArray(node.location ) ) {
-      node.location = node.location[0].city + ', ' + node.location[0].place;
-    }
-
     this.location = node.location || '';
     this.date = node.temporal || '';
     if ( node.description !== false ) {
@@ -176,7 +171,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       let link;
       for( let id in this.graph.links ) {
         link = this.graph.links[id];
-
         if( link.src === node['@id'] ) {
           let selectedNode = this.graph.nodes.find(node => node['@id'] === link.dst);
           if ( selectedNode ) {

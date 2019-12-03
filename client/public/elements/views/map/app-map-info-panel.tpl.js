@@ -313,7 +313,7 @@ ${sharedStyles}
             <div>
               <div class="dot" type="${node.type}"></div>
               <span>
-                <a class="internal" href="/map/${this.moment}/${node.type}/${node.id}">
+                <a class="internal" href="/map/${this.moment}/${node.type}/${node['@id']}">
                   ${node.name}
                 </a>
               </span>
