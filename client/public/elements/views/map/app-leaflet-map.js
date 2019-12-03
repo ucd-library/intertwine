@@ -445,6 +445,7 @@ export default class AppLeafletMap extends LitElement {
 
     for( let id in this.links ) {
       let item = this.links[id];
+
       let src = this.getMarkerLatLng(item.src);
       let dst = this.getMarkerLatLng(item.dst);
 
@@ -499,7 +500,6 @@ export default class AppLeafletMap extends LitElement {
     if( clusterLayer ) return clusterLayer.getLatLng();
     return L.latLng(this.nodes[id].coordinates);
   }
-
 
   updated(props) {
     if( props.has('active') && this.active ) {

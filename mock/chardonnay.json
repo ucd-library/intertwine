@@ -80,6 +80,8 @@
     {
       "@id": "_:b19",
       "@type": "schema:Place",
+      "latitude": "37.0902",
+      "longitude": "-95.7129",
       "name": "United States of America"
     },
     {
@@ -106,6 +108,8 @@
     {
       "@id": "_:b4",
       "@type": "schema:Place",
+      "latitude": "37.6819",
+      "longitude": "-121.7685",
       "name": "Livermore, CA"
     },
     {
