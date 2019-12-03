@@ -8,7 +8,9 @@ export default class AppLeafletMap extends LitElement {
 
   static get properties() {
     return {
-      active : {type: Boolean},
+      active : {
+        type: Boolean
+      },
       infoOpen : {
         type: Boolean,
         attribute: 'info-open'
@@ -210,9 +212,8 @@ export default class AppLeafletMap extends LitElement {
     let icon = L.divIcon({
       className: `leaflet-intertwine-node-label`,
       iconSize: [0, 0],
-      html : '<div>'+this.nodes[id].title+'</div><div class="intertwine-arrow"></div>'
+      html : '<div>'+this.nodes[id].name+'</div><div class="intertwine-arrow"></div>'
     });
-
     this.selectedNodeIcon[type] = L.marker(layer.getLatLng(), {icon});
     this.map.addLayer(this.selectedNodeIcon[type]);
     this.selectedNodeIcon[type].setZIndexOffset(5000);
@@ -397,13 +398,14 @@ export default class AppLeafletMap extends LitElement {
         iconSize: [15, 15]
       });
 
-      if (data.nodes[id].coordinates) {
+      if ( data.nodes[id].hasOwnProperty('coordinates') ) {
         let layer = L.marker(data.nodes[id].coordinates, {icon});
         layer.on('click', e => this.onNodeClicked(e));
         layer.intertWineId = id;
         this.nodeLayers[id] = layer;
         this.clusters.addLayer(layer);
       }
+
     }
 
     if( this.pendingClusterSelect ) {
@@ -446,33 +448,34 @@ export default class AppLeafletMap extends LitElement {
 
     for( let id in this.links ) {
       let item = this.links[id];
-      /*
+
       let src = this.getMarkerLatLng(item.src);
       let dst = this.getMarkerLatLng(item.dst);
 
       let selected = false;
       if( this.selectedNodeLayer && this.selectedNodeLayer.src && this.selectedNodeLayer.dst ) {
-        if( item.src === this.selectedNodeLayer.src.inertWineId && item.dst === this.selectedNodeLayer.dst.inertWineId ) {
+        if( item.src === this.selectedNodeLayer.src.intertWineId && item.dst === this.selectedNodeLayer.dst.intertWineId ) {
           selected = true;
         }
       }
 
-      let lid = src.lat+'-'+src.lng+'-'+dst.lat+'-'+dst.lng;
-      if( this.linkLayers[lid] ) {
-        if( selected && !this.linkLayers[lid].selected ) {
-          this.linkLayers[lid].selected = true;
-          this.linkLayers[lid].setStyle({opacity: 1, weight: 2});
+      if ( src !== undefined && dst !== undefined ) {
+        let lid = src.lat+'-'+src.lng+'-'+dst.lat+'-'+dst.lng;
+        if( this.linkLayers[lid] ) {
+          if( selected && !this.linkLayers[lid].selected ) {
+            this.linkLayers[lid].selected = true;
+            this.linkLayers[lid].setStyle({opacity: 1, weight: 2});
+          }
+          continue;
         }
-        continue;
-      }
 
-      this.linkLayers[lid] = L.polyline([src, dst], {
-        color: this.lineColor,
-        weight: selected ? 2: 1,
-        opacity : selected ? 1 : 0.3
-      }).addTo(this.map);
-      this.linkLayers[lid].selected = selected;
-      */
+        this.linkLayers[lid] = L.polyline([src, dst], {
+          color: this.lineColor,
+          weight: selected ? 2: 1,
+          opacity: selected ? 1 : 0.3
+        }).addTo(this.map);
+        this.linkLayers[lid].selected = selected;
+      }
     }
   }
 
@@ -498,9 +501,16 @@ export default class AppLeafletMap extends LitElement {
    * This could be the node itself or it's containing cluster
    */
   getMarkerLatLng(id) {
+    // Check and make sure it's an actual code, no special characters
+    let regex = RegExp(/[^A-Za-z0-9]+/g);
+    if ( regex.test(id) ) return;
+
+    let node = this.nodes.find(node => node['@id'] === id);
+
     let clusterLayer = this.clusters.getVisibleParent(this.nodeLayers[id]);
     if( clusterLayer ) return clusterLayer.getLatLng();
-    return L.latLng(this.nodes[id].coordinates);
+
+    return L.latLng(node.coordinates);
   }
 
 

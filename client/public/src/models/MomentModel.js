@@ -88,36 +88,15 @@ class MomentModel extends BaseModel {
     function getCoords(id) {
       return data.find(record => record['@id'] === id);
     }
-
-    function formatLocation(array) {
-      let final = [];
-
-      if ( Array.isArray(array) ) {
-        let fullLocation = array.filter(a => /([a-zA-Z])/.test(a) === true);
-
-        fullLocation.forEach(el => {
-          let split = el.split(', ');
-          let city  = split[0];
-          let state = split[1];
-
-          final.push({ 'city': city, 'place': state });
-        });
-
-        return final;
-      }
-
-      return false;
-    }
     // Helper Functions - END
 
     let lookup = {};
     data.forEach(item => {
-      if ( !item['schema:description'] ) item.description = false;
-      else item.description = item['schema:description'];
-
-      // Reformat the types
       item['type'] = cleanType(item['@type']);
       lookup[item['@id'].replace(/.*:/, '')] = item;
+
+      // Replace significantLink with connection
+      if ( item.type === 'significantlink' ) item.type = 'connection';
     });
 
     for( let id in lookup ) {
@@ -133,15 +112,14 @@ class MomentModel extends BaseModel {
       }
     }
 
-    // Build the nodes
-    // Data Structure => coordinates = [0,0]
+    // Nodes
     for( let id in lookup ) {
       if( !lookup[id].isLink ) {
         if ( lookup[id]['spatial'] ) {
           let _coords = getCoords(lookup[id]['spatial']);
           lookup[id]['location'] = _coords.name;
 
-          // Check for missing lat & long values and replace them with zeros
+          // Check for missing lat & lng values and replace them with zeros
           if ( isNaN(_coords.longitude) || isNaN(_coords.latitude) ) {
             _coords.longitude = 0;
             _coords.latitude  = 0;
@@ -153,33 +131,30 @@ class MomentModel extends BaseModel {
           ]
 
           lookup[id]['coordinates'] = coords;
+        } else if (lookup[id].type === 'place' ) {
+          if ( lookup[id]['latitude'] ) {
+            lookup[id]['coordinates'] = [
+              parseFloat(lookup[id]['latitude']),
+              parseFloat(lookup[id]['longitude'])
+            ]
+          }
         }
 
         nodes.push(lookup[id]);
       }
     }
 
-    /** Links Data Structure
-     *  coordinates {
-          dst: [lat,lng]
-          src: [lat,lng]
-        }
-    */
+    // Links
     for ( let id in links ) {
       let item = links[id];
       let src, dst;
-      let src_id = item.src;
-      let dst_id = item.dst;
 
       nodes.find(node => {
-        if (node['@id'] === dst_id) dst = node.coordinates;
-        if (node['@id'] === src_id) src = node.coordinates;
+        if (node['@id'] === item.dst) dst = node.coordinates;
+        if (node['@id'] === item.dst) src = node.coordinates;
       });
 
-      item.coordinates = {
-        src: src,
-        dst: dst
-      }
+      item.coordinates = { src: src, dst: dst }
     }
 
     return { nodes, links }
