@@ -16,6 +16,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       moment : {type: String},
       momentInfo : {type: Object},
       momentEntryPointUrl : {type: String},
+      endpoint: { type: String },
       type : {type : String},
       srctype : {type: String},
       dsttype : {type: String},
@@ -36,9 +37,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     super();
 
     this.open = true;
+    this.title = '';
     this.date = '';
     this.view = '';
     this.type = '';
+    this.thumbnail = '';
     this.srctype = '';
     this.dsttype = '';
     this.connections = [];
@@ -48,6 +51,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.moment = '';
     this.momentInfo = {};
     this.momentEntryPointUrl = '';
+
+    this.endpoint = APP_CONFIG.endpoint;
 
     this.connectionSubjects = [];
     this.clusterSubjectTypes = ['person', 'place', 'object', 'event'];
@@ -150,6 +155,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   renderItem(node) {
+    console.log(node);
     this.view = 'item';
 
     this.title = node.name || '';
@@ -159,6 +165,12 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     if ( node.description !== false ) {
       this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');
     }
+
+    /*
+    if ( node.thumbnail ) {
+      this.thumbnail = this.endpoint + '/' + node.thumbnail;
+    }
+    */
 
     if( node.type === 'connection' ) {
       this.connectionSubjects = [

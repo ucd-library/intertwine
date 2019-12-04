@@ -27,6 +27,7 @@ module.exports = (app) => {
     getConfig : async (req, res, next) => {
       next({
         appRoutes : config.server.appRoutes,
+        endpoint : 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/chardonnay2',
         gaCode : config.client.gaCode
       });
     },

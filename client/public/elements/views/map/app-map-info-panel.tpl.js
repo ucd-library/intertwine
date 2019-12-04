@@ -290,6 +290,11 @@ ${sharedStyles}
           <h2 style="margin: 0 0 14px 0">${this.date}</h2>
         </div>
 
+        <div ?hidden="${!this.thumbnail}">
+          <img class="thumbnail" src="${this.thumbnail}" title="${this.title}">
+        </div>
+
+        <!-- Filled from inside the parent js file -->
         <div id="description"></div>
 
         <div ?hidden="${!this.isNode}">
