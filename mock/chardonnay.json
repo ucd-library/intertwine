@@ -15,6 +15,62 @@
       "name": "St. Helena, California"
     },
     {
+      "@id": "_:b2",
+      "@type": "schema:Place",
+      "latitude": "46.73",
+      "longitude": "-117.16",
+      "name": "Washington State University (PhD conferred)"
+    },
+    {
+      "@id": "_:b3",
+      "@type": "schema:Place",
+      "latitude": "43.673479",
+      "longitude": "-70.310400",
+      "name": "Portland, Maine"
+    },
+    {
+      "@id": "_:b4",
+      "@type": "schema:Place",
+      "latitude": "37.6819",
+      "longitude": "-121.7685",
+      "name": "Livermore, CA"
+    },
+    {
+      "@id": "_:b5",
+      "@type": "schema:Place",
+      "latitude": "52.376384",
+      "longitude": "9.802665",
+      "name": "Hanover, Germany"
+    },
+    {
+      "@id": "_:b6",
+      "@type": "schema:Place",
+      "latitude": "52.3204",
+      "longitude": "10.24326",
+      "name": "Peine, Germany"
+    },
+    {
+      "@id": "_:b7",
+      "@type": "schema:Place",
+      "latitude": "37.760000",
+      "longitude": "-122.420000",
+      "name": "San Francisco, California"
+    },
+    {
+      "@id": "_:b8",
+      "@type": "schema:Place",
+      "latitude": "37.896579",
+      "longitude": "-122.030050",
+      "name": "Livermore, Napa, and Sonoma, California"
+    },
+    {
+      "@id": "_:b9",
+      "@type": "schema:Place",
+      "latitude": "37.783333",
+      "longitude": "-122.416667",
+      "name": "San Francisco, California"
+    },
+    {
       "@id": "_:b10",
       "@type": "schema:Place",
       "latitude": "38.54",
@@ -85,13 +141,6 @@
       "name": "United States of America"
     },
     {
-      "@id": "_:b2",
-      "@type": "schema:Place",
-      "latitude": "46.73",
-      "longitude": "-117.16",
-      "name": "Washington State University (PhD conferred)"
-    },
-    {
       "@id": "_:b20",
       "@type": "schema:Place",
       "latitude": "37.664235",
@@ -99,53 +148,25 @@
       "name": "Livermore, California"
     },
     {
-      "@id": "_:b3",
+      "@id": "_:b21",
       "@type": "schema:Place",
-      "latitude": "43.673479",
-      "longitude": "-70.310400",
-      "name": "Portland, Maine"
+      "latitude": "42.880230",
+      "longitude": "-78.878738",
+      "name": "Buffalo, New York"
     },
     {
-      "@id": "_:b4",
+      "@id": "_:b22",
       "@type": "schema:Place",
-      "latitude": "37.6819",
-      "longitude": "-121.7685",
-      "name": "Livermore, CA"
+      "latitude": "48.8567",
+      "longitude": "2.349014",
+      "name": "Paris, France"
     },
     {
-      "@id": "_:b5",
+      "@id": "_:b23",
       "@type": "schema:Place",
-      "latitude": "52.376384",
-      "longitude": "9.802665",
-      "name": "Hanover, Germany"
-    },
-    {
-      "@id": "_:b6",
-      "@type": "schema:Place",
-      "latitude": "52.3204",
-      "longitude": "10.24326",
-      "name": "Peine, Germany"
-    },
-    {
-      "@id": "_:b7",
-      "@type": "schema:Place",
-      "latitude": "37.760000",
-      "longitude": "-122.420000",
-      "name": "San Francisco, California"
-    },
-    {
-      "@id": "_:b8",
-      "@type": "schema:Place",
-      "latitude": "37.896579",
-      "longitude": "-122.030050",
-      "name": "Livermore, Napa, and Sonoma, California"
-    },
-    {
-      "@id": "_:b9",
-      "@type": "schema:Place",
-      "latitude": "37.783333",
-      "longitude": "-122.416667",
-      "name": "San Francisco, California"
+      "latitude": "51.509865",
+      "longitude": "-0.118092",
+      "name": "Great Britain, United Kingdom"
     },
     {
       "@id": "0MoT2Khu",
@@ -157,9 +178,10 @@
       "publisher": "lcna:no2008108707",
       "relatedLink": [
         "https://en.wikipedia.org/wiki/Patricia_Gallagher",
-        "https://www.sfchronicle.com/wine/article/The-hidden-figures-benind-the-Judgment-of-Paris-13333299.php",
+        "https://www.sfchronicle.com/wine/article/The-hidden-figures-benind-the-Judgement-of-Paris-13333299.php",
         "https://americanhistory.si.edu/blog/40th-anniversary-paris-tasting"
       ],
+      "spatial": "_:b19",
       "temporal": "1951/Present",
       "thumbnail": "0MoT2Khu/DqXaKE7WwAAfaWH.jpg"
     },
@@ -205,7 +227,7 @@
     {
       "@id": "5oa8mPsk_2",
       "@type": "schema:significantLink",
-      "description": "Harold Olmo selected promising material from the Martini planting of the Wente Clone, grown at Wente's Stanley Ranch Vineyard in Carneros, California. Through breeding, and heat treatment to eliminate viral infections, the team was able to raise the average yield from one half ton per acre in the 1950s to over five tons per acre. This improvement made chardonnay commercially viable in California.",
+      "description": "Harold Olmo selected promising material from the Martini planting of the Wente Clone, grown at Wente's Stanly Ranch Vineyard in Carneros, California. Through breeding, and heat treatment to eliminate viral infections, the team was able to raise the average yield from one half ton per acre in the 1950s to over five tons per acre. This improvement made chardonnay commercially viable in California.",
       "name": "hired"
     },
     {
@@ -231,6 +253,7 @@
         "https://www.thedrinksbusiness.com/2013/03/chateau-montelena-owner-jim-barrett-dies/",
         "https://www.winespectator.com/articles/chateau-montelena-owner-jim-barrett-dies-at-86-48165"
       ],
+      "spatial": "_:b18",
       "temporal": "1926/2013",
       "thumbnail": "65gmPKZY/jim-barrett.jpg"
     },
@@ -246,6 +269,7 @@
       "license": "http://rightsstatements.org/vocab/CNE/1.0/",
       "name": "Stanly Ranch Vineyards",
       "publisher": "lcna:no2008108707",
+      "spatial": "_:b8",
       "thumbnail": "6wM6jTwp/download-1.jpg"
     },
     {
@@ -255,6 +279,7 @@
       "puQadTTo_3": "puQadTTo",
       "license": "http://rightsstatements.org/vocab/CNE/1.0/",
       "name": "Ernest Wente",
+      "spatial": "_:b8",
       "publisher": "lcna:no2008108707"
     },
     {
@@ -262,6 +287,7 @@
       "@type": ["schema:WebPage", "ucdlib:Person"],
       "license": "http://rightsstatements.org/vocab/CNE/1.0/",
       "name": "Steven Spurrier",
+      "spatial": "_:b23",
       "publisher": "lcna:no2008108707",
       "thumbnail": "8w89Z72S/StevenSpurrier_780_old_fitbox_1000x600.jpg"
     },
@@ -270,6 +296,7 @@
       "@type": ["schema:WebPage", "ucdlib:Object"],
       "license": "http://rightsstatements.org/vocab/CNE/1.0/",
       "name": "FPS 04 Clone",
+      "spatial": "_:b10",
       "publisher": "lcna:no2008108707",
       "thumbnail": "9HL67beb/39512-bigview.jpg"
     },
@@ -351,6 +378,7 @@
       ],
       "schema:relatedLink": "#Image Credit",
       "temporal": "1919/2000",
+      "spatial": "_:b1",
       "thumbnail": "CvTHg5Ea/image.png"
     },
     {
@@ -401,6 +429,7 @@
       "license": "http://rightsstatements.org/vocab/CNE/1.0/",
       "name": "1936 Wente Chardonnay",
       "publisher": "lcna:no2008108707",
+      "spatial": "_:b8",
       "thumbnail": "Fc9HLLaf/Wente_Brothers_Bottle_1936-1.jpg"
     },
     {
@@ -437,6 +466,7 @@
       "wypl7p1J_2": "wypl7p1J",
       "license": "http://rightsstatements.org/vocab/CNE/1.0/",
       "name": "Cresta Blanca Winery",
+      "spatial": "_:b14",
       "publisher": "lcna:no2008108707",
       "thumbnail": "Ib1NpQvT/cresta_blanca_plaque.jpg"
     },
@@ -564,7 +594,7 @@
     {
       "@id": "Q9pXX12q_1",
       "@type": "schema:significantLink",
-      "description": "The Martini family's Stanley Ranch was among the vineyards whose chardonnay plantings were established from the Wente Vineyard, and continued the chain of improvement of the variety by hosting the selection work of Harold Olmo.",
+      "description": "The Martini family's Stanly Ranch was among the vineyards whose chardonnay plantings were established from the Wente Vineyard, and continued the chain of improvement of the variety by hosting the selection work of Harold Olmo.",
       "name": "owned"
     },
     {
@@ -607,8 +637,9 @@
       "@id": "RdTzzVHN",
       "@type": ["schema:WebPage", "ucdlib:Event"],
       "license": "http://rightsstatements.org/vocab/CNE/1.0/",
-      "name": "1976 Judgment of Paris",
+      "name": "1976 Judgement of Paris",
       "publisher": "lcna:no2008108707",
+      "spatial": "_:b22",
       "thumbnail": "RdTzzVHN/winecollage_1024.jpg"
     },
     {
@@ -675,6 +706,7 @@
       "license": "http://rightsstatements.org/vocab/CNE/1.0/",
       "name": "Fred McCrea",
       "publisher": "lcna:no2008108707",
+      "spatial": "_:b1",
       "relatedLink": "https://ohc-search.lib.berkeley.edu/catalog/MASTER_686",
       "temporal": "born(?)/1977"
     },
@@ -786,6 +818,7 @@
       "description": "Like other early members of the State Board of Viticulture Commissioners, Charles Wetmore looked to foreign markets and growing areas to inform his decisions about which wine grape varieties to plant in California. He imported budwood from Meursault, a small AVA on the southern coast of Burgundy, known for producing buttery, oaked, chardonnay. This line was passed among new vineyards, to become an integral component of the well-known Wente Clone.   #Connections#Link to Learn More#Image Credit",
       "license": "http://rightsstatements.org/vocab/CNE/1.0/",
       "name": "Meursault Budwood",
+      "spatial": "_:b4",
       "publisher": "lcna:no2008108707",
       "thumbnail": "cquwBxNn/Meursault_-_002.jpg"
     },
@@ -864,6 +897,7 @@
         "https://www.stonyhillvineyard.com/About/Our-Story"
       ],
       "schema:relatedLink": "#Image Credit",
+      "spatial": "_:b1",
       "temporal": "1948/present",
       "thumbnail": "hPI526VA/800px-Winery_Doors_of_Stony_Hill_Vineyard.jpg"
     },
@@ -941,6 +975,7 @@
       "publisher": "lcna:no2008108707",
       "relatedLink": "https://ohc-search.lib.berkeley.edu/catalog/MASTER_686",
       "temporal": "1907/1991",
+      "spatial": "_:b21",
       "thumbnail": "ibjOU3Qz/square_history.jpg"
     },
     {
@@ -990,6 +1025,7 @@
       "OIX6pWBy_2": "OIX6pWBy",
       "license": "http://rightsstatements.org/vocab/CNE/1.0/",
       "name": "Heitz Cellar",
+      "spatial": "_:b1",
       "publisher": "lcna:no2008108707",
       "thumbnail": "o9V24Tm4/Heitz_Cellars_Logo.jpg"
     },
@@ -1042,19 +1078,19 @@
     {
       "@id": "puQadTTo_4",
       "@type": "schema:significantLink",
-      "description": "Harold Olmo selected promising material from the Martini planting of the Wente Clone, grown at Wente's Stanley Ranch Vineyard in Carneros, California. Through breeding, and heat treatment to eliminate viral infections, the team was able to raise the average yield from one half ton per acre in the 1950s to over five tons per acre. This improvement made chardonnay commercially viable in California.",
+      "description": "Harold Olmo selected promising material from the Martini planting of the Wente Clone, grown at Wente's Stanly Ranch Vineyard in Carneros, California. Through breeding, and heat treatment to eliminate viral infections, the team was able to raise the average yield from one half ton per acre in the 1950s to over five tons per acre. This improvement made chardonnay commercially viable in California.",
       "name": "cultivated"
     },
     {
       "@id": "puQadTTo_5",
       "@type": "schema:significantLink",
-      "description": "The Martini family's Stanley Ranch was among the vineyards whose chardonnay plantings were established from the Wente Vineyard, and continued the chain of improvement of the variety by hosting the selection work of Harold Olmo.",
+      "description": "The Martini family's Stanly Ranch was among the vineyards whose chardonnay plantings were established from the Wente Vineyard, and continued the chain of improvement of the variety by hosting the selection work of Harold Olmo.",
       "name": "improved"
     },
     {
       "@id": "puQadTTo_6",
       "@type": "schema:significantLink",
-      "description": "The Martini family's Stanley Ranch was among the vineyards whose chardonnay plantings were established from the Wente Vineyard, and continued the chain of improvement of the variety by hosting the selection work of Harold Olmo.",
+      "description": "The Martini family's Stanly Ranch was among the vineyards whose chardonnay plantings were established from the Wente Vineyard, and continued the chain of improvement of the variety by hosting the selection work of Harold Olmo.",
       "name": "planted"
     },
     {
@@ -1080,6 +1116,7 @@
       "@type": ["schema:WebPage", "ucdlib:Place"],
       "license": "http://rightsstatements.org/vocab/CNE/1.0/",
       "name": "Stag's Leap Wine Cellars",
+      "spatial": "_:b8",
       "publisher": "lcna:no2008108707",
       "thumbnail": "wQgoqbSV/Stags_leap_logo.jpg"
     },
@@ -1188,6 +1225,7 @@
       "@type": ["schema:WebPage", "ucdlib:Place"],
       "license": "http://rightsstatements.org/vocab/CNE/1.0/",
       "name": "Chateau Montelena Winery",
+      "spatial": "_:b8",
       "publisher": "lcna:no2008108707",
       "thumbnail": "zBgXIHXc/Chateau_Montelena_Winery.gk.jpg"
     }

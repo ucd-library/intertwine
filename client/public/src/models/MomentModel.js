@@ -73,7 +73,7 @@ class MomentModel extends BaseModel {
   }
 
   transformMockLinks(data) {
-    let links = {}, nodes = {}, lookup = {}, item;
+    let links = {}, nodes = {}, lookup = {};
 
     // Helper Functions - START
     function cleanType(type) {
@@ -81,11 +81,21 @@ class MomentModel extends BaseModel {
         type = type.find(t => t.includes('ucdlib:'));
         return type.replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();
       } else {
-        return type.replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();      }
+        return type.replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();
+      }
     }
 
-    function getCoords(id) {
-      return data.find(record => record['@id'] === id);
+    function getLocation(id) {
+      if ( id.includes('_:') ) {
+        return data.find(record => record['@id'] === id);
+      } else if ( id.includes(':') ) {
+        let locationId = data.find(item => item.hasOwnProperty(id.split(':')[0]));
+        return data.find(record => record['@id'] === locationId.spatial);
+      } else {
+        let cleanId = id.split('_')[0];
+        let locationId = data.find(item => item['@id'] === cleanId);
+        return data.find(record => record['@id'] === locationId.spatial);
+      }
     }
     // Helper Functions - END
 
@@ -96,18 +106,6 @@ class MomentModel extends BaseModel {
       // Replace significantLink with connection
       if ( item.type === 'significantlink' ) item.type = 'connection';
     });
-
-    // Removing any schema:Places in the main location objects that are missing lat/lng
-    // Just a safety
-    /*
-    for ( let id in lookup ) {
-      if ( typeof lookup[id]['@type'] === 'string' && lookup[id]['@type'].includes('Place') ) {
-        if ( !lookup[id]['latitude'] ) {
-          delete lookup[id];
-        }
-      }
-    }
-    */
 
     // Create lookup table
     for ( let id in lookup ) {
@@ -127,73 +125,34 @@ class MomentModel extends BaseModel {
     // Nodes
     for( let id in lookup ) {
       if( !lookup[id].isLink ) {
-        if ( lookup[id]['spatial'] ) {
-          let _coords = getCoords(lookup[id]['spatial']);
-          lookup[id]['location'] = _coords.name;
+        let location;
+        if ( lookup[id]['spatial'] || lookup[id]['type'] !== 'place' ) {
 
-          // Check for missing lat & lng values and replace them with zeros
-          if ( isNaN(_coords.longitude) || isNaN(_coords.latitude) ) {
-            _coords.longitude = 0;
-            _coords.latitude  = 0;
+          if ( lookup[id]['spatial'] ) {
+            location = getLocation(lookup[id]['spatial']);
+          } else {
+            location = getLocation(lookup[id]['@id']);
           }
 
-          let coords = [
-            parseFloat(_coords.latitude),
-            parseFloat(_coords.longitude)
+          lookup[id]['location'] = location.name;
+          lookup[id]['coordinates'] = [
+            parseFloat(location.latitude),
+            parseFloat(location.longitude)
           ]
 
-          lookup[id]['coordinates'] = coords;
-        } else if (lookup[id].type === 'place' ) {
-          if ( lookup[id]['latitude'] ) {
-            lookup[id]['coordinates'] = [
-              parseFloat(lookup[id]['latitude']),
-              parseFloat(lookup[id]['longitude'])
-            ]
-          } else {
-            lookup[id]['coordinates'] = [0,0];
-          }
-        } else {
-          lookup[id]['coordinates'] = [0,0];
+          nodes[lookup[id]['@id']] = lookup[id];
         }
-
-        nodes[lookup[id]['@id']] = lookup[id];
       }
     }
 
     // Links
     for ( let id in links ) {
       let item = links[id];
-
       item.coordinates = {
         src: nodes[item.src].coordinates,
         dst: nodes[item.dst].coordinates
       }
     }
-
-    /*
-    // TODO: Temp Solution, cleaning out any jacked up coordinates. No 0,0!
-    for ( let id in nodes ) {
-      if ( nodes[id]['coordinates'][0] === 0 && nodes[id]['coordinates'][1] === 0) {
-        delete nodes[id];
-      }
-    }
-
-    for ( let id in links ) {
-      let src = links[id]['coordinates']['src'];
-      let dst = links[id]['coordinates']['dst'];
-
-      if ( src[0] === 0 && src[1] === 0 ) {
-        delete links[id];
-      }
-
-      if ( dst[0] === 0 && dst[1] === 0 ) {
-        delete links[id];
-      }
-    }
-    // TEMP FIX END
-    */
-
-    console.log(nodes, links);
 
     return { nodes, links }
   }
