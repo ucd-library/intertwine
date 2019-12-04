@@ -109,6 +109,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         }
       }
 
+      console.log("this.events: ", this.events);
+
       // TODO: Four Events, maybe pick one at random?
       if ( this.events ) {
         this.momentEntryPointUrl = `/map/${this.moment}`;
