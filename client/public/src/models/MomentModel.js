@@ -98,7 +98,8 @@ class MomentModel extends BaseModel {
     });
 
     // Removing any schema:Places in the main location objects that are missing lat/lng
-    // Just a safety name
+    // Just a safety
+    /*
     for ( let id in lookup ) {
       if ( typeof lookup[id]['@type'] === 'string' && lookup[id]['@type'].includes('Place') ) {
         if ( !lookup[id]['latitude'] ) {
@@ -106,6 +107,7 @@ class MomentModel extends BaseModel {
         }
       }
     }
+    */
 
     // Create lookup table
     for ( let id in lookup ) {
@@ -168,6 +170,7 @@ class MomentModel extends BaseModel {
       }
     }
 
+    /*
     // TODO: Temp Solution, cleaning out any jacked up coordinates. No 0,0!
     for ( let id in nodes ) {
       if ( nodes[id]['coordinates'][0] === 0 && nodes[id]['coordinates'][1] === 0) {
@@ -188,6 +191,7 @@ class MomentModel extends BaseModel {
       }
     }
     // TEMP FIX END
+    */
 
     console.log(nodes, links);
 

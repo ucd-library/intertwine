@@ -197,9 +197,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   renderLink(node) {
-    console.log("renderLink: ", node);
     this.type = 'item'
-    this.title = node.title;
+    this.title = node.name;
     this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');
   }
 

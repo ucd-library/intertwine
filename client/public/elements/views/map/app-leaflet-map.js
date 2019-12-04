@@ -211,7 +211,7 @@ export default class AppLeafletMap extends LitElement {
     let icon = L.divIcon({
       className: `leaflet-intertwine-node-label`,
       iconSize: [0, 0],
-      html : '<div>'+this.nodes[id].title+'</div><div class="intertwine-arrow"></div>'
+      html : '<div>'+this.nodes[id].name+'</div><div class="intertwine-arrow"></div>'
     });
     this.selectedNodeIcon[type] = L.marker(layer.getLatLng(), {icon});
     this.map.addLayer(this.selectedNodeIcon[type]);
