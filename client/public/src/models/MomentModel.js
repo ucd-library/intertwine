@@ -86,25 +86,15 @@ class MomentModel extends BaseModel {
     }
 
     function getLocation(id) {
-      if ( id.includes('_:') ) {
-        return data.find(record => record['@id'] === id);
-      } else if ( id.includes(':') ) {
-        let locationId = data.find(item => item.hasOwnProperty(id.split(':')[0]));
-        return data.find(record => record['@id'] === locationId.spatial);
-      } else {
-        let cleanId = id.split('_')[0];
-        let locationId = data.find(item => item['@id'] === cleanId);
-        return data.find(record => record['@id'] === locationId.spatial);
-      }
+      return data.find(record => record['@id'] === id);
     }
     // Helper Functions - END
 
     data.forEach(item => {
       item['type'] = cleanType(item['@type']);
-      lookup[item['@id'].replace(/.*:/, '')] = item;
-
       // Replace significantLink with connection
       if ( item.type === 'significantlink' ) item.type = 'connection';
+      lookup[item['@id'].replace(/.*:/, '')] = item;
     });
 
     // Create lookup table
@@ -117,37 +107,39 @@ class MomentModel extends BaseModel {
           link.dst = container[attr];
           link.isLink = true;
 
-          links[id] = link;
+          links[link['@id']] = link;
         }
       }
     }
 
     // Nodes
     for( let id in lookup ) {
-      if( !lookup[id].isLink ) {
+      if( !lookup[id].isLink && lookup[id]['type'] !== 'connection' ) {
         let location;
-        if ( lookup[id]['spatial'] || lookup[id]['type'] !== 'place' ) {
-
-          if ( lookup[id]['spatial'] ) {
-            location = getLocation(lookup[id]['spatial']);
-          } else {
-            location = getLocation(lookup[id]['@id']);
-          }
-
-          lookup[id]['location'] = location.name;
-          lookup[id]['coordinates'] = [
-            parseFloat(location.latitude),
-            parseFloat(location.longitude)
-          ]
-
-          nodes[lookup[id]['@id']] = lookup[id];
+        if ( lookup[id]['spatial'] ) {
+          location = getLocation(lookup[id]['spatial']);
+        } else {
+          location = getLocation(lookup[id]['@id']);
         }
+
+        lookup[id]['location'] = location.name;
+        lookup[id]['coordinates'] = [
+          parseFloat(location.latitude),
+          parseFloat(location.longitude)
+        ];
+
+        nodes[lookup[id]['@id']] = lookup[id];
       }
     }
 
     // Links
     for ( let id in links ) {
       let item = links[id];
+      if ( !nodes[item.src] || !nodes[item.dst] ) {
+        item.weblink = true;
+        continue;
+      };
+
       item.coordinates = {
         src: nodes[item.src].coordinates,
         dst: nodes[item.dst].coordinates

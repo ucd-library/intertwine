@@ -94,13 +94,14 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       if( moment.entryPoint ) {
         for( let id in moment.graph.nodes ) {
           let node = moment.graph.nodes[id];
-          if( node.id !== moment.entryPoint ) continue;
-          this.momentEntryPointUrl = `/map/${this.moment}/${node.type}/${node.id}`;
+          if( node['@id'] !== moment.entryPoint ) continue;
+          this.momentEntryPointUrl = `/map/${this.moment}/${node.type}/${node['@id']}`;
           break;
         }
       }
 
       this.graph = moment.graph;
+      console.log(this.graph)
     }
 
     this.isLink = false;
@@ -155,7 +156,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   renderItem(node) {
-    console.log(node);
     this.view = 'item';
 
     this.title = node.name || '';
@@ -183,14 +183,15 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       // find connections
       let connections = [];
       let link;
+
       for( let id in this.graph.links ) {
         link = this.graph.links[id];
-        if( link.src === node.id ) {
+        if( link.src === node['@id'] ) {
           connections.push({
             link,
             node : this.graph.nodes[link.dst]
           });
-        } else if ( link.dst === node.id ) {
+        } else if ( link.dst === node['@id'] ) {
           connections.push({
             link,
             node : this.graph.nodes[link.src]

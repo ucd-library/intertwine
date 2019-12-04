@@ -446,6 +446,8 @@ export default class AppLeafletMap extends LitElement {
     for( let id in this.links ) {
       let item = this.links[id];
 
+      if ( item.weblink ) continue;
+
       let src = this.getMarkerLatLng(item.src);
       let dst = this.getMarkerLatLng(item.dst);
 
