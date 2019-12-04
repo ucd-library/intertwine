@@ -91,6 +91,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
       this.momentEntryPointUrl = '';
 
+      // TODO: Holdover from previous version
       if( moment.entryPoint ) {
         for( let id in moment.graph.nodes ) {
           let node = moment.graph.nodes[id];
@@ -101,7 +102,18 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       }
 
       this.graph = moment.graph;
-      console.log(this.graph)
+      this.events = {};
+      for ( let id in this.graph.nodes ) {
+        if (this.graph.nodes[id]['type'] === 'event' ) {
+          this.events[id] = this.graph.nodes[id];
+        }
+      }
+
+      // TODO: Four Events, maybe pick one at random?
+      if ( this.events ) {
+        this.momentEntryPointUrl = `/map/${this.moment}`;
+      }
+
     }
 
     this.isLink = false;
