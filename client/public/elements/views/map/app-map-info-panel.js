@@ -190,6 +190,9 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     }
     */
 
+    // TODO:
+    // For url, I only want to show the core site url — for example: tavbooks.com, wikipedia.org
+    // and then there should be associated page titles to display next to the url with the data from trello
     if ( Array.isArray(node.relatedLink) ) {
       this.relatedLinks = node.relatedLink;
     } else if ( node.relatedLink !== undefined ) {
