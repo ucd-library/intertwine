@@ -137,6 +137,11 @@ ${sharedStyles}
   .color-break[type="connection"], iron-icon[type="connection"] {
     background-color: var(--app-color-interface-blue);
   }
+  iron-icon.external-link[type="cluster"],
+  iron-icon.external-link[type="connection"] {
+    background-color: transparent;
+    fill: var(--app-color-interface-blue);
+  }
   .image[type="cluster"] {
     height: 200px;
   }
@@ -147,12 +152,20 @@ ${sharedStyles}
   .color-break[type="person"], iron-icon[type="person"], .dot[type="person"] {
     background-color: var(--app-color-scarlet);
   }
+  iron-icon.external-link[type="person"] {
+    background-color: transparent;
+    fill: var(--app-color-scarlet);
+  }
 
   .type-color[type="place"] {
     color: var(--app-color-vine);
   }
   .color-break[type="place"], iron-icon[type="place"], .dot[type="place"] {
     background-color: var(--app-color-vine);
+  }
+  iron-icon.external-link[type="place"] {
+    background-color: transparent;
+    fill: var(--app-color-vine);
   }
 
   .type-color[type="event"] {
@@ -161,12 +174,20 @@ ${sharedStyles}
   .color-break[type="event"], iron-icon[type="event"], .dot[type="event"] {
     background-color: var(--app-color-rose);
   }
+  iron-icon.external-link[type="event"] {
+    background-color: transparent;
+    fill: var(--app-color-rose);
+  }
 
   .type-color[type="object"] {
     color: var(--app-color-grape);
   }
   .color-break[type="object"], iron-icon[type="object"], .dot[type="object"] {
     background-color: var(--app-color-grape);
+  }
+  iron-icon.external-link[type="object"] {
+    background-color: transparent;
+    fill: var(--app-color-interface-blue);
   }
 
   .connection-image-layout {
@@ -297,7 +318,8 @@ ${sharedStyles}
         <!-- Filled from inside the parent js file -->
         <div id="description"></div>
 
-        <div ?hidden="${!this.isNode}">
+        <!-- Hide if there are no connections -->
+        <div ?hidden="${!this.connections.length}">
           <h3 style="margin: 0 0 5px 0">Explore Connections</h3>
           <div>
             ${this.connections.map(item => html`
@@ -325,6 +347,15 @@ ${sharedStyles}
             </div>
           `)}
         </div>
+
+        <!-- Related Links -->
+        <div ?hidden="${!this.relatedLinks.length}">
+          <h3>Learn More</h3>
+          ${this.relatedLinks.map(node => html`
+            <iron-icon class="external-link" icon="intert-wine-icons:link" type="${this.type}"></iron-icon>
+            <a class="external type-color" type="${this.type}" href="${node}">${node}</a>
+          `)}
+          </div>
       </div>
       <!-- END ITEM -->
     </iron-pages>

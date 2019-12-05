@@ -27,6 +27,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       isNode : {type: Boolean},
       isLink : {type: Boolean},
       isMoment : {type: Boolean},
+      relatedLinks: { type: Array},
       connectionSubjects : {type: Array},
       clusterSubjects : {type: Object},
       clusterSubjectTypes : {type: Array}
@@ -51,6 +52,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.moment = '';
     this.momentInfo = {};
     this.momentEntryPointUrl = '';
+    this.relatedLinks = [];
 
     this.endpoint = APP_CONFIG.endpoint;
 
@@ -108,8 +110,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
           this.events[id] = this.graph.nodes[id];
         }
       }
-
-      console.log("this.events: ", this.events);
 
       // TODO: Four Events, maybe pick one at random?
       if ( this.events ) {
@@ -186,6 +186,10 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     }
     */
 
+    if ( node.relatedLink ) {
+      this.relatedLinks = node.relatedLink;
+    }
+
     if( node.type === 'connection' ) {
       this.connectionSubjects = [
         this.graph.nodes[node.src],
@@ -197,18 +201,13 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       // find connections
       let connections = [];
       let link;
-
       for( let id in this.graph.links ) {
         link = this.graph.links[id];
-        if( link.src === node['@id'] ) {
+
+        if ( link['@id'].includes(node['@id']) ) {
           connections.push({
             link,
-            node : this.graph.nodes[link.dst]
-          });
-        } else if ( link.dst === node['@id'] ) {
-          connections.push({
-            link,
-            node : this.graph.nodes[link.src]
+            node: this.graph.nodes[link.src]
           });
         }
       }
