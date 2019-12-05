@@ -79,6 +79,15 @@ ${sharedStyles}
     margin-bottom: 10px;
   }
 
+  ul.related-links {
+    margin: 0;
+    padding: 0;
+  }
+
+  ul.related-links li {
+    list-style-type: none;
+  }
+
   #description > p {
     padding: 14px 0 18px 9;
   }
@@ -351,10 +360,14 @@ ${sharedStyles}
         <!-- Related Links -->
         <div ?hidden="${!this.relatedLinks.length}">
           <h3>Learn More</h3>
+          <ul class="related-links">
           ${this.relatedLinks.map(node => html`
-            <iron-icon class="external-link" icon="intert-wine-icons:link" type="${this.type}"></iron-icon>
-            <a class="external type-color" type="${this.type}" href="${node}">${node}</a>
+            <li>
+              <iron-icon class="external-link" icon="intert-wine-icons:link" type="${this.type}"></iron-icon>
+              <a class="external type-color" type="${this.type}" href="${node}">${node}</a>
+            </li>
           `)}
+          </ul>
           </div>
       </div>
       <!-- END ITEM -->
