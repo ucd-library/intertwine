@@ -16,6 +16,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       moment : {type: String},
       momentInfo : {type: Object},
       momentEntryPointUrl : {type: String},
+      events: { type: Array},
       endpoint: { type: String },
       type : {type : String},
       srctype : {type: String},
@@ -46,6 +47,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.srctype = '';
     this.dsttype = '';
     this.connections = [];
+    this.events = [];
     this.isLink = false;
     this.isNode = false;
     this.isMoment = false;
@@ -94,6 +96,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       this.momentEntryPointUrl = '';
 
       // TODO: Holdover from previous version
+      // How to implement this going forward?
       if( moment.entryPoint ) {
         for( let id in moment.graph.nodes ) {
           let node = moment.graph.nodes[id];
@@ -104,18 +107,14 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       }
 
       this.graph = moment.graph;
-      this.events = {};
+
+      // Events?
+      this.events = [];
       for ( let id in this.graph.nodes ) {
         if (this.graph.nodes[id]['type'] === 'event' ) {
-          this.events[id] = this.graph.nodes[id];
+          this.events.push(this.graph.nodes[id]);
         }
       }
-
-      // TODO: Four Events, maybe pick one at random?
-      if ( this.events ) {
-        this.momentEntryPointUrl = `/map/${this.moment}`;
-      }
-
     }
 
     this.isLink = false;
@@ -219,6 +218,12 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         }
       }
 
+      // TODO: Remove description-less connections that have links missing descriptions
+      // Those seem to mostly be verse terse dupes of main links
+      // There are still a few other dupes but this seems to take care of a lot of them
+      connections = connections.filter(connection => connection.link['description'] !== undefined);
+
+      // Alphabetize the connections
       connections.sort((a, b) => (a.node.name > b.node.name) ? 1 : -1);
 
       this.connections = connections;

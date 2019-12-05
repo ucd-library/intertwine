@@ -129,7 +129,7 @@
       "publisher": "lcna:no2008108707",
       "relatedLink": [
         "https://en.wikipedia.org/wiki/Patricia_Gallagher",
-        "https://www.sfchronicle.com/wine/article/The-hidden-figures-benind-the-Judgement-of-Paris-13333299.php",
+        "https://www.sfchronicle.com/wine/article/The-hidden-figures-benind-the-Judgment-of-Paris-13333299.php",
         "https://americanhistory.si.edu/blog/40th-anniversary-paris-tasting"
       ],
       "spatial": "_:b19",
@@ -588,7 +588,7 @@
       "@id": "RdTzzVHN",
       "@type": ["schema:WebPage", "ucdlib:Event"],
       "license": "http://rightsstatements.org/vocab/CNE/1.0/",
-      "name": "1976 Judgement of Paris",
+      "name": "1976 Judgment of Paris",
       "publisher": "lcna:no2008108707",
       "spatial": "_:b22",
       "thumbnail": "RdTzzVHN/winecollage_1024.jpg"

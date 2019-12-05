@@ -79,11 +79,13 @@ ${sharedStyles}
     margin-bottom: 10px;
   }
 
+  ul.events,
   ul.related-links {
     margin: 0;
     padding: 0;
   }
 
+  ul.events li,
   ul.related-links li {
     list-style-type: none;
   }
@@ -274,11 +276,21 @@ ${sharedStyles}
           connections to California wine history.
         </div>
 
-        <div class="moment-break"></div>
-        <h3 class="inverse">Connections in Context</h3>
-        <div id="momentDescription"></div>
+        <div ?hidden="${!this.events.length}">
+          <h3 class="inverse">Events</h3>
+          ${this.events.map(event => html`
+            <a class="btn inverse" style="margin: 5px 0;" href="/map/${this.moment}/${event.type}/${event['@id']}">${event.name}</a>
+          `)}
+        </div>
 
-        <a class="btn inverse" ?hidden="${!this.momentEntryPointUrl}" href="${this.momentEntryPointUrl}">Read Story</a>
+        <div class="moment-break"></div>
+
+        <div ?hidden="${!this.momentEntryPoint}">
+          <h3 class="inverse">Connections in Context</h3>
+          <div id="momentDescription"></div>
+
+          <a class="btn inverse" ?hidden="${!this.momentEntryPointUrl}" href="${this.momentEntryPointUrl}">Read Story</a>
+        </div>
       </div>
       <!-- END EMPTY -->
 
