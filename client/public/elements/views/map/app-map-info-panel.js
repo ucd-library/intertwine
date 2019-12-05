@@ -167,6 +167,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       this.clusterSubjects[node.type].enabled = true;
       this.clusterSubjects[node.type].nodes.push(node);
     });
+
+    // Alphabetize the clusterSubjects
+    for (let attr in this.clusterSubjects) {
+      this.clusterSubjects[attr].nodes.sort((a, b) => (a.name > b.name) ? 1 : -1);
+    }
   }
 
   renderItem(node) {
@@ -186,8 +191,10 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     }
     */
 
-    if ( node.relatedLink ) {
+    if ( Array.isArray(node.relatedLink) ) {
       this.relatedLinks = node.relatedLink;
+    } else if ( node.relatedLink !== undefined ) {
+      this.relatedLinks.push(node.relatedLink)
     }
 
     if( node.type === 'connection' ) {
@@ -212,11 +219,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         }
       }
 
-      connections.sort((a, b) => {
-        if( a.node.name < b.node.name ) return -1;
-        if( a.node.name > b.node.name ) return 1;
-        return 0;
-      });
+      connections.sort((a, b) => (a.node.name > b.node.name) ? 1 : -1);
 
       this.connections = connections;
     }

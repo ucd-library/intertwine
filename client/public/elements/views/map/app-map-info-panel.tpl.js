@@ -368,7 +368,7 @@ ${sharedStyles}
             </li>
           `)}
           </ul>
-          </div>
+        </div>
       </div>
       <!-- END ITEM -->
     </iron-pages>
