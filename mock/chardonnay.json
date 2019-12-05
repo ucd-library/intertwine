@@ -33,7 +33,7 @@
       "@type": "schema:Place",
       "latitude": "37.6819",
       "longitude": "-121.7685",
-      "name": "Livermore, CA"
+      "name": "Livermore, California"
     },
     {
       "@id": "_:b5",
@@ -64,46 +64,11 @@
       "name": "Livermore, Napa, and Sonoma, California"
     },
     {
-      "@id": "_:b9",
-      "@type": "schema:Place",
-      "latitude": "37.783333",
-      "longitude": "-122.416667",
-      "name": "San Francisco, California"
-    },
-    {
       "@id": "_:b10",
       "@type": "schema:Place",
       "latitude": "38.54",
       "longitude": "-121.75",
       "name": "Davis, California"
-    },
-    {
-      "@id": "_:b11",
-      "@type": "schema:Place",
-      "latitude": "37.664235",
-      "longitude": "-121.725368",
-      "name": "Livermore, California"
-    },
-    {
-      "@id": "_:b12",
-      "@type": "schema:Place",
-      "latitude": "38.534879",
-      "longitude": "-121.790775",
-      "name": "Davis, California"
-    },
-    {
-      "@id": "_:b13",
-      "@type": "schema:Place",
-      "latitude": "38.313393",
-      "longitude": "-122.462502",
-      "name": "Sonoma, CA"
-    },
-    {
-      "@id": "_:b14",
-      "@type": "schema:Place",
-      "latitude": "37.681944",
-      "longitude": "-121.768056",
-      "name": "Livermore, California"
     },
     {
       "@id": "_:b15",
@@ -120,13 +85,6 @@
       "name": "Rome, Italy"
     },
     {
-      "@id": "_:b17",
-      "@type": "schema:Place",
-      "latitude": "38.293337",
-      "longitude": "-122.296761",
-      "name": "San Francisco, California"
-    },
-    {
       "@id": "_:b18",
       "@type": "schema:Place",
       "latitude": "41.855428",
@@ -139,13 +97,6 @@
       "latitude": "37.0902",
       "longitude": "-95.7129",
       "name": "United States of America"
-    },
-    {
-      "@id": "_:b20",
-      "@type": "schema:Place",
-      "latitude": "37.664235",
-      "longitude": "-121.725368",
-      "name": "Livermore, California"
     },
     {
       "@id": "_:b21",
@@ -345,7 +296,7 @@
       "name": "James D. Zellerbach",
       "publisher": "lcna:no2008108707",
       "relatedLink": "https://en.wikipedia.org/wiki/Hanzell_Vineyards",
-      "spatial": "_:b9",
+      "spatial": "_:b7",
       "temporal": "1892/1963",
       "thumbnail": "BJqHUXnH/image.png"
     },
@@ -445,7 +396,7 @@
         "http://onlinebooks.library.upenn.edu/webbin/book/lookupname?key=California.%20Board%20of%20State%20Viticultural%20Commissioners",
         "https://en.wikipedia.org/wiki/Board_of_State_Viticultural_Commissioners"
       ],
-      "spatial": "_:b17",
+      "spatial": "_:b7",
       "temporal": "1880/1894",
       "thumbnail": "I3IabGsw/image.png"
     },
@@ -466,7 +417,7 @@
       "wypl7p1J_2": "wypl7p1J",
       "license": "http://rightsstatements.org/vocab/CNE/1.0/",
       "name": "Cresta Blanca Winery",
-      "spatial": "_:b14",
+      "spatial": "_:b4",
       "publisher": "lcna:no2008108707",
       "thumbnail": "Ib1NpQvT/cresta_blanca_plaque.jpg"
     },
@@ -587,7 +538,7 @@
       "license": "http://rightsstatements.org/vocab/CNE/1.0/",
       "name": "Louis P. Martini",
       "publisher": "lcna:no2008108707",
-      "spatial": "_:b14",
+      "spatial": "_:b4",
       "temporal": "1918/1998",
       "thumbnail": "Q9pXX12q/image.png"
     },
@@ -745,7 +696,7 @@
         "https://en.wikipedia.org/wiki/Hanzell_Vineyards",
         "https://winesvinesanalytics.com/sections/printout_article.cfm?article=feature&content=70101"
       ],
-      "spatial": "_:b13",
+      "spatial": "_:b0",
       "temporal": "1922/1999",
       "thumbnail": "ZZV840iO/image.png"
     },
@@ -1015,7 +966,7 @@
         "http://fps.ucdavis.edu/",
         "https://fps.ucdavis.edu/grapebook/winebook.cfm?chap=FPSEstablished"
       ],
-      "spatial": "_:b12",
+      "spatial": "_:b10",
       "temporal": "1958/present",
       "thumbnail": "nG7eTNMs/image.png"
     },
@@ -1043,7 +994,7 @@
         "https://commons.wikimedia.org/wiki/File:Chardonnay_Grapes_at_Hanzell_Winery_-_Stierch.jpg"
       ],
       "schema:relatedLink": "#Photo Credit",
-      "spatial": "_:b11",
+      "spatial": "_:b4",
       "temporal": "1946",
       "thumbnail": "puQadTTo/Chardonnay_Grapes_at_Hanzell_Winery_-_Stierch.jpg"
     },
@@ -1155,7 +1106,7 @@
       "license": "http://rightsstatements.org/vocab/CNE/1.0/",
       "name": "Wente Vineyards",
       "publisher": "lcna:no2008108707",
-      "spatial": "_:b20",
+      "spatial": "_:b4",
       "temporal": "1883/Present",
       "thumbnail": "wypl7p1J/6PrInlsQ.jpg"
     },
