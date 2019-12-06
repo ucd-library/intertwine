@@ -276,13 +276,6 @@ ${sharedStyles}
           connections to California wine history.
         </div>
 
-        <div ?hidden="${!this.events.length}">
-          <h3 class="inverse">Events</h3>
-          ${this.events.map(event => html`
-            <a class="btn inverse" style="margin: 5px 0;" href="/map/${this.moment}/${event.type}/${event['@id']}">${event.name}</a>
-          `)}
-        </div>
-
         <div class="moment-break"></div>
 
         <div ?hidden="${!this.momentEntryPoint}">
@@ -376,7 +369,7 @@ ${sharedStyles}
           ${this.relatedLinks.map(node => html`
             <li>
               <iron-icon class="external-link" icon="intert-wine-icons:link" type="${this.type}"></iron-icon>
-              <a class="external type-color" type="${this.type}" href="${node}">${node}</a>
+              <a class="external type-color" type="${this.type}" href="${node.full}" target="_blank">${node.short}</a>
             </li>
           `)}
           </ul>

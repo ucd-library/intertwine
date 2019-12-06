@@ -16,7 +16,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       moment : {type: String},
       momentInfo : {type: Object},
       momentEntryPointUrl : {type: String},
-      events: { type: Array},
       endpoint: { type: String },
       type : {type : String},
       srctype : {type: String},
@@ -28,7 +27,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       isNode : {type: Boolean},
       isLink : {type: Boolean},
       isMoment : {type: Boolean},
-      relatedLinks: { type: Array},
+      relatedLinks: { type: Array },
       connectionSubjects : {type: Array},
       clusterSubjects : {type: Object},
       clusterSubjectTypes : {type: Array}
@@ -47,7 +46,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.srctype = '';
     this.dsttype = '';
     this.connections = [];
-    this.events = [];
     this.isLink = false;
     this.isNode = false;
     this.isMoment = false;
@@ -107,14 +105,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       }
 
       this.graph = moment.graph;
-
-      // Events?
-      this.events = [];
-      for ( let id in this.graph.nodes ) {
-        if (this.graph.nodes[id]['type'] === 'event' ) {
-          this.events.push(this.graph.nodes[id]);
-        }
-      }
     }
 
     this.isLink = false;
@@ -191,8 +181,10 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     */
 
     // TODO:
-    // For url, I only want to show the core site url — for example: tavbooks.com, wikipedia.org
-    // and then there should be associated page titles to display next to the url with the data from trello
+    // Kimmy: 
+    //    1. DONE => For url, I only want to show the core site url — for example: tavbooks.com, wikipedia.org
+    //    2. There should be associated page titles to display next to the url with the data from trello
+    this.relatedLinks = [];
     if ( Array.isArray(node.relatedLink) ) {
       this.relatedLinks = node.relatedLink;
     } else if ( node.relatedLink !== undefined ) {
@@ -201,8 +193,14 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
     this.relatedLinks = this.relatedLinks.map(link => {
       let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
-      return link.replace(re, '').split('/')[0];
+      let obj = {
+        'short': link.replace(re, '').split('/')[0],
+        'full': link
+      }
+      return obj;
     });
+
+    console.log(this.relatedLinks)
 
     if( node.type === 'connection' ) {
       this.connectionSubjects = [
