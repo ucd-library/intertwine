@@ -199,6 +199,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       this.relatedLinks.push(node.relatedLink)
     }
 
+    this.relatedLinks = this.relatedLinks.map(link => {
+      let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
+      return link.replace(re, '').split('/')[0];
+    });
+
     if( node.type === 'connection' ) {
       this.connectionSubjects = [
         this.graph.nodes[node.src],
