@@ -67,7 +67,7 @@ return html`
     <a @click="${this._onAboutClick}">About</a>
   </div>
   <div class="image">
-    <a href="https://www.library.ucdavis.edu/">
+    <a href="https://www.library.ucdavis.edu/" target="_blank">
       <img src="/images/ucd-lib-logo-white.png" />
     </a>
   </div>
