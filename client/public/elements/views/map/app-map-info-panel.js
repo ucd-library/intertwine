@@ -95,6 +95,12 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     } else {
       this.descriptionEle.innerHTML = '';
     }
+
+    if ( this.connections.length > 0 ) {
+      this.hasConnections = true;
+    } else {
+      this.hasConnections = false;
+    }
   }
 
   renderState(moment) {
@@ -249,10 +255,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       connections.sort((a, b) => (a.node.name > b.node.name) ? 1 : -1);
 
       this.connections = connections;
-
-      if ( this.connections.length > 0 ) {
-        this.hasConnections = true;
-      }
     }
 
   }
