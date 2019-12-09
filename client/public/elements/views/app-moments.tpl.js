@@ -42,10 +42,11 @@ export default function render() {
       }
 
       .image {
+        margin-top: 10px;
         height: 150px;
         width: 150px;
         background-size: contain;
-        border: 1px solid red;
+        border: 1px dashed gray;
       }
     </style>
 
@@ -53,27 +54,13 @@ export default function render() {
       <h1 class="page-title">Moments</h1>
 
       <div class="card-wrapper">
-        ${this.moments.map(element => html`
-          <div class="card">
-            <h1>${element.name}</h1>
-            <p>${element['schema:description']}</p>
-            <div class="image" style="background-image: url('${element.image}')"></div>
-
-            <!--
-            <h2 style="margin-bottom: 3px">${element.spatial}</h2>
-            <h2 style="margin: 0 0 14px 0">${element.temporal}</h2>
-            ${element.mainTopicOfPage ? html`<a href="${element.mainTopicOfPage}" target="_blank">External Link</a>` : ''}
-
-            ${this.moment}
-
-            <p>${element.description}</p>
-
-            <div style="width: 100%; padding-top: 5px; text-align: center; border-top: 1px solid gray;">
-                <a class="internal" href="/map/${this.moment}/event/${element.mainTopicOfPage}">Learn More</a>
-            </div>
-            -->
-          </div>
-        `)}
+        <div class="card">
+          <h1>${this.moments[0].name}</h1>
+          <a class="btn" href="${this.momentUrl}">
+            Read More
+          </a>
+          <div class="image" style="background-image: url('${this.endpoint}/${this.moments[0].thumbnail}')"></div>
+        </div>
       </div>
     </section>
 `;}
