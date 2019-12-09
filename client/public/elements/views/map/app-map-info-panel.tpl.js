@@ -282,10 +282,13 @@ ${sharedStyles}
           <h3 class="inverse">Connections in Context</h3>
           <div id="momentDescription"></div>
 
-          <a class="btn inverse" ?hidden="${!this.momentEntryPointUrl}" href="${this.momentEntryPointUrl}">Read Story</a>
+          <a class="btn inverse" ?hidden="${!this.momentEntryPointUrl}" href="${this.momentEntryPointUrl}">
+            Read Story
+          </a>
         </div>
       </div>
       <!-- END EMPTY -->
+
 
       <!-- START CLUSTER -->
       <div id="cluster">

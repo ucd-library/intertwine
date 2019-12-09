@@ -23,6 +23,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       view : {type : String},
       title : {type : String},
       date : {type : String},
+      events: { type: Array },
       connections : {type: Array},
       isNode : {type: Boolean},
       isLink : {type: Boolean},
@@ -55,6 +56,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.momentInfo = {};
     this.momentEntryPointUrl = '';
     this.relatedLinks = [];
+    this.events       = [];
 
     this.endpoint = APP_CONFIG.endpoint;
 
@@ -110,8 +112,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
       this.momentEntryPointUrl = '';
 
-      // TODO: Holdover from previous version
-      // How to implement this going forward?
+      // TODO: Need to add entryPoint to data in Trello
+      /*
       if( moment.entryPoint ) {
         for( let id in moment.graph.nodes ) {
           let node = moment.graph.nodes[id];
@@ -119,6 +121,20 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
           this.momentEntryPointUrl = `/map/${this.moment}/${node.type}/${node['@id']}`;
           break;
         }
+      }
+      */
+
+      // Temp entry point
+      this.events = [];
+      for ( let id in moment.graph.nodes ) {
+        if (moment.graph.nodes[id].type === 'event') {
+          this.events.push(moment.graph.nodes[id]);
+        }
+      }
+
+      if ( this.events.length > 0 ) {
+        this.momentEntryPoint    = this.events[0]['name'];
+        this.momentEntryPointUrl = `/map/${this.moment}/${this.events[0].type}/${this.events[0]['@id']}`;
       }
 
       this.graph = moment.graph;
