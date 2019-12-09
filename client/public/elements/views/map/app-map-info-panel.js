@@ -179,7 +179,12 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
     this.title = node.name || '';
     this.location = node.location || '';
-    this.date = node.temporal.replace('/', ' - ') || '';
+
+    let temporal = '';
+    if ( node.temporal !== undefined ) {
+      temporal = node.temporal.replace('/', ' - ');
+    }
+    this.date = temporal || '';
 
     // TODO: Some of the descriptions are like this: description: @id: http://link.com
     //       So weeding those out by testing to see if they're strings first

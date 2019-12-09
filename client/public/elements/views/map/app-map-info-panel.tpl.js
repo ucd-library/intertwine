@@ -333,7 +333,7 @@ ${sharedStyles}
         <div id="description"></div>
 
         <div ?hidden="${!this.isNode}">
-          <h3 ?hidden="${!this.hasConnections}" style="margin: 0 0 5px 0">Explore Connections</h3>
+          ${this.hasConnections? html`<h3 style="margin: 0 0 5px 0">Explore Connections</h3>` : html``}
           <div>
             ${this.connections.map(item => html`
               <div>
