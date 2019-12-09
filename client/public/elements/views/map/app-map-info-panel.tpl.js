@@ -332,16 +332,15 @@ ${sharedStyles}
         <!-- Filled from inside the parent js file -->
         <div id="description"></div>
 
-        <!-- Hide if there are no connections -->
-        <div ?hidden="${!this.connections.length}">
-          <h3 style="margin: 0 0 5px 0">Explore Connections</h3>
+        <div ?hidden="${!this.isNode}">
+          <h3 ?hidden="${!this.hasConnections}" style="margin: 0 0 5px 0">Explore Connections</h3>
           <div>
             ${this.connections.map(item => html`
               <div>
                 <div class="dot" type="${item.node.type}"></div>
                 <span>
                   <a class="internal" href="/map/${this.moment}/connection/${item.link['@id']}">
-                    ${item.node.name}
+                    ${item.link.name}
                   </a>
                 </span>
               </div>
@@ -362,7 +361,6 @@ ${sharedStyles}
           `)}
         </div>
 
-        <!-- Related Links -->
         <div ?hidden="${!this.relatedLinks.length}">
           <h3>Learn More</h3>
           <ul class="related-links">

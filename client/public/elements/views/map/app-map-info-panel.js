@@ -28,6 +28,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       isLink : {type: Boolean},
       isMoment : {type: Boolean},
       relatedLinks: { type: Array },
+      hasConnections: { type: Boolean },
       connectionSubjects : {type: Array},
       clusterSubjects : {type: Object},
       clusterSubjectTypes : {type: Array}
@@ -42,6 +43,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.date = '';
     this.view = '';
     this.type = '';
+    this.description = '';
     this.thumbnail = '';
     this.srctype = '';
     this.dsttype = '';
@@ -56,6 +58,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
     this.endpoint = APP_CONFIG.endpoint;
 
+    this.hasConnections = false;
     this.connectionSubjects = [];
     this.clusterSubjectTypes = ['person', 'place', 'object', 'event'];
     this.resetClusterSubjects();
@@ -75,7 +78,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.renderState(e.payload);
   }
 
-  async _onAppStateUpdate(e) {
+  _onAppStateUpdate(e) {
     this.moment   = e.moment;
     this.selected = e.selected;
     this.renderState();
@@ -84,6 +87,14 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   firstUpdated() {
     this.descriptionEle = this.shadowRoot.querySelector('#description');
     this.momentDescEle  = this.shadowRoot.querySelector('#momentDescription');
+  }
+
+  updated() {
+    if ( this.isLink ) {
+      this.title = '';
+    } else {
+      this.descriptionEle.innerHTML = '';
+    }
   }
 
   renderState(moment) {
@@ -170,10 +181,12 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.location = node.location || '';
     this.date = node.temporal || '';
 
-    if ( node.description !== false ) {
+    // TODO: Some of the descriptions are like this: description: @id: http://link.com
+    //       So weeding those out by testing to see if they're strings first
+    //       Otherwise markdown breaks
+    if ( node.description !== false && typeof node.description === 'string' ) {
       this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');
     }
-
     /*
     if ( node.thumbnail ) {
       this.thumbnail = this.endpoint + '/' + node.thumbnail;
@@ -181,7 +194,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     */
 
     // TODO:
-    // Kimmy: 
+    // Kimmy:
     //    1. DONE => For url, I only want to show the core site url — for example: tavbooks.com, wikipedia.org
     //    2. There should be associated page titles to display next to the url with the data from trello
     this.relatedLinks = [];
@@ -199,8 +212,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       }
       return obj;
     });
-
-    console.log(this.relatedLinks)
 
     if( node.type === 'connection' ) {
       this.connectionSubjects = [
@@ -233,7 +244,12 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       connections.sort((a, b) => (a.node.name > b.node.name) ? 1 : -1);
 
       this.connections = connections;
+
+      if ( this.connections.length > 0 ) {
+        this.hasConnections = true;
+      }
     }
+
   }
 
   renderLink(node) {
