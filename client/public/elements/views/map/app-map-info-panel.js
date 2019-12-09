@@ -133,6 +133,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       }
 
       if ( this.events.length > 0 ) {
+        this.momentInfo.title    = this.events[0]['name'];
+        this.momentInfo.date     = this.events[0]['temporal'].replace('/', ' - ');
         this.momentEntryPoint    = this.events[0]['name'];
         this.momentEntryPointUrl = `/map/${this.moment}/${this.events[0].type}/${this.events[0]['@id']}`;
       }
