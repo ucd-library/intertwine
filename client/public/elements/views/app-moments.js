@@ -38,6 +38,7 @@ export default class AppMoments extends Mixin(LitElement)
       let moment  = payload['@graph'].filter(data => data['type'] === 'event');
 
       this.moments = moment;
+
       this.momentUrl = `/map/${this.selectedMoment}/${this.moments[0].type}/${this.moments[0]['@id']}`;
     }
   }
