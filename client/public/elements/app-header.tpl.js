@@ -60,7 +60,7 @@ return html`
 <div class="layout">
   <h1>
     <span><a href="${this.baseUrl}">intertWINE</a></span>
-    <span class="title-extra">//  California's Modern Wine Network<span>
+    <span class="title-extra">// California's Modern Wine Network<span>
   </h1>
   <div style="padding-right: 20px">
     <!--<a @click="${this._onMomentsClick}">Moments</a>-->
