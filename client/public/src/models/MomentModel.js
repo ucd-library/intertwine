@@ -24,6 +24,7 @@ class MomentModel extends BaseModel {
       if( state.request ) {
         await state.request;
       } else if( state.state !== 'loaded' ) {
+        let test = await this.service.get(moment, this.transformMockLinks);
         await this.service.get(moment, this.transformMockLinks);
       }
     } catch(e) { console.error(e) };
@@ -73,6 +74,8 @@ class MomentModel extends BaseModel {
   }
 
   transformMockLinks(data) {
+    //if ( !data ) return;
+
     let links = {}, nodes = {}, lookup = {};
 
     // Helper Functions - START
