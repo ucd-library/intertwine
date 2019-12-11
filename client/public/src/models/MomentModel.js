@@ -3,7 +3,6 @@ const MomentService = require('../services/MomentService');
 const MomentStore = require('../stores/MomentStore');
 
 class MomentModel extends BaseModel {
-
   constructor() {
     super();
 
@@ -74,7 +73,7 @@ class MomentModel extends BaseModel {
   }
 
   transformMockLinks(data) {
-    //if ( !data ) return;
+    if ( !data ) return;
 
     let links = {}, nodes = {}, lookup = {};
 
@@ -125,11 +124,11 @@ class MomentModel extends BaseModel {
           location = getLocation(lookup[id]['@id']);
         }
 
+        let lat = (location.latitude ? parseFloat(location.latitude) : 0);
+        let lng = (location.longitude ? parseFloat(location.latitude) : 0);
+
         lookup[id]['location'] = location.name;
-        lookup[id]['coordinates'] = [
-          parseFloat(location.latitude),
-          parseFloat(location.longitude)
-        ];
+        lookup[id]['coordinates'] = [ lat, lng ];
 
         nodes[lookup[id]['@id']] = lookup[id];
       }

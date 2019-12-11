@@ -31,7 +31,7 @@ router.get('/:id', (req, res) => {
   */
 
   let data = fs.readFileSync(path.join(__dirname, '..', '..', 'mock', req.params.id + '.json'), 'utf-8');
-  res.json(JSON.parse(data));
+   res.json(JSON.parse(data));
 });
 
 module.exports = router;
