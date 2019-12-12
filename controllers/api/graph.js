@@ -29,9 +29,7 @@ async function check_missing_latlng(data) {
           data['@graph'][id]['longitude'] = lng;
         }
       } catch (e) {
-        // If any of the awaited promises are rejected this catch block will catch the reason
         console.log(e);
-        return null;
       }
     }
   }
@@ -39,13 +37,12 @@ async function check_missing_latlng(data) {
   return data;
 }
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', (req, res) => {
   const url = 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/chardonnay2/chardonnay.json';
   fetch(url)
   .then(res => res.json())
   .then(data => {
-    if ( data ) {      
-      // Star an IIFE to use await at the top level
+    if ( data ) {
       (async function() {
         res.send(await check_missing_latlng(data));
       })();

@@ -6,7 +6,7 @@ class MomentModel extends BaseModel {
   constructor() {
     super();
 
-    this.store = MomentStore;
+    this.store   = MomentStore;
     this.service = MomentService;
 
     this.EventBus.on('app-state-update', e => {
@@ -23,7 +23,6 @@ class MomentModel extends BaseModel {
       if( state.request ) {
         await state.request;
       } else if( state.state !== 'loaded' ) {
-        let test = await this.service.get(moment, this.transformMockLinks);
         await this.service.get(moment, this.transformMockLinks);
       }
     } catch(e) { console.error(e) };
@@ -73,8 +72,6 @@ class MomentModel extends BaseModel {
   }
 
   transformMockLinks(data) {
-    if ( !data ) return;
-
     let links = {}, nodes = {}, lookup = {};
 
     // Helper Functions - START
@@ -124,11 +121,11 @@ class MomentModel extends BaseModel {
           location = getLocation(lookup[id]['@id']);
         }
 
-        let lat = (location.latitude ? parseFloat(location.latitude) : 0);
-        let lng = (location.longitude ? parseFloat(location.latitude) : 0);
-
         lookup[id]['location'] = location.name;
-        lookup[id]['coordinates'] = [ lat, lng ];
+        lookup[id]['coordinates'] = [ 
+          parseFloat(location.latitude),
+          parseFloat(location.longitude)
+        ];
 
         nodes[lookup[id]['@id']] = lookup[id];
       }
