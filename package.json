@@ -2,11 +2,12 @@
   "name": "@ucd-lib/intert-wine",
   "version": "1.0.0",
   "description": "California's modern wine network",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "watch": "cd client && webpack --config webpack-watch.config.js --watch",
     "dist": "cd client && ./dist.sh",
     "deploy": "./deploy.sh",
+    "nodemon": "nodemon -V server.js --ignore ./mock/",
     "create-icons": "cd client/public/elements && cork-icon-set-generator intert-wine-icons ../icons"
   },
   "author": "jrmerz@ucdavis.edu",
@@ -14,6 +15,7 @@
   "devDependencies": {
     "@ucd-lib/cork-app-build": "^0.1.5",
     "@ucd-lib/cork-icon-set-generator": "git+https://github.com/UCDavisLibrary/cork-icon-set-generator.git",
+    "nodemon": "^1.18.10",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9"
   },

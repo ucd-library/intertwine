@@ -5,6 +5,7 @@ let fetch   = require('node-fetch');
 
 const openGeocoder = require('node-open-geocoder');
 
+// This isn't declared as 'async' because it already returns a promise
 function get_location_info (name) {
   return new Promise((resolve, reject) => {
     openGeocoder().geocode(name).end((err, res) => {
@@ -14,33 +15,28 @@ function get_location_info (name) {
   });
 }
 
-async function check_missing_latlng() {
-  let _data = fs.readFileSync(path.join(__dirname, '..', '..', 'mock/chardonnay.json'), 'utf-8');
-  const data  = JSON.parse(_data);
-
+async function check_missing_latlng(data) {
   for ( let id in data['@graph']) {
     if ( data['@graph'][id]['@id'].includes('_:b') && !data['@graph'][id]['latitude'] ) {
       let lat = 0, lng = 0, name = data['@graph'][id].name;
-
       try {
         const location = await get_location_info(name);
-
-        if ( location.length === 5 ) {
+        if ( location ) {
           lat = location[0].lat;
           lng = location[0].lon;
 
           data['@graph'][id]['latitude']  = lat;
           data['@graph'][id]['longitude'] = lng;
-
-          setTimeout(() => {
-            return data;
-          }, 200);
         }
       } catch (e) {
+        // If any of the awaited promises are rejected this catch block will catch the reason
         console.log(e);
+        return null;
       }
     }
   }
+
+  return data;
 }
 
 router.get('/:id', async (req, res, next) => {
@@ -48,24 +44,21 @@ router.get('/:id', async (req, res, next) => {
   fetch(url)
   .then(res => res.json())
   .then(data => {
-    if ( data ) {
-      res.send(data);
+    if ( data ) {      
+      // Star an IIFE to use await at the top level
+      (async function() {
+        res.send(await check_missing_latlng(data));
+      })();
     } else {
       let _data = fs.readFileSync(path.join(__dirname, '..', '..', 'mock', req.params.id + '.json'), 'utf-8');
-      let data  = JSON.parse(data);
+      let data  = JSON.parse(_data);
       res.json(data);
     }
   })
   .catch(err => {
-    console.log(err)
+    console.log('Error: ', err);
   });
 
-  /*
-  let _data = fs.readFileSync(path.join(__dirname, '..', '..', 'mock', req.params.id + '.json'), 'utf-8');
-  let data  = JSON.parse(_data);
-
-  res.json(data);
-  */
 });
 
 module.exports = router;
