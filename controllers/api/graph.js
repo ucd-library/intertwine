@@ -38,8 +38,9 @@ async function check_missing_latlng(data) {
 }
 
 router.get('/:id', (req, res) => {
-  //const url = 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/chardonnay2/chardonnay.json';
-  const url = 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/chardonnay2/chardonnay.json/d6/8e/6e/59/d68e6e59-02aa-44b9-a983-c4daf97c6edf';
+  const url = 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/chardonnay2/chardonnay2.json';
+
+  // https://daveceddia.com/unexpected-token-in-json-at-position-0/
   fetch(url)
     .then(res => res.json())
     .then(data => {
