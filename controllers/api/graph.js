@@ -38,23 +38,24 @@ async function check_missing_latlng(data) {
 }
 
 router.get('/:id', (req, res) => {
-  const url = 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/chardonnay2/chardonnay.json';
+  //const url = 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/chardonnay2/chardonnay.json';
+  const url = 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/chardonnay2/chardonnay.json/d6/8e/6e/59/d68e6e59-02aa-44b9-a983-c4daf97c6edf';
   fetch(url)
-  .then(res => res.json())
-  .then(data => {
-    if ( data ) {
-      (async function() {
-        res.send(await check_missing_latlng(data));
-      })();
-    } else {
-      let _data = fs.readFileSync(path.join(__dirname, '..', '..', 'mock', req.params.id + '.json'), 'utf-8');
-      let data  = JSON.parse(_data);
-      res.json(data);
-    }
-  })
-  .catch(err => {
-    console.log('Error: ', err);
-  });
+    .then(res => res.json())
+    .then(data => {
+      if ( data ) {
+        (async function() {
+          res.send(await check_missing_latlng(data));
+        })();
+      } else {
+        let _data = fs.readFileSync(path.join(__dirname, '..', '..', 'mock', req.params.id + '.json'), 'utf-8');
+        let data  = JSON.parse(_data);
+        res.json(data);
+      }
+    })
+    .catch(err => {
+      console.log('Error: ', err);
+    });
 
 });
 
