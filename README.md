@@ -4,15 +4,15 @@ California's modern wine network
 
 ## Development
 
-In the root, let's install our dependancies needed to construct our code.
+1. In the root, let's install our dependancies needed to construct our code.
 
 ```bash
 npm install
 ```
 
-Navigate to ./client/public and once again run `npm install`.
+2. Navigate to ./client/public and once again run `npm install`.
 
-Next, you need to create a *loader* directory containing the required polyfills.
+3. Create a *loader* directory containing the required polyfills.
 
 MacOS:
 
@@ -26,12 +26,12 @@ Windows (run as administrator):
 mklink /D c:\Projects\intertwine\client\public\loader c:\Projects\intertwine\client\public\node_modules\@ucd-lib\cork-app-load\lib
 ```
 
-Set up webpack to continuously update its bundles.  This command is setup in the `package.json` file at the project's root.
+4. Set up webpack to continuously update its bundles.  This command is setup in the `package.json` file at the project's root.
 
 ```bash
 npm run watch
 ```
 
-Next navigate to the root directory and run `node server.js`.
+5. Navigate to the root directory and run `node server.js`.
 
 And you are now running your development setup on `localhost`.
