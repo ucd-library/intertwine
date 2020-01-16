@@ -76,12 +76,17 @@ class MomentModel extends BaseModel {
 
     // Helper Functions - START
     function cleanType(type) {
+      let newType;
       if ( Array.isArray(type) ) {
-        type = type.find(t => t.includes('ucdlib:'));
-        return type.replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();
+        newType = type.find(t => t.includes('ucdlib:'));
+        if ( newType === undefined ) {
+          newType = type.find(t => t !== 'schema:WebPage');
+        }
+        return newType.replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();
       } else {
         return type.replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();
       }
+
     }
 
     function getLocation(id) {
@@ -122,7 +127,7 @@ class MomentModel extends BaseModel {
         }
 
         lookup[id]['location'] = location.name;
-        lookup[id]['coordinates'] = [ 
+        lookup[id]['coordinates'] = [
           parseFloat(location.latitude),
           parseFloat(location.longitude)
         ];

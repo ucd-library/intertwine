@@ -40,7 +40,7 @@ And you are now running your development setup on `localhost`.
   Using Fin
 
   ```bash
-  fin http get -H "Accept: application/ld+json; profile=\"http://www.w3.org/ns/json-ld#compacted\"" -P b /collection/chardonnay2 > chardonnay2.json
+  fin http get -H "Accept: application/ld+json; profile=\"http://www.w3.org/ns/json-ld#compacted\"" -P b /collection/moments/chardonnay/chardonnay.json > mock/chardonnay.json
   ```
 
 ### Documentation

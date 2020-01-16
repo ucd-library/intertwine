@@ -37,7 +37,8 @@ class AppStateModelImpl extends AppStateModel {
     }
 
     // Currently selected moment
-    state.moment = 'chardonnay';
+    //state.moment = 'chardonnay';
+    state.moment = 'jop';
 
     // parse out selected object(s)
     if( state.page === 'map' && state.location.path.length >= 3 ) {

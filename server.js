@@ -4,8 +4,8 @@ const config  = require('./config');
 const fs      = require('fs');
 const https   = require('https');
 
-const url = 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/chardonnay2/chardonnay2.json';
-const file = fs.createWriteStream('./mock/chardonnay.json');
+const url = 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/moments/jop/jop.json';
+const file = fs.createWriteStream('./mock/jop.json');
 
 https.get(url, (res) => {
   res.on('data', (data) => file.write(data))
