@@ -38,10 +38,14 @@ async function check_missing_latlng(data) {
 }
 
 router.get('/:id', (req, res) => {
-  //const url = 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/moments/chardonnay/chardonnay.json';
-  const url = 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/moments/jop/jop.json';
+  let _data = fs.readFileSync(path.join(__dirname, '..', '..', 'mock', req.params.id + '.json'), 'utf-8');
+  let data  = JSON.parse(_data);
+  res.json(data);
 
+  // const url = 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/moments/chardonnay/chardonnay.json';
+  // const url = 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/moments/jop/jop.json';
   // https://daveceddia.com/unexpected-token-in-json-at-position-0/
+  /*
   fetch(url)
     .then(res => res.json())
     .then(data => {
@@ -58,6 +62,7 @@ router.get('/:id', (req, res) => {
     .catch(err => {
       console.log('Error: ', err);
     });
+  */
 
 });
 

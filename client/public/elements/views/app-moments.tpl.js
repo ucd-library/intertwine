@@ -57,7 +57,10 @@ export default function render() {
         <div class="card">
           <h1 style="margin-bottom: 0px;">${this.moments[0].name}</h1>
           <h2 style="margin: 0px;">${this.moments[0].location}</h2>
-          <h2 style="margin-top: 0px;">${this.moments[0].temporal.replace('/', ' - ')}</h2>
+          <h2 style="margin-top: 0px;">
+            ${this.moments[0].temporal}
+            <!-- this.moments[0].temporal.replace('/', ' - ')-->
+          </h2>
           <a class="btn" href="${this.momentUrl}">
             Read More
           </a>

@@ -90,6 +90,25 @@ class MomentModel extends BaseModel {
     }
 
     function getLocation(id) {
+      /* Possible Layouts:
+        Jop:
+          "spatial" : [
+            "Saint-Julien-Beychevelle, France",
+            {
+              "@id" : "_:b14"
+            }
+          ]
+
+        Chardonnay: "spatial": "_:b7",
+      */
+      if ( typeof id === 'object' && Array.isArray(id) ) {
+        id.forEach(el => {
+          if ( typeof el === 'object' ) {
+            id = el['@id'];
+          };
+        });
+      }
+
       return data.find(record => record['@id'] === id);
     }
     // Helper Functions - END
@@ -119,14 +138,24 @@ class MomentModel extends BaseModel {
     // Nodes
     for( let id in lookup ) {
       if( !lookup[id].isLink && lookup[id]['type'] !== 'connection' ) {
-        let location;
+        let location = {
+          name: 'unknown',
+          latitude: '0',
+          longitude: '0'
+        };
+
         if ( lookup[id]['spatial'] ) {
-          location = getLocation(lookup[id]['spatial']);
+          if ( getLocation(lookup[id]['spatial']) !== undefined ) {
+            location = getLocation(lookup[id]['spatial']);
+          }
         } else {
-          location = getLocation(lookup[id]['@id']);
+
+          if ( lookup[id]['type'] === 'place' ) {
+            location = getLocation(lookup[id]['@id']);
+          }
         }
 
-        lookup[id]['location'] = location.name;
+        lookup[id]['location'] = location.name.replace(/\+/g, ' ');
         lookup[id]['coordinates'] = [
           parseFloat(location.latitude),
           parseFloat(location.longitude)
@@ -149,6 +178,18 @@ class MomentModel extends BaseModel {
         dst: nodes[item.dst].coordinates
       }
     }
+
+    Object.values(nodes).map(el => {
+      if ( typeof el.location === "string" ) {
+        el.location = el.location.replace(/\+/g, ' ').replace(/\%26/g, '&');
+      }
+
+      if ( typeof el.name === "string" ) {
+       el.name = el.name.replace(/\+/g, ' ').replace(/\%26/g, '&');
+      }
+
+      return el;
+    });
 
     return { nodes, links }
   }
