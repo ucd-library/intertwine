@@ -46,3 +46,10 @@ And you are now running your development setup on `localhost`.
 ### Documentation
 
 (Fedora 4.7.5 RESTful HTTP API)<https://wiki.lyrasis.org/display/FEDORA475/RESTful+HTTP+API>
+
+### Deployment
+
+```bash
+npm run dist
+./deploy.sh
+```
