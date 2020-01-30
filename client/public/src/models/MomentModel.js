@@ -78,15 +78,16 @@ class MomentModel extends BaseModel {
     function cleanType(type) {
       let newType;
       if ( Array.isArray(type) ) {
-        newType = type.find(t => t.includes('ucdlib:'));
+        newType = type.find(t => t.toLowerCase().includes('significantlink'));
+
         if ( newType === undefined ) {
+          newType = type.find(t => t.includes('ucdlib:'));
           newType = type.find(t => t !== 'schema:WebPage');
         }
         return newType.replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();
       } else {
         return type.replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();
       }
-
     }
 
     function getLocation(id) {
@@ -108,19 +109,32 @@ class MomentModel extends BaseModel {
           };
         });
       }
-
       return data.find(record => record['@id'] === id);
     }
     // Helper Functions - END
 
     data.forEach(item => {
       item['type'] = cleanType(item['@type']);
-      // Replace significantLink with connection
-      if ( item.type === 'significantlink' ) item.type = 'connection';
-      lookup[item['@id'].replace(/.*:/, '')] = item;
+      if ( item['schema:longitude'] ) {
+        item['longitude'] = item['schema:longitude'];
+        delete item['schema:longitude'];
+      }
+
+      if ( item['schema:latitude'] ) {
+        item['latitude'] = item['schema:latitude'];
+        delete item['schema:latitude'];
+      }
+
+      // Replace significantlink(s) with connection
+      if ( item.type.includes('significantlink') ) {
+        item.type = 'connection';
+      }
+
+      lookup[item['@id'].replace(/.*:b/, 'b')] = item;
     });
 
     // Create lookup table
+    // TODO: Links not filling correctly on jop, correct on chardonnay
     for ( let id in lookup ) {
       let container = lookup[id];
       for ( let attr in container ) {
@@ -129,7 +143,6 @@ class MomentModel extends BaseModel {
           link.src = container['@id'];
           link.dst = container[attr];
           link.isLink = true;
-
           links[link['@id']] = link;
         }
       }
@@ -137,22 +150,14 @@ class MomentModel extends BaseModel {
 
     // Nodes
     for( let id in lookup ) {
+      // Can't be a link or a connection
       if( !lookup[id].isLink && lookup[id]['type'] !== 'connection' ) {
-        let location = {
-          name: 'unknown',
-          latitude: '0',
-          longitude: '0'
-        };
+        let location;
 
         if ( lookup[id]['spatial'] ) {
-          if ( getLocation(lookup[id]['spatial']) !== undefined ) {
-            location = getLocation(lookup[id]['spatial']);
-          }
-        } else {
-
-          if ( lookup[id]['type'] === 'place' ) {
-            location = getLocation(lookup[id]['@id']);
-          }
+          location = getLocation(lookup[id]['spatial']);
+        } else if ( lookup[id]['type'] === 'place' ) {
+          location = getLocation(lookup[id]['@id']);
         }
 
         lookup[id]['location'] = location.name.replace(/\+/g, ' ');
