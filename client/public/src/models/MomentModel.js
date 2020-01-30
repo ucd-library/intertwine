@@ -115,6 +115,7 @@ class MomentModel extends BaseModel {
 
     data.forEach(item => {
       item['type'] = cleanType(item['@type']);
+
       if ( item['schema:longitude'] ) {
         item['longitude'] = item['schema:longitude'];
         delete item['schema:longitude'];
