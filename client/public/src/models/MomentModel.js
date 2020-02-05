@@ -154,19 +154,26 @@ class MomentModel extends BaseModel {
       if( !lookup[id].isLink && lookup[id]['type'] !== 'connection' ) {
         let location;
 
-        if ( lookup[id]['spatial'] ) {
-          location = getLocation(lookup[id]['spatial']);
-        } else if ( lookup[id]['type'] === 'place' ) {
-          location = getLocation(lookup[id]['@id']);
+        /**
+         * Weed out the _:b items, which won't be needed in the final display
+        */
+        const regex = new RegExp(/^_:b*/g);
+        if ( !regex.test(lookup[id]["@id"]) ) {
+
+          if ( lookup[id]['spatial'] ) {
+            location = getLocation(lookup[id]['spatial']);
+          } else if ( lookup[id]['type'] === 'place' ) {
+            location = getLocation(lookup[id]['@id']);
+          }
+
+          lookup[id]['location'] = location.name.replace(/\+/g, ' ');
+          lookup[id]['coordinates'] = [
+            parseFloat(location.latitude),
+            parseFloat(location.longitude)
+          ];
+
+          nodes[lookup[id]['@id']] = lookup[id];
         }
-
-        lookup[id]['location'] = location.name.replace(/\+/g, ' ');
-        lookup[id]['coordinates'] = [
-          parseFloat(location.latitude),
-          parseFloat(location.longitude)
-        ];
-
-        nodes[lookup[id]['@id']] = lookup[id];
       }
     }
 
@@ -183,18 +190,6 @@ class MomentModel extends BaseModel {
         dst: nodes[item.dst].coordinates
       }
     }
-
-    Object.values(nodes).map(el => {
-      if ( typeof el.location === "string" ) {
-        el.location = el.location.replace(/\+/g, ' ').replace(/\%26/g, '&');
-      }
-
-      if ( typeof el.name === "string" ) {
-       el.name = el.name.replace(/\+/g, ' ').replace(/\%26/g, '&');
-      }
-
-      return el;
-    });
 
     return { nodes, links }
   }

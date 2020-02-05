@@ -385,22 +385,7 @@ export default class AppLeafletMap extends LitElement {
    * @description set node/link data, render map
    */
   setData(data) {
-    this.nodes = remove_location_objects(data.nodes);
-
-    // This filters out the _:b items, which are no longer needed,
-    // since their only purpose is to provide coords for the actual items
-    // TODO: Have Justin check
-    function remove_location_objects(obj) {
-      let result = {}, key;
-      for (key in obj) {
-        if (obj.hasOwnProperty(key) && !RegExp(/_:b*/g).test(key)) {
-          result[key] = obj[key];
-        }
-      }
-
-      return result;
-    };
-
+    this.nodes = data.nodes;
     this.nodeLayers = {};
     this.links = data.links;
 
