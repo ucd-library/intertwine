@@ -188,9 +188,16 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.view = 'cluster';
     this.resetClusterSubjects();
 
+
     nodes.forEach(node => {
       if( !this.clusterSubjects[node.type] ) return;
+
+      // Weed out the _:b location objects
+      // This prevents duplicates from being posted.
+      if ( RegExp(/^_:b*/g).test(node['@id']) ) return;
+
       this.clusterSubjects[node.type].enabled = true;
+
       this.clusterSubjects[node.type].nodes.push(node);
     });
 

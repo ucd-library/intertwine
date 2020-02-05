@@ -385,19 +385,34 @@ export default class AppLeafletMap extends LitElement {
    * @description set node/link data, render map
    */
   setData(data) {
-    this.nodes = data.nodes;
+    this.nodes = remove_location_objects(data.nodes);
+
+    // This filters out the _:b items, which are no longer needed,
+    // since their only purpose is to provide coords for the actual items
+    // TODO: Have Justin check
+    function remove_location_objects(obj) {
+      let result = {}, key;
+      for (key in obj) {
+        if (obj.hasOwnProperty(key) && !RegExp(/_:b*/g).test(key)) {
+          result[key] = obj[key];
+        }
+      }
+
+      return result;
+    };
+
     this.nodeLayers = {};
     this.links = data.links;
 
     this.clusters.clearLayers();
 
-    for( let id in data.nodes ) {
+    for( let id in this.nodes ) {
       let icon = L.divIcon({
-        className: `leaflet-intertwine-icon leaflet-${data.nodes[id].type}-icon`,
+        className: `leaflet-intertwine-icon leaflet-${this.nodes[id].type}-icon`,
         iconSize: [15, 15]
       });
 
-      let layer = L.marker(data.nodes[id].coordinates, {icon});
+      let layer = L.marker(this.nodes[id].coordinates, {icon});
 
       layer.on('click', e => this.onNodeClicked(e));
       layer.inertWineId = id;
@@ -445,7 +460,6 @@ export default class AppLeafletMap extends LitElement {
 
     for( let id in this.links ) {
       let item = this.links[id];
-
       if ( item.weblink ) continue;
 
       let src = this.getMarkerLatLng(item.src);

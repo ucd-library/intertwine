@@ -135,7 +135,6 @@ class MomentModel extends BaseModel {
     });
 
     // Create lookup table
-    // TODO: Links not filling correctly on jop, correct on chardonnay
     for ( let id in lookup ) {
       let container = lookup[id];
       for ( let attr in container ) {
