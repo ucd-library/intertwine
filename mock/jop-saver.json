@@ -2,33 +2,33 @@
   "@graph" : [ {
     "@id" : "_:b0",
     "@type" : "schema:Place",
-    "schema:latitude" : 51.5285582,
-    "schema:longitude" : -0.2416795,
-    "name" : "London,+UK"
+    "schema:latitude" : 38.5015586,
+    "schema:longitude" : -122.4187834,
+    "name" : "Heitz+Wine+Cellar"
   }, {
     "@id" : "_:b1",
     "@type" : "schema:Place",
-    "schema:latitude" : 43.0657306,
-    "schema:longitude" : 17.5267338,
-    "name" : "Desne,+Croatia"
+    "schema:latitude" : 36.4701378,
+    "schema:longitude" : -121.2320202,
+    "name" : "Chalone+Vineyard"
   }, {
     "@id" : "_:b10",
     "@type" : "schema:Place",
-    "schema:latitude" : 38.361717,
-    "schema:longitude" : -122.4194027,
-    "name" : "Veedercrest+Ranch"
+    "schema:latitude" : 38.602514,
+    "schema:longitude" : -122.5999107,
+    "name" : "Chateau+Montelena+Winery"
   }, {
     "@id" : "_:b11",
     "@type" : "schema:Place",
-    "schema:latitude" : 46.9770936,
-    "schema:longitude" : 4.7728859,
-    "name" : "1+Rue+Charles+Giraud,+21190+Meursault,+France"
+    "schema:latitude" : 48.8661299,
+    "schema:longitude" : 2.3357972,
+    "name" : "Le+Grand+Véfour"
   }, {
     "@id" : "_:b12",
     "@type" : "schema:Place",
-    "schema:latitude" : 45.1638323,
-    "schema:longitude" : -0.7424355,
-    "name" : "Château+Léoville-Las+Cases"
+    "schema:latitude" : 38.5255567,
+    "schema:longitude" : -122.4985412,
+    "name" : "Freemark+Abbey+Winery"
   }, {
     "@id" : "_:b13",
     "@type" : "schema:Place",
@@ -38,9 +38,9 @@
   }, {
     "@id" : "_:b14",
     "@type" : "schema:Place",
-    "schema:latitude" : 38.2859417,
-    "schema:longitude" : -122.3599985,
-    "name" : "Napa,+CA"
+    "schema:latitude" : 38.891154,
+    "schema:longitude" : -77.0318748,
+    "name" : "Smithsonian+National+Museum+of+American+History"
   }, {
     "@id" : "_:b15",
     "@type" : "schema:Place",
@@ -56,15 +56,15 @@
   }, {
     "@id" : "_:b17",
     "@type" : "schema:Place",
-    "schema:latitude" : 45.2130751,
-    "schema:longitude" : -0.7720411,
-    "name" : "Château+Mouton+Rothschild"
+    "schema:latitude" : 45.2465895,
+    "schema:longitude" : -0.7639582,
+    "name" : "Château+Montrose"
   }, {
     "@id" : "_:b18",
     "@type" : "schema:Place",
-    "schema:latitude" : 46.9342374,
-    "schema:longitude" : 4.7223589,
-    "name" : "Domaine+Ramonet"
+    "schema:latitude" : 34.1938654,
+    "schema:longitude" : -118.1712585,
+    "name" : "Altadena,+CA"
   }, {
     "@id" : "_:b19",
     "@type" : "schema:Place",
@@ -74,9 +74,9 @@
   }, {
     "@id" : "_:b2",
     "@type" : "schema:Place",
-    "schema:latitude" : 37.167834,
-    "schema:longitude" : -122.0479977,
-    "name" : "David+Bruce+Winery"
+    "schema:latitude" : 33.9459362,
+    "schema:longitude" : -117.5396128,
+    "name" : "Riverside,+CA"
   }, {
     "@id" : "_:b20",
     "@type" : "schema:Place",
@@ -86,15 +86,15 @@
   }, {
     "@id" : "_:b21",
     "@type" : "schema:Place",
-    "schema:latitude" : 48.8690432,
-    "schema:longitude" : 2.3211506,
-    "name" : "25+Rue+Royale,+75008+Paris,+France"
+    "schema:latitude" : 37.167834,
+    "schema:longitude" : -122.0479977,
+    "name" : "David+Bruce+Winery"
   }, {
     "@id" : "_:b22",
     "@type" : "schema:Place",
-    "schema:latitude" : 33.9459362,
-    "schema:longitude" : -117.5396128,
-    "name" : "Riverside,+CA"
+    "schema:latitude" : 38.3871827,
+    "schema:longitude" : -122.3148005,
+    "name" : "Clos+Du+Val"
   }, {
     "@id" : "_:b23",
     "@type" : "schema:Place",
@@ -110,87 +110,87 @@
   }, {
     "@id" : "_:b25",
     "@type" : "schema:Place",
-    "schema:latitude" : 55.5807482,
-    "schema:longitude" : 36.825156,
-    "name" : "Moscow,+Russia"
-  }, {
-    "@id" : "_:b26",
-    "@type" : "schema:Place",
     "schema:latitude" : 48.870834,
     "schema:longitude" : 2.3282383,
     "name" : "InterContinental+Paris+-+Le+Grand"
   }, {
+    "@id" : "_:b26",
+    "@type" : "schema:Place",
+    "schema:latitude" : 48.8497866,
+    "schema:longitude" : 2.3527581,
+    "name" : "La+Tour+d'Argent"
+  }, {
     "@id" : "_:b27",
     "@type" : "schema:Place",
-    "schema:latitude" : 45.0143201,
-    "schema:longitude" : -0.6549911,
-    "name" : "33460+Labarde,+France"
+    "schema:latitude" : 45.1638323,
+    "schema:longitude" : -0.7424355,
+    "name" : "Château+Léoville-Las+Cases"
   }, {
     "@id" : "_:b28",
     "@type" : "schema:Place",
-    "schema:latitude" : 48.8661299,
-    "schema:longitude" : 2.3357972,
-    "name" : "Le+Grand+Véfour"
+    "schema:latitude" : 55.5807482,
+    "schema:longitude" : 36.825156,
+    "name" : "Moscow,+Russia"
   }, {
     "@id" : "_:b29",
     "@type" : "schema:Place",
-    "schema:latitude" : 38.602514,
-    "schema:longitude" : -122.5999107,
-    "name" : "Chateau+Montelena+Winery"
+    "schema:latitude" : 44.8166517,
+    "schema:longitude" : -0.6108006,
+    "name" : "Château+Haut-Brion"
   }, {
     "@id" : "_:b3",
     "@type" : "schema:Place",
-    "schema:latitude" : 38.3992276,
-    "schema:longitude" : -122.3257286,
-    "name" : "Stag's+Leap+Wine+Cellars"
+    "schema:latitude" : 51.5285582,
+    "schema:longitude" : -0.2416795,
+    "name" : "London,+UK"
   }, {
     "@id" : "_:b30",
     "@type" : "schema:Place",
-    "schema:latitude" : 48.8701734,
-    "schema:longitude" : 2.3031831,
-    "name" : "Taillevent"
+    "schema:latitude" : 45.2130751,
+    "schema:longitude" : -0.7720411,
+    "name" : "Château+Mouton+Rothschild"
   }, {
     "@id" : "_:b31",
+    "@type" : "schema:Place",
+    "schema:latitude" : 46.9770936,
+    "schema:longitude" : 4.7728859,
+    "name" : "1+Rue+Charles+Giraud,+21190+Meursault,+France"
+  }, {
+    "@id" : "_:b32",
     "@type" : "schema:Place",
     "schema:latitude" : 38.3992276,
     "schema:longitude" : -122.3257286,
     "name" : "Stag's+Leap+Wine+Cellars"
   }, {
-    "@id" : "_:b32",
-    "@type" : "schema:Place",
-    "schema:latitude" : 34.1938654,
-    "schema:longitude" : -118.1712585,
-    "name" : "Altadena,+CA"
-  }, {
     "@id" : "_:b33",
-    "@type" : "schema:Place",
-    "schema:latitude" : 36.4701378,
-    "schema:longitude" : -121.2320202,
-    "name" : "Chalone+Vineyard"
-  }, {
-    "@id" : "_:b34",
     "@type" : "schema:Place",
     "schema:latitude" : 38.50707,
     "schema:longitude" : -122.4940895,
     "name" : "Spring+Mountain+Vineyard"
   }, {
-    "@id" : "_:b35",
-    "@type" : "schema:Place",
-    "schema:latitude" : 45.2465895,
-    "schema:longitude" : -0.7639582,
-    "name" : "Château+Montrose"
-  }, {
-    "@id" : "_:b36",
+    "@id" : "_:b34",
     "@type" : "schema:Place",
     "schema:latitude" : 46.944697,
     "schema:longitude" : 4.7510253,
     "name" : "Leflaive+Domaine"
   }, {
-    "@id" : "_:b37",
+    "@id" : "_:b35",
     "@type" : "schema:Place",
     "schema:latitude" : 38.365188,
     "schema:longitude" : -122.4256317,
-    "name" : "Mayacamas+Vineyards+&+Winery"
+    "name" : "Mayacamas+Vineyards+%26+Winery"
+  }, {
+    "@id" : "_:b36",
+    "@type" : "schema:Place",
+    "schema:latitude" : 48.8701734,
+    "schema:longitude" : 2.3031831,
+    "name" : "Taillevent"
+  }, {
+    "@id" : "_:b37",
+    "@type" : "schema:Place",
+    "schema:latitude" : 45.0143201,
+    "schema:longitude" : -0.6549911,
+    "name" : "33460+Labarde,+France"
   }, {
     "@id" : "_:b38",
     "@type" : "schema:Place",
@@ -200,51 +200,51 @@
   }, {
     "@id" : "_:b39",
     "@type" : "schema:Place",
-    "schema:latitude" : 38.5255567,
-    "schema:longitude" : -122.4985412,
-    "name" : "Freemark+Abbey+Winery"
+    "schema:latitude" : 48.8690432,
+    "schema:longitude" : 2.3211506,
+    "name" : "25+Rue+Royale,+75008+Paris,+France"
   }, {
     "@id" : "_:b4",
+    "@type" : "schema:Place",
+    "schema:latitude" : 38.3992276,
+    "schema:longitude" : -122.3257286,
+    "name" : "Stag's+Leap+Wine+Cellars"
+  }, {
+    "@id" : "_:b40",
+    "@type" : "schema:Place",
+    "schema:latitude" : 46.9342374,
+    "schema:longitude" : 4.7223589,
+    "name" : "Domaine+Ramonet"
+  }, {
+    "@id" : "_:b5",
+    "@type" : "schema:Place",
+    "schema:latitude" : 38.2859417,
+    "schema:longitude" : -122.3599985,
+    "name" : "Napa,+CA"
+  }, {
+    "@id" : "_:b6",
+    "@type" : "schema:Place",
+    "schema:latitude" : 37.299637,
+    "schema:longitude" : -122.1180374,
+    "name" : "Ridge+Vineyards"
+  }, {
+    "@id" : "_:b7",
+    "@type" : "schema:Place",
+    "schema:latitude" : 43.0657306,
+    "schema:longitude" : 17.5267338,
+    "name" : "Desne,+Croatia"
+  }, {
+    "@id" : "_:b8",
     "@type" : "schema:Place",
     "schema:latitude" : 47.1617666,
     "schema:longitude" : 4.9529227,
     "name" : "Domaine+Romanée+Conti"
   }, {
-    "@id" : "_:b40",
-    "@type" : "schema:Place",
-    "schema:latitude" : 38.5015586,
-    "schema:longitude" : -122.4187834,
-    "name" : "Heitz+Wine+Cellar"
-  }, {
-    "@id" : "_:b5",
-    "@type" : "schema:Place",
-    "schema:latitude" : 48.8497866,
-    "schema:longitude" : 2.3527581,
-    "name" : "La+Tour+d'Argent"
-  }, {
-    "@id" : "_:b6",
-    "@type" : "schema:Place",
-    "schema:latitude" : 38.3871827,
-    "schema:longitude" : -122.3148005,
-    "name" : "Clos+Du+Val"
-  }, {
-    "@id" : "_:b7",
-    "@type" : "schema:Place",
-    "schema:latitude" : 44.8166517,
-    "schema:longitude" : -0.6108006,
-    "name" : "Château+Haut-Brion"
-  }, {
-    "@id" : "_:b8",
-    "@type" : "schema:Place",
-    "schema:latitude" : 38.891154,
-    "schema:longitude" : -77.0318748,
-    "name" : "Smithsonian+National+Museum+of+American+History"
-  }, {
     "@id" : "_:b9",
     "@type" : "schema:Place",
-    "schema:latitude" : 37.299637,
-    "schema:longitude" : -122.1180374,
-    "name" : "Ridge+Vineyards"
+    "schema:latitude" : 38.361717,
+    "schema:longitude" : -122.4194027,
+    "name" : "Veedercrest+Ranch"
   }, {
     "@id" : "11W8hjAo",
     "@type" : [ "schema:significantLinks", "ucdlib:judged" ],
@@ -263,9 +263,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Aubert de Villaine",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Vosne-Romanée, France",
-    "spatial" : "_:b4",
-    "thumbnail" : "z:19H6O8s0/aubert-villaine.jpg",
+    "spatial" : [ {
+      "@id" : "_:b8"
+    }, "Vosne-Romanée, France" ],
+    "thumbnail" : "19H6O8s0/aubert-villaine.jpg",
     "u8OU2fpH" : "ydKZ9DhI"
   }, {
     "@id" : "19pCYhjl",
@@ -274,9 +275,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Château Léoville-Las Cases",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Saint-Julien-Beychevelle, France",
-    "spatial" : "_:b12",
-    "thumbnail" : "z:19pCYhjl/chateau-leoville-la-cases.jpg",
+    "spatial" : [ "Saint-Julien-Beychevelle, France", {
+      "@id" : "_:b27"
+    } ],
+    "thumbnail" : "19pCYhjl/chateau-leoville-la-cases.jpg",
     "wDak0uKZ_rev" : "ydKZ9DhI"
   }, {
     "@id" : "1ENTeWmj",
@@ -307,9 +309,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "InterContinental Paris Le Grand",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Paris, France",
-    "spatial" : "_:b26",
-    "thumbnail" : "z:42bEJkdS/intercontinental-paris-le-grand-2011.jpg",
+    "spatial" : [ "Paris, France", {
+      "@id" : "_:b25"
+    } ],
+    "thumbnail" : "42bEJkdS/intercontinental-paris-le-grand-2011.jpg",
     "KNZ0TQuz" : "ydKZ9DhI"
   }, {
     "@id" : "4k3LZWlq",
@@ -318,9 +321,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Heitz Cellar",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "spatial" : "_:b40",
-    "schema:spatial" : "St Helena, California",
-    "thumbnail" : "z:4k3LZWlq/heitz-cellar.jpg",
+    "spatial" : [ "St Helena, California", {
+      "@id" : "_:b0"
+    } ],
+    "thumbnail" : "4k3LZWlq/heitz-cellar.jpg",
     "5hFzRNvO_rev" : "ydKZ9DhI"
   }, {
     "@id" : "4lT1dlHw",
@@ -329,9 +333,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Smithsonian National Museum of American History",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "spatial" : "_:b8",
-    "schema:spatial" : "Washington, DC",
-    "thumbnail" : "z:4lT1dlHw/national-museum-american-history.jpg",
+    "spatial" : [ "Washington, DC", {
+      "@id" : "_:b14"
+    } ],
+    "thumbnail" : "4lT1dlHw/national-museum-american-history.jpg",
     "5cEgIuoM" : "Obny8Rpq",
     "NjYuebG5" : "sk79HEjl"
   }, {
@@ -364,7 +369,7 @@
     "name" : [ "Christian Vannequé judged the Judgment of Paris", "judged" ],
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707"
   }, {
-    "@id" : "5ib3I1kZ:_rev",
+    "@id" : "5ib3I1k_rev",
     "@type" : [ "schema:significantLinks", "ucdlib:judged_by" ],
     "name" : "judged by"
   }, {
@@ -374,9 +379,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Odette Kahn",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "spatial" : "_:b15",
-    "schema:spatial" : "Pantin, France",
-    "thumbnail" : "z:62tsFHXQ/odette-kahn.jpg",
+    "spatial" : [ "Pantin, France", {
+      "@id" : "_:b15"
+    } ],
+    "thumbnail" : "62tsFHXQ/odette-kahn.jpg",
     "zAlHW9I2" : "ydKZ9DhI"
   }, {
     "@id" : "6HmRJOWb",
@@ -418,9 +424,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Ridge Vineyards",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Cupertino, California",
-    "spatial" : "_:b9",
-    "thumbnail" : "z:8h0hwVyP/ridge-vineyards.jpg",
+    "spatial" : [ "Cupertino, California", {
+      "@id" : "_:b6"
+    } ],
+    "thumbnail" : "8h0hwVyP/ridge-vineyards.jpg",
     "crGEiojG_rev" : "ydKZ9DhI"
   }, {
     "@id" : "9Pyha9n3",
@@ -451,9 +458,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Les Caves de la Madeleine",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Paris, France",
-    "spatial" : "_:b21",
-    "thumbnail" : "z:BEiG1xaf/les-caves.jpg",
+    "spatial" : [ {
+      "@id" : "_:b39"
+    }, "Paris, France" ],
+    "thumbnail" : "BEiG1xaf/les-caves.jpg",
     "9Pyha9n3_rev" : "kmPMGPQ5"
   }, {
     "@id" : "C54vxFqv",
@@ -462,9 +470,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Jean-Claude Vrinat",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Paris, France",
-    "spatial" : "_:b30",
-    "thumbnail" : "z:C54vxFqv/jcvrinat.jpg",
+    "spatial" : [ "Paris, France", {
+      "@id" : "_:b36"
+    } ],
+    "thumbnail" : "C54vxFqv/jcvrinat.jpg",
     "DvGF3KKI" : "ydKZ9DhI"
   }, {
     "@id" : "CvCz7pNj",
@@ -495,9 +504,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Clos Du Val",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Napa, California",
-    "spatial" : "_:b6",
-    "thumbnail" : "z:D37urK0h/clos-du-val.jpg",
+    "spatial" : [ "Napa, California", {
+      "@id" : "_:b22"
+    } ],
+    "thumbnail" : "D37urK0h/clos-du-val.jpg",
     "1ENTeWmj_rev" : "ydKZ9DhI"
   }, {
     "@id" : "DvGF3KKI",
@@ -517,9 +527,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Raymond Oliver",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "spatial" : "_:b28",
-    "schema:spatial" : "Paris, France",
-    "thumbnail" : "z:EA5AfFd2/raymond-oliver.jpeg",
+    "spatial" : [ "Paris, France", {
+      "@id" : "_:b11"
+    } ],
+    "thumbnail" : "EA5AfFd2/raymond-oliver.jpeg",
     "11W8hjAo" : "ydKZ9DhI"
   }, {
     "@id" : "Fcd7GppP",
@@ -572,9 +583,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Joanne DePuy",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Altadena, CA",
-    "spatial" : "_:b32",
-    "thumbnail" : "z:HDmnuCC5/joanne-depuy.jpg",
+    "spatial" : [ "Altadena, CA", {
+      "@id" : "_:b18"
+    } ],
+    "thumbnail" : "HDmnuCC5/joanne-depuy.jpg",
     "2BX91onm" : "kmPMGPQ5",
     "I8SCcwFs" : "Hsr1Bktg"
   }, {
@@ -584,9 +596,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "André Tchelistcheff",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "spatial" : "_:b25",
-    "schema:spatial" : "Moscow, Russia",
-    "thumbnail" : "z:Hsr1Bktg/andre-tchelistcheff.jpg",
+    "spatial" : [ {
+      "@id" : "_:b28"
+    }, "Moscow, Russia" ],
+    "thumbnail" : "Hsr1Bktg/andre-tchelistcheff.jpg",
     "7uAGLBz9" : "wSHcDVl2",
     "CymKw4L1" : "Nn9iS1kw",
     "I8SCcwFs_rev" : "HDmnuCC5"
@@ -609,7 +622,7 @@
     "name" : [ "InterContinental Paris Le Grand hosted the 1976 Judgment of Paris", "hosted" ],
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707"
   }, {
-    "@id" : "KNZ0TQuz:_rev",
+    "@id" : "KNZ0TQu_rev",
     "@type" : [ "schema:significantLinks", "ucdlib:hosted_by" ],
     "name" : "hosted by"
   }, {
@@ -630,9 +643,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Chateau Montelena Winery",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Calistoga, California",
-    "spatial" : "_:b29",
-    "thumbnail" : "z:Mb41fKZU/chateau-montelena.jpg",
+    "spatial" : [ {
+      "@id" : "_:b10"
+    }, "Calistoga, California" ],
+    "thumbnail" : "Mb41fKZU/chateau-montelena.jpg",
     "tuvt5f23_rev" : "ydKZ9DhI"
   }, {
     "@id" : "Msu5YnRJ",
@@ -641,9 +655,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Claude Dubois-Millot",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Paris, France",
-    "spatial" : "_:b38",
-    "thumbnail" : "z:Msu5YnRJ/claude-dubois-millot.jpg",
+    "spatial" : [ {
+      "@id" : "_:b38"
+    }, "Paris, France" ],
+    "thumbnail" : "Msu5YnRJ/claude-dubois-millot.jpg",
     "OZotjvsH" : "ydKZ9DhI"
   }, {
     "@id" : "NJdtHips",
@@ -652,9 +667,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Domaine Roulot",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Meursault, France",
-    "spatial" : "_:b11",
-    "thumbnail" : "z:NJdtHips/domain-roulot.jpg",
+    "spatial" : [ {
+      "@id" : "_:b31"
+    }, "Meursault, France" ],
+    "thumbnail" : "NJdtHips/domain-roulot.jpg",
     "sskFnS0Y_rev" : "ydKZ9DhI"
   }, {
     "@id" : "NQ7FScAv",
@@ -663,9 +679,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Château Haut-Brion",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "spatial" : "_:b7",
-    "schema:spatial" : "Pessac, France",
-    "thumbnail" : "z:NQ7FScAv/chateau-haut-brion.jpg",
+    "spatial" : [ "Pessac, France", {
+      "@id" : "_:b29"
+    } ],
+    "thumbnail" : "NQ7FScAv/chateau-haut-brion.jpg",
     "Y55LQcx6_rev" : "ydKZ9DhI"
   }, {
     "@id" : "NjYuebG5",
@@ -685,9 +702,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Warren Winiarski",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Chicago, Illinois",
-    "spatial" : "_:b14",
-    "thumbnail" : "z:Nn9iS1kw/warren-winiarski.jpg",
+    "spatial" : [ "Chicago, Illinois", {
+      "@id" : "_:b5"
+    } ],
+    "thumbnail" : "Nn9iS1kw/warren-winiarski.jpg",
     "87v1kCdC" : "sk79HEjl",
     "CymKw4L1_rev" : "Hsr1Bktg",
     "VaSz5lKQ" : "RtfyXN9i"
@@ -709,9 +727,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "1973 Chateau Montelena Chardonnay",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Calistoga, California",
-    "spatial" : "_:b16",
-    "thumbnail" : "z:Obny8Rpq/1973montelena.jpg",
+    "spatial" : [ {
+      "@id" : "_:b16"
+    }, "Calistoga, California" ],
+    "thumbnail" : "Obny8Rpq/1973montelena.jpg",
     "5cEgIuoM_rev" : "4lT1dlHw",
     "Pw59YERo_rev" : "wSHcDVl2",
     "iPD48uUA" : "ydKZ9DhI"
@@ -722,9 +741,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Chalone Vineyard",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Soledad, California",
-    "spatial" : "_:b33",
-    "thumbnail" : "z:Ow4I2o9s/chalone.jpg",
+    "spatial" : [ "Soledad, California", {
+      "@id" : "_:b1"
+    } ],
+    "thumbnail" : "Ow4I2o9s/chalone.jpg",
     "iJeSqbDv_rev" : "ydKZ9DhI"
   }, {
     "@id" : "Pw59YERo",
@@ -744,9 +764,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Christian Vannequé",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Paris, France",
-    "spatial" : "_:b5",
-    "thumbnail" : "z:RFQmao8i/christian-vanneque.jpg",
+    "spatial" : [ {
+      "@id" : "_:b26"
+    }, "Paris, France" ],
+    "thumbnail" : "RFQmao8i/christian-vanneque.jpg",
     "5ib3I1kZ" : "ydKZ9DhI"
   }, {
     "@id" : "RtfyXN9i",
@@ -755,9 +776,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Stag's Leap Wine Cellars",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "spatial" : "_:b3",
-    "schema:spatial" : "Napa, CA",
-    "thumbnail" : "z:RtfyXN9i/stagsleapwc.jpg",
+    "spatial" : [ "Napa, CA", {
+      "@id" : "_:b4"
+    } ],
+    "thumbnail" : "RtfyXN9i/stagsleapwc.jpg",
     "VaSz5lKQ_rev" : "Nn9iS1kw",
     "n0EvUJic_rev" : "ydKZ9DhI",
     "nP9EzD6b" : "sk79HEjl"
@@ -779,8 +801,9 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Pierre Bréjoux",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "spatial" : "_:b13",
-    "schema:spatial" : "Paris, France",
+    "spatial" : [ {
+      "@id" : "_:b13"
+    }, "Paris, France" ],
     "temporal" : "unknown",
     "eEYuddRz" : "ydKZ9DhI"
   }, {
@@ -790,9 +813,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "David Bruce Winery",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Los Gatos, California",
-    "spatial" : "_:b2",
-    "thumbnail" : "z:UmAzNHOz/david-bruce-winery.jpg",
+    "spatial" : [ "Los Gatos, California", {
+      "@id" : "_:b21"
+    } ],
+    "thumbnail" : "UmAzNHOz/david-bruce-winery.jpg",
     "FwPSFsPf_rev" : "ydKZ9DhI"
   }, {
     "@id" : "VBMYwJXy",
@@ -823,9 +847,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Michel Dovaz",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "spatial" : "_:b19",
-    "schema:spatial" : "Geneva, Switzerland",
-    "thumbnail" : "z:VltC8SAR/mdovaz.jpg",
+    "spatial" : [ "Geneva, Switzerland", {
+      "@id" : "_:b19"
+    } ],
+    "thumbnail" : "VltC8SAR/mdovaz.jpg",
     "CvCz7pNj" : "ydKZ9DhI"
   }, {
     "@id" : "Wa1OnKCL",
@@ -834,9 +859,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Pierre Tari",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Labarde, France",
-    "spatial" : "_:b27",
-    "thumbnail" : "z:Wa1OnKCL/pierre_tari.jpg",
+    "spatial" : [ "Labarde, France", {
+      "@id" : "_:b37"
+    } ],
+    "thumbnail" : "Wa1OnKCL/pierre_tari.jpg",
     "Fcd7GppP" : "ydKZ9DhI"
   }, {
     "@id" : "Y55LQcx6",
@@ -878,9 +904,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Château Mouton Rothschild",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Pauillac, France",
-    "spatial" : "_:b17",
-    "thumbnail" : "z:a4xqyd1U/chateau-mouton-rothschild.jpg",
+    "spatial" : [ {
+      "@id" : "_:b30"
+    }, "Pauillac, France" ],
+    "thumbnail" : "a4xqyd1U/chateau-mouton-rothschild.jpg",
     "LzAbD4pA_rev" : "ydKZ9DhI"
   }, {
     "@id" : "ahIXKuhm",
@@ -889,9 +916,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Spring Mountain Vineyard",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "spatial" : "_:b34",
-    "schema:spatial" : "St. Helena, California",
-    "thumbnail" : "z:ahIXKuhm/spring-mountain.jpg",
+    "spatial" : [ {
+      "@id" : "_:b33"
+    }, "St. Helena, California" ],
+    "thumbnail" : "ahIXKuhm/spring-mountain.jpg",
     "SiBlieN7_rev" : "ydKZ9DhI"
   }, {
     "@id" : "crGEiojG",
@@ -912,7 +940,7 @@
     "name" : [ "Pierre Bréjoux judged the Judgment of Paris", "judged" ],
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707"
   }, {
-    "@id" : "eEYuddRz:_rev",
+    "@id" : "eEYuddR_rev",
     "@type" : [ "schema:significantLinks", "ucdlib:judged_by" ],
     "name" : "judged by"
   }, {
@@ -922,9 +950,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Château Montrose",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Saint-Estèphe, France",
-    "spatial" : "_:b35",
-    "thumbnail" : "z:hkbN3AXg/chatmontrose.jpg",
+    "spatial" : [ {
+      "@id" : "_:b17"
+    }, "Saint-Estèphe, France" ],
+    "thumbnail" : "hkbN3AXg/chatmontrose.jpg",
     "wHzHGZig_rev" : "ydKZ9DhI"
   }, {
     "@id" : "iJDHzQxd",
@@ -933,9 +962,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Domaine Leflaive",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Puligny-Montrachet, France",
-    "spatial" : "_:b36",
-    "thumbnail" : "z:iJDHzQxd/domaine-leflaive.jpg",
+    "spatial" : [ "Puligny-Montrachet, France", {
+      "@id" : "_:b34"
+    } ],
+    "thumbnail" : "iJDHzQxd/domaine-leflaive.jpg",
     "ZEZBn4SF_rev" : "ydKZ9DhI"
   }, {
     "@id" : "iJeSqbDv",
@@ -966,9 +996,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Maison Joseph Drouhin",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "spatial" : "_:b20",
-    "schema:spatial" : "Beaune, France",
-    "thumbnail" : "z:jeS628wG/maison-joseph-drouhin.jpg",
+    "spatial" : [ "Beaune, France", {
+      "@id" : "_:b20"
+    } ],
+    "thumbnail" : "jeS628wG/maison-joseph-drouhin.jpg",
     "s1j1ditp_rev" : "ydKZ9DhI"
   }, {
     "@id" : "k7QJHPyX",
@@ -977,9 +1008,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Patricia Gastaud-Gallagher",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Wilmington, Delaware",
-    "spatial" : "_:b24",
-    "thumbnail" : "z:k7QJHPyX/patricia-gallagher.jpg",
+    "spatial" : [ "Wilmington, Delaware", {
+      "@id" : "_:b24"
+    } ],
+    "thumbnail" : "k7QJHPyX/patricia-gallagher.jpg",
     "H7jzCtEa" : "ydKZ9DhI"
   }, {
     "@id" : "kXbX7fxQ",
@@ -988,9 +1020,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "George M. Taber",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "spatial" : "_:b22",
-    "schema:spatial" : "Riverside, California",
-    "thumbnail" : "z:kXbX7fxQ/george-taber.jpg",
+    "spatial" : [ "Riverside, California", {
+      "@id" : "_:b2"
+    } ],
+    "thumbnail" : "kXbX7fxQ/george-taber.jpg",
     "yHWSpaWQ" : "ydKZ9DhI"
   }, {
     "@id" : "kmPMGPQ5",
@@ -999,9 +1032,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Steven Spurrier",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "spatial" : "_:b0",
-    "schema:spatial" : "London, United Kingdom",
-    "thumbnail" : "z:kmPMGPQ5/sspurrier.jpg",
+    "spatial" : [ "London, United Kingdom", {
+      "@id" : "_:b3"
+    } ],
+    "thumbnail" : "kmPMGPQ5/sspurrier.jpg",
     "2BX91onm_rev" : "HDmnuCC5",
     "9Pyha9n3" : "BEiG1xaf",
     "VBMYwJXy" : "ydKZ9DhI"
@@ -1023,9 +1057,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Domaine Ramonet-Prudhon",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Batard-Montrachet, France",
-    "spatial" : "_:b18",
-    "thumbnail" : "z:nAMfCtk1/domaine-ramonet-prudhon-1973.jpg",
+    "spatial" : [ "Batard-Montrachet, France", {
+      "@id" : "_:b40"
+    } ],
+    "thumbnail" : "nAMfCtk1/domaine-ramonet-prudhon-1973.jpg",
     "6HmRJOWb_rev" : "ydKZ9DhI"
   }, {
     "@id" : "nP9EzD6b",
@@ -1056,9 +1091,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "1973 Stag's Leap Wine Cellars Cabernet",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "spatial" : "_:b31",
-    "schema:spatial" : "Napa, California",
-    "thumbnail" : "z:sk79HEjl/1973slv.jpg",
+    "spatial" : [ {
+      "@id" : "_:b32"
+    }, "Napa, California" ],
+    "thumbnail" : "sk79HEjl/1973slv.jpg",
     "87v1kCdC_rev" : "Nn9iS1kw",
     "NjYuebG5_rev" : "4lT1dlHw",
     "nP9EzD6b_rev" : "RtfyXN9i",
@@ -1081,9 +1117,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Freemark Abbey",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "St. Helena, California",
-    "spatial" : "_:b39",
-    "thumbnail" : "z:tHYYOXrE/freemark.jpg",
+    "spatial" : [ {
+      "@id" : "_:b12"
+    }, "St. Helena, California" ],
+    "thumbnail" : "tHYYOXrE/freemark.jpg",
     "Fht6On46_rev" : "ydKZ9DhI"
   }, {
     "@id" : "tN8OPoTy",
@@ -1092,9 +1129,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Veedercrest Vineyards",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "spatial" : "_:b10",
-    "schema:spatial" : "Napa, California",
-    "thumbnail" : "z:tN8OPoTy/veedercrest.jpg",
+    "spatial" : [ "Napa, California", {
+      "@id" : "_:b9"
+    } ],
+    "thumbnail" : "tN8OPoTy/veedercrest.jpg",
     "YGeIeyws_rev" : "ydKZ9DhI"
   }, {
     "@id" : "tuvt5f23",
@@ -1126,7 +1164,7 @@
     "name" : [ "Judgment of Paris tasted Château Léoville-Las Cases", "tasted" ],
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707"
   }, {
-    "@id" : "wDak0uKZ:_rev",
+    "@id" : "wDak0uK_rev",
     "@type" : [ "schema:significantLinks", "ucdlib:tasted_at" ],
     "name" : "tasted at"
   }, {
@@ -1147,9 +1185,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Mike Grgich",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Desne, Croatia",
-    "spatial" : "_:b1",
-    "thumbnail" : "z:wSHcDVl2/mike-grgich.jpg",
+    "spatial" : [ "Desne, Croatia", {
+      "@id" : "_:b7"
+    } ],
+    "thumbnail" : "wSHcDVl2/mike-grgich.jpg",
     "7uAGLBz9_rev" : "Hsr1Bktg",
     "Pw59YERo" : "Obny8Rpq"
   }, {
@@ -1181,9 +1220,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Judgment of Paris",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "schema:spatial" : "Paris, France",
-    "spatial" : "_:b23",
-    "thumbnail" : "z:ydKZ9DhI/jop.jpg",
+    "spatial" : [ "Paris, France", {
+      "@id" : "_:b23"
+    } ],
+    "thumbnail" : "ydKZ9DhI/jop.jpg",
     "11W8hjAo_rev" : "EA5AfFd2",
     "1ENTeWmj" : "D37urK0h",
     "5hFzRNvO" : "4k3LZWlq",
@@ -1225,9 +1265,10 @@
     "license" : "http://rightsstatements.org/vocab/CNE/1.0/",
     "name" : "Mayacamas Vineyards",
     "publisher" : "http://id.loc.gov/authorities/names/no2008108707",
-    "spatial" : "_:b37",
-    "schema:spatial" : "Napa, California",
-    "thumbnail" : "z:yhlzvGcG/mayacamas.jpg",
+    "spatial" : [ {
+      "@id" : "_:b35"
+    }, "Napa, California" ],
+    "thumbnail" : "yhlzvGcG/mayacamas.jpg",
     "9Xoec2Fw_rev" : "ydKZ9DhI"
   }, {
     "@id" : "zAlHW9I2",
@@ -1242,20 +1283,12 @@
     "name" : "judged by"
   } ],
   "@context" : {
-    "name" : {
-      "@id" : "http://schema.org/name"
-    },
-    "longitude" : {
-      "@id" : "http://schema.org/longitude",
-      "@type" : "http://www.w3.org/2001/XMLSchema#double"
-    },
-    "latitude" : {
-      "@id" : "http://schema.org/latitude",
-      "@type" : "http://www.w3.org/2001/XMLSchema#double"
-    },
     "publisher" : {
       "@id" : "http://schema.org/publisher",
       "@type" : "@id"
+    },
+    "name" : {
+      "@id" : "http://schema.org/name"
     },
     "license" : {
       "@id" : "http://schema.org/license",
@@ -1264,9 +1297,13 @@
     "description" : {
       "@id" : "http://schema.org/description"
     },
-    "spatial" : {
-      "@id" : "http://schema.org/spatial",
-      "@type" : "@id"
+    "longitude" : {
+      "@id" : "http://schema.org/longitude",
+      "@type" : "http://www.w3.org/2001/XMLSchemadouble"
+    },
+    "latitude" : {
+      "@id" : "http://schema.org/latitude",
+      "@type" : "http://www.w3.org/2001/XMLSchemadouble"
     },
     "n0EvUJic_rev" : {
       "@id" : "n0EvUJic_rev",
@@ -1275,6 +1312,9 @@
     "VaSz5lKQ_rev" : {
       "@id" : "VaSz5lKQ_rev",
       "@type" : "@id"
+    },
+    "spatial" : {
+      "@id" : "http://schema.org/spatial"
     },
     "nP9EzD6b" : {
       "@id" : "nP9EzD6b",
@@ -1637,9 +1677,9 @@
     },
     "schema" : "http://schema.org/",
     "fast" : "http://id.worldcat.org/fast/",
-    "rdf" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "ucdlib" : "http://digital.ucdavis.edu/schema#",
+    "rdf" : "http://www.w3.org/1999/02/22-rdf-syntax-ns",
+    "ucdlib" : "http://digital.ucdavis.edu/schema",
     "wdt" : "http://www.wikidata.org/prop/direct/",
-    "w" : "http://library.ucdavis.edu/wine-ontology#"
+    "w" : "http://library.ucdavis.edu/wine-ontology"
   }
 }

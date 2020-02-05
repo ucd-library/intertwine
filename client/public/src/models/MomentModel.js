@@ -191,6 +191,8 @@ class MomentModel extends BaseModel {
       }
     }
 
+    //console.log("nodes: ", nodes, " links: ", links);
+
     return { nodes, links }
   }
 }

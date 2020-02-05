@@ -4,7 +4,6 @@ import render from "./app-leaflet-map.tpl.js"
 import "leaflet"
 import "leaflet.markercluster"
 
-
 export default class AppLeafletMap extends LitElement {
 
   static get properties() {
@@ -441,6 +440,7 @@ export default class AppLeafletMap extends LitElement {
     for( let id in this.linkLayers ) {
       this.map.removeLayer(this.linkLayers[id]);
     }
+
     this.linkLayers = {};
 
     for( let id in this.links ) {
