@@ -30,47 +30,6 @@ class MomentModel extends BaseModel {
     return this.store.data[moment];
   }
 
-  // My beautiful useless function (;_;)
-  transformLDPLinks(data) {
-    let finalArray = [];
-
-    function cleanType(type) {
-      return type.replace(/^\/\/|^.*?:(\/\/)?/, '').split(/[/#]+/).pop().toLowerCase();
-    }
-
-    function simplifyArray(array) {
-      array.filter(element => {
-        Object.keys(element).map(key => {
-          if ( Array.isArray(element[key]) ) {
-            if ( element[key].length === 1 ) element[key].forEach(i => element[key] = Object.values(i)[0]);
-            else {
-              element[key].filter(i => typeof i === 'object').forEach(el => {
-                element[key] = element[Object.keys(el)[0]] = Object.values(el)[0];
-              });
-            }
-          }
-        });
-      });
-    }
-
-    function traverse(item) {
-      let obj = {};
-      if (Array.isArray(item)) {
-        item.forEach(element => traverse(element));
-      } else if ((typeof item === 'object') && (item !== null)) {
-        Object.keys(item).forEach(i => {
-          obj[cleanType(i)] = item[i];
-          if ( obj['@type'] ) obj['@type'] = obj['@type'].map(el => cleanType(el));
-        });
-        finalArray.push(obj);
-      }
-      simplifyArray(finalArray);
-    }
-    traverse(data);
-
-    return finalArray;
-  }
-
   transformMockLinks(data) {
     let links = {}, nodes = {}, lookup = {};
 
@@ -113,26 +72,28 @@ class MomentModel extends BaseModel {
     }
     // Helper Functions - END
 
-    data.forEach(item => {
-      item['type'] = cleanType(item['@type']);
+    for ( let i = 0; i < data.length; i++ ) {
+      if ( data[i]['@type'] === undefined ) continue;
 
-      if ( item['schema:longitude'] ) {
-        item['longitude'] = item['schema:longitude'];
-        delete item['schema:longitude'];
+      data[i]['type'] = cleanType(data[i]['@type']);
+
+      if ( data[i]['schema:longitude'] ) {
+        data[i]['longitude'] = data[i]['schema:longitude'];
+        delete data[i]['schema:longitude'];
       }
 
-      if ( item['schema:latitude'] ) {
-        item['latitude'] = item['schema:latitude'];
-        delete item['schema:latitude'];
+      if ( data[i]['schema:latitude'] ) {
+        data[i]['latitude'] = data[i]['schema:latitude'];
+        delete data[i]['schema:latitude'];
       }
 
       // Replace significantlink(s) with connection
-      if ( item.type.includes('significantlink') ) {
-        item.type = 'connection';
+      if ( data[i].type.includes('significantlink') ) {
+        data[i].type = 'connection';
       }
 
-      lookup[item['@id'].replace(/.*:b/, 'b')] = item;
-    });
+      lookup[data[i]['@id'].replace(/.*:b/, 'b')] = data[i];
+    }
 
     // Create lookup table
     for ( let id in lookup ) {
