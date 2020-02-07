@@ -94,8 +94,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   updated() {
     if ( this.isLink ) {
       this.title = '';
-    } else {
-      this.descriptionEle.innerHTML = '';
     }
 
     if ( this.connections.length > 0 ) {
@@ -223,11 +221,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     if ( node.description !== false && typeof node.description === 'string' ) {
       this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');
     }
-    /*
+
     if ( node.thumbnail ) {
-      this.thumbnail = this.endpoint + '/' + node.thumbnail;
+      this.thumbnail = this.endpoint + '/' + this.moment + '/' + node.thumbnail.replace('z:', '');
+      //console.log(this.thumbnail);
     }
-    */
 
     // TODO:
     //    1. There should be associated page titles to display next to the url with the data from trello

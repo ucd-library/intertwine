@@ -94,6 +94,16 @@ ${sharedStyles}
     padding: 14px 0 18px 9;
   }
 
+  .thumbnail {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .thumbnail > img {
+    width: 100%;
+    border-radius: 10px;
+  }
+
   .location, .date {
     font-style: italic;
   }
@@ -328,8 +338,8 @@ ${sharedStyles}
           <h2 style="margin: 0 0 14px 0">${this.date}</h2>
         </div>
 
-        <div ?hidden="${!this.thumbnail}">
-          <img class="thumbnail" src="${this.thumbnail}" title="${this.title}">
+        <div class="thumbnail" ?hidden="${!this.thumbnail}">
+          <img src="${this.thumbnail}" title="${this.title}">
         </div>
 
         <!-- Filled from inside the parent js file -->
