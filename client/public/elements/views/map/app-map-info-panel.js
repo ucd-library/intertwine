@@ -188,8 +188,10 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.view = 'cluster';
     this.resetClusterSubjects();
 
-
     nodes.forEach(node => {
+      // Some items in Trello are labeled as 'thing' instead of 'object'
+      if ( node.type === 'thing' ) node.type = 'object';
+
       if( !this.clusterSubjects[node.type] ) return;
 
       this.clusterSubjects[node.type].enabled = true;
@@ -228,9 +230,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     */
 
     // TODO:
-    // Kimmy:
-    //    1. DONE => For url, I only want to show the core site url — for example: tavbooks.com, wikipedia.org
-    //    2. There should be associated page titles to display next to the url with the data from trello
+    //    1. There should be associated page titles to display next to the url with the data from trello
     this.relatedLinks = [];
     if ( Array.isArray(node.relatedLink) ) {
       this.relatedLinks = node.relatedLink;
