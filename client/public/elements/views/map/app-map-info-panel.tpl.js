@@ -353,7 +353,7 @@ ${sharedStyles}
                 <div class="dot" type="${item.node.type}"></div>
                 <span>
                   <a class="internal" href="/map/${this.moment}/connection/${item.link['@id']}">
-                    <strong><em>${item.link.name}</em></strong>&nbsp;&nbsp;${item.node.name}
+                    <strong><em>${item.link.name[0]}</em></strong>&nbsp;&nbsp;${item.link.name[1]}
                   </a>
                 </span>
               </div>

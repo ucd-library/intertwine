@@ -37,12 +37,20 @@ class MomentModel extends BaseModel {
     function cleanType(type) {
       let newType;
       if ( Array.isArray(type) ) {
-        newType = type.find(t => t.toLowerCase().includes('significantlink'));
+        for ( let t in type ) {
+          // Some of the Trello objects are labeled as things so let's standardize this
+          // and convert them to the description to objects
+          if ( type[t].toLowerCase().includes('thing') ) {
+            type[t] = 'object';
+          }
+        }
 
+        newType = type.find(t => t.toLowerCase().includes('significantlink'));
         if ( newType === undefined ) {
           newType = type.find(t => t.includes('ucdlib:'));
           newType = type.find(t => t !== 'schema:WebPage');
         }
+
         return newType.replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();
       } else {
         return type.replace(/^\/\/|^.*?:(\/\/)?/, '').toLowerCase();

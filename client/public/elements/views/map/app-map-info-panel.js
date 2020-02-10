@@ -187,9 +187,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.resetClusterSubjects();
 
     nodes.forEach(node => {
-      // Some items in Trello are labeled as 'thing' instead of 'object'
-      if ( node.type === 'thing' ) node.type = 'object';
-
       if( !this.clusterSubjects[node.type] ) return;
 
       this.clusterSubjects[node.type].enabled = true;
@@ -256,10 +253,18 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       // find connections
       let connections = [];
       let link;
+      let check;
       for( let id in this.graph.links ) {
         link = this.graph.links[id];
-
         if ( link['@id'].includes(node['@id']) ) {
+          check = true;
+          connections.push({
+            link,
+            node: this.graph.nodes[link.src]
+          });
+        }
+
+        if ( check === undefined && link.src === node['@id'] ) {
           connections.push({
             link,
             node: this.graph.nodes[link.src]
@@ -271,6 +276,14 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       // Those seem to mostly be verse terse dupes of main links
       // There are still a few other dupes but this seems to take care of a lot of them
       connections = connections.filter(connection => connection.link['description'] !== undefined);
+
+      connections.map(connection => {
+        if ( Array.isArray(connection.link.name) ) {
+          connection.link.name = connection.link.name.reverse();
+        } else {
+          connection.link.name = [ connection.link.name, connection.node.name ]
+        }
+      });
 
       // Alphabetize the connections
       connections.sort((a, b) => (a.node.name > b.node.name) ? 1 : -1);
