@@ -30,6 +30,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       isMoment : {type: Boolean},
       relatedLinks: { type: Array },
       hasConnections: { type: Boolean },
+      shortConnection: { type: Boolean },
       connectionSubjects : {type: Array},
       clusterSubjects : {type: Object},
       clusterSubjectTypes : {type: Array}
@@ -57,6 +58,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.momentEntryPointUrl = '';
     this.relatedLinks = [];
     this.events       = [];
+    this.shortConnection = false;
 
     this.endpoint = APP_CONFIG.endpoint;
 
@@ -264,11 +266,18 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
           });
         }
 
-        if ( check === undefined && link.src === node['@id'] ) {
-          connections.push({
-            link,
-            node: this.graph.nodes[link.src]
-          });
+        if ( check === undefined ) {
+          if ( link.src === node['@id'] ) {
+            connections.push({
+              link,
+              node: this.graph.nodes[link.src]
+            });
+          } else if ( link.dst === node['@id'] ) {
+            connections.push({
+              link,
+              node: this.graph.nodes[link.dst]
+            });
+          }
         }
       }
 
@@ -279,11 +288,24 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
       connections.map(connection => {
         if ( Array.isArray(connection.link.name) ) {
-          connection.link.name = connection.link.name.reverse();
-        } else {
-          connection.link.name = [ connection.link.name, connection.node.name ]
+          let substring = connection.link.name[1];
+          let string    = connection.link.name[0];
+
+          connection.link.name = formatString(string, substring);
+
+          this.shortConnection = true;
         }
       });
+
+      function formatString(string, substring) {
+        let regex = new RegExp(substring, 'g');
+
+        if ( regex.test(string) ) {
+          return string.replace(regex, '<b>' + substring + '</b>');
+        } else {
+          return '<b>' + substring + '</b>&nbsp;' + string;
+        }
+      }
 
       // Alphabetize the connections
       connections.sort((a, b) => (a.node.name > b.node.name) ? 1 : -1);

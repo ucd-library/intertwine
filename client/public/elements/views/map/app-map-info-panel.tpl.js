@@ -1,4 +1,5 @@
 import { html } from 'lit-element';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import sharedStyles from './../../styles/shared-styles'
 
 export default function render() {
@@ -10,6 +11,10 @@ ${sharedStyles}
     display: block;
     background: white;
     box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+  }
+
+  a.internal {
+    display: inline;
   }
 
   .toggle {
@@ -351,11 +356,12 @@ ${sharedStyles}
             ${this.connections.map(item => html`
               <div>
                 <div class="dot" type="${item.node.type}"></div>
-                <span>
-                  <a class="internal" href="/map/${this.moment}/connection/${item.link['@id']}">
-                    <strong><em>${item.link.name[0]}</em></strong>&nbsp;&nbsp;${item.link.name[1]}
-                  </a>
-                </span>
+                <a class="internal" href="/map/${this.moment}/connection/${item.link['@id']}">
+                ${this.shortConnection ?
+                  html`${unsafeHTML(item.link.name)}` :
+                  html`<strong><em>${item.link.name}</em></strong>&nbsp;${item.node.name}`
+                }
+                </a>
               </div>
             `)}
           </div>
