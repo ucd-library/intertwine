@@ -14,15 +14,17 @@ const bundle = `
   <script src="/loader/loader.js?_=${config.client.versions.loader}"></script>`;
 
 module.exports = (app) => {
-  let mockDir = path.join(__dirname, '..', 'mock');
   let mocks = [];
+
+  let mockDir = path.join(__dirname, '..', 'mock');
+
   fs.readdirSync(mockDir).forEach(_file => {
     let trimmed_file = _file.split('.');
     mocks.push(trimmed_file[0]);
   });
 
   let assetsDir = path.join(__dirname, '..', 'client', config.server.assets);
-  console.log('Using assests dir: '+assetsDir);
+  console.log('Using assests dir: ' + assetsDir);
   /**
    * Setup SPA app routes
   */
@@ -34,7 +36,7 @@ module.exports = (app) => {
     getConfig : async (req, res, next) => {
       next({
         appRoutes : config.server.appRoutes,
-        mocks: mocks,
+        mocks : mocks,
         endpoint : 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/moments',
         gaCode : config.client.gaCode
       });
