@@ -243,9 +243,9 @@ ${sharedStyles}
       transform: rotate(-90deg);
     }
 
-    /* .toggle-sm {
+    .toggle-sm {
       display: block;
-    } */
+    }
   }
 </style>
 
@@ -255,7 +255,6 @@ ${sharedStyles}
     <iron-icon icon="close"></iron-icon>
   </div>
   -->
-
   <div ?hidden="${this.isMoment}">
     <div ?hidden="${this.isLink}">
       <div class="image" type="${this.type}">
@@ -284,6 +283,9 @@ ${sharedStyles}
       <!-- START EMPTY -->
       <div id="moment">
         <div class="subject-type">Explore</div>
+
+        <app-moments-dropdown></app-moments-dropdown>
+
         <h1 style="margin-bottom: 3px" class="inverse">${this.momentInfo.title}</h1>
         <h2 style="margin: 0 0 14px 0" class="inverse">${this.momentInfo.date}</h2>
         <div>

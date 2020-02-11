@@ -4,6 +4,8 @@ import {markdown} from "markdown"
 
 import "@polymer/iron-icons"
 
+import "../../app-moments-dropdown"
+
 export default class AppMapInfoPanel extends Mixin(LitElement)
   .with(LitCorkUtils) {
 
@@ -29,6 +31,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       isLink : {type: Boolean},
       isMoment : {type: Boolean},
       relatedLinks: { type: Array },
+      selectedIndex: { type: Number },
       hasConnections: { type: Boolean },
       shortConnection: { type: Boolean },
       connectionSubjects : {type: Array},
@@ -85,6 +88,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   _onAppStateUpdate(e) {
     this.moment   = e.moment;
     this.selected = e.selected;
+
     this.renderState();
   }
 
@@ -94,22 +98,16 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   updated() {
-    if ( this.isLink ) {
-      this.title = '';
-    }
+    if ( this.isLink ) this.title = '';
 
-    if ( this.connections.length > 0 ) {
-      this.hasConnections = true;
-    } else {
-      this.hasConnections = false;
-    }
+    if ( this.connections.length > 0 ) this.hasConnections = true;
+    else this.hasConnections = false;
   }
 
   renderState(moment) {
     if( moment ) {
       this.momentInfo = moment;
       this.momentDescEle.innerHTML = markdown.toHTML(moment.description || '');
-
       this.momentEntryPointUrl = '';
 
       // TODO: Need to add entryPoint to data in Trello
@@ -223,7 +221,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
     if ( node.thumbnail ) {
       this.thumbnail = this.endpoint + '/' + this.moment + '/' + node.thumbnail.replace('z:', '');
-      //console.log(this.thumbnail);
     }
 
     // TODO:
@@ -312,7 +309,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
       this.connections = connections;
     }
-
   }
 
   renderLink(node) {

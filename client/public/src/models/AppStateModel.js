@@ -31,17 +31,20 @@ class AppStateModelImpl extends AppStateModel {
 
   set(state) {
     // parse out page
-    if( state.location ) {
+    if ( state.location ) {
       let page = state.location.path ? state.location.path[0] : 'map';
       state.page = page || 'map';
     }
 
-    // Currently selected moment
-    //state.moment = 'chardonnay';
-    state.moment = 'jop';
+    // Select the correct moment
+    if ( !state.id ) {
+      state.moment = 'jop';
+    } else {
+      state.moment = state.id;
+    }
 
     // parse out selected object(s)
-    if( state.page === 'map' && state.location.path.length >= 3 ) {
+    if ( state.page === 'map' && state.location.path.length >= 3 ) {
       state.selected = {
         type : state.location.path[2]
       }
