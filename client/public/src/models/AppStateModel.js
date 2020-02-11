@@ -30,6 +30,8 @@ class AppStateModelImpl extends AppStateModel {
   }
 
   set(state) {
+    console.log('AppStateModel.set() ', state);
+
     // parse out page
     if ( state.location ) {
       let page = state.location.path ? state.location.path[0] : 'map';
