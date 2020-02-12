@@ -7,7 +7,7 @@ module.exports = {
     endpoint : 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/moments',
     appRoutes : ['about', 'map', 'moment', 'moments'],
     moments : ['chardonnay', 'jop'],
-    port : process.env.APP_PORT || process.env.PORT || 3001
+    port : process.env.APP_PORT || process.env.PORT || 3000
   },
 
   client : {
