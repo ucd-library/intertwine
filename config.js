@@ -4,8 +4,10 @@ let clientPackage = require('./client/public/package.json');
 module.exports = {
   server : {
     assets : (env === 'prod') ? 'dist' : 'public',
+    endpoint : 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/moments',
     appRoutes : ['about', 'map', 'moment', 'moments'],
-    port : process.env.APP_PORT || process.env.PORT || 3000
+    moments : ['chardonnay', 'jop'],
+    port : process.env.APP_PORT || process.env.PORT || 3001
   },
 
   client : {

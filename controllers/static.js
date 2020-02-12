@@ -24,7 +24,7 @@ module.exports = (app) => {
   });
 
   let assetsDir = path.join(__dirname, '..', 'client', config.server.assets);
-  console.log('Using assests dir: ' + assetsDir);
+  //console.log('Using assests dir: ' + assetsDir);
   /**
    * Setup SPA app routes
   */

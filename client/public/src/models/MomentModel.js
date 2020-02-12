@@ -135,6 +135,8 @@ class MomentModel extends BaseModel {
             location = getLocation(lookup[id]['@id']);
           }
 
+          if ( location === undefined ) continue;
+
           lookup[id]['location'] = location.name.replace(/\+/g, ' ');
           lookup[id]['coordinates'] = [
             parseFloat(location.latitude),

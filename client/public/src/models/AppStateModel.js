@@ -19,6 +19,7 @@ class AppStateModelImpl extends AppStateModel {
    */
   setSelectedClusterIds(ids) {
     let state = this.store.data;
+
     if( !state.selected ) {
       return console.warn('Attempting to set cluster ids, but no selected object');
     }
@@ -26,6 +27,7 @@ class AppStateModelImpl extends AppStateModel {
       return console.warn('Attempting to set cluster ids, but selected object is not a cluster');
     }
     state.selected.ids = ids;
+
     return super.set(state);
   }
 
@@ -34,11 +36,14 @@ class AppStateModelImpl extends AppStateModel {
     if ( state.location ) {
       let page = state.location.path ? state.location.path[0] : 'map';
       state.page = page || 'map';
+      state.first = true;
     }
 
-    // Select the correct moment
-    if ( !state.id ) {
+    //state.moment = state.id || 'jop';
+
+    if ( state.first ) {
       state.moment = 'jop';
+      state.first  = false;
     } else {
       state.moment = state.id;
     }
