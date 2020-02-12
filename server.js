@@ -9,7 +9,6 @@ const moments  = config.server.moments;
 
 // TODO: Implement this functionality once the json version match both here and in Fedora
 // Load the files locally on app start so we have a fall back in case they can't get to the server
-/*
 for ( let i = 0; i < moments.length; i++ ) {
   let url = endpoint + '/' + moments[i] + '/' + moments[i] + '.json';
 
@@ -20,7 +19,6 @@ for ( let i = 0; i < moments.length; i++ ) {
   })
   .on('end', () => file.end());
 }
-*/
 
 app.use('/api', require('./controllers/api'));
 require('./controllers/static')(app);
