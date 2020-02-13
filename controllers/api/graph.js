@@ -17,7 +17,7 @@ router.get('/:id', (req, res) => {
         res.json(json);
       } else {
         let rawdata = fs.readFileSync(path.join(__dirname, '..', '..', 'mock', req.params.id + '.json'));
-        let data  = JSON.parse(rawdata);
+        let data = JSON.parse(rawdata);
         res.json(data);
       }
     }).catch(err => console.log('Error: ', err));
