@@ -278,10 +278,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         }
       }
 
-      // TODO: Remove description-less connections that have links missing descriptions
+      // TODO: Seems like this may no longer be necessary?
+      // Remove description-less connections that have links missing descriptions
       // Those seem to mostly be verse terse dupes of main links
       // There are still a few other dupes but this seems to take care of a lot of them
-      connections = connections.filter(connection => connection.link['description'] !== undefined);
+      //connections = connections.filter(connection => connection.link['description'] !== undefined);
 
       connections.map(connection => {
         if ( Array.isArray(connection.link.name) ) {
