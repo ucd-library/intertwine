@@ -1,6 +1,5 @@
 const express = require('express');
 const path    = require('path');
-const fs      = require('fs');
 const spaMiddleware = require('@ucd-lib/spa-router-middleware');
 const config  = require('../config');
 
@@ -14,15 +13,6 @@ const bundle = `
   <script src="/loader/loader.js?_=${config.client.versions.loader}"></script>`;
 
 module.exports = (app) => {
-  let mocks = [];
-
-  let mockDir = path.join(__dirname, '..', 'mock');
-
-  fs.readdirSync(mockDir).forEach(_file => {
-    let trimmed_file = _file.split('.');
-    mocks.push(trimmed_file[0]);
-  });
-
   let assetsDir = path.join(__dirname, '..', 'client', config.server.assets);
   //console.log('Using assests dir: ' + assetsDir);
   /**
@@ -36,8 +26,8 @@ module.exports = (app) => {
     getConfig : async (req, res, next) => {
       next({
         appRoutes : config.server.appRoutes,
-        mocks : mocks,
-        endpoint : 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/moments',
+        moments : config.server.moments,
+        endpoint : config.server.endpoint,
         gaCode : config.client.gaCode
       });
     },

@@ -6,14 +6,15 @@ export default class AppMomentsDropdown extends Mixin(LitElement)
 
   static get properties() {
     return {
-      mocks: { type: Array }
+      moments: { type: Array },
+      topic: { type: String }
     }
   }
 
   constructor() {
     super();
 
-    this.mocks = APP_CONFIG.mocks;
+    this.moments = APP_CONFIG.moments;
 
     this.render = render.bind(this);
 
@@ -25,31 +26,29 @@ export default class AppMomentsDropdown extends Mixin(LitElement)
   }
 
   async firstUpdated() {
-    this.momentSelectEle = this.shadowRoot.querySelector('#moments');
+    this.momentSelectEle = this.shadowRoot.querySelector('#moments');  
 
-    let topic = await this.AppStateModel.get();
+    //let topic = await this.AppStateModel.get();
 
     for ( let i = 0; i < this.momentSelectEle.options.length; i++ ) {
+      if ( this.momentSelectEle.selectedIndex === this.momentSelectEle.options[i].index ) {
+        this.topic = this.momentSelectEle.options[i].value;       
+        this.AppStateModel.set({selectedMoment:this.topic});
+      }
+
+      /*
+      if ( this.momentSelectEle.selectedIndex = this.momentSelectEle.options[i] ) {
+        console.log(this.momentSelectEle.options[i].value);
+      }
       if ( this.momentSelectEle.options[i].value === topic.moment ) {
         this.momentSelectEle.selectedIndex = i;
       };
+      */
     }
   }
 
-  async updated(changedProperties) {
-    if ( changedProperties.type === 'change' ) {
-      // Clear the store BEFORE reloading it or it loads them both in at the same time
-      this.MomentModel.store.data = new Object();
-
-      // Get the new moment (string)
-      this.selectedIndex = changedProperties.path[0].options.selectedIndex;
-      this.selected = this.momentSelectEle.options[this.selectedIndex].value;
-
-      // Pass it to the MomentModel
-      let topic = await this.MomentModel.get(this.selected);
-      //console.log(topic)
-      this.AppStateModel.set(topic);
-    }
+  _onSelectMomentChange(topic) {
+    this.AppStateModel.set({selectedMoment: topic});
   }
 }
 

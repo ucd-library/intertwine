@@ -23,14 +23,14 @@ class MomentModel extends BaseModel {
       if( state.request ) {
         await state.request;
       } else if( state.state !== 'loaded' ) {
-        await this.service.get(moment, this.transformMockLinks);
+        await this.service.get(moment, this.transformLinks);
       }
     } catch(e) { console.error(e) };
 
     return this.store.data[moment];
   }
 
-  transformMockLinks(data) {
+  transformLinks(data) {
     let links = {}, nodes = {}, lookup = {};
 
     // Helper Functions - START

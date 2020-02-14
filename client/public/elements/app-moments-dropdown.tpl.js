@@ -18,9 +18,9 @@ return html`
     }
   </style>
 
-  <select name="moments" id="moments" @change=${e => this.updated(e)}>
-    ${this.mocks.map(mock => html`
-      <option value="${mock}">${mock}</option>
+  <select name="moments" id="moments" @change=${e => this._onSelectMomentChange(e.currentTarget.value)}>
+    ${this.moments.map(moment => html`
+      <option value="${moment}">${moment}</option>
     `)}
   </select>
 `;}

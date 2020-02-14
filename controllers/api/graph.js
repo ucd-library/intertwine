@@ -7,20 +7,24 @@ const config   = require('../../config');
 const endpoint = config.server.endpoint;
 
 router.get('/:id', (req, res) => {
-  const url = endpoint + '/' + req.params.id + '/' + req.params.id + '.json';
+  // TODO: Ask Justin, better way to filter this?  
+  if ( req.params.id !== 'undefined' ) {
+    const moment = req.params.id;
+    
+    const url = endpoint + '/' + moment + '/' + moment + '.json';
 
-  // https://daveceddia.com/unexpected-token-in-json-at-position-0/
-  fetch(url)
-    .then(res => res.json())
-    .then(json => {
-      if ( json ) {
+    const getData = async url => {
+      try {
+        const response = await fetch(url);
+        const json = await response.json();
         res.json(json);
-      } else {
-        let rawdata = fs.readFileSync(path.join(__dirname, '..', '..', 'mock', req.params.id + '.json'));
-        let data = JSON.parse(rawdata);
-        res.json(data);
+      } catch (error) {
+        console.error(error);
       }
-    }).catch(err => console.log('Error: ', err));
+    };
+    
+    getData(url);
+  }
 });
 
 module.exports = router;
