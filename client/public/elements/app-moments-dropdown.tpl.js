@@ -20,7 +20,7 @@ return html`
 
   <select name="moments" id="moments" @change=${e => this._onSelectMomentChange(e.currentTarget.value)}>
     ${this.moments.map(moment => html`
-      <option value="${moment}">${moment}</option>
+      <option value="${moment}" ?selected=${this.selectedMoment === moment}>${moment}</option>
     `)}
   </select>
 `;}

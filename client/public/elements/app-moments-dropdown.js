@@ -7,7 +7,7 @@ export default class AppMomentsDropdown extends Mixin(LitElement)
   static get properties() {
     return {
       moments: { type: Array },
-      topic: { type: String }
+      selectedMoment: { type: String }
     }
   }
 
@@ -22,33 +22,16 @@ export default class AppMomentsDropdown extends Mixin(LitElement)
   }
 
   _onAppStateUpdate(e) {
-    //console.log(e)
+    this.selectedMoment = e.moment;
+    console.log('this.selectedMoment: ', this.selectedMoment);
   }
 
-  async firstUpdated() {
-    this.momentSelectEle = this.shadowRoot.querySelector('#moments');  
-
-    //let topic = await this.AppStateModel.get();
-
-    for ( let i = 0; i < this.momentSelectEle.options.length; i++ ) {
-      if ( this.momentSelectEle.selectedIndex === this.momentSelectEle.options[i].index ) {
-        this.topic = this.momentSelectEle.options[i].value;       
-        this.AppStateModel.set({selectedMoment:this.topic});
-      }
-
-      /*
-      if ( this.momentSelectEle.selectedIndex = this.momentSelectEle.options[i] ) {
-        console.log(this.momentSelectEle.options[i].value);
-      }
-      if ( this.momentSelectEle.options[i].value === topic.moment ) {
-        this.momentSelectEle.selectedIndex = i;
-      };
-      */
-    }
+  firstUpdated() {
+    this.momentSelectEle = this.shadowRoot.querySelector('#moments');
   }
 
-  _onSelectMomentChange(topic) {
-    this.AppStateModel.set({selectedMoment: topic});
+  _onSelectMomentChange(moment) {
+    this.AppStateModel.set({selectedMoment: moment});
   }
 }
 

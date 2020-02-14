@@ -32,14 +32,13 @@ class AppStateModelImpl extends AppStateModel {
   }
 
   set(state) {
-    console.log('state.selectedMoment: ', state.selectedMoment);
     // parse out page
     if ( state.location ) {
       let page = state.location.path ? state.location.path[0] : 'map';
       state.page = page || 'map';
     }
 
-    state.moment = state.selectedMoment;
+    state.moment = state.selectedMoment || 'jop';
 
     // parse out selected object(s)
     if ( state.page === 'map' && state.location.path.length >= 3 ) {
