@@ -16,6 +16,7 @@ import "@polymer/iron-pages"
 import "./intert-wine-icons"
 import "./app-header"
 import "./views/map/app-view-map"
+import "./views/app-home"
 
 export default class IntertWine extends Mixin(LitElement)
   .with(LitCorkUtils) {

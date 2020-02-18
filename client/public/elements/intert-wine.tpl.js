@@ -11,15 +11,6 @@ ${sharedStyles}
     min-height: 100vh;
   }
 
-  /*
-  app-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-  */
-
   iron-pages {
     align-self: stretch;
     flex: 1;
@@ -40,8 +31,9 @@ ${sharedStyles}
 
   <iron-pages selected="${this.view}" attr-for-selected="id" selected-attribute="visible">
     <app-about id="about"></app-about>
-    <!--<app-moments id="moments"></app-moments>-->
+    <app-moments id="moments"></app-moments>
     <app-view-map id="map"></app-view-map>
+    <app-home id="home"></app-home>
   </iron-pages>
 </div>
 `;}

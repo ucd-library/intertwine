@@ -3,6 +3,7 @@ import render from "./app-header.tpl.js"
 
 import "./views/map/app-map-info-panel"
 import "./views/app-about"
+import "./views/app-home"
 //import "./views/app-moments"
 
 export default class AppHeader extends Mixin(LitElement)
