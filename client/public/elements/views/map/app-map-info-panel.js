@@ -4,6 +4,8 @@ import {markdown} from "markdown"
 
 import "@polymer/iron-icons"
 
+import "../../app-moments-dropdown"
+
 export default class AppMapInfoPanel extends Mixin(LitElement)
   .with(LitCorkUtils) {
 
@@ -16,16 +18,22 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       moment : {type: String},
       momentInfo : {type: Object},
       momentEntryPointUrl : {type: String},
+      endpoint: { type: String },
       type : {type : String},
       srctype : {type: String},
       dsttype : {type: String},
       view : {type : String},
       title : {type : String},
       date : {type : String},
+      events: { type: Array },
       connections : {type: Array},
       isNode : {type: Boolean},
       isLink : {type: Boolean},
       isMoment : {type: Boolean},
+      relatedLinks: { type: Array },
+      selectedIndex: { type: Number },
+      hasConnections: { type: Boolean },
+      shortConnection: { type: Boolean },
       connectionSubjects : {type: Array},
       clusterSubjects : {type: Object},
       clusterSubjectTypes : {type: Array}
@@ -34,11 +42,14 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
   constructor() {
     super();
-    
+
     this.open = true;
+    this.title = '';
     this.date = '';
     this.view = '';
     this.type = '';
+    this.description = '';
+    this.thumbnail = '';
     this.srctype = '';
     this.dsttype = '';
     this.connections = [];
@@ -48,7 +59,13 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.moment = '';
     this.momentInfo = {};
     this.momentEntryPointUrl = '';
+    this.relatedLinks = [];
+    this.events       = [];
+    this.shortConnection = false;
 
+    this.endpoint = APP_CONFIG.endpoint;
+
+    this.hasConnections = false;
     this.connectionSubjects = [];
     this.clusterSubjectTypes = ['person', 'place', 'object', 'event'];
     this.resetClusterSubjects();
@@ -60,8 +77,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   /**
    * @method _onMomentGraphUpdate
    * @description bound to graph-update events from the MomentModel
-   * 
-   * @param {*} e 
+   *
+   * @param {*} e
    */
   _onMomentGraphUpdate(e) {
     if( e.state !== 'loaded' ) return;
@@ -69,29 +86,57 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   _onAppStateUpdate(e) {
-    this.moment = e.moment;
+    this.moment   = e.moment;
     this.selected = e.selected;
+
     this.renderState();
   }
 
   firstUpdated() {
     this.descriptionEle = this.shadowRoot.querySelector('#description');
-    this.momentDescEle = this.shadowRoot.querySelector('#momentDescription');
+    this.momentDescEle  = this.shadowRoot.querySelector('#momentDescription');
+  }
+
+  updated() {
+    if ( this.isLink ) this.title = '';
+
+    if ( this.connections.length > 0 ) this.hasConnections = true;
+    else this.hasConnections = false;
   }
 
   renderState(moment) {
     if( moment ) {
       this.momentInfo = moment;
       this.momentDescEle.innerHTML = markdown.toHTML(moment.description || '');
-
       this.momentEntryPointUrl = '';
+
+      // TODO: Need to add entryPoint to data in Trello
+      /*
       if( moment.entryPoint ) {
         for( let id in moment.graph.nodes ) {
           let node = moment.graph.nodes[id];
-          if( node.id !== moment.entryPoint ) continue;
-          this.momentEntryPointUrl = `/map/${this.moment}/${node.type}/${node.id}`;
+          if( node['@id'] !== moment.entryPoint ) continue;
+          this.momentEntryPointUrl = `/map/${this.moment}/${node.type}/${node['@id']}`;
           break;
         }
+      }
+      */
+
+      // Temp entry point
+      this.events = [];
+      for ( let id in moment.graph.nodes ) {
+        if (moment.graph.nodes[id].type === 'event') {
+          this.events.push(moment.graph.nodes[id]);
+        }
+      }
+
+      if ( this.events.length > 0 ) {
+        this.momentInfo.title    = this.events[0]['name'];
+        if ( this.events[0]['temporal'] ) {
+          this.momentInfo.date   = this.events[0]['temporal'].replace('/', ' - ');
+        }
+        this.momentEntryPoint    = this.events[0]['name'];
+        this.momentEntryPointUrl = `/map/${this.moment}/${this.events[0].type}/${this.events[0]['@id']}`;
       }
 
       this.graph = moment.graph;
@@ -105,8 +150,9 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       this.renderEmpty();
       return;
     }
+
     if( !this.graph ) return;
-    
+
     this.type = this.selected.type;
 
     if( this.type === 'cluster' ) {
@@ -115,10 +161,12 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       }
     } else if( this.type === 'connection' ) {
       this.isLink = true;
-      this.renderItem(this.graph.links[this.selected.id]);
+      let selectedNode = this.graph.links[this.selected.id];
+      this.renderItem(selectedNode);
     } else {
       this.isNode = true;
-      this.renderItem(this.graph.nodes[this.selected.id]);
+      let selectedNode = this.graph.nodes[this.selected.id];
+      this.renderItem(selectedNode);
     }
   }
 
@@ -137,21 +185,61 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   renderCluster(nodes) {
     this.view = 'cluster';
     this.resetClusterSubjects();
-    
+
     nodes.forEach(node => {
       if( !this.clusterSubjects[node.type] ) return;
+
       this.clusterSubjects[node.type].enabled = true;
+
       this.clusterSubjects[node.type].nodes.push(node);
     });
+
+    // Alphabetize the clusterSubjects
+    for (let attr in this.clusterSubjects) {
+      this.clusterSubjects[attr].nodes.sort((a, b) => (a.name > b.name) ? 1 : -1);
+    }
   }
 
   renderItem(node) {
-    this.view = 'item'
+    this.view = 'item';
 
-    this.title = node.title || '';
+    this.title = node.name || '';
     this.location = node.location || '';
-    this.date = node.date || '';
-    this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');
+
+    let temporal = '';
+    if ( node.temporal !== undefined ) {
+      temporal = node.temporal.replace('/', ' - ');
+    }
+    this.date = temporal || '';
+
+    // TODO: Some of the descriptions are like this: description: @id: http://link.com
+    //       So weeding those out by testing to see if they're strings first
+    //       Otherwise markdown breaks
+    if ( node.description !== false && typeof node.description === 'string' ) {
+      this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');
+    }
+
+    if ( node.thumbnail ) {
+      this.thumbnail = this.endpoint + '/' + this.moment + '/' + node.thumbnail.replace('z:', '');
+    }
+
+    // TODO:
+    //    1. There should be associated page titles to display next to the url with the data from trello
+    this.relatedLinks = [];
+    if ( Array.isArray(node.relatedLink) ) {
+      this.relatedLinks = node.relatedLink;
+    } else if ( node.relatedLink !== undefined ) {
+      this.relatedLinks.push(node.relatedLink)
+    }
+
+    this.relatedLinks = this.relatedLinks.map(link => {
+      let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
+      let obj = {
+        'short': link.replace(re, '').split('/')[0],
+        'full': link
+      }
+      return obj;
+    });
 
     if( node.type === 'connection' ) {
       this.connectionSubjects = [
@@ -164,35 +252,54 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       // find connections
       let connections = [];
       let link;
+      let check;
       for( let id in this.graph.links ) {
         link = this.graph.links[id];
-        if( link.src === node.id ) {
+
+        if ( link.src === node['@id'] ) {
           connections.push({
             link,
-            node : this.graph.nodes[link.dst]
+            node: this.graph.nodes[link.src]
           });
-        } else if ( link.dst === node.id ) {
+        } else if ( link.dst === node['@id'] ) {
           connections.push({
             link,
-            node : this.graph.nodes[link.src]
+            node: this.graph.nodes[link.dst]
           });
         }
       }
 
-      connections.sort((a, b) => {
-        if( a.node.title < b.node.title ) return -1;
-        if( a.node.title > b.node.title ) return 1;
-        return 0;
-      })
+      connections.map(connection => {
+        if ( Array.isArray(connection.link.name) ) {
+          let substring = connection.link.name[1];
+          let string    = connection.link.name[0];
+
+          connection.link.name = formatString(string, substring);
+
+          this.shortConnection = true;
+        }
+      });
+
+      function formatString(string, substring) {
+        let regex = new RegExp(substring, 'g');
+
+        if ( regex.test(string) ) {
+          return string.replace(regex, '<b>' + substring + '</b>');
+        } else {
+          return '<b>' + substring + '</b>&nbsp;' + string;
+        }
+      }
+
+      // Alphabetize the connections
+      connections.sort((a, b) => (a.node.name > b.node.name) ? 1 : -1);
 
       this.connections = connections;
     }
-
   }
 
   renderLink(node) {
     this.type = 'item'
-    this.title = node.title;
+    this.title = node.name;
     this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');
   }
 

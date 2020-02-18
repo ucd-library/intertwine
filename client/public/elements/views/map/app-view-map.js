@@ -9,8 +9,12 @@ export default class AppViewMap extends Mixin(LitElement)
 
   static get properties() {
     return {
-      visible : {type: Boolean},
-      infoPanelOpen : {type: Boolean}
+      visible: {
+        type: Boolean
+      },
+      infoPanelOpen: {
+        type: Boolean
+      }
     }
   }
 
@@ -30,10 +34,11 @@ export default class AppViewMap extends Mixin(LitElement)
   /**
    * @method _onAppStateUpdate
    * @description bound to AppStateModel app-state-update events
-   * 
-   * @param {Object} e 
+   *
+   * @param {Object} e
    */
   _onAppStateUpdate(e) {
+    console.log("_onAppStateUpdate: ", e)
     this.selectedMoment = e.moment;
     if( e.selected ) this.mapEle.renderSelectedState(e);
     else this.mapEle.renderSelectedState();
@@ -42,8 +47,8 @@ export default class AppViewMap extends Mixin(LitElement)
   /**
    * @method _onMomentGraphUpdate
    * @description bound to moment-graph-update events from the MomentModel
-   * 
-   * @param {*} e 
+   *
+   * @param {*} e
    */
   _onMomentGraphUpdate(e) {
     if( e.state !== 'loaded' ) return;
@@ -54,19 +59,19 @@ export default class AppViewMap extends Mixin(LitElement)
   /**
    * @method _onNodeClick
    * @description bound to app-leaflet-map node-click events
-   * 
-   * @param {Object} e 
+   *
+   * @param {Object} e
    */
   _onNodeClick(e) {
     let node = this.data.nodes[e.detail.id];
-    this.AppStateModel.setLocation('/map/'+this.selectedMoment+'/'+node.type+'/'+node.id);
+    this.AppStateModel.setLocation('/map/'+this.selectedMoment+'/'+node.type+'/'+node['@id']);
   }
 
   /**
    * @method _onClusterClick
    * @description bound to app-leaflet-map cluster-click events
-   * 
-   * @param {Object} e 
+   *
+   * @param {Object} e
    */
   _onClusterClick(e) {
     this.AppStateModel.setLocation('/map/'+this.selectedMoment+'/cluster/'+

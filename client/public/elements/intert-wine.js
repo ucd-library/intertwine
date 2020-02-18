@@ -4,7 +4,10 @@ import render from "./intert-wine.tpl.js"
 // global imports
 import "./styles/style-properties"
 import "@ucd-lib/cork-app-utils"
-import "../src"
+import models from "../src"
+
+// Uncomment out for debugging
+window.APP_MODELS = models;
 
 // npm imports
 import "@polymer/iron-pages"
@@ -19,8 +22,8 @@ export default class IntertWine extends Mixin(LitElement)
 
   static get properties() {
     return {
-      view : {type: String},
-      appRoutes : {type: Array}
+      view : { type: String },
+      appRoutes : { type: Array }
     }
   }
 
@@ -38,7 +41,6 @@ export default class IntertWine extends Mixin(LitElement)
   _onAppStateUpdate(e) {
     this.view = e.page;
   }
-
 
 }
 

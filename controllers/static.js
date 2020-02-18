@@ -1,7 +1,7 @@
 const express = require('express');
-const path = require('path');
+const path    = require('path');
 const spaMiddleware = require('@ucd-lib/spa-router-middleware');
-const config = require('../config');
+const config  = require('../config');
 
 const bundle = `
   <script>
@@ -14,19 +14,20 @@ const bundle = `
 
 module.exports = (app) => {
   let assetsDir = path.join(__dirname, '..', 'client', config.server.assets);
-  console.log('Using assests dir: '+assetsDir);
-
+  //console.log('Using assests dir: ' + assetsDir);
   /**
    * Setup SPA app routes
-   */
+  */
   spaMiddleware({
     app: app, // pass the express app
     htmlFile : path.join(assetsDir, 'index.html'), // pass the file you want to use
     isRoot : true, // are we serving from host root (/)?
-    appRoutes : config.server.appRoutes, // array of root paths.  ie appRoutes = ['foo', 'bar'] to server /foo/* /bar/*
+    appRoutes : config.server.appRoutes, // array of root paths. ie appRoutes = ['foo', 'bar'] to server /foo/* /bar/*
     getConfig : async (req, res, next) => {
       next({
         appRoutes : config.server.appRoutes,
+        moments : config.server.moments,
+        endpoint : config.server.endpoint,
         gaCode : config.client.gaCode
       });
     },

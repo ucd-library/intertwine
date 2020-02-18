@@ -1,15 +1,20 @@
 import { html } from 'lit-element';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import sharedStyles from './../../styles/shared-styles'
 
-export default function render() { 
+export default function render() {
 return html`
 
 ${sharedStyles}
 <style>
   :host {
-    background: white;
     display: block;
+    background: white;
     box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+  }
+
+  a.internal {
+    display: inline;
   }
 
   .toggle {
@@ -79,8 +84,29 @@ ${sharedStyles}
     margin-bottom: 10px;
   }
 
+  ul.events,
+  ul.related-links {
+    margin: 0;
+    padding: 0;
+  }
+
+  ul.events li,
+  ul.related-links li {
+    list-style-type: none;
+  }
+
   #description > p {
     padding: 14px 0 18px 9;
+  }
+
+  .thumbnail {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .thumbnail > img {
+    width: 100%;
+    border-radius: 10px;
   }
 
   .location, .date {
@@ -131,42 +157,63 @@ ${sharedStyles}
   }
 
   .type-color[type="cluster"], .type-color[type="connection"] {
-    color: var(--app-color-interface-blue); 
+    color: var(--app-color-interface-blue);
   }
   .color-break[type="cluster"], iron-icon[type="cluster"],
   .color-break[type="connection"], iron-icon[type="connection"] {
-    background-color: var(--app-color-interface-blue); 
+    background-color: var(--app-color-interface-blue);
+  }
+  iron-icon.external-link[type="cluster"],
+  iron-icon.external-link[type="connection"] {
+    background-color: transparent;
+    fill: var(--app-color-interface-blue);
   }
   .image[type="cluster"] {
-    height: 200px
+    height: 200px;
   }
 
   .type-color[type="person"] {
-    color: var(--app-color-scarlet); 
+    color: var(--app-color-scarlet);
   }
   .color-break[type="person"], iron-icon[type="person"], .dot[type="person"] {
-    background-color: var(--app-color-scarlet); 
+    background-color: var(--app-color-scarlet);
+  }
+  iron-icon.external-link[type="person"] {
+    background-color: transparent;
+    fill: var(--app-color-scarlet);
   }
 
   .type-color[type="place"] {
-    color: var(--app-color-vine); 
+    color: var(--app-color-vine);
   }
   .color-break[type="place"], iron-icon[type="place"], .dot[type="place"] {
-    background-color: var(--app-color-vine); 
+    background-color: var(--app-color-vine);
+  }
+  iron-icon.external-link[type="place"] {
+    background-color: transparent;
+    fill: var(--app-color-vine);
   }
 
   .type-color[type="event"] {
-    color: var(--app-color-rose); 
+    color: var(--app-color-rose);
   }
   .color-break[type="event"], iron-icon[type="event"], .dot[type="event"] {
-    background-color: var(--app-color-rose); 
+    background-color: var(--app-color-rose);
+  }
+  iron-icon.external-link[type="event"] {
+    background-color: transparent;
+    fill: var(--app-color-rose);
   }
 
   .type-color[type="object"] {
-    color: var(--app-color-grape); 
+    color: var(--app-color-grape);
   }
   .color-break[type="object"], iron-icon[type="object"], .dot[type="object"] {
-    background-color: var(--app-color-grape); 
+    background-color: var(--app-color-grape);
+  }
+  iron-icon.external-link[type="object"] {
+    background-color: transparent;
+    fill: var(--app-color-interface-blue);
   }
 
   .connection-image-layout {
@@ -195,20 +242,20 @@ ${sharedStyles}
     .toggle iron-icon {
       transform: rotate(-90deg);
     }
-    /* .toggle-sm {
-      display: block;
-    } */
 
+    .toggle-sm {
+      display: block;
+    }
   }
-</style>  
+</style>
 
 <div class="content" ?moment-view="${this.isMoment}">
-  <!-- <div class="toggle-sm" tabindex="0" @click="${this._fireToggleEvent}" @key-up="${this._onToggleKeyUp}">
+  <!--
+  <div class="toggle-sm" tabindex="0" @click="${this._fireToggleEvent}" @key-up="${this._onToggleKeyUp}">
     <iron-icon icon="close"></iron-icon>
-  </div> -->
-
+  </div>
+  -->
   <div ?hidden="${this.isMoment}">
-
     <div ?hidden="${this.isLink}">
       <div class="image" type="${this.type}">
         <iron-icon class="type-color" type="${this.type}" icon="intert-wine-icons:${this.type}"></iron-icon>
@@ -229,7 +276,6 @@ ${sharedStyles}
     <div class="color-break" type="${this.type}">
       <iron-icon icon="intert-wine-icons:${this.type}" type="${this.type}"></iron-icon>
     </div>
-
   </div>
 
   <div class="content-padding">
@@ -237,6 +283,9 @@ ${sharedStyles}
       <!-- START EMPTY -->
       <div id="moment">
         <div class="subject-type">Explore</div>
+
+        <app-moments-dropdown></app-moments-dropdown>
+
         <h1 style="margin-bottom: 3px" class="inverse">${this.momentInfo.title}</h1>
         <h2 style="margin: 0 0 14px 0" class="inverse">${this.momentInfo.date}</h2>
         <div>
@@ -245,12 +294,18 @@ ${sharedStyles}
         </div>
 
         <div class="moment-break"></div>
-        <h3 class="inverse">Connections in Context</h3>
-        <div id="momentDescription"></div>
 
-        <a class="btn inverse" ?hidden="${!this.momentEntryPointUrl}" href="${this.momentEntryPointUrl}" >Read Story</a>
+        <div ?hidden="${!this.momentEntryPoint}">
+          <h3 class="inverse">Connections in Context</h3>
+          <div id="momentDescription"></div>
+
+          <a class="btn inverse" ?hidden="${!this.momentEntryPointUrl}" href="${this.momentEntryPointUrl}">
+            Read Story
+          </a>
+        </div>
       </div>
       <!-- END EMPTY -->
+
 
       <!-- START CLUSTER -->
       <div id="cluster">
@@ -265,7 +320,9 @@ ${sharedStyles}
             ${this.clusterSubjects[type].nodes.map(node => html`
               <div>
                 <div class="dot" type="${type}"></div>
-                <span><a class="internal" href="/map/${this.moment}/${type}/${node.id}">${node.title}</a></span>
+                <span>
+                  <a class="internal" href="/map/${this.moment}/${type}/${node['@id']}">${node.name}</a>
+                </span>
               </div>
             `)}
           </div>
@@ -288,15 +345,25 @@ ${sharedStyles}
           <h2 style="margin: 0 0 14px 0">${this.date}</h2>
         </div>
 
+        <div class="thumbnail" ?hidden="${!this.thumbnail}">
+          <img src="${this.thumbnail}" title="${this.title}">
+        </div>
+
+        <!-- Filled from inside the parent js file -->
         <div id="description"></div>
 
         <div ?hidden="${!this.isNode}">
-          <h3 style="margin: 0 0 5px 0">Explore Connections</h3>
+          ${this.hasConnections? html`<h3 style="margin: 0 0 5px 0">Explore Connections</h3>` : html``}
           <div>
             ${this.connections.map(item => html`
               <div>
                 <div class="dot" type="${item.node.type}"></div>
-                <span><a class="internal" href="/map/${this.moment}/connection/${item.link.id}">${item.node.title}</a></span>
+                <a class="internal" href="/map/${this.moment}/connection/${item.link['@id']}">
+                ${this.shortConnection ?
+                  html`${unsafeHTML(item.link.name)}` :
+                  html`<strong><em>${item.link.name}</em></strong>&nbsp;${item.node.name}`
+                }
+                </a>
               </div>
             `)}
           </div>
@@ -306,9 +373,25 @@ ${sharedStyles}
           ${this.connectionSubjects.map(node => html`
             <div>
               <div class="dot" type="${node.type}"></div>
-              <span><a class="internal" href="/map/${this.moment}/${node.type}/${node.id}">${node.title}</a></span>
+              <span>
+                <a class="internal" href="/map/${this.moment}/${node.type}/${node['@id']}">
+                  ${node.name}
+                </a>
+              </span>
             </div>
           `)}
+        </div>
+
+        <div ?hidden="${!this.relatedLinks.length}">
+          <h3>Learn More</h3>
+          <ul class="related-links">
+          ${this.relatedLinks.map(node => html`
+            <li>
+              <iron-icon class="external-link" icon="intert-wine-icons:link" type="${this.type}"></iron-icon>
+              <a class="external type-color" type="${this.type}" href="${node.full}" target="_blank">${node.short}</a>
+            </li>
+          `)}
+          </ul>
         </div>
       </div>
       <!-- END ITEM -->

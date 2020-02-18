@@ -4,7 +4,6 @@ import render from "./app-leaflet-map.tpl.js"
 import "leaflet"
 import "leaflet.markercluster"
 
-
 export default class AppLeafletMap extends LitElement {
 
   static get properties() {
@@ -60,7 +59,7 @@ export default class AppLeafletMap extends LitElement {
     L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
-    
+
     // create the clulster layer
     this.clusters = L.markerClusterGroup({
       animate: false,
@@ -91,7 +90,7 @@ export default class AppLeafletMap extends LitElement {
    * @method renderSelectedState
    * @description called by the parent when app state updates.  render the map
    * to the current state
-   * 
+   *
    * @param {Object} e app-state-update event object
    */
   renderSelectedState(e) {
@@ -134,7 +133,7 @@ export default class AppLeafletMap extends LitElement {
    * @method selectLink
    * @description render a link based on id.  This will show two labels and
    * the center connection line label
-   * 
+   *
    * @param {String} id connection id
    */
   selectLink(id) {
@@ -173,8 +172,8 @@ export default class AppLeafletMap extends LitElement {
   /**
    * @method selectNode
    * @description set a node label.  The type should be either src or dst.  For single
-   * node selection the type will be src.  
-   * 
+   * node selection the type will be src.
+   *
    * @param {String} id node id
    * @param {String} type either src|dst
    */
@@ -203,7 +202,7 @@ export default class AppLeafletMap extends LitElement {
       this.selectedNodeIcon = {};
     }
     this.selectedNodeLayer[type] = layer;
-    
+
     // graph the visible marker, either the cluster marker or the layer itself
     layer = this.clusters.getVisibleParent(layer) || layer;
 
@@ -211,18 +210,18 @@ export default class AppLeafletMap extends LitElement {
     let icon = L.divIcon({
       className: `leaflet-intertwine-node-label`,
       iconSize: [0, 0],
-      html : '<div>'+this.nodes[id].title+'</div><div class="intertwine-arrow"></div>'
+      html : '<div>'+this.nodes[id].name+'</div><div class="intertwine-arrow"></div>'
     });
     this.selectedNodeIcon[type] = L.marker(layer.getLatLng(), {icon});
     this.map.addLayer(this.selectedNodeIcon[type]);
     this.selectedNodeIcon[type].setZIndexOffset(5000);
 
-    // we need to let the marker render so we can adjust the left offset based 
+    // we need to let the marker render so we can adjust the left offset based
     // on the marker width.  We will do a little bit of additional css work as well
     requestAnimationFrame(() => {
       // should the label be set to bottom of marker?
       // check the two selected nodes and see which has a higher lat
-      let bottom = false; 
+      let bottom = false;
       for( let key in this.selectedNodeIcon ) {
         if( key === type ) continue;
         if( this.selectedNodeLayer[key].getLatLng().lat > this.selectedNodeLayer[type].getLatLng().lat ) {
@@ -268,11 +267,11 @@ export default class AppLeafletMap extends LitElement {
   /**
    * @method _getMidPoint
    * @description get the midpoint for a line by finding the screen (x, y) midpoint
-   * then converting to lat/lng.  This is how lines are rendered and we need the 
+   * then converting to lat/lng.  This is how lines are rendered and we need the
    * label based on that otherwise it may look off when labels are far apart.
-   * 
-   * @param {*} srcll 
-   * @param {*} dstll 
+   *
+   * @param {*} srcll
+   * @param {*} dstll
    */
   _getMidPoint(srcll, dstll) {
     let srcxy = this.map.latLngToContainerPoint(srcll);
@@ -342,7 +341,7 @@ export default class AppLeafletMap extends LitElement {
     }
 
     if( !selectedCluster ) return console.warn('no clusters found to selected');
-  
+
     let event = new CustomEvent('selected-cluster-ids', {
       detail: selectedCluster.getAllChildMarkers().map(l => l.inertWineId)
     })
@@ -391,12 +390,13 @@ export default class AppLeafletMap extends LitElement {
 
     this.clusters.clearLayers();
 
-    for( let id in data.nodes ) {
+    for( let id in this.nodes ) {
       let icon = L.divIcon({
-        className: `leaflet-intertwine-icon leaflet-${data.nodes[id].type}-icon`,
+        className: `leaflet-intertwine-icon leaflet-${this.nodes[id].type}-icon`,
         iconSize: [15, 15]
       });
-      let layer = L.marker(data.nodes[id].coordinates, {icon});
+
+      let layer = L.marker(this.nodes[id].coordinates, {icon});
 
       layer.on('click', e => this.onNodeClicked(e));
       layer.inertWineId = id;
@@ -440,10 +440,13 @@ export default class AppLeafletMap extends LitElement {
     for( let id in this.linkLayers ) {
       this.map.removeLayer(this.linkLayers[id]);
     }
+
     this.linkLayers = {};
 
     for( let id in this.links ) {
       let item = this.links[id];
+      if ( item.weblink ) continue;
+
       let src = this.getMarkerLatLng(item.src);
       let dst = this.getMarkerLatLng(item.dst);
 
@@ -498,7 +501,6 @@ export default class AppLeafletMap extends LitElement {
     if( clusterLayer ) return clusterLayer.getLatLng();
     return L.latLng(this.nodes[id].coordinates);
   }
-
 
   updated(props) {
     if( props.has('active') && this.active ) {

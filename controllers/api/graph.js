@@ -1,10 +1,30 @@
-var router = require('express').Router();
-let fs = require('fs');
-let path = require('path');
+var router  = require('express').Router();
+let fs      = require('fs');
+let path    = require('path');
+let fetch   = require('node-fetch');
 
-router.get('/mock', (req, res) => {
-  let data = fs.readFileSync(path.join(__dirname, '..', '..', 'mock', 'mock-graph.json'), 'utf-8');
-  res.json(JSON.parse(data));
+const config   = require('../../config');
+const endpoint = config.server.endpoint;
+
+router.get('/:id', (req, res) => {
+  // TODO: Ask Justin, better way to filter this?  
+  if ( req.params.id !== 'undefined' ) {
+    const moment = req.params.id;
+    
+    const url = endpoint + '/' + moment + '/' + moment + '.json';
+
+    const getData = async url => {
+      try {
+        const response = await fetch(url);
+        const json = await response.json();
+        res.json(json);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    
+    getData(url);
+  }
 });
 
 module.exports = router;

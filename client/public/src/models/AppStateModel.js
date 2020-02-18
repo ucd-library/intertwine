@@ -1,5 +1,5 @@
-const {AppStateModel} = require('@ucd-lib/cork-app-state');
-const AppStateStore = require('../stores/AppStateStore');
+const { AppStateModel } = require('@ucd-lib/cork-app-state');
+const AppStateStore     = require('../stores/AppStateStore');
 
 class AppStateModelImpl extends AppStateModel {
 
@@ -19,6 +19,7 @@ class AppStateModelImpl extends AppStateModel {
    */
   setSelectedClusterIds(ids) {
     let state = this.store.data;
+
     if( !state.selected ) {
       return console.warn('Attempting to set cluster ids, but no selected object');
     }
@@ -26,25 +27,26 @@ class AppStateModelImpl extends AppStateModel {
       return console.warn('Attempting to set cluster ids, but selected object is not a cluster');
     }
     state.selected.ids = ids;
+
     return super.set(state);
   }
 
   set(state) {
     // parse out page
-    if( state.location ) {
+    if ( state.location ) {
       let page = state.location.path ? state.location.path[0] : 'map';
       state.page = page || 'map';
     }
-    state.moment = 'chardonnay';
 
     // parse out selected object(s)
-    if( state.page === 'map' && state.location.path.length >= 3 ) {
+    // TODO: selected => selectedNode
+    if ( state.page === 'map' && state.location.path.length >= 1 ) {
+      state.moment = state.location.path[1];
+    }
+
+    if ( state.page === 'map' && state.location.path.length >= 3 ) {
       state.selected = {
         type : state.location.path[2]
-      }
-
-      if( state.location.path.length > 1 ) {
-        state.moment = state.location.path[1];
       }
 
       if( state.location.path[2] === 'cluster' ) {
@@ -55,6 +57,11 @@ class AppStateModelImpl extends AppStateModel {
       }
     } else {
       state.selected = null;
+    }
+
+    // Set a default moment if none has been set
+    if ( !state.moment ) {
+      state.moment = APP_CONFIG.moments[0];
     }
 
     return super.set(state);
@@ -75,7 +82,6 @@ class AppStateModelImpl extends AppStateModel {
       page_path: window.location.pathname
     });
   }
-
 
 }
 

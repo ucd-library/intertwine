@@ -1,7 +1,7 @@
 import { html } from 'lit-element'
 import sharedStyles from './styles/shared-styles'
 
-export default function render() { 
+export default function render() {
 return html`
 
 ${sharedStyles}
@@ -11,12 +11,14 @@ ${sharedStyles}
     min-height: 100vh;
   }
 
-  /* app-header {
+  /*
+  app-header {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-  } */
+  }
+  */
 
   iron-pages {
     align-self: stretch;
@@ -37,9 +39,9 @@ ${sharedStyles}
   <app-header></app-header>
 
   <iron-pages selected="${this.view}" attr-for-selected="id" selected-attribute="visible">
+    <app-about id="about"></app-about>
+    <!--<app-moments id="moments"></app-moments>-->
     <app-view-map id="map"></app-view-map>
   </iron-pages>
-
 </div>
-
 `;}

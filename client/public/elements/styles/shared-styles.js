@@ -93,11 +93,9 @@ export default html`
     background-color: var(--app-color-smoke);
   }
 
-
   button[disabled], .btn[disabled] {
     cursor: not-allowed;
     background-color: var(--app-color-pewter) !important;
   }
-
 </style>
 `;
