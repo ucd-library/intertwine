@@ -1,0 +1,54 @@
+#container {
+  height: 100%;
+  overflow-y: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0px;
+  padding: 0px;
+  font-style: normal;
+}
+
+h1 {
+  font-size: 20px;
+}
+
+h2 {
+  font-size: 30px;
+  line-height: 1.0em;
+}
+
+h4 {
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+h6 {
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.secondary-blue-bg {
+  background-color: var(--app-color-secondary-blue);
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.bg-tan {
+  background-color: #F3F2F0;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.w-100 {
+  width: 100%;
+}
