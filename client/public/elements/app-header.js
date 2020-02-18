@@ -4,7 +4,7 @@ import render from "./app-header.tpl.js"
 import "./views/map/app-map-info-panel"
 import "./views/app-about"
 import "./views/app-home"
-import "./views/app-moments"
+import "./views/app-moment"
 
 export default class AppHeader extends Mixin(LitElement)
   .with(LitCorkUtils){
@@ -28,15 +28,6 @@ export default class AppHeader extends Mixin(LitElement)
   async firstUpdated() {
     let _topic = await this.AppStateModel.get();
     this.currentTopic = _topic.moment;
-  }
-
-  /**
-   * @method _onMomentClick
-   * @description ...
-   * @param {Object} e
-  */
-  _onMomentsClick() {
-    this.AppStateModel.setLocation('/moments/');
   }
 
   /**

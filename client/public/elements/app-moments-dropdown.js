@@ -23,7 +23,6 @@ export default class AppMomentsDropdown extends Mixin(LitElement)
 
   _onAppStateUpdate(e) {
     this.selectedMoment = e.moment;
-    console.log('this.selectedMoment: ', this.selectedMoment);
   }
 
   /**

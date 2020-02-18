@@ -3,7 +3,7 @@ import leafletCss from "leaflet/dist/leaflet.css"
 import markerClusterCss from "leaflet.markercluster/dist/MarkerCluster.css"
 import markerClusterDefaultCss from "leaflet.markercluster/dist/MarkerCluster.Default.css"
 
-export default function render() { 
+export default function render() {
 return html`
 
 <style>
@@ -22,7 +22,7 @@ ${markerClusterDefaultCss}
 
   .border-top {
     position: absolute;
-    box-shadow: 0 0 5px rgba(0, 0, 0, .8);
+    /*box-shadow: 0 0 5px rgba(0, 0, 0, .8);*/
     top: -1px;
     right: 0;
     left: 0;
@@ -43,16 +43,16 @@ ${markerClusterDefaultCss}
   }
 
   .leaflet-person-icon {
-    background-color: var(--app-color-scarlet); 
+    background-color: var(--app-color-scarlet);
   }
   .leaflet-place-icon {
-    background-color: var(--app-color-vine); 
+    background-color: var(--app-color-vine);
   }
   .leaflet-event-icon {
-    background-color: var(--app-color-rose); 
+    background-color: var(--app-color-rose);
   }
   .leaflet-object-icon {
-    background-color: var(--app-color-grape); 
+    background-color: var(--app-color-grape);
   }
 
   .intertwine-arrow {

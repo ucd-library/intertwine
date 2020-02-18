@@ -7,6 +7,7 @@ export default function render() {
     <style>
       :host {
         display: block;
+        height: 100%;
         position: absolute;
         top: 0;
         right: 0;
@@ -14,7 +15,9 @@ export default function render() {
         left: 0;
         overflow-y: auto;
         background-color: var(--app-color-smoke);
-        background: no-repeat url('./../../images/background.png');
+        background-image: url('./../../images/background.png');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
       }
 
       header {
@@ -114,6 +117,14 @@ export default function render() {
         font-size: 30px;
       }
 
+      .card > .footer > button {
+        margin: 0;
+        padding: 0;
+        color: var(--app-color-interface-blue);
+        background-color: initial;
+        border: initial;
+      }
+
       @media(max-width: 1220px) {
         main > div:first-of-type {
           margin-right: 0px;
@@ -137,7 +148,7 @@ export default function render() {
     </header>
 
     <main>
-      <div>
+      <div id="chardonnay" class="chardonnay">
         <div class="card">
           <div class="feature-img chardonnay"></div>
           <div class="content">
@@ -153,14 +164,18 @@ export default function render() {
             </p>
           </div>
           <div class="footer">
-            Read Story <iron-icon icon="intert-wine-icons:book"></iron-icon>
+            <button name="chardonnay" type="button" @click="${e => this._onReadStoryClick(e.currentTarget.name)}">
+              Read Story <iron-icon icon="intert-wine-icons:book"></iron-icon>
+            </button>
             <span class="separator"></span>
-            <iron-icon icon="intert-wine-icons:explore"></iron-icon> Explore Map
+            <button name="chardonnay" type="button" @click="${e => this._onExploreMapClick(e.currentTarget.name)}">
+              <iron-icon icon="intert-wine-icons:explore"></iron-icon> Explore Map
+            </button>
           </div>
         </div>
       </div>
 
-      <div>
+      <div id="jop" class="jop">
         <div class="card">
           <div class="feature-img jop"></div>
           <div class="content">
@@ -174,9 +189,13 @@ export default function render() {
             </p>
           </div>
           <div class="footer">
-            Read Story <iron-icon icon="intert-wine-icons:book"></iron-icon>
+            <button name="jop" type="button" @click="${e => this._onReadStoryClick(e.currentTarget.name)}">
+              Read Story <iron-icon icon="intert-wine-icons:book"></iron-icon>
+            </button>
             <span class="separator"></span>
-            <iron-icon icon="intert-wine-icons:explore"></iron-icon> Explore Map
+            <button name="jop" type="button" @click="${e => this._onExploreMapClick(e.currentTarget.name)}">
+              <iron-icon icon="intert-wine-icons:explore"></iron-icon> Explore Map
+            </button>
           </div>
         </div>
       </div>

@@ -31,7 +31,7 @@ ${sharedStyles}
 
   <iron-pages selected="${this.view}" attr-for-selected="id" selected-attribute="visible">
     <app-about id="about"></app-about>
-    <app-moments id="moments"></app-moments>
+    <app-moment id="moment"></app-moment>
     <app-view-map id="map"></app-view-map>
     <app-home id="home"></app-home>
   </iron-pages>

@@ -6,6 +6,7 @@ return html`
 <style>
   :host {
     display: block;
+    width: 100%;
     height: 60px;
     background-color: black;
     color: white;
@@ -59,11 +60,10 @@ return html`
 
 <div class="layout">
   <h1>
-    <span><a href="${this.baseUrl}">intertWINE</a></span>
+    <span><a href="${this.baseUrl}/home">intertWINE</a></span>
     <span class="title-extra">// California's Modern Wine Network<span>
   </h1>
   <div style="padding-right: 20px">
-    <a @click="${this._onMomentsClick}">Moments</a>
     <a @click="${this._onAboutClick}">About</a>
   </div>
   <div class="image">
