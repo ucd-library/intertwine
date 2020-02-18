@@ -44,6 +44,10 @@ class AppStateModelImpl extends AppStateModel {
       state.moment = state.location.path[1];
     }
 
+    if ( state.page === 'moment' ) {
+      state.moment = state.location.path[1];
+    }
+
     if ( state.page === 'map' && state.location.path.length >= 3 ) {
       state.selected = {
         type : state.location.path[2]
