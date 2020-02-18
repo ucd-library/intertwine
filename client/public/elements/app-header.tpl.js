@@ -63,7 +63,7 @@ return html`
     <span class="title-extra">// California's Modern Wine Network<span>
   </h1>
   <div style="padding-right: 20px">
-    <!--<a @click="${this._onMomentsClick}">Moments</a>-->
+    <a @click="${this._onMomentsClick}">Moments</a>
     <a @click="${this._onAboutClick}">About</a>
   </div>
   <div class="image">

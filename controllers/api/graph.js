@@ -1,16 +1,14 @@
 var router  = require('express').Router();
-let fs      = require('fs');
-let path    = require('path');
 let fetch   = require('node-fetch');
 
 const config   = require('../../config');
 const endpoint = config.server.endpoint;
 
 router.get('/:id', (req, res) => {
-  // TODO: Ask Justin, better way to filter this?  
+  // TODO: Is there a better way to filter this?
   if ( req.params.id !== 'undefined' ) {
     const moment = req.params.id;
-    
+
     const url = endpoint + '/' + moment + '/' + moment + '.json';
 
     const getData = async url => {
@@ -22,7 +20,7 @@ router.get('/:id', (req, res) => {
         console.error(error);
       }
     };
-    
+
     getData(url);
   }
 });

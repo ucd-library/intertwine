@@ -17,6 +17,7 @@ import "./intert-wine-icons"
 import "./app-header"
 import "./views/map/app-view-map"
 import "./views/app-home"
+import "./views/app-moments"
 
 export default class IntertWine extends Mixin(LitElement)
   .with(LitCorkUtils) {
