@@ -26,8 +26,14 @@ export default class AppMomentsDropdown extends Mixin(LitElement)
     console.log('this.selectedMoment: ', this.selectedMoment);
   }
 
-  _onSelectMomentChange(moment) {
-    this.AppStateModel.set({selectedMoment: moment});
+  /**
+   * @method _onSelectMomentInputChange
+   * @description bound to input selector
+   * @param {Object} moment
+  */
+  _onSelectMomentInputChange(moment) {
+    // Triggers app state update event
+    this.AppStateModel.setLocation('/map/' + moment);
   }
 }
 

@@ -38,6 +38,7 @@ export default class AppViewMap extends Mixin(LitElement)
    * @param {Object} e
    */
   _onAppStateUpdate(e) {
+    console.log("_onAppStateUpdate: ", e)
     this.selectedMoment = e.moment;
     if( e.selected ) this.mapEle.renderSelectedState(e);
     else this.mapEle.renderSelectedState();

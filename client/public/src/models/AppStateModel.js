@@ -38,16 +38,15 @@ class AppStateModelImpl extends AppStateModel {
       state.page = page || 'map';
     }
 
-    state.moment = state.selectedMoment || APP_CONFIG.moments[1];
-
     // parse out selected object(s)
+    // TODO: selected => selectedNode
+    if ( state.page === 'map' && state.location.path.length >= 1 ) {
+      state.moment = state.location.path[1];
+    }
+
     if ( state.page === 'map' && state.location.path.length >= 3 ) {
       state.selected = {
         type : state.location.path[2]
-      }
-
-      if( state.location.path.length > 1 ) {
-        state.moment = state.location.path[1];
       }
 
       if( state.location.path[2] === 'cluster' ) {
@@ -58,6 +57,11 @@ class AppStateModelImpl extends AppStateModel {
       }
     } else {
       state.selected = null;
+    }
+
+    // Set a default moment if none has been set
+    if ( !state.moment ) {
+      state.moment = APP_CONFIG.moments[0];
     }
 
     return super.set(state);
