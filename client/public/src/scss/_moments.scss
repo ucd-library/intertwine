@@ -9,10 +9,17 @@
     .header-image {
       width: 100%;
       height: 790px;
-      background-image: url('../../images/growthchardonnay3.jpg');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center; /* sets reference point to scale from */
+
+      &.jop {
+        background-image: url('../../images/jop.jpg');
+      }
+
+      &.chardonnay {
+        background-image: url('../../images/growthchardonnay3.jpg');
+      }
     }
 
     .moment-header {

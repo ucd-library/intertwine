@@ -24,7 +24,7 @@ export default function render() {
 
     <div id="container" class="container" role="main">
       <header>
-        <div class="header-image"></div>
+        <div class="header-image jop"></div>
         <div class="moment-header">
           <ul>
             <li style="text-align: right;">
