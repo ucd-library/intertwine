@@ -18,6 +18,9 @@ return html`
     display: flex;
     height: 100%;
     align-items: center;
+    -webkit-box-shadow: -2px 0px 6px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    -2px 0px 6px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         -2px 0px 6px 0px rgba(50, 50, 50, 0.75);
   }
 
   h1 {
@@ -32,13 +35,9 @@ return html`
   }
 
   a {
-    margin: 0 10px;
     display: inline-block;
-
     cursor: pointer;
-
     color: white;
-    text-transform: capitalize;
     text-decoration: none;
   }
 
@@ -58,18 +57,18 @@ return html`
   }
 </style>
 
-<div class="layout">
+<header class="layout">
   <h1>
     <span><a href="${this.baseUrl}/home">intertWINE</a></span>
     <span class="title-extra">// California's Modern Wine Network<span>
   </h1>
-  <div style="padding-right: 20px">
-    <a @click="${this._onAboutClick}">About</a>
+  <div style="padding-right: 20px;">
+    <a @click="${this._onAboutClick}">ABOUT</a>
   </div>
   <div class="image">
     <a href="https://www.library.ucdavis.edu/" target="_blank">
       <img src="/images/ucd-lib-logo-white.png" />
     </a>
   </div>
-</div>
+</header>
 `;}

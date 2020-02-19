@@ -25,18 +25,28 @@ export default function render() {
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: center;
-        margin-bottom: 50px;
+        position: relative;
         padding: 50px 0;
         background-color: var(--app-color-interface-blue);
         background-image: url('./../../images/header-connectedicons.svg');
       }
 
       header > div {
+        align-self: top;
+        padding: 0 30px;
+        width: 50%;
         max-width: 400px;
+        line-height: 25px;
         color: white;
       }
 
+      header > div:first-of-type {
+        text-align: right;
+      }
+
       header > div > h1 {
+        margin: 0;
+        padding: 0;
         color: white;
         font-size: 30px;
         font-weight: normal;
@@ -45,7 +55,24 @@ export default function render() {
       }
 
       header .text-block {
+        padding-top: 0;
         background-color: var(--app-color-interface-blue);
+      }
+
+      .arrow-down {
+        height: 32px;
+        position: relative;
+        text-align: center;
+      }
+
+      .arrow-down::after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        content: '';
+        border-top: 20px solid var(--app-color-interface-blue);
+        border-right: 20px solid transparent;
+        border-left: 20px solid transparent;
       }
 
       main {
@@ -53,15 +80,21 @@ export default function render() {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
+        padding: 0 30px;
       }
 
       main > div {
-        width: 600px;
+        width: 48%;
+        max-width: 600px;
         margin-bottom: 30px;
       }
 
       main > div:first-of-type {
-        margin-right: 30px;
+        margin-right: 15px;
+      }
+
+      main > div:last-of-type {
+        margin-left: 15px;
       }
 
       .card {
@@ -69,8 +102,9 @@ export default function render() {
       }
 
       .card .feature-img {
-        width: 600px;
         height: 300px;
+        max-width: 600px;
+        max-height: 300px;
       }
 
       .card .chardonnay {
@@ -99,7 +133,16 @@ export default function render() {
         font-size: 17px;
       }
 
+      .card .content > p {
+        margin: 15px 0 0 0;
+        padding: 0;
+      }
+
       .card .footer {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
         padding: 0 0 30px 0;
         color: var(--app-color-interface-blue);
         font-weight: bold;
@@ -108,16 +151,9 @@ export default function render() {
         text-align: center;
       }
 
-      .card .footer .separator {
-        margin: 0 14px 0 10px;
-        border-right: 1px solid #D4DADC;
-      }
-
-      .card .footer iron-icon {
-        font-size: 30px;
-      }
-
-      .card > .footer > button {
+      .card .footer > button {
+        display: flex;
+        flex-direction: row;
         margin: 0;
         padding: 0;
         color: var(--app-color-interface-blue);
@@ -125,15 +161,122 @@ export default function render() {
         border: initial;
       }
 
-      @media(max-width: 1220px) {
+      .card .footer > button > iron-icon {
+        margin: 0 8px;
+      }
+
+      .card .footer > button:first-of-type > span:first-of-type {
+        order: 0;
+      }
+
+      .card .footer > button:first-of-type > iron-icon {
+        top: -4px;
+        order: 1;
+      }
+
+      .card .footer .separator {
+        margin: 0 14px 0 10px;
+        height: 30px;
+        border-right: 1px solid var(--app-color-pewter);
+      }
+
+      .card .footer iron-icon {
+        font-size: 30px;
+      }
+
+      @media(max-width: 860px) {
+        .card .feature-img {
+          height: 200px;
+        }
+      }
+
+      @media(max-width: 800px) {
+        main > div {
+          width: 100%;
+        }
+
         main > div:first-of-type {
           margin-right: 0px;
+        }
+
+        main > div:last-of-type {
+          margin-left: 0px;
+        }
+      }
+
+      @media (max-width: 590px) {
+        header {
+          background-image: initial;
+        }
+
+        main > div {
+          width: 100%;
+        }
+
+        main > div:first-of-type {
+          margin-right: 0px;
+        }
+
+        main > div:last-of-type {
+          margin-left: 0px;
+        }
+
+        .card .feature-img {
+          height: 300px;
+        }
+      }
+
+      @media(max-width: 414px) {
+        header {
+          padding: 30px 0;
+          flex-wrap: wrap;
+        }
+
+        header > div {
+          width: 100%;
+        }
+
+        header > div:first-of-type {
+          text-align: initial;
+        }
+
+        header .text-block {
+          padding-top: 20px;
+        }
+
+        .arrow-down::after {
+          display: none;
+        }
+
+        .card .feature-img {
+          height: 200px;
+        }
+
+        .card .footer > button {
+          flex-direction: column;
+        }
+
+        .card .footer > button:first-of-type > span:first-of-type {
+          order: 1;
+        }
+
+        .card .footer > button:first-of-type > iron-icon {
+          order: 0;
+        }
+
+        .card .footer > button > iron-icon {
+          align-self: center;
+          margin-bottom: 10px;
+        }
+
+        .card .footer .separator {
+          height: 60px;
         }
       }
     </style>
 
     <header>
-      <div style="text-align: right; margin-right: 30px;">
+      <div>
         <h1>
           Enter a Moment in
           <br />
@@ -146,6 +289,7 @@ export default function render() {
         specific connections between them.
       </div>
     </header>
+    <div class="arrow-down"></div>
 
     <main>
       <div id="chardonnay" class="chardonnay">
@@ -165,11 +309,13 @@ export default function render() {
           </div>
           <div class="footer">
             <button name="chardonnay" type="button" @click="${e => this._onReadStoryClick(e.currentTarget.name)}">
-              Read Story <iron-icon icon="intert-wine-icons:book"></iron-icon>
+              <span>Read Story</span>
+              <iron-icon icon="intert-wine-icons:book"></iron-icon>
             </button>
             <span class="separator"></span>
             <button name="chardonnay" type="button" @click="${e => this._onExploreMapClick(e.currentTarget.name)}">
-              <iron-icon icon="intert-wine-icons:explore"></iron-icon> Explore Map
+              <iron-icon icon="intert-wine-icons:explore"></iron-icon>
+              <span>Explore Map</span>
             </button>
           </div>
         </div>
@@ -190,11 +336,13 @@ export default function render() {
           </div>
           <div class="footer">
             <button name="jop" type="button" @click="${e => this._onReadStoryClick(e.currentTarget.name)}">
-              Read Story <iron-icon icon="intert-wine-icons:book"></iron-icon>
+              <span>Read Story</span>
+              <iron-icon icon="intert-wine-icons:book"></iron-icon>
             </button>
             <span class="separator"></span>
             <button name="jop" type="button" @click="${e => this._onExploreMapClick(e.currentTarget.name)}">
-              <iron-icon icon="intert-wine-icons:explore"></iron-icon> Explore Map
+              <iron-icon icon="intert-wine-icons:explore"></iron-icon>
+              <span>Explore Map</span>
             </button>
           </div>
         </div>
