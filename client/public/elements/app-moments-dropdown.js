@@ -18,7 +18,7 @@ export default class AppMomentsDropdown extends Mixin(LitElement)
 
     this.render = render.bind(this);
 
-    this._injectModel('AppStateModel', 'MomentModel');
+    this._injectModel('AppStateModel');
   }
 
   _onAppStateUpdate(e) {
