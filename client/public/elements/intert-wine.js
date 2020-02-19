@@ -32,7 +32,7 @@ export default class IntertWine extends Mixin(LitElement)
   constructor() {
     super();
 
-    this.view = 'map';
+    this.view = 'home';
     this.appRoutes = APP_CONFIG.appRoutes;
 
     this.render = render.bind(this);

@@ -5,7 +5,6 @@ const config   = require('../../config');
 const endpoint = config.server.endpoint;
 
 router.get('/:id', (req, res) => {
-  // TODO: Is there a better way to filter this?
   if ( req.params.id !== 'undefined' ) {
     const moment = req.params.id;
 

@@ -252,7 +252,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       // find connections
       let connections = [];
       let link;
-      let check;
       for( let id in this.graph.links ) {
         link = this.graph.links[id];
 

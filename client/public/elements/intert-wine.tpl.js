@@ -12,8 +12,8 @@ ${sharedStyles}
   }
 
   iron-pages {
-    align-self: stretch;
     flex: 1;
+    align-self: stretch;
     position: relative;
   }
 
@@ -30,10 +30,10 @@ ${sharedStyles}
   <app-header></app-header>
 
   <iron-pages selected="${this.view}" attr-for-selected="id" selected-attribute="visible">
+    <app-home id="home"></app-home>
     <app-about id="about"></app-about>
     <app-moment id="moment"></app-moment>
     <app-view-map id="map"></app-view-map>
-    <app-home id="home"></app-home>
   </iron-pages>
 </div>
 `;}

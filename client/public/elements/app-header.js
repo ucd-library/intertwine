@@ -22,7 +22,7 @@ export default class AppHeader extends Mixin(LitElement)
 
     this.baseUrl = window.location.protocol + '//' + window.location.host;
 
-    this._injectModel('MomentModel', 'AppStateModel');
+    this._injectModel('AppStateModel', 'MomentModel');
   }
 
   async firstUpdated() {

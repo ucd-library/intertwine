@@ -6,12 +6,12 @@ export default function render() {
   ${sharedStyles}
   <style>
     :host {
-      background-color: white;
       display: block;
+      background-color: white;
     }
 
     main {
-      padding: 10px;
+      padding: 50px 30px;
     }
   </style>
 

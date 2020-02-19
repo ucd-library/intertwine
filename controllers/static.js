@@ -28,7 +28,6 @@ module.exports = (app) => {
       next({
         appRoutes : config.server.appRoutes,
         moments : config.server.moments,
-        endpoint : config.server.endpoint,
         gaCode : config.client.gaCode
       });
     },
@@ -39,6 +38,6 @@ module.exports = (app) => {
 
   /**
    * Setup static asset dir
-   */
+  */
   app.use(express.static(assetsDir));
 }
