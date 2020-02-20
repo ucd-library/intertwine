@@ -67,7 +67,7 @@ return html`
 
 <header class="layout">
   <h1>
-    <span><a href="${this.baseUrl}/home">intertWINE</a></span>
+    <span><a href="${this.baseUrl}">intertWINE</a></span>
     <span class="title-extra">// California's Modern Wine Network<span>
   </h1>
   <div class="about" style="padding-right: 20px;">

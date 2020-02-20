@@ -1,9 +1,7 @@
 import { html } from 'lit-element';
-import sharedStyles from './../styles/shared-styles'
 
 export default function render() {
   return html`
-    ${sharedStyles}
     <style>
       :host {
         display: block;
@@ -25,22 +23,29 @@ export default function render() {
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: center;
-        position: relative;
-        padding: 50px 0;
+        flex-shrink: 0;
+
+        height: 200px;
+        min-height: 200px;
+
         background-color: var(--app-color-interface-blue);
         background-image: url('./../../images/header-connectedicons.svg');
         background-repeat: no-repeat;
-        background-position: center;
-        background-size: 105%;
+        background-size: 1500px 1500px;
+        background-position: center center;
       }
 
       header > div {
         align-self: top;
-        padding: 0 30px;
+        padding: 50px 15px 50px 15px;
         width: 50%;
         max-width: 400px;
         line-height: 25px;
         color: white;
+      }
+
+      header > .text-block {
+        padding: 50px 15px 50px 15px;
       }
 
       header > div:first-of-type {
@@ -54,10 +59,6 @@ export default function render() {
         font-size: 30px;
         font-weight: normal;
         line-height: 35px;
-      }
-
-      header .text-block {
-        padding-top: 0;
       }
 
       .arrow-down {
@@ -157,6 +158,13 @@ export default function render() {
         flex-direction: row;
         margin: 0;
         padding: 0;
+        height: 44px;
+        cursor: pointer;
+
+        text-transform: uppercase;
+        font-size: 16px;
+        font-weight: bold;
+
         color: var(--app-color-interface-blue);
         background-color: initial;
         border: initial;
@@ -267,14 +275,14 @@ export default function render() {
     </style>
 
     <header>
-      <div>
+      <div style="float: left;">
         <h1>
           Enter a Moment in
           <br />
           California Wine History
         </h1>
       </div>
-      <div class="text-block" style="font-size: 17px;">
+      <div class="text-block" style="float: right; font-size: 17px;">
         Get the story behind the people, places, and things connected to a particular time
         or event in wine history, then dive into an interactive map to explore the
         specific connections between them.
