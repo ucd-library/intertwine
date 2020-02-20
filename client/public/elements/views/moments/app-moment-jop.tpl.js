@@ -4,7 +4,7 @@ import sharedStyles from './../../styles/shared-styles'
 import '@polymer/iron-icon';
 import '@polymer/iron-icons';
 
-import "./../app-moment-float-btn";
+import "./app-moment-float-btn";
 
 export default function render() {
   return html`
