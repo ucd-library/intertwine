@@ -41,9 +41,17 @@ return html`
     text-decoration: none;
   }
 
+  .about:hover {
+    font-weight: bold;
+  }
+
   .image {
     padding: 15px 20px;
     background-color: var(--app-color-interface-blue );
+  }
+
+  .image:hover {
+    background-color: var(--app-color-secondary-blue);
   }
 
   img {
@@ -62,7 +70,7 @@ return html`
     <span><a href="${this.baseUrl}/home">intertWINE</a></span>
     <span class="title-extra">// California's Modern Wine Network<span>
   </h1>
-  <div style="padding-right: 20px;">
+  <div class="about" style="padding-right: 20px;">
     <a @click="${this._onAboutClick}">ABOUT</a>
   </div>
   <div class="image">

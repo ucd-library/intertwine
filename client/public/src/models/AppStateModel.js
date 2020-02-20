@@ -7,6 +7,8 @@ class AppStateModelImpl extends AppStateModel {
     super();
     this.store = AppStateStore;
 
+    this.DEFAULT_VIEW = 'home';
+
     this.EventBus.on(this.store.events.APP_STATE_UPDATE, () => this._sendGA());
     this._sendGA();
   }
@@ -34,8 +36,8 @@ class AppStateModelImpl extends AppStateModel {
   set(state) {
     // parse out page
     if ( state.location ) {
-      let page = state.location.path ? state.location.path[0] : 'map';
-      state.page = page || 'map';
+      let page = state.location.path ? state.location.path[0] : this.DEFAULT_VIEW;
+      state.page = page || this.DEFAULT_VIEW;
     }
 
     // parse out selected object(s)

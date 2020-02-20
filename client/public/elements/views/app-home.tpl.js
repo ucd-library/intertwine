@@ -29,6 +29,9 @@ export default function render() {
         padding: 50px 0;
         background-color: var(--app-color-interface-blue);
         background-image: url('./../../images/header-connectedicons.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 105%;
       }
 
       header > div {
@@ -51,15 +54,14 @@ export default function render() {
         font-size: 30px;
         font-weight: normal;
         line-height: 35px;
-        background-color: var(--app-color-interface-blue);
       }
 
       header .text-block {
         padding-top: 0;
-        background-color: var(--app-color-interface-blue);
       }
 
       .arrow-down {
+        margin-bottom: 20px;
         height: 32px;
         position: relative;
         text-align: center;
@@ -102,20 +104,19 @@ export default function render() {
       }
 
       .card .feature-img {
+        width: 100%;
         height: 300px;
         max-width: 600px;
         max-height: 300px;
       }
 
       .card .chardonnay {
-        background-image: url('./../../images/chardonnaygrapes.jpg');
-        background-repeat: no-repeat;
+        background: url('./../../images/chardonnaygrapes.jpg') no-repeat center;
         background-size: cover;
       }
 
       .card .jop {
-        background-image: url('./../../images/jop.jpg');
-        background-repeat: no-repeat;
+        background: url('./../../images/jop.jpg') no-repeat center;
         background-size: cover;
       }
 
@@ -125,7 +126,7 @@ export default function render() {
       }
 
       .card .content h4 {
-        margin: 0;
+        margin: 0 0 10px 0;
         font-size: 20px;
       }
 
@@ -161,6 +162,10 @@ export default function render() {
         border: initial;
       }
 
+      .card .footer > button:hover {
+        color: var(--app-color-secondary-blue);
+      }
+
       .card .footer > button > iron-icon {
         margin: 0 8px;
       }
@@ -182,12 +187,6 @@ export default function render() {
 
       .card .footer iron-icon {
         font-size: 30px;
-      }
-
-      @media(max-width: 860px) {
-        .card .feature-img {
-          height: 200px;
-        }
       }
 
       @media(max-width: 800px) {
@@ -220,10 +219,6 @@ export default function render() {
         main > div:last-of-type {
           margin-left: 0px;
         }
-
-        .card .feature-img {
-          height: 300px;
-        }
       }
 
       @media(max-width: 414px) {
@@ -246,10 +241,6 @@ export default function render() {
 
         .arrow-down::after {
           display: none;
-        }
-
-        .card .feature-img {
-          height: 200px;
         }
 
         .card .footer > button {
