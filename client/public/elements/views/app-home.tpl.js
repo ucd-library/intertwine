@@ -25,7 +25,6 @@ export default function render() {
         justify-content: center;
         flex-shrink: 0;
 
-        height: 200px;
         min-height: 200px;
 
         background-color: var(--app-color-interface-blue);
@@ -101,14 +100,15 @@ export default function render() {
       }
 
       .card {
+        height: 100%;
         background-color: white;
       }
 
       .card .feature-img {
+        padding-top: 58%;
         width: 100%;
-        height: 300px;
         max-width: 600px;
-        max-height: 300px;
+        max-height: 350px;
       }
 
       .card .chardonnay {
@@ -127,7 +127,7 @@ export default function render() {
       }
 
       .card .content h4 {
-        margin: 0 0 10px 0;
+        margin: 0 0 5px 0;
         font-size: 20px;
       }
 
@@ -145,7 +145,11 @@ export default function render() {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
+
         padding: 0 0 30px 0;
+        height: auto;
+        min-height: 100%;
+
         color: var(--app-color-interface-blue);
         font-weight: bold;
         font-size: 15px;
@@ -189,8 +193,9 @@ export default function render() {
 
       .card .footer .separator {
         margin: 0 14px 0 10px;
+        padding-top: 10px;
         height: 30px;
-        border-right: 1px solid var(--app-color-pewter);
+        border: 1px solid var(--app-color-pewter);
       }
 
       .card .footer iron-icon {
