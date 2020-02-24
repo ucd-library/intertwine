@@ -1,8 +1,6 @@
 import { LitElement } from 'lit-element';
 import render from './app-moment-chardonnay.tpl.js';
 
-import IntersectionObserver from 'intersection-observer-polyfill';
-
 export default class AppMomentChardonnay extends LitElement {
   static get properties() {
     return {
@@ -16,12 +14,21 @@ export default class AppMomentChardonnay extends LitElement {
     this.active = true;
   }
 
-  firstUpdated() {
+  async firstUpdated() {
     this.container = this.shadowRoot.getElementById('container');
-    this.container.addEventListener('scroll', e => this._scrollIntoView(e));
+
+    // https://www.sitepoint.com/intersectionobserver-api/
+    // https://webdesign.tutsplus.com/tutorials/how-to-intersection-observer--cms-30250
+
+    // If IntersectionObserver is not defined, inject the polyfill.  IE only
+    if( !window.IntersectionObserver ) {
+      console.log('Injecting IntersectionObserver polyfill');
+      await import(/* webpackChunkName: "intersection-observer-polyfill" */ 'intersection-observer');
+    }
+    this._initIntersectionObserver();
   }
 
-  _scrollIntoView(e) {
+  _initIntersectionObserver() {
     // https://www.sitepoint.com/intersectionobserver-api/
     // https://webdesign.tutsplus.com/tutorials/how-to-intersection-observer--cms-30250
 
