@@ -15,9 +15,6 @@ export default class AppMomentJop extends LitElement {
   }
 
   async firstUpdated() {
-    this.container = this.shadowRoot.getElementById('container');
-    //this.container.addEventListener('scroll', e => this._scrollIntoView(e));
-
     // https://www.sitepoint.com/intersectionobserver-api/
     // https://webdesign.tutsplus.com/tutorials/how-to-intersection-observer--cms-30250
 

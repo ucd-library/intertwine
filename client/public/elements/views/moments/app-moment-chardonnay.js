@@ -15,8 +15,6 @@ export default class AppMomentChardonnay extends LitElement {
   }
 
   async firstUpdated() {
-    this.container = this.shadowRoot.getElementById('container');
-
     // https://www.sitepoint.com/intersectionobserver-api/
     // https://webdesign.tutsplus.com/tutorials/how-to-intersection-observer--cms-30250
 
