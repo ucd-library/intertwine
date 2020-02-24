@@ -189,7 +189,7 @@ export default function render() {
             Learn more about how the people, locations, and wines are connected to the growth of Chardonnay via the network
             map of this moment in wine history.
             <br /><br />
-            <a class="btn inverse">Launch Map</a>
+            <a @click="${this._launchMap}" class="btn inverse">Launch Map</a>
           </div>
         </div>
 

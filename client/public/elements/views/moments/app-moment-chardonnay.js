@@ -1,10 +1,13 @@
 import { LitElement } from 'lit-element';
 import render from './app-moment-chardonnay.tpl.js';
 
-export default class AppMomentChardonnay extends LitElement {
+export default class AppMomentChardonnay extends Mixin(LitElement)
+  .with(LitCorkUtils) {
+
   static get properties() {
     return {
-      active: { type: Boolean }
+      active: { type: Boolean },
+      moment: { type: String }
     }
   }
 
@@ -12,9 +15,14 @@ export default class AppMomentChardonnay extends LitElement {
     super();
     this.render = render.bind(this);
     this.active = true;
+
+    this._injectModel('AppStateModel');
   }
 
   async firstUpdated() {
+    let _moment = await this.AppStateModel.get();
+    this.moment = _moment.moment;
+
     // https://www.sitepoint.com/intersectionobserver-api/
     // https://webdesign.tutsplus.com/tutorials/how-to-intersection-observer--cms-30250
 
@@ -56,6 +64,10 @@ export default class AppMomentChardonnay extends LitElement {
     const observer = new window.IntersectionObserver(handler);
     // Give the observer some dom nodes to keep an eye on
     observer.observe(this.footer);
+  }
+
+  _launchMap() {
+    this.AppStateModel.setLocation('/map/' + this.moment);
   }
 }
 
