@@ -95,6 +95,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   firstUpdated() {
     this.descriptionEle = this.shadowRoot.querySelector('#description');
     this.momentDescEle  = this.shadowRoot.querySelector('#momentDescription');
+    this.singleImage    = this.shadowRoot.querySelector('#singleImage');
   }
 
   updated() {
@@ -145,6 +146,14 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.isLink = false;
     this.isNode = false;
     this.isMoment = false;
+
+    /**
+     * Reset the thumbnail and the backgroundImage so if
+     * the user has navigated to a new item the old image
+     * isn't displayed
+    **/
+    this.thumbnail = '';
+    this.singleImage.style.backgroundImage = 'initial';
 
     if( !this.selected ) {
       this.renderEmpty();
@@ -221,6 +230,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
     if ( node.thumbnail ) {
       this.thumbnail = this.endpoint + '/' + this.moment + '/' + node.thumbnail.replace('z:', '');
+      this.singleImage.style.backgroundImage = 'url(' + this.thumbnail + ')';
     }
 
     // TODO:
@@ -344,7 +354,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   _fireToggleEvent() {
     this.dispatchEvent(new CustomEvent('toggle'));
   }
-
 }
 
 customElements.define('app-map-info-panel', AppMapInfoPanel);

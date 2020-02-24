@@ -68,11 +68,15 @@ ${sharedStyles}
   }
 
   .image {
-    background-color: var(--app-color-smoke);
-    height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    height: 300px;
+
+    background-color: var(--app-color-smoke);
+    background-size: cover;
+    background-repeat: no-repeat;
   }
   .image iron-icon {
     background-color: var(--app-color-smoke) !important;
@@ -97,16 +101,6 @@ ${sharedStyles}
 
   #description > p {
     padding: 14px 0 18px 9;
-  }
-
-  .thumbnail {
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .thumbnail > img {
-    width: 100%;
-    border-radius: 10px;
   }
 
   .location, .date {
@@ -255,10 +249,11 @@ ${sharedStyles}
     <iron-icon icon="close"></iron-icon>
   </div>
   -->
+
   <div ?hidden="${this.isMoment}">
     <div ?hidden="${this.isLink}">
-      <div class="image" type="${this.type}">
-        <iron-icon class="type-color" type="${this.type}" icon="intert-wine-icons:${this.type}"></iron-icon>
+      <div id="singleImage" class="image" type="${this.type}">
+        <iron-icon ?hidden="${this.thumbnail}" class="type-color" type="${this.type}" icon="intert-wine-icons:${this.type}"></iron-icon>
       </div>
     </div>
 
@@ -343,10 +338,6 @@ ${sharedStyles}
           <h1 style="margin-bottom: 3px">${this.title}</h1>
           <h2 style="margin: 0">${this.location}</h2>
           <h2 style="margin: 0 0 14px 0">${this.date}</h2>
-        </div>
-
-        <div class="thumbnail" ?hidden="${!this.thumbnail}">
-          <img src="${this.thumbnail}" title="${this.title}">
         </div>
 
         <!-- Filled from inside the parent js file -->
