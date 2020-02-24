@@ -1501,11 +1501,15 @@ ${lt}
   }
 
   .image {
-    background-color: var(--app-color-smoke);
-    height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    height: 300px;
+
+    background-color: var(--app-color-smoke);
+    background-size: cover;
+    background-repeat: no-repeat;
   }
   .image iron-icon {
     background-color: var(--app-color-smoke) !important;
@@ -1530,16 +1534,6 @@ ${lt}
 
   #description > p {
     padding: 14px 0 18px 9;
-  }
-
-  .thumbnail {
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .thumbnail > img {
-    width: 100%;
-    border-radius: 10px;
   }
 
   .location, .date {
@@ -1688,10 +1682,11 @@ ${lt}
     <iron-icon icon="close"></iron-icon>
   </div>
   -->
+
   <div ?hidden="${this.isMoment}">
     <div ?hidden="${this.isLink}">
-      <div class="image" type="${this.type}">
-        <iron-icon class="type-color" type="${this.type}" icon="intert-wine-icons:${this.type}"></iron-icon>
+      <div id="singleImage" class="image" type="${this.type}">
+        <iron-icon ?hidden="${this.thumbnail}" class="type-color" type="${this.type}" icon="intert-wine-icons:${this.type}"></iron-icon>
       </div>
     </div>
 
@@ -1776,10 +1771,6 @@ ${lt}
           <h1 style="margin-bottom: 3px">${this.title}</h1>
           <h2 style="margin: 0">${this.location}</h2>
           <h2 style="margin: 0 0 14px 0">${this.date}</h2>
-        </div>
-
-        <div class="thumbnail" ?hidden="${!this.thumbnail}">
-          <img src="${this.thumbnail}" title="${this.title}">
         </div>
 
         <!-- Filled from inside the parent js file -->
@@ -2183,7 +2174,7 @@ found at http://polymer.github.io/PATENTS.txt
         ?selected=${this.selectedMoment===t}>${t}</option>
     `)}
   </select>
-`}document.head.appendChild(Ot.content);class Ht extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{moments:{type:Array},selectedMoment:{type:String}}}constructor(){super(),this.moments=APP_CONFIG.moments,this.render=At.bind(this),this._injectModel("AppStateModel")}_onAppStateUpdate(t){this.selectedMoment=t.moment}_onSelectMomentInputChange(t){this.AppStateModel.setLocation("/map/"+t)}}customElements.define("app-moments-dropdown",Ht);class It extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{open:{type:Boolean,reflect:!0},moment:{type:String},momentInfo:{type:Object},momentEntryPointUrl:{type:String},endpoint:{type:String},type:{type:String},srctype:{type:String},dsttype:{type:String},view:{type:String},title:{type:String},date:{type:String},events:{type:Array},connections:{type:Array},isNode:{type:Boolean},isLink:{type:Boolean},isMoment:{type:Boolean},relatedLinks:{type:Array},selectedIndex:{type:Number},hasConnections:{type:Boolean},shortConnection:{type:Boolean},connectionSubjects:{type:Array},clusterSubjects:{type:Object},clusterSubjectTypes:{type:Array}}}constructor(){super(),this.open=!0,this.title="",this.date="",this.view="",this.type="",this.description="",this.thumbnail="",this.srctype="",this.dsttype="",this.connections=[],this.isLink=!1,this.isNode=!1,this.isMoment=!1,this.moment="",this.momentInfo={},this.momentEntryPointUrl="",this.relatedLinks=[],this.events=[],this.shortConnection=!1,this.endpoint=APP_CONFIG.endpoint,this.hasConnections=!1,this.connectionSubjects=[],this.clusterSubjectTypes=["person","place","object","event"],this.resetClusterSubjects(),this.render=Tt.bind(this),this._injectModel("AppStateModel","MomentModel")}_onMomentGraphUpdate(t){"loaded"===t.state&&this.renderState(t.payload)}_onAppStateUpdate(t){this.moment=t.moment,this.selected=t.selected,this.renderState()}firstUpdated(){this.descriptionEle=this.shadowRoot.querySelector("#description"),this.momentDescEle=this.shadowRoot.querySelector("#momentDescription")}updated(){this.isLink&&(this.title=""),this.connections.length>0?this.hasConnections=!0:this.hasConnections=!1}renderState(t){if(t){this.momentInfo=t,this.momentDescEle.innerHTML=Et.markdown.toHTML(t.description||""),this.momentEntryPointUrl="",this.events=[];for(let e in t.graph.nodes)"event"===t.graph.nodes[e].type&&this.events.push(t.graph.nodes[e]);this.events.length>0&&(this.momentInfo.title=this.events[0].name,this.events[0].temporal&&(this.momentInfo.date=this.events[0].temporal.replace("/"," - ")),this.momentEntryPoint=this.events[0].name,this.momentEntryPointUrl=`/map/${this.moment}/${this.events[0].type}/${this.events[0]["@id"]}`),this.graph=t.graph}if(this.isLink=!1,this.isNode=!1,this.isMoment=!1,this.selected){if(this.graph)if(this.type=this.selected.type,"cluster"===this.type)this.selected.ids&&this.renderCluster(this.selected.ids.map(t=>this.graph.nodes[t]));else if("connection"===this.type){this.isLink=!0;let t=this.graph.links[this.selected.id];this.renderItem(t)}else{this.isNode=!0;let t=this.graph.nodes[this.selected.id];this.renderItem(t)}}else this.renderEmpty()}renderEmpty(){if(!this.moment)return this.view="empty",void(this.type="empty");this.type="moment",this.view="moment",this.isMoment=!0}renderCluster(t){this.view="cluster",this.resetClusterSubjects(),t.forEach(t=>{this.clusterSubjects[t.type]&&(this.clusterSubjects[t.type].enabled=!0,this.clusterSubjects[t.type].nodes.push(t))});for(let t in this.clusterSubjects)this.clusterSubjects[t].nodes.sort((t,e)=>t.name>e.name?1:-1)}renderItem(t){this.view="item",this.title=t.name||"",this.location=t.location||"";let e="";if(void 0!==t.temporal&&(e=t.temporal.replace("/"," - ")),this.date=e||"",!1!==t.description&&"string"==typeof t.description&&(this.descriptionEle.innerHTML=Et.markdown.toHTML(t.description||"")),t.thumbnail&&(this.thumbnail=this.endpoint+"/"+this.moment+"/"+t.thumbnail.replace("z:","")),this.relatedLinks=[],Array.isArray(t.relatedLink)?this.relatedLinks=t.relatedLink:void 0!==t.relatedLink&&this.relatedLinks.push(t.relatedLink),this.relatedLinks=this.relatedLinks.map(t=>{return{short:t.replace(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/,"").split("/")[0],full:t}}),"connection"===t.type)this.connectionSubjects=[this.graph.nodes[t.src],this.graph.nodes[t.dst]],this.srctype=this.connectionSubjects[0].type,this.dsttype=this.connectionSubjects[1].type;else{let e,i=[];for(let n in this.graph.links)e=this.graph.links[n],e.src===t["@id"]?i.push({link:e,node:this.graph.nodes[e.src]}):e.dst===t["@id"]&&i.push({link:e,node:this.graph.nodes[e.dst]});i.map(t=>{if(Array.isArray(t.link.name)){let e=t.link.name[1],i=t.link.name[0];t.link.name=function(t,e){let i=new RegExp(e,"g");return i.test(t)?t.replace(i,"<b>"+e+"</b>"):"<b>"+e+"</b>&nbsp;"+t}(i,e),this.shortConnection=!0}}),i.sort((t,e)=>t.node.name>e.node.name?1:-1),this.connections=i}}renderLink(t){this.type="item",this.title=t.name,this.descriptionEle.innerHTML=Et.markdown.toHTML(t.description||"")}resetClusterSubjects(){this.clusterSubjects={person:{enabled:!1,label:"People",nodes:[]},place:{enabled:!1,label:"Places",nodes:[]},object:{enabled:!1,label:"Objects",nodes:[]},event:{enabled:!1,label:"Events",nodes:[]}}}_onToggleKeyUp(t){13===t.which&&this._fireToggleEvent()}_fireToggleEvent(){this.dispatchEvent(new CustomEvent("toggle"))}}function Nt(){return j`
+`}document.head.appendChild(Ot.content);class Ht extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{moments:{type:Array},selectedMoment:{type:String}}}constructor(){super(),this.moments=APP_CONFIG.moments,this.render=At.bind(this),this._injectModel("AppStateModel")}_onAppStateUpdate(t){this.selectedMoment=t.moment}_onSelectMomentInputChange(t){this.AppStateModel.setLocation("/map/"+t)}}customElements.define("app-moments-dropdown",Ht);class It extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{open:{type:Boolean,reflect:!0},moment:{type:String},momentInfo:{type:Object},momentEntryPointUrl:{type:String},endpoint:{type:String},type:{type:String},srctype:{type:String},dsttype:{type:String},view:{type:String},title:{type:String},date:{type:String},events:{type:Array},connections:{type:Array},isNode:{type:Boolean},isLink:{type:Boolean},isMoment:{type:Boolean},relatedLinks:{type:Array},selectedIndex:{type:Number},hasConnections:{type:Boolean},shortConnection:{type:Boolean},connectionSubjects:{type:Array},clusterSubjects:{type:Object},clusterSubjectTypes:{type:Array}}}constructor(){super(),this.open=!0,this.title="",this.date="",this.view="",this.type="",this.description="",this.thumbnail="",this.srctype="",this.dsttype="",this.connections=[],this.isLink=!1,this.isNode=!1,this.isMoment=!1,this.moment="",this.momentInfo={},this.momentEntryPointUrl="",this.relatedLinks=[],this.events=[],this.shortConnection=!1,this.endpoint=APP_CONFIG.endpoint,this.hasConnections=!1,this.connectionSubjects=[],this.clusterSubjectTypes=["person","place","object","event"],this.resetClusterSubjects(),this.render=Tt.bind(this),this._injectModel("AppStateModel","MomentModel")}_onMomentGraphUpdate(t){"loaded"===t.state&&this.renderState(t.payload)}_onAppStateUpdate(t){this.moment=t.moment,this.selected=t.selected,this.renderState()}firstUpdated(){this.descriptionEle=this.shadowRoot.querySelector("#description"),this.momentDescEle=this.shadowRoot.querySelector("#momentDescription"),this.singleImage=this.shadowRoot.querySelector("#singleImage")}updated(){this.isLink&&(this.title=""),this.connections.length>0?this.hasConnections=!0:this.hasConnections=!1}renderState(t){if(t){this.momentInfo=t,this.momentDescEle.innerHTML=Et.markdown.toHTML(t.description||""),this.momentEntryPointUrl="",this.events=[];for(let e in t.graph.nodes)"event"===t.graph.nodes[e].type&&this.events.push(t.graph.nodes[e]);this.events.length>0&&(this.momentInfo.title=this.events[0].name,this.events[0].temporal&&(this.momentInfo.date=this.events[0].temporal.replace("/"," - ")),this.momentEntryPoint=this.events[0].name,this.momentEntryPointUrl=`/map/${this.moment}/${this.events[0].type}/${this.events[0]["@id"]}`),this.graph=t.graph}if(this.isLink=!1,this.isNode=!1,this.isMoment=!1,this.thumbnail="",this.singleImage.style.backgroundImage="initial",this.selected){if(this.graph)if(this.type=this.selected.type,"cluster"===this.type)this.selected.ids&&this.renderCluster(this.selected.ids.map(t=>this.graph.nodes[t]));else if("connection"===this.type){this.isLink=!0;let t=this.graph.links[this.selected.id];this.renderItem(t)}else{this.isNode=!0;let t=this.graph.nodes[this.selected.id];this.renderItem(t)}}else this.renderEmpty()}renderEmpty(){if(!this.moment)return this.view="empty",void(this.type="empty");this.type="moment",this.view="moment",this.isMoment=!0}renderCluster(t){this.view="cluster",this.resetClusterSubjects(),t.forEach(t=>{this.clusterSubjects[t.type]&&(this.clusterSubjects[t.type].enabled=!0,this.clusterSubjects[t.type].nodes.push(t))});for(let t in this.clusterSubjects)this.clusterSubjects[t].nodes.sort((t,e)=>t.name>e.name?1:-1)}renderItem(t){this.view="item",this.title=t.name||"",this.location=t.location||"";let e="";if(void 0!==t.temporal&&(e=t.temporal.replace("/"," - ")),this.date=e||"",!1!==t.description&&"string"==typeof t.description&&(this.descriptionEle.innerHTML=Et.markdown.toHTML(t.description||"")),t.thumbnail&&(this.thumbnail=this.endpoint+"/"+this.moment+"/"+t.thumbnail.replace("z:",""),this.singleImage.style.backgroundImage="url("+this.thumbnail+")"),this.relatedLinks=[],Array.isArray(t.relatedLink)?this.relatedLinks=t.relatedLink:void 0!==t.relatedLink&&this.relatedLinks.push(t.relatedLink),this.relatedLinks=this.relatedLinks.map(t=>{return{short:t.replace(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/,"").split("/")[0],full:t}}),"connection"===t.type)this.connectionSubjects=[this.graph.nodes[t.src],this.graph.nodes[t.dst]],this.srctype=this.connectionSubjects[0].type,this.dsttype=this.connectionSubjects[1].type;else{let e,i=[];for(let n in this.graph.links)e=this.graph.links[n],e.src===t["@id"]?i.push({link:e,node:this.graph.nodes[e.src]}):e.dst===t["@id"]&&i.push({link:e,node:this.graph.nodes[e.dst]});i.map(t=>{if(Array.isArray(t.link.name)){let e=t.link.name[1],i=t.link.name[0];t.link.name=function(t,e){let i=new RegExp(e,"g");return i.test(t)?t.replace(i,"<b>"+e+"</b>"):"<b>"+e+"</b>&nbsp;"+t}(i,e),this.shortConnection=!0}}),i.sort((t,e)=>t.node.name>e.node.name?1:-1),this.connections=i}}renderLink(t){this.type="item",this.title=t.name,this.descriptionEle.innerHTML=Et.markdown.toHTML(t.description||"")}resetClusterSubjects(){this.clusterSubjects={person:{enabled:!1,label:"People",nodes:[]},place:{enabled:!1,label:"Places",nodes:[]},object:{enabled:!1,label:"Objects",nodes:[]},event:{enabled:!1,label:"Events",nodes:[]}}}_onToggleKeyUp(t){13===t.which&&this._fireToggleEvent()}_fireToggleEvent(){this.dispatchEvent(new CustomEvent("toggle"))}}function Nt(){return j`
   ${lt}
   <style>
     :host {

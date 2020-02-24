@@ -4,9 +4,7 @@
   "description": "Client UI for intert-wine app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "watch:sass": "node-sass src/scss/style.scss elements/styles/custom_styles.css --watch",
-    "compile:sass": "node-sass src/scss/style.scss elements/styles/custom_styles.css"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jrmerz@ucdavis.edu",
   "license": "MIT",
@@ -23,7 +21,6 @@
     "markdown": "^0.5.0"
   },
   "devDependencies": {
-    "intersection-observer-polyfill": "^0.1.0",
-    "node-sass": "^4.13.1"
+    "intersection-observer-polyfill": "^0.1.0"
   }
 }

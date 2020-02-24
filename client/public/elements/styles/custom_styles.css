@@ -54,10 +54,6 @@ h6 {
       background-repeat: no-repeat;
       background-position: center;
       /* sets reference point to scale from */ }
-      .container header .header-image.jop {
-        background-image: url("../../images/jop.jpg"); }
-      .container header .header-image.chardonnay {
-        background-image: url("../../images/growthchardonnay3.jpg"); }
     .container header .moment-header {
       padding: 50px 0;
       color: white;
@@ -112,21 +108,19 @@ h6 {
     flex-direction: row; }
     .container .text-image-pairing > div {
       width: 50%; }
-    .container .text-image-pairing .wine-harvest {
+    .container .text-image-pairing .image {
       margin: 0 auto;
       display: flex;
       align-items: flex-end;
       min-height: 750px;
-      background-image: url("../../images/stanlyranch.jpg");
       background-size: cover;
       background-repeat: no-repeat; }
-      .container .text-image-pairing .wine-harvest span {
+      .container .text-image-pairing .image span {
         padding: 10px 20px;
         color: white;
         background: rgba(0, 0, 0, 0.5); }
     .container .text-image-pairing .wentechardonnay {
       min-height: 700px;
-      background-image: url("../../images/wentechardonnay_1936.jpg");
       background-size: cover;
       background-position-y: bottom;
       background-position-x: center;
@@ -144,18 +138,10 @@ h6 {
       height: 200px;
       color: white;
       background-color: var(--app-color-charcoal);
+      background-size: cover;
       text-align: bottom; }
-      .container .triptych div:first-of-type {
-        background-image: url("../../images/livermorevalley_1896.jpg");
-        background-size: cover; }
-      .container .triptych div:nth-of-type(2) {
-        margin: 0 0 0 10px;
-        background-image: url("../../images/prohibitionagents.jpg");
-        background-size: cover; }
-      .container .triptych div:nth-of-type(3) {
-        margin: 0 0 0 10px;
-        background-image: url("../../images/wentefamily_1895.jpg");
-        background-size: cover; }
+      .container .triptych div:nth-of-type(2), .container .triptych div:nth-of-type(3) {
+        margin: 0 0 0 10px; }
       .container .triptych div span {
         padding: 10px 20px;
         color: white;
@@ -184,7 +170,8 @@ h6 {
       font-size: 15px;
       font-weight: bold; }
     .container footer .bottom-content a {
-      color: #F3F2F0; }
+      color: #F3F2F0;
+      font-size: 13px; }
     .container footer .bottom-content ol {
       list-style: none;
       counter-reset: my-awesome-counter;

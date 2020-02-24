@@ -12,14 +12,6 @@
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center; /* sets reference point to scale from */
-
-      &.jop {
-        background-image: url('../../images/jop.jpg');
-      }
-
-      &.chardonnay {
-        background-image: url('../../images/growthchardonnay3.jpg');
-      }
     }
 
     .moment-header {
@@ -104,12 +96,11 @@
       width: 50%;
     }
 
-    .wine-harvest {
+    .image {
       margin: 0 auto;
       display: flex;
       align-items: flex-end;
       min-height: 750px;
-      background-image: url('../../images/stanlyranch.jpg');
       background-size: cover;
       background-repeat: no-repeat;
 
@@ -122,7 +113,6 @@
 
     .wentechardonnay {
       min-height: 700px;
-      background-image: url('../../images/wentechardonnay_1936.jpg');
       background-size: cover;
       background-position-y: bottom;
       background-position-x: center;
@@ -144,23 +134,12 @@
       height: 200px;
       color: white;
       background-color: var(--app-color-charcoal);
+      background-size: cover;
       text-align: bottom;
 
-      &:first-of-type {
-        background-image: url('../../images/livermorevalley_1896.jpg');
-        background-size: cover;
-      }
-
-      &:nth-of-type(2) {
-        margin: 0 0 0 10px;
-        background-image: url('../../images/prohibitionagents.jpg');
-        background-size: cover;
-      }
-
+      &:nth-of-type(2),
       &:nth-of-type(3) {
         margin: 0 0 0 10px;
-        background-image: url('../../images/wentefamily_1895.jpg');
-        background-size: cover;
       }
 
       span {
@@ -208,6 +187,7 @@
 
       a {
         color: #F3F2F0;
+        font-size: 13px;
       }
 
       ol {
