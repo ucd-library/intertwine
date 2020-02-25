@@ -31,10 +31,6 @@ ${sharedStyles}
     align-items: center;
   }
 
-  /* .toggle-sm {
-    display: none;
-  } */
-
   .content {
     overflow: auto;
     height: 100%;
@@ -225,7 +221,6 @@ ${sharedStyles}
 
   @media(max-width: 600px) {
     .toggle {
-      /* display: none; */
       width: 50px;
       height: 35px;
       position: absolute;
@@ -244,12 +239,6 @@ ${sharedStyles}
 </style>
 
 <div class="content" ?moment-view="${this.isMoment}">
-  <!--
-  <div class="toggle-sm" tabindex="0" @click="${this._fireToggleEvent}" @key-up="${this._onToggleKeyUp}">
-    <iron-icon icon="close"></iron-icon>
-  </div>
-  -->
-
   <div ?hidden="${this.isMoment}">
     <div ?hidden="${this.isLink}">
       <div id="singleImage" class="image" type="${this.type}">

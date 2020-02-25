@@ -33,9 +33,6 @@ export default class AppMoment extends Mixin(LitElement)
   }
 
   async firstUpdated() {
-    // https://www.sitepoint.com/intersectionobserver-api/
-    // https://webdesign.tutsplus.com/tutorials/how-to-intersection-observer--cms-30250
-
     // If IntersectionObserver is not defined, inject the polyfill.  IE only
     if( !window.IntersectionObserver ) {
       console.log('Injecting IntersectionObserver polyfill');
@@ -45,16 +42,6 @@ export default class AppMoment extends Mixin(LitElement)
   }
 
   _initIntersectionObserver() {
-    // https://www.sitepoint.com/intersectionobserver-api/
-    // https://webdesign.tutsplus.com/tutorials/how-to-intersection-observer--cms-30250
-
-    if ( 'IntersectionObserver' in window) {
-      //console.log("Intersection Observer supported");
-    } else {
-      //console.log("Intersection Observer not supported");
-    }
-
-    // https://codepen.io/hey-nick/pen/mLpmMV
     this.floatBtn = this.shadowRoot.getElementById('floatBtn');
     this.footer   = this.shadowRoot.querySelector('footer');
 
