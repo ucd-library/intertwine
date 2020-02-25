@@ -531,7 +531,7 @@ The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
 The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-*/let n,o=null,r=window.HTMLImports&&window.HTMLImports.whenReady||null;function s(t){requestAnimationFrame((function(){r?r(t):(o||(o=new Promise(t=>{n=t}),"complete"===document.readyState?n():document.addEventListener("readystatechange",()=>{"complete"===document.readyState&&n()})),o.then((function(){t&&t()})))}))}i.d(e,"a",(function(){return d}));const a="__seenByShadyCSS",l="__shadyCSSCachedStyle";let h=null,c=null;class d{constructor(){this.customStyles=[],this.enqueued=!1,s(()=>{window.ShadyCSS.flushCustomStyles&&window.ShadyCSS.flushCustomStyles()})}enqueueDocumentValidation(){!this.enqueued&&c&&(this.enqueued=!0,s(c))}addCustomStyle(t){t[a]||(t[a]=!0,this.customStyles.push(t),this.enqueueDocumentValidation())}getStyleForCustomStyle(t){if(t[l])return t[l];let e;return e=t.getStyle?t.getStyle():t,e}processStyles(){const t=this.customStyles;for(let e=0;e<t.length;e++){const i=t[e];if(i[l])continue;const n=this.getStyleForCustomStyle(i);if(n){const t=n.__appliedElement||n;h&&h(t),i[l]=t}}return t}}d.prototype.addCustomStyle=d.prototype.addCustomStyle,d.prototype.getStyleForCustomStyle=d.prototype.getStyleForCustomStyle,d.prototype.processStyles=d.prototype.processStyles,Object.defineProperties(d.prototype,{transformCallback:{get:()=>h,set(t){h=t}},validateCallback:{get:()=>c,set(t){let e=!1;c||(e=!0),c=t,e&&this.enqueueDocumentValidation()}}})},function(t,e,i){i(49),t.exports=self.fetch.bind(self)},function(t,e,i){t.exports={AppStateInterface:i(33),AppStateModel:i(56),AppStateStore:i(57),"app-route":i(80)}},function(t,e,i){const{BaseStore:n}=i(15);t.exports=new class extends n{constructor(){super(),this.data={},this.events={GRAPH_UPDATE:"moment-graph-update"}}onGraphLoading(t,e){this._setGraphState({id:t,state:this.STATE.LOADING,request:e})}onGraphLoaded(t,e){this._setGraphState({id:t,state:this.STATE.LOADED,payload:e})}onGraphError(t,e){this._setGraphState({id:t,state:this.STATE.ERROR,error:e})}_setGraphState(t){this.data[t.id]=t,this.emit(this.events.GRAPH_UPDATE,t)}}},function(t,e,i){t.exports={AppStateModel:i(55),MomentModel:i(62)}},function(t,e,i){"use strict";var n=i(58),o=i(59),r=i(60);function s(t,e){return e.encode?e.strict?n(t):encodeURIComponent(t):t}function a(t){var e=t.indexOf("?");return-1===e?"":t.slice(e+1)}function l(t,e){var i=function(t){var e;switch(t.arrayFormat){case"index":return function(t,i,n){e=/\[(\d*)\]$/.exec(t),t=t.replace(/\[\d*\]$/,""),e?(void 0===n[t]&&(n[t]={}),n[t][e[1]]=i):n[t]=i};case"bracket":return function(t,i,n){e=/(\[\])$/.exec(t),t=t.replace(/\[\]$/,""),e?void 0!==n[t]?n[t]=[].concat(n[t],i):n[t]=[i]:n[t]=i};default:return function(t,e,i){void 0!==i[t]?i[t]=[].concat(i[t],e):i[t]=e}}}(e=o({arrayFormat:"none"},e)),n=Object.create(null);return"string"!=typeof t?n:(t=t.trim().replace(/^[?#&]/,""))?(t.split("&").forEach((function(t){var e=t.replace(/\+/g," ").split("="),o=e.shift(),s=e.length>0?e.join("="):void 0;s=void 0===s?null:r(s),i(r(o),s,n)})),Object.keys(n).sort().reduce((function(t,e){var i=n[e];return Boolean(i)&&"object"==typeof i&&!Array.isArray(i)?t[e]=function t(e){return Array.isArray(e)?e.sort():"object"==typeof e?t(Object.keys(e)).sort((function(t,e){return Number(t)-Number(e)})).map((function(t){return e[t]})):e}(i):t[e]=i,t}),Object.create(null))):n}e.extract=a,e.parse=l,e.stringify=function(t,e){!1===(e=o({encode:!0,strict:!0,arrayFormat:"none"},e)).sort&&(e.sort=function(){});var i=function(t){switch(t.arrayFormat){case"index":return function(e,i,n){return null===i?[s(e,t),"[",n,"]"].join(""):[s(e,t),"[",s(n,t),"]=",s(i,t)].join("")};case"bracket":return function(e,i){return null===i?s(e,t):[s(e,t),"[]=",s(i,t)].join("")};default:return function(e,i){return null===i?s(e,t):[s(e,t),"=",s(i,t)].join("")}}}(e);return t?Object.keys(t).sort(e.sort).map((function(n){var o=t[n];if(void 0===o)return"";if(null===o)return s(n,e);if(Array.isArray(o)){var r=[];return o.slice().forEach((function(t){void 0!==t&&r.push(i(n,t,r.length))})),r.join("&")}return s(n,e)+"="+s(o,e)})).filter((function(t){return t.length>0})).join("&"):""},e.parseUrl=function(t,e){return{url:t.split("?")[0]||"",query:l(a(t),e)}}},function(t,e,i){var n=i(70);t.exports="string"==typeof n?n:n.toString()},function(t,e,i){var n=i(75);t.exports="string"==typeof n?n:n.toString()},function(t,e,i){var n=i(76);t.exports="string"==typeof n?n:n.toString()},function(t,e){let i=document.createElement("style");document.head.appendChild(i),i.innerHTML='\nhtml {\n  --app-color-scarlet : #EA534B;\n  --app-color-gold : #F2AC30;\n  --app-color-vine : #1EA866;\n  --app-color-rose : #ED77A5;\n  --app-color-grape : #BA5B93;\n  --app-color-interface-blue : #18779B;\n  --app-color-secondary-blue : #015E80;\n  --app-color-cluster-blue : var(--app-color-secondary-blue);\n  --app-color-cluster-blue-alpha : rgba(1, 94, 128, 0.5);\n  --app-color-smoke : #F3F2F0;\n  --app-color-pewter : #D4DADC;\n  --app-color-charcoal : #333333;\n  --app-color-black : #000000;\n  --app-color-white : #FFFFFF;\n\n  \n  --app-primary-color   : var(--app-color-interface-blue);\n  --app-background-color : var(--app-color-white);\n  --app-text-color      : var(--app-color-black);\n  --app-max-width               : 1200px;\n  --app-max-text-width          : 650px;\n  --app-font-size               : 14px;\n  --app-font-size-sm            : 13px;\n  --app-font-weight             : 400;\n  --app-font-weight-light       : 200;\n  --app-font-weight-heavy       : 700;\n  --app-layout-sm               : 768px;\n  --app-grid-cell-width         : 250px;\n  --app-default-outline         : 2px dotted var(--default-secondary-color);\n}\n\nbody, html {\n  /* @apply --paper-font-common-base; */\n  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;\n  font-size        : var(--app-font-size);\n  font-weight      : var(--app-font-weight);\n  line-height      : calc(var(--app-font-size) * 1.625);\n  margin           : 0;\n  padding          : 0;\n  background-color : var(--app-background-color);\n  color            : var(--app-text-color);\n  max-width        : 100vw;\n  overflow: hidden;\n}\n'},function(t,e,i){const n=i(22),o=i(31);t.exports=class{get EventBus(){return n}register(t){t||console.warn("Name not passed to register().  This will fail in IE, cause, you know, IE.");var e=t||this.__proto__.constructor.name;o.registerModel(e,this)}emit(t,e){setTimeout(()=>{n.emit(t,e)},0)}}},function(t,e,i){"use strict";var n,o="object"==typeof Reflect?Reflect:null,r=o&&"function"==typeof o.apply?o.apply:function(t,e,i){return Function.prototype.apply.call(t,e,i)};n=o&&"function"==typeof o.ownKeys?o.ownKeys:Object.getOwnPropertySymbols?function(t){return Object.getOwnPropertyNames(t).concat(Object.getOwnPropertySymbols(t))}:function(t){return Object.getOwnPropertyNames(t)};var s=Number.isNaN||function(t){return t!=t};function a(){a.init.call(this)}t.exports=a,a.EventEmitter=a,a.prototype._events=void 0,a.prototype._eventsCount=0,a.prototype._maxListeners=void 0;var l=10;function h(t){return void 0===t._maxListeners?a.defaultMaxListeners:t._maxListeners}function c(t,e,i,n){var o,r,s,a;if("function"!=typeof i)throw new TypeError('The "listener" argument must be of type Function. Received type '+typeof i);if(void 0===(r=t._events)?(r=t._events=Object.create(null),t._eventsCount=0):(void 0!==r.newListener&&(t.emit("newListener",e,i.listener?i.listener:i),r=t._events),s=r[e]),void 0===s)s=r[e]=i,++t._eventsCount;else if("function"==typeof s?s=r[e]=n?[i,s]:[s,i]:n?s.unshift(i):s.push(i),(o=h(t))>0&&s.length>o&&!s.warned){s.warned=!0;var l=new Error("Possible EventEmitter memory leak detected. "+s.length+" "+String(e)+" listeners added. Use emitter.setMaxListeners() to increase limit");l.name="MaxListenersExceededWarning",l.emitter=t,l.type=e,l.count=s.length,a=l,console&&console.warn&&console.warn(a)}return t}function d(){for(var t=[],e=0;e<arguments.length;e++)t.push(arguments[e]);this.fired||(this.target.removeListener(this.type,this.wrapFn),this.fired=!0,r(this.listener,this.target,t))}function u(t,e,i){var n={fired:!1,wrapFn:void 0,target:t,type:e,listener:i},o=d.bind(n);return o.listener=i,n.wrapFn=o,o}function p(t,e,i){var n=t._events;if(void 0===n)return[];var o=n[e];return void 0===o?[]:"function"==typeof o?i?[o.listener||o]:[o]:i?function(t){for(var e=new Array(t.length),i=0;i<e.length;++i)e[i]=t[i].listener||t[i];return e}(o):m(o,o.length)}function f(t){var e=this._events;if(void 0!==e){var i=e[t];if("function"==typeof i)return 1;if(void 0!==i)return i.length}return 0}function m(t,e){for(var i=new Array(e),n=0;n<e;++n)i[n]=t[n];return i}Object.defineProperty(a,"defaultMaxListeners",{enumerable:!0,get:function(){return l},set:function(t){if("number"!=typeof t||t<0||s(t))throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received '+t+".");l=t}}),a.init=function(){void 0!==this._events&&this._events!==Object.getPrototypeOf(this)._events||(this._events=Object.create(null),this._eventsCount=0),this._maxListeners=this._maxListeners||void 0},a.prototype.setMaxListeners=function(t){if("number"!=typeof t||t<0||s(t))throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received '+t+".");return this._maxListeners=t,this},a.prototype.getMaxListeners=function(){return h(this)},a.prototype.emit=function(t){for(var e=[],i=1;i<arguments.length;i++)e.push(arguments[i]);var n="error"===t,o=this._events;if(void 0!==o)n=n&&void 0===o.error;else if(!n)return!1;if(n){var s;if(e.length>0&&(s=e[0]),s instanceof Error)throw s;var a=new Error("Unhandled error."+(s?" ("+s.message+")":""));throw a.context=s,a}var l=o[t];if(void 0===l)return!1;if("function"==typeof l)r(l,this,e);else{var h=l.length,c=m(l,h);for(i=0;i<h;++i)r(c[i],this,e)}return!0},a.prototype.addListener=function(t,e){return c(this,t,e,!1)},a.prototype.on=a.prototype.addListener,a.prototype.prependListener=function(t,e){return c(this,t,e,!0)},a.prototype.once=function(t,e){if("function"!=typeof e)throw new TypeError('The "listener" argument must be of type Function. Received type '+typeof e);return this.on(t,u(this,t,e)),this},a.prototype.prependOnceListener=function(t,e){if("function"!=typeof e)throw new TypeError('The "listener" argument must be of type Function. Received type '+typeof e);return this.prependListener(t,u(this,t,e)),this},a.prototype.removeListener=function(t,e){var i,n,o,r,s;if("function"!=typeof e)throw new TypeError('The "listener" argument must be of type Function. Received type '+typeof e);if(void 0===(n=this._events))return this;if(void 0===(i=n[t]))return this;if(i===e||i.listener===e)0==--this._eventsCount?this._events=Object.create(null):(delete n[t],n.removeListener&&this.emit("removeListener",t,i.listener||e));else if("function"!=typeof i){for(o=-1,r=i.length-1;r>=0;r--)if(i[r]===e||i[r].listener===e){s=i[r].listener,o=r;break}if(o<0)return this;0===o?i.shift():function(t,e){for(;e+1<t.length;e++)t[e]=t[e+1];t.pop()}(i,o),1===i.length&&(n[t]=i[0]),void 0!==n.removeListener&&this.emit("removeListener",t,s||e)}return this},a.prototype.off=a.prototype.removeListener,a.prototype.removeAllListeners=function(t){var e,i,n;if(void 0===(i=this._events))return this;if(void 0===i.removeListener)return 0===arguments.length?(this._events=Object.create(null),this._eventsCount=0):void 0!==i[t]&&(0==--this._eventsCount?this._events=Object.create(null):delete i[t]),this;if(0===arguments.length){var o,r=Object.keys(i);for(n=0;n<r.length;++n)"removeListener"!==(o=r[n])&&this.removeAllListeners(o);return this.removeAllListeners("removeListener"),this._events=Object.create(null),this._eventsCount=0,this}if("function"==typeof(e=i[t]))this.removeListener(t,e);else if(void 0!==e)for(n=e.length-1;n>=0;n--)this.removeListener(t,e[n]);return this},a.prototype.listeners=function(t){return p(this,t,!0)},a.prototype.rawListeners=function(t){return p(this,t,!1)},a.listenerCount=function(t,e){return"function"==typeof t.listenerCount?t.listenerCount(e):f.call(t,e)},a.prototype.listenerCount=f,a.prototype.eventNames=function(){return this._eventsCount>0?n(this._events):[]}},function(t,e,i){const n=i(22),o=i(47);t.exports=class{constructor(){this.STATE={INIT:"init",LOADING:"loading",LOADED:"loaded",ERROR:"error",SAVING:"saving",SAVE_ERROR:"save-error",SAVE_SUCCESS:"save-success",DELETING:"deleting",DELETE_ERROR:"delete-error",DELETED:"deleted"}}get EventBus(){return n}emit(t,e){setTimeout(()=>{n.emit(t,e)},0)}stateChanged(t,e){return!(t||!e)||(!(!t||e)||!(!t&&!e)&&(t.state!==e.state||!o(t,e)))}}},function(t,e,i){"use strict";var n=Array.isArray,o=Object.keys,r=Object.prototype.hasOwnProperty;t.exports=function t(e,i){if(e===i)return!0;if(e&&i&&"object"==typeof e&&"object"==typeof i){var s,a,l,h=n(e),c=n(i);if(h&&c){if((a=e.length)!=i.length)return!1;for(s=a;0!=s--;)if(!t(e[s],i[s]))return!1;return!0}if(h!=c)return!1;var d=e instanceof Date,u=i instanceof Date;if(d!=u)return!1;if(d&&u)return e.getTime()==i.getTime();var p=e instanceof RegExp,f=i instanceof RegExp;if(p!=f)return!1;if(p&&f)return e.toString()==i.toString();var m=o(e);if((a=m.length)!==o(i).length)return!1;for(s=a;0!=s--;)if(!r.call(i,m[s]))return!1;for(s=a;0!=s--;)if(!t(e[l=m[s]],i[l]))return!1;return!0}return e!=e&&i!=i}},function(t,e,i){const n=i(35);t.exports=class{constructor(){this.rootUrl="","undefined"!=typeof window&&(this.rootUrl=window.location.protocol+"//"+window.location.host),this.ERROR_MESSAGES={REQUEST:"Request Error",STATUS_CODE:"Invalid status code",JSON:"Invalid JSON response",APPLICATION_ERROR:"Application Error"}}async request(t){if(!t.store){if(!this.store)return console.error(new Error("No store provided"));t.store=this.store}if(t.fetchOptions||(t.fetchOptions={}),t.fetchOptions.credentials||(t.fetchOptions.credentials="include"),t.json&&t.fetchOptions&&t.fetchOptions.body&&"object"==typeof t.fetchOptions.body&&(t.fetchOptions.body=JSON.stringify(t.fetchOptions.body),t.fetchOptions.headers||(t.fetchOptions.headers={}),t.fetchOptions.headers["Content-Type"]="application/json"),t.qs){let i=[];for(var e in t.qs)i.push(`${e}=${t.qs[e]}`);t.url+="?"+i.join("&")}if(t.checkCached){var i=t.checkCached();if(this.isLoaded(i))return i;if(this.isLoading(i)){if(!i.request)throw new Error("checkCached set but no request object found",i);return i.request}}let n=this._request(t);return t.onLoading&&t.onLoading(n),await n}_request(t){return t.fetchOptions||(t.fetchOptions={}),new Promise(async(e,i)=>{var o=null;try{o=await n(t.url,t.fetchOptions)}catch(e){return this._handleError(t,i,{error:!0,details:e,response:o,message:this.ERROR_MESSAGES.REQUEST})}if(o.status<200||o.status>299)return this._handleError(t,i,{error:!0,response:o,message:this.ERROR_MESSAGES.STATUS_CODE});if(o.headers.has("Content-Type")&&o.headers.get("Content-Type").match(/application\/json/i)){var r=null;try{r=await o.json()}catch(e){return this._handleError(t,i,{error:!0,details:e,response:o,message:this.ERROR_MESSAGES.JSON})}if(r.error)return this._handleError(t,i,{error:!0,details:r,response:o,message:this.ERROR_MESSAGES.APPLICATION_ERROR})}else r=await o.text();t.onLoad&&t.onLoad({response:o,body:r}),e({response:o,body:r})})}async _handleError(t,e,i){if(i.response&&!i.payload)if(i.response.headers.has("Content-Type")&&i.response.headers.get("Content-Type").match(/application\/json/i))try{i.payload=await i.response.json()}catch(t){i.payload={}}else i.payload=await i.response.text();t.onError&&t.onError(i),e(i)}isLoaded(t){return this.store?!(!t||t.state!==this.store.STATE.LOADED):console.warn("Checking LOADED state but no store set for service")}isLoading(t){return this.store?!(!t||t.state!==this.store.STATE.LOADING):console.warn("Checking LOADED state but no store set for service")}}},function(t,e,i){"use strict";i.r(e),i.d(e,"Headers",(function(){return h})),i.d(e,"Request",(function(){return _})),i.d(e,"Response",(function(){return v})),i.d(e,"DOMException",(function(){return b})),i.d(e,"fetch",(function(){return w}));var n={searchParams:"URLSearchParams"in self,iterable:"Symbol"in self&&"iterator"in Symbol,blob:"FileReader"in self&&"Blob"in self&&function(){try{return new Blob,!0}catch(t){return!1}}(),formData:"FormData"in self,arrayBuffer:"ArrayBuffer"in self};if(n.arrayBuffer)var o=["[object Int8Array]","[object Uint8Array]","[object Uint8ClampedArray]","[object Int16Array]","[object Uint16Array]","[object Int32Array]","[object Uint32Array]","[object Float32Array]","[object Float64Array]"],r=ArrayBuffer.isView||function(t){return t&&o.indexOf(Object.prototype.toString.call(t))>-1};function s(t){if("string"!=typeof t&&(t=String(t)),/[^a-z0-9\-#$%&'*+.^_`|~]/i.test(t))throw new TypeError("Invalid character in header field name");return t.toLowerCase()}function a(t){return"string"!=typeof t&&(t=String(t)),t}function l(t){var e={next:function(){var e=t.shift();return{done:void 0===e,value:e}}};return n.iterable&&(e[Symbol.iterator]=function(){return e}),e}function h(t){this.map={},t instanceof h?t.forEach((function(t,e){this.append(e,t)}),this):Array.isArray(t)?t.forEach((function(t){this.append(t[0],t[1])}),this):t&&Object.getOwnPropertyNames(t).forEach((function(e){this.append(e,t[e])}),this)}function c(t){if(t.bodyUsed)return Promise.reject(new TypeError("Already read"));t.bodyUsed=!0}function d(t){return new Promise((function(e,i){t.onload=function(){e(t.result)},t.onerror=function(){i(t.error)}}))}function u(t){var e=new FileReader,i=d(e);return e.readAsArrayBuffer(t),i}function p(t){if(t.slice)return t.slice(0);var e=new Uint8Array(t.byteLength);return e.set(new Uint8Array(t)),e.buffer}function f(){return this.bodyUsed=!1,this._initBody=function(t){var e;this._bodyInit=t,t?"string"==typeof t?this._bodyText=t:n.blob&&Blob.prototype.isPrototypeOf(t)?this._bodyBlob=t:n.formData&&FormData.prototype.isPrototypeOf(t)?this._bodyFormData=t:n.searchParams&&URLSearchParams.prototype.isPrototypeOf(t)?this._bodyText=t.toString():n.arrayBuffer&&n.blob&&((e=t)&&DataView.prototype.isPrototypeOf(e))?(this._bodyArrayBuffer=p(t.buffer),this._bodyInit=new Blob([this._bodyArrayBuffer])):n.arrayBuffer&&(ArrayBuffer.prototype.isPrototypeOf(t)||r(t))?this._bodyArrayBuffer=p(t):this._bodyText=t=Object.prototype.toString.call(t):this._bodyText="",this.headers.get("content-type")||("string"==typeof t?this.headers.set("content-type","text/plain;charset=UTF-8"):this._bodyBlob&&this._bodyBlob.type?this.headers.set("content-type",this._bodyBlob.type):n.searchParams&&URLSearchParams.prototype.isPrototypeOf(t)&&this.headers.set("content-type","application/x-www-form-urlencoded;charset=UTF-8"))},n.blob&&(this.blob=function(){var t=c(this);if(t)return t;if(this._bodyBlob)return Promise.resolve(this._bodyBlob);if(this._bodyArrayBuffer)return Promise.resolve(new Blob([this._bodyArrayBuffer]));if(this._bodyFormData)throw new Error("could not read FormData body as blob");return Promise.resolve(new Blob([this._bodyText]))},this.arrayBuffer=function(){return this._bodyArrayBuffer?c(this)||Promise.resolve(this._bodyArrayBuffer):this.blob().then(u)}),this.text=function(){var t,e,i,n=c(this);if(n)return n;if(this._bodyBlob)return t=this._bodyBlob,e=new FileReader,i=d(e),e.readAsText(t),i;if(this._bodyArrayBuffer)return Promise.resolve(function(t){for(var e=new Uint8Array(t),i=new Array(e.length),n=0;n<e.length;n++)i[n]=String.fromCharCode(e[n]);return i.join("")}(this._bodyArrayBuffer));if(this._bodyFormData)throw new Error("could not read FormData body as text");return Promise.resolve(this._bodyText)},n.formData&&(this.formData=function(){return this.text().then(g)}),this.json=function(){return this.text().then(JSON.parse)},this}h.prototype.append=function(t,e){t=s(t),e=a(e);var i=this.map[t];this.map[t]=i?i+", "+e:e},h.prototype.delete=function(t){delete this.map[s(t)]},h.prototype.get=function(t){return t=s(t),this.has(t)?this.map[t]:null},h.prototype.has=function(t){return this.map.hasOwnProperty(s(t))},h.prototype.set=function(t,e){this.map[s(t)]=a(e)},h.prototype.forEach=function(t,e){for(var i in this.map)this.map.hasOwnProperty(i)&&t.call(e,this.map[i],i,this)},h.prototype.keys=function(){var t=[];return this.forEach((function(e,i){t.push(i)})),l(t)},h.prototype.values=function(){var t=[];return this.forEach((function(e){t.push(e)})),l(t)},h.prototype.entries=function(){var t=[];return this.forEach((function(e,i){t.push([i,e])})),l(t)},n.iterable&&(h.prototype[Symbol.iterator]=h.prototype.entries);var m=["DELETE","GET","HEAD","OPTIONS","POST","PUT"];function _(t,e){var i,n,o=(e=e||{}).body;if(t instanceof _){if(t.bodyUsed)throw new TypeError("Already read");this.url=t.url,this.credentials=t.credentials,e.headers||(this.headers=new h(t.headers)),this.method=t.method,this.mode=t.mode,this.signal=t.signal,o||null==t._bodyInit||(o=t._bodyInit,t.bodyUsed=!0)}else this.url=String(t);if(this.credentials=e.credentials||this.credentials||"same-origin",!e.headers&&this.headers||(this.headers=new h(e.headers)),this.method=(i=e.method||this.method||"GET",n=i.toUpperCase(),m.indexOf(n)>-1?n:i),this.mode=e.mode||this.mode||null,this.signal=e.signal||this.signal,this.referrer=null,("GET"===this.method||"HEAD"===this.method)&&o)throw new TypeError("Body not allowed for GET or HEAD requests");this._initBody(o)}function g(t){var e=new FormData;return t.trim().split("&").forEach((function(t){if(t){var i=t.split("="),n=i.shift().replace(/\+/g," "),o=i.join("=").replace(/\+/g," ");e.append(decodeURIComponent(n),decodeURIComponent(o))}})),e}function v(t,e){e||(e={}),this.type="default",this.status=void 0===e.status?200:e.status,this.ok=this.status>=200&&this.status<300,this.statusText="statusText"in e?e.statusText:"OK",this.headers=new h(e.headers),this.url=e.url||"",this._initBody(t)}_.prototype.clone=function(){return new _(this,{body:this._bodyInit})},f.call(_.prototype),f.call(v.prototype),v.prototype.clone=function(){return new v(this._bodyInit,{status:this.status,statusText:this.statusText,headers:new h(this.headers),url:this.url})},v.error=function(){var t=new v(null,{status:0,statusText:""});return t.type="error",t};var y=[301,302,303,307,308];v.redirect=function(t,e){if(-1===y.indexOf(e))throw new RangeError("Invalid status code");return new v(null,{status:e,headers:{location:t}})};var b=self.DOMException;try{new b}catch(t){(b=function(t,e){this.message=t,this.name=e;var i=Error(t);this.stack=i.stack}).prototype=Object.create(Error.prototype),b.prototype.constructor=b}function w(t,e){return new Promise((function(i,o){var r=new _(t,e);if(r.signal&&r.signal.aborted)return o(new b("Aborted","AbortError"));var s=new XMLHttpRequest;function a(){s.abort()}s.onload=function(){var t,e,n={status:s.status,statusText:s.statusText,headers:(t=s.getAllResponseHeaders()||"",e=new h,t.replace(/\r?\n[\t ]+/g," ").split(/\r?\n/).forEach((function(t){var i=t.split(":"),n=i.shift().trim();if(n){var o=i.join(":").trim();e.append(n,o)}})),e)};n.url="responseURL"in s?s.responseURL:n.headers.get("X-Request-URL");var o="response"in s?s.response:s.responseText;i(new v(o,n))},s.onerror=function(){o(new TypeError("Network request failed"))},s.ontimeout=function(){o(new TypeError("Network request failed"))},s.onabort=function(){o(new b("Aborted","AbortError"))},s.open(r.method,r.url,!0),"include"===r.credentials?s.withCredentials=!0:"omit"===r.credentials&&(s.withCredentials=!1),"responseType"in s&&n.blob&&(s.responseType="blob"),r.headers.forEach((function(t,e){s.setRequestHeader(e,t)})),r.signal&&(r.signal.addEventListener("abort",a),s.onreadystatechange=function(){4===s.readyState&&r.signal.removeEventListener("abort",a)}),s.send(void 0===r._bodyInit?null:r._bodyInit)}))}w.polyfill=!0,self.fetch||(self.fetch=w,self.Headers=h,self.Request=_,self.Response=v)},function(t,e){class i{ready(){this.listening=!0}}"undefined"!=typeof window&&(window.BaseMixin=i),t.exports=i},function(t,e){class i{constructor(t){this.superclass=t}with(...t){return t.reduce((t,e)=>e(t),this.superclass)}}const n=t=>new i(t);"undefined"!=typeof window&&(window.Mixin=n),t.exports=n},function(t,e,i){const n=i(22),o=i(31),r=t=>(class extends t{static get properties(){return{listening:{type:Boolean,value:!0,observer:"_onListenUpdate"}}}set bind(t){this._bind=Object.assign(this.bind,t)}get bind(){return this._bind||(this._bind={}),this._bind}constructor(){super(),this.bind={},this._eb_handlers={},this._eb_handlersSet=!1,this._eb_unregisterOnDetach=!0,this._debounce_handlers={}}ready(){super.ready(),this._eb_init()}connectedCallback(){super.connectedCallback(),this._eb_init()}_eb_init(){if(!this._eb_handlersSet)for(var t in this._eb_handlersSet=!0,this._debugEventInterface&&console.log(this.nodeName,"ready and connected to DOM, attaching event listeners",this.bind),this.bind)this[this.bind[t]]?this._eb_init_fn(t):console.warn(`${this.nodeName} could not bind event ${t} to ${this.bind[t]}`)}_eb_init_fn(t){this[this.bind[t]]=this[this.bind[t]].bind(this),this._eb_handlers[t]=(...e)=>{this.listening?(this._debugEventInterface&&console.log(this.nodeName,"received event",t,", triggering function:",this.bind[t]),this[this.bind[t]].apply(this,e)):this._debugEventInterface&&console.warn(this.nodeName,"ignoring",t,"event, element not listening")},n.on(t,this._eb_handlers[t])}disconnectedCallback(){if(super.disconnectedCallback(),this._debugEventInterface&&console.log(this.nodeName,"disconnected from DOM, removing event listeners"),this._eb_unregisterOnDetach&&this._eb_handlersSet)for(var t in this._eb_handlersSet=!1,this.bind){if(!this[this.bind[t]])continue;let e=n.listenerCount(t);n.removeListener(t,this._eb_handlers[t]),n.listenerCount(t)!==e-1&&console.warn(this.nodeName,"On element detach, failed to remove event listener for: ",t),this._debugEventInterface&&console.log(this.nodeName,"removing event listener for:",t)}}EventBus(){return n}_injectModel(...t){t.forEach(t=>{"string"==typeof t?this._injectModelStr(t):this._bindModelObj(t)})}_injectModelStr(t){this[t]=o.getModel(t),this._bindModelObj(this[t])}_bindModelObj(t){t.events&&this._registerModelEvents(t.events),t.store&&t.store.events&&this._registerModelEvents(t.store.events)}_registerModelEvents(t){for(var e in t){var i=this._getMethodNameFromEvent(t[e]);this[i]?(this._debugEventInterface&&console.log(this.nodeName,"auto-bind:",i+" -> "+t[e],!0),this.bind[t[e]]=i):this._debugEventInterface&&console.log(this.nodeName,"auto-bind:",i+" -> "+t[e],!1)}}_getMethodNameFromEvent(t){return"_on"+t.split("-").map(t=>t.charAt(0).toUpperCase()+t.slice(1)).join("")}emit(t,e){n.emit(t,e)}fire(t,e={}){this.dispatchEvent(new CustomEvent(t,{detail:e,bubbles:!0,composed:!0}))}debounce(t,e,i){this._debounce_handlers[t]&&clearTimeout(this._debounce_handlers[t]),this._debounce_handlers[t]=setTimeout(()=>{delete this._debounce_handlers[t],e()},i)}_onListenUpdate(){}});"undefined"!=typeof window&&(window.EventInterface=r),t.exports=r},function(t,e,i){const n=i(22),o=i(31),r=t=>(class extends t{static get properties(){return{listening:{type:Boolean}}}set bind(t){this._bind=Object.assign(this.bind,t)}get bind(){return this._bind||(this._bind={}),this._bind}constructor(){super(),this.bind={},this._eb_handlers={},this._eb_handlersSet=!1,this._eb_unregisterOnDetach=!0,this._debounce_handlers={},this.listening=!0}connectedCallback(){super.connectedCallback(),this._eb_init()}_eb_init(){if(!this._eb_handlersSet)for(var t in this._eb_handlersSet=!0,this._debugLitCorkUtils&&console.log(this.nodeName,"ready and connected to DOM, attaching event listeners",this.bind),this.bind)this[this.bind[t]]?this._eb_init_fn(t):console.warn(`${this.nodeName} could not bind event ${t} to ${this.bind[t]}`)}_eb_init_fn(t){this[this.bind[t]]=this[this.bind[t]].bind(this),this._eb_handlers[t]=(...e)=>{this.listening?(this._debugLitCorkUtils&&console.log(this.nodeName,"received event",t,", triggering function:",this.bind[t]),this[this.bind[t]].apply(this,e)):this._debugLitCorkUtils&&console.warn(this.nodeName,"ignoring",t,"event, element not listening")},n.on(t,this._eb_handlers[t])}disconnectedCallback(){if(super.disconnectedCallback(),this._debugLitCorkUtils&&console.log(this.nodeName,"disconnected from DOM, removing event listeners"),this._eb_unregisterOnDetach&&this._eb_handlersSet)for(var t in this._eb_handlersSet=!1,this.bind){if(!this[this.bind[t]])continue;let e=n.listenerCount(t);n.removeListener(t,this._eb_handlers[t]),n.listenerCount(t)!==e-1&&console.warn(this.nodeName,"On element detach, failed to remove event listener for: ",t),this._debugLitCorkUtils&&console.log(this.nodeName,"removing event listener for:",t)}}EventBus(){return n}_injectModel(...t){t.forEach(t=>{"string"==typeof t?this._injectModelStr(t):this._bindModelObj(t)})}_injectModelStr(t){this[t]=o.getModel(t),this._bindModelObj(this[t])}_bindModelObj(t){t.events&&this._registerModelEvents(t.events),t.store&&t.store.events&&this._registerModelEvents(t.store.events)}_registerModelEvents(t){for(var e in t){var i=this._getMethodNameFromEvent(t[e]);this[i]?(this._debugLitCorkUtils&&console.log(this.nodeName,"auto-bind:",i+" -> "+t[e],!0),this.bind[t[e]]=i):this._debugLitCorkUtils&&console.log(this.nodeName,"auto-bind:",i+" -> "+t[e],!1)}}_getMethodNameFromEvent(t){return"_on"+t.split("-").map(t=>t.charAt(0).toUpperCase()+t.slice(1)).join("")}emit(t,e){n.emit(t,e)}fire(t,e={}){this.dispatchEvent(new CustomEvent(t,{detail:e,bubbles:!0,composed:!0}))}byId(t){return this.shadowRoot?this.shadowRoot.querySelector("#"+t):this.querySelector("#"+t)}$(t){return this.shadowRoot?this.shadowRoot.querySelector(t):this.querySelector(t)}$$(t){return this.shadowRoot?this.shadowRoot.querySelectorAll(t):this.querySelector(t)}updated(t){t.has("listening")&&this._onListenUpdate()}_onListenUpdate(){}});"undefined"!=typeof window&&(window.LitCorkUtils=r),t.exports=r},function(t,e){t.exports=t=>(class extends t{_attachDom(t){if(window.ShadyDOM&&window.ShadyDOM.inUse)return super._attachDom(t);let e=t.querySelectorAll("style");for(var i=0;i<e.length;i++)e[i].parentNode.removeChild(e[i]),this._stylesInserted||(e[i].setAttribute("id",this.nodeName.toLowerCase()+"-styles"),document.head.appendChild(e[i]));return this.appendChild(t),t}querySelector(t){return this.shadowRoot?this.shadowRoot.querySelector(t):super.querySelector(t)}querySelectorAll(t){return this.shadowRoot?this.shadowRoot.querySelectorAll(t):super.querySelectorAll(t)}})},function(t,e,i){const{AppStateModel:n}=i(36),o=i(61);t.exports=new class extends n{constructor(){super(),this.store=o,this.DEFAULT_VIEW="home",this.EventBus.on(this.store.events.APP_STATE_UPDATE,()=>this._sendGA()),this._sendGA()}setSelectedClusterIds(t){let e=this.store.data;return e.selected?"cluster"!==e.selected.type?console.warn("Attempting to set cluster ids, but selected object is not a cluster"):(e.selected.ids=t,super.set(e)):console.warn("Attempting to set cluster ids, but no selected object")}set(t){if(t.location){let e=t.location.path?t.location.path[0]:this.DEFAULT_VIEW;t.page=e||this.DEFAULT_VIEW}return"map"===t.page&&t.location.path.length>=1&&(t.moment=t.location.path[1]),"moment"===t.page&&(t.moment=t.location.path[1]),"map"===t.page&&t.location.path.length>=3?(t.selected={type:t.location.path[2]},"cluster"===t.location.path[2]?(t.selected.latlng=t.location.path[3].split(",").map(t=>parseFloat(t)),t.selected.zoom=parseInt(t.location.path[4])):t.selected.id=t.location.path[3]):t.selected=null,t.moment||(t.moment=APP_CONFIG.moments[0]),super.set(t)}_sendGA(){if(!window.gtag)return console.warn("No global gtag variable set for analytics events");this.lastGaLocation!==window.location.pathname&&(this.lastGaLocation=window.location.pathname,gtag("config",APP_CONFIG.gaCode,{page_path:window.location.pathname}))}}},function(t,e,i){var{BaseModel:n}=i(15);t.exports=class extends n{constructor(){super(),this.register("AppStateModel")}setLocationElement(t){this.locationElement=t}setLocation(t){if(!this.locationElement)return console.warn("Call to setWindowLocation but no locationElement set");this.locationElement.setWindowLocation(t)}async get(){return this.store.data}set(t){return this.store.set(t),this.get()}}},function(t,e,i){const{BaseStore:n}=i(15);t.exports=class extends n{constructor(){super(),this.data={location:{}},this.events={APP_STATE_UPDATE:"app-state-update"}}set(t){this.stateChanged(this.data,t)&&(this.data=Object.assign({},this.data,t),this.emit(this.events.APP_STATE_UPDATE,this.data))}get(){return this.data}}},function(t,e,i){"use strict";t.exports=function(t){return encodeURIComponent(t).replace(/[!'()*]/g,(function(t){return"%"+t.charCodeAt(0).toString(16).toUpperCase()}))}},function(t,e,i){"use strict";
+*/let n,o=null,r=window.HTMLImports&&window.HTMLImports.whenReady||null;function s(t){requestAnimationFrame((function(){r?r(t):(o||(o=new Promise(t=>{n=t}),"complete"===document.readyState?n():document.addEventListener("readystatechange",()=>{"complete"===document.readyState&&n()})),o.then((function(){t&&t()})))}))}i.d(e,"a",(function(){return d}));const a="__seenByShadyCSS",l="__shadyCSSCachedStyle";let h=null,c=null;class d{constructor(){this.customStyles=[],this.enqueued=!1,s(()=>{window.ShadyCSS.flushCustomStyles&&window.ShadyCSS.flushCustomStyles()})}enqueueDocumentValidation(){!this.enqueued&&c&&(this.enqueued=!0,s(c))}addCustomStyle(t){t[a]||(t[a]=!0,this.customStyles.push(t),this.enqueueDocumentValidation())}getStyleForCustomStyle(t){if(t[l])return t[l];let e;return e=t.getStyle?t.getStyle():t,e}processStyles(){const t=this.customStyles;for(let e=0;e<t.length;e++){const i=t[e];if(i[l])continue;const n=this.getStyleForCustomStyle(i);if(n){const t=n.__appliedElement||n;h&&h(t),i[l]=t}}return t}}d.prototype.addCustomStyle=d.prototype.addCustomStyle,d.prototype.getStyleForCustomStyle=d.prototype.getStyleForCustomStyle,d.prototype.processStyles=d.prototype.processStyles,Object.defineProperties(d.prototype,{transformCallback:{get:()=>h,set(t){h=t}},validateCallback:{get:()=>c,set(t){let e=!1;c||(e=!0),c=t,e&&this.enqueueDocumentValidation()}}})},function(t,e,i){i(49),t.exports=self.fetch.bind(self)},function(t,e,i){t.exports={AppStateInterface:i(33),AppStateModel:i(56),AppStateStore:i(57),"app-route":i(80)}},function(t,e,i){const{BaseStore:n}=i(15);t.exports=new class extends n{constructor(){super(),this.data={},this.events={GRAPH_UPDATE:"moment-graph-update"}}onGraphLoading(t,e){this._setGraphState({id:t,state:this.STATE.LOADING,request:e})}onGraphLoaded(t,e){this._setGraphState({id:t,state:this.STATE.LOADED,payload:e})}onGraphError(t,e){this._setGraphState({id:t,state:this.STATE.ERROR,error:e})}_setGraphState(t){this.data[t.id]=t,this.emit(this.events.GRAPH_UPDATE,t)}}},function(t,e,i){t.exports={AppStateModel:i(55),MomentModel:i(62)}},function(t,e,i){"use strict";var n=i(58),o=i(59),r=i(60);function s(t,e){return e.encode?e.strict?n(t):encodeURIComponent(t):t}function a(t){var e=t.indexOf("?");return-1===e?"":t.slice(e+1)}function l(t,e){var i=function(t){var e;switch(t.arrayFormat){case"index":return function(t,i,n){e=/\[(\d*)\]$/.exec(t),t=t.replace(/\[\d*\]$/,""),e?(void 0===n[t]&&(n[t]={}),n[t][e[1]]=i):n[t]=i};case"bracket":return function(t,i,n){e=/(\[\])$/.exec(t),t=t.replace(/\[\]$/,""),e?void 0!==n[t]?n[t]=[].concat(n[t],i):n[t]=[i]:n[t]=i};default:return function(t,e,i){void 0!==i[t]?i[t]=[].concat(i[t],e):i[t]=e}}}(e=o({arrayFormat:"none"},e)),n=Object.create(null);return"string"!=typeof t?n:(t=t.trim().replace(/^[?#&]/,""))?(t.split("&").forEach((function(t){var e=t.replace(/\+/g," ").split("="),o=e.shift(),s=e.length>0?e.join("="):void 0;s=void 0===s?null:r(s),i(r(o),s,n)})),Object.keys(n).sort().reduce((function(t,e){var i=n[e];return Boolean(i)&&"object"==typeof i&&!Array.isArray(i)?t[e]=function t(e){return Array.isArray(e)?e.sort():"object"==typeof e?t(Object.keys(e)).sort((function(t,e){return Number(t)-Number(e)})).map((function(t){return e[t]})):e}(i):t[e]=i,t}),Object.create(null))):n}e.extract=a,e.parse=l,e.stringify=function(t,e){!1===(e=o({encode:!0,strict:!0,arrayFormat:"none"},e)).sort&&(e.sort=function(){});var i=function(t){switch(t.arrayFormat){case"index":return function(e,i,n){return null===i?[s(e,t),"[",n,"]"].join(""):[s(e,t),"[",s(n,t),"]=",s(i,t)].join("")};case"bracket":return function(e,i){return null===i?s(e,t):[s(e,t),"[]=",s(i,t)].join("")};default:return function(e,i){return null===i?s(e,t):[s(e,t),"=",s(i,t)].join("")}}}(e);return t?Object.keys(t).sort(e.sort).map((function(n){var o=t[n];if(void 0===o)return"";if(null===o)return s(n,e);if(Array.isArray(o)){var r=[];return o.slice().forEach((function(t){void 0!==t&&r.push(i(n,t,r.length))})),r.join("&")}return s(n,e)+"="+s(o,e)})).filter((function(t){return t.length>0})).join("&"):""},e.parseUrl=function(t,e){return{url:t.split("?")[0]||"",query:l(a(t),e)}}},function(t,e,i){var n=i(70);t.exports="string"==typeof n?n:n.toString()},function(t,e,i){var n=i(75);t.exports="string"==typeof n?n:n.toString()},function(t,e,i){var n=i(76);t.exports="string"==typeof n?n:n.toString()},function(t,e){let i=document.createElement("style");document.head.appendChild(i),i.innerHTML='\nhtml {\n  --app-color-scarlet : #EA534B;\n  --app-color-gold : #F2AC30;\n  --app-color-vine : #1EA866;\n  --app-color-rose : #ED77A5;\n  --app-color-grape : #BA5B93;\n  --app-color-interface-blue : #18779B;\n  --app-color-secondary-blue : #015E80;\n  --app-color-cluster-blue : var(--app-color-secondary-blue);\n  --app-color-cluster-blue-alpha : rgba(1, 94, 128, 0.5);\n  --app-color-smoke : #F3F2F0;\n  --app-color-pewter : #D4DADC;\n  --app-color-charcoal : #333333;\n  --app-color-black : #000000;\n  --app-color-white : #FFFFFF;\n\n  \n  --app-primary-color   : var(--app-color-interface-blue);\n  --app-background-color : var(--app-color-white);\n  --app-text-color      : var(--app-color-black);\n  --app-max-width               : 1200px;\n  --app-max-text-width          : 650px;\n  --app-font-size               : 14px;\n  --app-font-size-sm            : 13px;\n  --app-font-weight             : 400;\n  --app-font-weight-light       : 200;\n  --app-font-weight-heavy       : 700;\n  --app-layout-sm               : 768px;\n  --app-grid-cell-width         : 250px;\n  --app-default-outline         : 2px dotted var(--default-secondary-color);\n}\n\nbody, html {\n  /* @apply --paper-font-common-base; */\n  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;\n  font-size        : var(--app-font-size);\n  font-weight      : var(--app-font-weight);\n  line-height      : calc(var(--app-font-size) * 1.625);\n  margin           : 0;\n  padding          : 0;\n  background-color : var(--app-background-color);\n  color            : var(--app-text-color);\n  max-width        : 100vw;\n  overflow: hidden;\n}\n'},function(t,e,i){const n=i(22),o=i(31);t.exports=class{get EventBus(){return n}register(t){t||console.warn("Name not passed to register().  This will fail in IE, cause, you know, IE.");var e=t||this.__proto__.constructor.name;o.registerModel(e,this)}emit(t,e){setTimeout(()=>{n.emit(t,e)},0)}}},function(t,e,i){"use strict";var n,o="object"==typeof Reflect?Reflect:null,r=o&&"function"==typeof o.apply?o.apply:function(t,e,i){return Function.prototype.apply.call(t,e,i)};n=o&&"function"==typeof o.ownKeys?o.ownKeys:Object.getOwnPropertySymbols?function(t){return Object.getOwnPropertyNames(t).concat(Object.getOwnPropertySymbols(t))}:function(t){return Object.getOwnPropertyNames(t)};var s=Number.isNaN||function(t){return t!=t};function a(){a.init.call(this)}t.exports=a,a.EventEmitter=a,a.prototype._events=void 0,a.prototype._eventsCount=0,a.prototype._maxListeners=void 0;var l=10;function h(t){return void 0===t._maxListeners?a.defaultMaxListeners:t._maxListeners}function c(t,e,i,n){var o,r,s,a;if("function"!=typeof i)throw new TypeError('The "listener" argument must be of type Function. Received type '+typeof i);if(void 0===(r=t._events)?(r=t._events=Object.create(null),t._eventsCount=0):(void 0!==r.newListener&&(t.emit("newListener",e,i.listener?i.listener:i),r=t._events),s=r[e]),void 0===s)s=r[e]=i,++t._eventsCount;else if("function"==typeof s?s=r[e]=n?[i,s]:[s,i]:n?s.unshift(i):s.push(i),(o=h(t))>0&&s.length>o&&!s.warned){s.warned=!0;var l=new Error("Possible EventEmitter memory leak detected. "+s.length+" "+String(e)+" listeners added. Use emitter.setMaxListeners() to increase limit");l.name="MaxListenersExceededWarning",l.emitter=t,l.type=e,l.count=s.length,a=l,console&&console.warn&&console.warn(a)}return t}function d(){for(var t=[],e=0;e<arguments.length;e++)t.push(arguments[e]);this.fired||(this.target.removeListener(this.type,this.wrapFn),this.fired=!0,r(this.listener,this.target,t))}function u(t,e,i){var n={fired:!1,wrapFn:void 0,target:t,type:e,listener:i},o=d.bind(n);return o.listener=i,n.wrapFn=o,o}function p(t,e,i){var n=t._events;if(void 0===n)return[];var o=n[e];return void 0===o?[]:"function"==typeof o?i?[o.listener||o]:[o]:i?function(t){for(var e=new Array(t.length),i=0;i<e.length;++i)e[i]=t[i].listener||t[i];return e}(o):m(o,o.length)}function f(t){var e=this._events;if(void 0!==e){var i=e[t];if("function"==typeof i)return 1;if(void 0!==i)return i.length}return 0}function m(t,e){for(var i=new Array(e),n=0;n<e;++n)i[n]=t[n];return i}Object.defineProperty(a,"defaultMaxListeners",{enumerable:!0,get:function(){return l},set:function(t){if("number"!=typeof t||t<0||s(t))throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received '+t+".");l=t}}),a.init=function(){void 0!==this._events&&this._events!==Object.getPrototypeOf(this)._events||(this._events=Object.create(null),this._eventsCount=0),this._maxListeners=this._maxListeners||void 0},a.prototype.setMaxListeners=function(t){if("number"!=typeof t||t<0||s(t))throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received '+t+".");return this._maxListeners=t,this},a.prototype.getMaxListeners=function(){return h(this)},a.prototype.emit=function(t){for(var e=[],i=1;i<arguments.length;i++)e.push(arguments[i]);var n="error"===t,o=this._events;if(void 0!==o)n=n&&void 0===o.error;else if(!n)return!1;if(n){var s;if(e.length>0&&(s=e[0]),s instanceof Error)throw s;var a=new Error("Unhandled error."+(s?" ("+s.message+")":""));throw a.context=s,a}var l=o[t];if(void 0===l)return!1;if("function"==typeof l)r(l,this,e);else{var h=l.length,c=m(l,h);for(i=0;i<h;++i)r(c[i],this,e)}return!0},a.prototype.addListener=function(t,e){return c(this,t,e,!1)},a.prototype.on=a.prototype.addListener,a.prototype.prependListener=function(t,e){return c(this,t,e,!0)},a.prototype.once=function(t,e){if("function"!=typeof e)throw new TypeError('The "listener" argument must be of type Function. Received type '+typeof e);return this.on(t,u(this,t,e)),this},a.prototype.prependOnceListener=function(t,e){if("function"!=typeof e)throw new TypeError('The "listener" argument must be of type Function. Received type '+typeof e);return this.prependListener(t,u(this,t,e)),this},a.prototype.removeListener=function(t,e){var i,n,o,r,s;if("function"!=typeof e)throw new TypeError('The "listener" argument must be of type Function. Received type '+typeof e);if(void 0===(n=this._events))return this;if(void 0===(i=n[t]))return this;if(i===e||i.listener===e)0==--this._eventsCount?this._events=Object.create(null):(delete n[t],n.removeListener&&this.emit("removeListener",t,i.listener||e));else if("function"!=typeof i){for(o=-1,r=i.length-1;r>=0;r--)if(i[r]===e||i[r].listener===e){s=i[r].listener,o=r;break}if(o<0)return this;0===o?i.shift():function(t,e){for(;e+1<t.length;e++)t[e]=t[e+1];t.pop()}(i,o),1===i.length&&(n[t]=i[0]),void 0!==n.removeListener&&this.emit("removeListener",t,s||e)}return this},a.prototype.off=a.prototype.removeListener,a.prototype.removeAllListeners=function(t){var e,i,n;if(void 0===(i=this._events))return this;if(void 0===i.removeListener)return 0===arguments.length?(this._events=Object.create(null),this._eventsCount=0):void 0!==i[t]&&(0==--this._eventsCount?this._events=Object.create(null):delete i[t]),this;if(0===arguments.length){var o,r=Object.keys(i);for(n=0;n<r.length;++n)"removeListener"!==(o=r[n])&&this.removeAllListeners(o);return this.removeAllListeners("removeListener"),this._events=Object.create(null),this._eventsCount=0,this}if("function"==typeof(e=i[t]))this.removeListener(t,e);else if(void 0!==e)for(n=e.length-1;n>=0;n--)this.removeListener(t,e[n]);return this},a.prototype.listeners=function(t){return p(this,t,!0)},a.prototype.rawListeners=function(t){return p(this,t,!1)},a.listenerCount=function(t,e){return"function"==typeof t.listenerCount?t.listenerCount(e):f.call(t,e)},a.prototype.listenerCount=f,a.prototype.eventNames=function(){return this._eventsCount>0?n(this._events):[]}},function(t,e,i){const n=i(22),o=i(47);t.exports=class{constructor(){this.STATE={INIT:"init",LOADING:"loading",LOADED:"loaded",ERROR:"error",SAVING:"saving",SAVE_ERROR:"save-error",SAVE_SUCCESS:"save-success",DELETING:"deleting",DELETE_ERROR:"delete-error",DELETED:"deleted"}}get EventBus(){return n}emit(t,e){setTimeout(()=>{n.emit(t,e)},0)}stateChanged(t,e){return!(t||!e)||(!(!t||e)||!(!t&&!e)&&(t.state!==e.state||!o(t,e)))}}},function(t,e,i){"use strict";var n=Array.isArray,o=Object.keys,r=Object.prototype.hasOwnProperty;t.exports=function t(e,i){if(e===i)return!0;if(e&&i&&"object"==typeof e&&"object"==typeof i){var s,a,l,h=n(e),c=n(i);if(h&&c){if((a=e.length)!=i.length)return!1;for(s=a;0!=s--;)if(!t(e[s],i[s]))return!1;return!0}if(h!=c)return!1;var d=e instanceof Date,u=i instanceof Date;if(d!=u)return!1;if(d&&u)return e.getTime()==i.getTime();var p=e instanceof RegExp,f=i instanceof RegExp;if(p!=f)return!1;if(p&&f)return e.toString()==i.toString();var m=o(e);if((a=m.length)!==o(i).length)return!1;for(s=a;0!=s--;)if(!r.call(i,m[s]))return!1;for(s=a;0!=s--;)if(!t(e[l=m[s]],i[l]))return!1;return!0}return e!=e&&i!=i}},function(t,e,i){const n=i(35);t.exports=class{constructor(){this.rootUrl="","undefined"!=typeof window&&(this.rootUrl=window.location.protocol+"//"+window.location.host),this.ERROR_MESSAGES={REQUEST:"Request Error",STATUS_CODE:"Invalid status code",JSON:"Invalid JSON response",APPLICATION_ERROR:"Application Error"}}async request(t){if(!t.store){if(!this.store)return console.error(new Error("No store provided"));t.store=this.store}if(t.fetchOptions||(t.fetchOptions={}),t.fetchOptions.credentials||(t.fetchOptions.credentials="include"),t.json&&t.fetchOptions&&t.fetchOptions.body&&"object"==typeof t.fetchOptions.body&&(t.fetchOptions.body=JSON.stringify(t.fetchOptions.body),t.fetchOptions.headers||(t.fetchOptions.headers={}),t.fetchOptions.headers["Content-Type"]="application/json"),t.qs){let i=[];for(var e in t.qs)i.push(`${e}=${t.qs[e]}`);t.url+="?"+i.join("&")}if(t.checkCached){var i=t.checkCached();if(this.isLoaded(i))return i;if(this.isLoading(i)){if(!i.request)throw new Error("checkCached set but no request object found",i);return i.request}}let n=this._request(t);return t.onLoading&&t.onLoading(n),await n}_request(t){return t.fetchOptions||(t.fetchOptions={}),new Promise(async(e,i)=>{var o=null;try{o=await n(t.url,t.fetchOptions)}catch(e){return this._handleError(t,i,{error:!0,details:e,response:o,message:this.ERROR_MESSAGES.REQUEST})}if(o.status<200||o.status>299)return this._handleError(t,i,{error:!0,response:o,message:this.ERROR_MESSAGES.STATUS_CODE});if(o.headers.has("Content-Type")&&o.headers.get("Content-Type").match(/application\/json/i)){var r=null;try{r=await o.json()}catch(e){return this._handleError(t,i,{error:!0,details:e,response:o,message:this.ERROR_MESSAGES.JSON})}if(r.error)return this._handleError(t,i,{error:!0,details:r,response:o,message:this.ERROR_MESSAGES.APPLICATION_ERROR})}else r=await o.text();t.onLoad&&t.onLoad({response:o,body:r}),e({response:o,body:r})})}async _handleError(t,e,i){if(i.response&&!i.payload)if(i.response.headers.has("Content-Type")&&i.response.headers.get("Content-Type").match(/application\/json/i))try{i.payload=await i.response.json()}catch(t){i.payload={}}else i.payload=await i.response.text();t.onError&&t.onError(i),e(i)}isLoaded(t){return this.store?!(!t||t.state!==this.store.STATE.LOADED):console.warn("Checking LOADED state but no store set for service")}isLoading(t){return this.store?!(!t||t.state!==this.store.STATE.LOADING):console.warn("Checking LOADED state but no store set for service")}}},function(t,e,i){"use strict";i.r(e),i.d(e,"Headers",(function(){return h})),i.d(e,"Request",(function(){return _})),i.d(e,"Response",(function(){return v})),i.d(e,"DOMException",(function(){return b})),i.d(e,"fetch",(function(){return w}));var n={searchParams:"URLSearchParams"in self,iterable:"Symbol"in self&&"iterator"in Symbol,blob:"FileReader"in self&&"Blob"in self&&function(){try{return new Blob,!0}catch(t){return!1}}(),formData:"FormData"in self,arrayBuffer:"ArrayBuffer"in self};if(n.arrayBuffer)var o=["[object Int8Array]","[object Uint8Array]","[object Uint8ClampedArray]","[object Int16Array]","[object Uint16Array]","[object Int32Array]","[object Uint32Array]","[object Float32Array]","[object Float64Array]"],r=ArrayBuffer.isView||function(t){return t&&o.indexOf(Object.prototype.toString.call(t))>-1};function s(t){if("string"!=typeof t&&(t=String(t)),/[^a-z0-9\-#$%&'*+.^_`|~]/i.test(t))throw new TypeError("Invalid character in header field name");return t.toLowerCase()}function a(t){return"string"!=typeof t&&(t=String(t)),t}function l(t){var e={next:function(){var e=t.shift();return{done:void 0===e,value:e}}};return n.iterable&&(e[Symbol.iterator]=function(){return e}),e}function h(t){this.map={},t instanceof h?t.forEach((function(t,e){this.append(e,t)}),this):Array.isArray(t)?t.forEach((function(t){this.append(t[0],t[1])}),this):t&&Object.getOwnPropertyNames(t).forEach((function(e){this.append(e,t[e])}),this)}function c(t){if(t.bodyUsed)return Promise.reject(new TypeError("Already read"));t.bodyUsed=!0}function d(t){return new Promise((function(e,i){t.onload=function(){e(t.result)},t.onerror=function(){i(t.error)}}))}function u(t){var e=new FileReader,i=d(e);return e.readAsArrayBuffer(t),i}function p(t){if(t.slice)return t.slice(0);var e=new Uint8Array(t.byteLength);return e.set(new Uint8Array(t)),e.buffer}function f(){return this.bodyUsed=!1,this._initBody=function(t){var e;this._bodyInit=t,t?"string"==typeof t?this._bodyText=t:n.blob&&Blob.prototype.isPrototypeOf(t)?this._bodyBlob=t:n.formData&&FormData.prototype.isPrototypeOf(t)?this._bodyFormData=t:n.searchParams&&URLSearchParams.prototype.isPrototypeOf(t)?this._bodyText=t.toString():n.arrayBuffer&&n.blob&&((e=t)&&DataView.prototype.isPrototypeOf(e))?(this._bodyArrayBuffer=p(t.buffer),this._bodyInit=new Blob([this._bodyArrayBuffer])):n.arrayBuffer&&(ArrayBuffer.prototype.isPrototypeOf(t)||r(t))?this._bodyArrayBuffer=p(t):this._bodyText=t=Object.prototype.toString.call(t):this._bodyText="",this.headers.get("content-type")||("string"==typeof t?this.headers.set("content-type","text/plain;charset=UTF-8"):this._bodyBlob&&this._bodyBlob.type?this.headers.set("content-type",this._bodyBlob.type):n.searchParams&&URLSearchParams.prototype.isPrototypeOf(t)&&this.headers.set("content-type","application/x-www-form-urlencoded;charset=UTF-8"))},n.blob&&(this.blob=function(){var t=c(this);if(t)return t;if(this._bodyBlob)return Promise.resolve(this._bodyBlob);if(this._bodyArrayBuffer)return Promise.resolve(new Blob([this._bodyArrayBuffer]));if(this._bodyFormData)throw new Error("could not read FormData body as blob");return Promise.resolve(new Blob([this._bodyText]))},this.arrayBuffer=function(){return this._bodyArrayBuffer?c(this)||Promise.resolve(this._bodyArrayBuffer):this.blob().then(u)}),this.text=function(){var t,e,i,n=c(this);if(n)return n;if(this._bodyBlob)return t=this._bodyBlob,e=new FileReader,i=d(e),e.readAsText(t),i;if(this._bodyArrayBuffer)return Promise.resolve(function(t){for(var e=new Uint8Array(t),i=new Array(e.length),n=0;n<e.length;n++)i[n]=String.fromCharCode(e[n]);return i.join("")}(this._bodyArrayBuffer));if(this._bodyFormData)throw new Error("could not read FormData body as text");return Promise.resolve(this._bodyText)},n.formData&&(this.formData=function(){return this.text().then(g)}),this.json=function(){return this.text().then(JSON.parse)},this}h.prototype.append=function(t,e){t=s(t),e=a(e);var i=this.map[t];this.map[t]=i?i+", "+e:e},h.prototype.delete=function(t){delete this.map[s(t)]},h.prototype.get=function(t){return t=s(t),this.has(t)?this.map[t]:null},h.prototype.has=function(t){return this.map.hasOwnProperty(s(t))},h.prototype.set=function(t,e){this.map[s(t)]=a(e)},h.prototype.forEach=function(t,e){for(var i in this.map)this.map.hasOwnProperty(i)&&t.call(e,this.map[i],i,this)},h.prototype.keys=function(){var t=[];return this.forEach((function(e,i){t.push(i)})),l(t)},h.prototype.values=function(){var t=[];return this.forEach((function(e){t.push(e)})),l(t)},h.prototype.entries=function(){var t=[];return this.forEach((function(e,i){t.push([i,e])})),l(t)},n.iterable&&(h.prototype[Symbol.iterator]=h.prototype.entries);var m=["DELETE","GET","HEAD","OPTIONS","POST","PUT"];function _(t,e){var i,n,o=(e=e||{}).body;if(t instanceof _){if(t.bodyUsed)throw new TypeError("Already read");this.url=t.url,this.credentials=t.credentials,e.headers||(this.headers=new h(t.headers)),this.method=t.method,this.mode=t.mode,this.signal=t.signal,o||null==t._bodyInit||(o=t._bodyInit,t.bodyUsed=!0)}else this.url=String(t);if(this.credentials=e.credentials||this.credentials||"same-origin",!e.headers&&this.headers||(this.headers=new h(e.headers)),this.method=(i=e.method||this.method||"GET",n=i.toUpperCase(),m.indexOf(n)>-1?n:i),this.mode=e.mode||this.mode||null,this.signal=e.signal||this.signal,this.referrer=null,("GET"===this.method||"HEAD"===this.method)&&o)throw new TypeError("Body not allowed for GET or HEAD requests");this._initBody(o)}function g(t){var e=new FormData;return t.trim().split("&").forEach((function(t){if(t){var i=t.split("="),n=i.shift().replace(/\+/g," "),o=i.join("=").replace(/\+/g," ");e.append(decodeURIComponent(n),decodeURIComponent(o))}})),e}function v(t,e){e||(e={}),this.type="default",this.status=void 0===e.status?200:e.status,this.ok=this.status>=200&&this.status<300,this.statusText="statusText"in e?e.statusText:"OK",this.headers=new h(e.headers),this.url=e.url||"",this._initBody(t)}_.prototype.clone=function(){return new _(this,{body:this._bodyInit})},f.call(_.prototype),f.call(v.prototype),v.prototype.clone=function(){return new v(this._bodyInit,{status:this.status,statusText:this.statusText,headers:new h(this.headers),url:this.url})},v.error=function(){var t=new v(null,{status:0,statusText:""});return t.type="error",t};var y=[301,302,303,307,308];v.redirect=function(t,e){if(-1===y.indexOf(e))throw new RangeError("Invalid status code");return new v(null,{status:e,headers:{location:t}})};var b=self.DOMException;try{new b}catch(t){(b=function(t,e){this.message=t,this.name=e;var i=Error(t);this.stack=i.stack}).prototype=Object.create(Error.prototype),b.prototype.constructor=b}function w(t,e){return new Promise((function(i,o){var r=new _(t,e);if(r.signal&&r.signal.aborted)return o(new b("Aborted","AbortError"));var s=new XMLHttpRequest;function a(){s.abort()}s.onload=function(){var t,e,n={status:s.status,statusText:s.statusText,headers:(t=s.getAllResponseHeaders()||"",e=new h,t.replace(/\r?\n[\t ]+/g," ").split(/\r?\n/).forEach((function(t){var i=t.split(":"),n=i.shift().trim();if(n){var o=i.join(":").trim();e.append(n,o)}})),e)};n.url="responseURL"in s?s.responseURL:n.headers.get("X-Request-URL");var o="response"in s?s.response:s.responseText;i(new v(o,n))},s.onerror=function(){o(new TypeError("Network request failed"))},s.ontimeout=function(){o(new TypeError("Network request failed"))},s.onabort=function(){o(new b("Aborted","AbortError"))},s.open(r.method,r.url,!0),"include"===r.credentials?s.withCredentials=!0:"omit"===r.credentials&&(s.withCredentials=!1),"responseType"in s&&n.blob&&(s.responseType="blob"),r.headers.forEach((function(t,e){s.setRequestHeader(e,t)})),r.signal&&(r.signal.addEventListener("abort",a),s.onreadystatechange=function(){4===s.readyState&&r.signal.removeEventListener("abort",a)}),s.send(void 0===r._bodyInit?null:r._bodyInit)}))}w.polyfill=!0,self.fetch||(self.fetch=w,self.Headers=h,self.Request=_,self.Response=v)},function(t,e){class i{ready(){this.listening=!0}}"undefined"!=typeof window&&(window.BaseMixin=i),t.exports=i},function(t,e){class i{constructor(t){this.superclass=t}with(...t){return t.reduce((t,e)=>e(t),this.superclass)}}const n=t=>new i(t);"undefined"!=typeof window&&(window.Mixin=n),t.exports=n},function(t,e,i){const n=i(22),o=i(31),r=t=>(class extends t{static get properties(){return{listening:{type:Boolean,value:!0,observer:"_onListenUpdate"}}}set bind(t){this._bind=Object.assign(this.bind,t)}get bind(){return this._bind||(this._bind={}),this._bind}constructor(){super(),this.bind={},this._eb_handlers={},this._eb_handlersSet=!1,this._eb_unregisterOnDetach=!0,this._debounce_handlers={}}ready(){super.ready(),this._eb_init()}connectedCallback(){super.connectedCallback(),this._eb_init()}_eb_init(){if(!this._eb_handlersSet)for(var t in this._eb_handlersSet=!0,this._debugEventInterface&&console.log(this.nodeName,"ready and connected to DOM, attaching event listeners",this.bind),this.bind)this[this.bind[t]]?this._eb_init_fn(t):console.warn(`${this.nodeName} could not bind event ${t} to ${this.bind[t]}`)}_eb_init_fn(t){this[this.bind[t]]=this[this.bind[t]].bind(this),this._eb_handlers[t]=(...e)=>{this.listening?(this._debugEventInterface&&console.log(this.nodeName,"received event",t,", triggering function:",this.bind[t]),this[this.bind[t]].apply(this,e)):this._debugEventInterface&&console.warn(this.nodeName,"ignoring",t,"event, element not listening")},n.on(t,this._eb_handlers[t])}disconnectedCallback(){if(super.disconnectedCallback(),this._debugEventInterface&&console.log(this.nodeName,"disconnected from DOM, removing event listeners"),this._eb_unregisterOnDetach&&this._eb_handlersSet)for(var t in this._eb_handlersSet=!1,this.bind){if(!this[this.bind[t]])continue;let e=n.listenerCount(t);n.removeListener(t,this._eb_handlers[t]),n.listenerCount(t)!==e-1&&console.warn(this.nodeName,"On element detach, failed to remove event listener for: ",t),this._debugEventInterface&&console.log(this.nodeName,"removing event listener for:",t)}}EventBus(){return n}_injectModel(...t){t.forEach(t=>{"string"==typeof t?this._injectModelStr(t):this._bindModelObj(t)})}_injectModelStr(t){this[t]=o.getModel(t),this._bindModelObj(this[t])}_bindModelObj(t){t.events&&this._registerModelEvents(t.events),t.store&&t.store.events&&this._registerModelEvents(t.store.events)}_registerModelEvents(t){for(var e in t){var i=this._getMethodNameFromEvent(t[e]);this[i]?(this._debugEventInterface&&console.log(this.nodeName,"auto-bind:",i+" -> "+t[e],!0),this.bind[t[e]]=i):this._debugEventInterface&&console.log(this.nodeName,"auto-bind:",i+" -> "+t[e],!1)}}_getMethodNameFromEvent(t){return"_on"+t.split("-").map(t=>t.charAt(0).toUpperCase()+t.slice(1)).join("")}emit(t,e){n.emit(t,e)}fire(t,e={}){this.dispatchEvent(new CustomEvent(t,{detail:e,bubbles:!0,composed:!0}))}debounce(t,e,i){this._debounce_handlers[t]&&clearTimeout(this._debounce_handlers[t]),this._debounce_handlers[t]=setTimeout(()=>{delete this._debounce_handlers[t],e()},i)}_onListenUpdate(){}});"undefined"!=typeof window&&(window.EventInterface=r),t.exports=r},function(t,e,i){const n=i(22),o=i(31),r=t=>(class extends t{static get properties(){return{listening:{type:Boolean}}}set bind(t){this._bind=Object.assign(this.bind,t)}get bind(){return this._bind||(this._bind={}),this._bind}constructor(){super(),this.bind={},this._eb_handlers={},this._eb_handlersSet=!1,this._eb_unregisterOnDetach=!0,this._debounce_handlers={},this.listening=!0}connectedCallback(){super.connectedCallback(),this._eb_init()}_eb_init(){if(!this._eb_handlersSet)for(var t in this._eb_handlersSet=!0,this._debugLitCorkUtils&&console.log(this.nodeName,"ready and connected to DOM, attaching event listeners",this.bind),this.bind)this[this.bind[t]]?this._eb_init_fn(t):console.warn(`${this.nodeName} could not bind event ${t} to ${this.bind[t]}`)}_eb_init_fn(t){this[this.bind[t]]=this[this.bind[t]].bind(this),this._eb_handlers[t]=(...e)=>{this.listening?(this._debugLitCorkUtils&&console.log(this.nodeName,"received event",t,", triggering function:",this.bind[t]),this[this.bind[t]].apply(this,e)):this._debugLitCorkUtils&&console.warn(this.nodeName,"ignoring",t,"event, element not listening")},n.on(t,this._eb_handlers[t])}disconnectedCallback(){if(super.disconnectedCallback(),this._debugLitCorkUtils&&console.log(this.nodeName,"disconnected from DOM, removing event listeners"),this._eb_unregisterOnDetach&&this._eb_handlersSet)for(var t in this._eb_handlersSet=!1,this.bind){if(!this[this.bind[t]])continue;let e=n.listenerCount(t);n.removeListener(t,this._eb_handlers[t]),n.listenerCount(t)!==e-1&&console.warn(this.nodeName,"On element detach, failed to remove event listener for: ",t),this._debugLitCorkUtils&&console.log(this.nodeName,"removing event listener for:",t)}}EventBus(){return n}_injectModel(...t){t.forEach(t=>{"string"==typeof t?this._injectModelStr(t):this._bindModelObj(t)})}_injectModelStr(t){this[t]=o.getModel(t),this._bindModelObj(this[t])}_bindModelObj(t){t.events&&this._registerModelEvents(t.events),t.store&&t.store.events&&this._registerModelEvents(t.store.events)}_registerModelEvents(t){for(var e in t){var i=this._getMethodNameFromEvent(t[e]);this[i]?(this._debugLitCorkUtils&&console.log(this.nodeName,"auto-bind:",i+" -> "+t[e],!0),this.bind[t[e]]=i):this._debugLitCorkUtils&&console.log(this.nodeName,"auto-bind:",i+" -> "+t[e],!1)}}_getMethodNameFromEvent(t){return"_on"+t.split("-").map(t=>t.charAt(0).toUpperCase()+t.slice(1)).join("")}emit(t,e){n.emit(t,e)}fire(t,e={}){this.dispatchEvent(new CustomEvent(t,{detail:e,bubbles:!0,composed:!0}))}byId(t){return this.shadowRoot?this.shadowRoot.querySelector("#"+t):this.querySelector("#"+t)}$(t){return this.shadowRoot?this.shadowRoot.querySelector(t):this.querySelector(t)}$$(t){return this.shadowRoot?this.shadowRoot.querySelectorAll(t):this.querySelector(t)}updated(t){t.has("listening")&&this._onListenUpdate()}_onListenUpdate(){}});"undefined"!=typeof window&&(window.LitCorkUtils=r),t.exports=r},function(t,e){t.exports=t=>(class extends t{_attachDom(t){if(window.ShadyDOM&&window.ShadyDOM.inUse)return super._attachDom(t);let e=t.querySelectorAll("style");for(var i=0;i<e.length;i++)e[i].parentNode.removeChild(e[i]),this._stylesInserted||(e[i].setAttribute("id",this.nodeName.toLowerCase()+"-styles"),document.head.appendChild(e[i]));return this.appendChild(t),t}querySelector(t){return this.shadowRoot?this.shadowRoot.querySelector(t):super.querySelector(t)}querySelectorAll(t){return this.shadowRoot?this.shadowRoot.querySelectorAll(t):super.querySelectorAll(t)}})},function(t,e,i){const{AppStateModel:n}=i(36),o=i(61);t.exports=new class extends n{constructor(){super(),this.store=o,this.DEFAULT_VIEW="home",this.EventBus.on(this.store.events.APP_STATE_UPDATE,()=>this._sendGA()),this._sendGA()}setSelectedClusterIds(t){let e=this.store.data;return e.selectedNode?"cluster"!==e.selectedNode.type?console.warn("Attempting to set cluster ids, but selected object is not a cluster"):(e.selectedNode.ids=t,super.set(e)):console.warn("Attempting to set cluster ids, but no selected object")}set(t){if(t.location){let e=t.location.path?t.location.path[0]:this.DEFAULT_VIEW;t.page=e||this.DEFAULT_VIEW}return"map"===t.page&&t.location.path.length>=1&&(t.moment=t.location.path[1]),"moment"===t.page&&(t.moment=t.location.path[1]),"map"===t.page&&t.location.path.length>=3?(t.selectedNode={type:t.location.path[2]},"cluster"===t.location.path[2]?(t.selectedNode.latlng=t.location.path[3].split(",").map(t=>parseFloat(t)),t.selectedNode.zoom=parseInt(t.location.path[4])):t.selectedNode.id=t.location.path[3]):t.selectedNode=null,t.moment||(t.moment=APP_CONFIG.moments[0]),super.set(t)}_sendGA(){if(!window.gtag)return console.warn("No global gtag variable set for analytics events");this.lastGaLocation!==window.location.pathname&&(this.lastGaLocation=window.location.pathname,gtag("config",APP_CONFIG.gaCode,{page_path:window.location.pathname}))}}},function(t,e,i){var{BaseModel:n}=i(15);t.exports=class extends n{constructor(){super(),this.register("AppStateModel")}setLocationElement(t){this.locationElement=t}setLocation(t){if(!this.locationElement)return console.warn("Call to setWindowLocation but no locationElement set");this.locationElement.setWindowLocation(t)}async get(){return this.store.data}set(t){return this.store.set(t),this.get()}}},function(t,e,i){const{BaseStore:n}=i(15);t.exports=class extends n{constructor(){super(),this.data={location:{}},this.events={APP_STATE_UPDATE:"app-state-update"}}set(t){this.stateChanged(this.data,t)&&(this.data=Object.assign({},this.data,t),this.emit(this.events.APP_STATE_UPDATE,this.data))}get(){return this.data}}},function(t,e,i){"use strict";t.exports=function(t){return encodeURIComponent(t).replace(/[!'()*]/g,(function(t){return"%"+t.charCodeAt(0).toString(16).toUpperCase()}))}},function(t,e,i){"use strict";
 /*
 object-assign
 (c) Sindre Sorhus
@@ -776,39 +776,38 @@ const Z=(t,e)=>`${t}--${e}`;let F=!0;void 0===window.ShadyCSS?F=!1:void 0===wind
   }
 </style>
 `;function ht(){return j`
+  ${lt}
+  <style>
+    :host {
+      display: block;
+      min-height: 100vh;
+    }
 
-${lt}
-<style>
-  :host {
-    display: block;
-    min-height: 100vh;
-  }
+    iron-pages {
+      flex: 1;
+      align-self: stretch;
+      position: relative;
+    }
 
-  iron-pages {
-    flex: 1;
-    align-self: stretch;
-    position: relative;
-  }
+    .layout {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
 
-  .layout {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-</style>
+  <app-route .appRoutes="${this.appRoutes}"></app-route>
 
-<app-route .appRoutes="${this.appRoutes}"></app-route>
+  <div class="layout">
+    <app-header></app-header>
 
-<div class="layout">
-  <app-header></app-header>
-
-  <iron-pages selected="${this.view}" attr-for-selected="id" selected-attribute="visible">
-    <app-home id="home"></app-home>
-    <app-about id="about"></app-about>
-    <app-moment id="moment"></app-moment>
-    <app-view-map id="map"></app-view-map>
-  </iron-pages>
-</div>
+    <iron-pages selected="${this.view}" attr-for-selected="id" selected-attribute="visible">
+      <app-home id="home"></app-home>
+      <app-about id="about"></app-about>
+      <app-moment id="moment"></app-moment>
+      <app-view-map id="map"></app-view-map>
+    </iron-pages>
+  </div>
 `}i(43),i(15);var ct=i(38),dt=i.n(ct),ut=i(11),pt=i(5),ft=i(2),mt=new Set;const _t={properties:{_parentResizable:{type:Object,observer:"_parentResizableChanged"},_notifyingDescendant:{type:Boolean,value:!1}},listeners:{"iron-request-resize-notifications":"_onIronRequestResizeNotifications"},created:function(){this._interestedResizables=[],this._boundNotifyResize=this.notifyResize.bind(this),this._boundOnDescendantIronResize=this._onDescendantIronResize.bind(this)},attached:function(){this._requestResizeNotifications()},detached:function(){this._parentResizable?this._parentResizable.stopResizeNotificationsFor(this):(mt.delete(this),window.removeEventListener("resize",this._boundNotifyResize)),this._parentResizable=null},notifyResize:function(){this.isAttached&&(this._interestedResizables.forEach((function(t){this.resizerShouldNotify(t)&&this._notifyDescendant(t)}),this),this._fireResize())},assignParentResizable:function(t){this._parentResizable&&this._parentResizable.stopResizeNotificationsFor(this),this._parentResizable=t,t&&-1===t._interestedResizables.indexOf(this)&&(t._interestedResizables.push(this),t._subscribeIronResize(this))},stopResizeNotificationsFor:function(t){var e=this._interestedResizables.indexOf(t);e>-1&&(this._interestedResizables.splice(e,1),this._unsubscribeIronResize(t))},_subscribeIronResize:function(t){t.addEventListener("iron-resize",this._boundOnDescendantIronResize)},_unsubscribeIronResize:function(t){t.removeEventListener("iron-resize",this._boundOnDescendantIronResize)},resizerShouldNotify:function(t){return!0},_onDescendantIronResize:function(t){this._notifyingDescendant?t.stopPropagation():ft.i||this._fireResize()},_fireResize:function(){this.fire("iron-resize",null,{node:this,bubbles:!1})},_onIronRequestResizeNotifications:function(t){var e=Object(pt.a)(t).rootTarget;e!==this&&(e.assignParentResizable(this),this._notifyDescendant(e),t.stopPropagation())},_parentResizableChanged:function(t){t&&window.removeEventListener("resize",this._boundNotifyResize)},_notifyDescendant:function(t){this.isAttached&&(this._notifyingDescendant=!0,t.notifyResize(),this._notifyingDescendant=!1)},_requestResizeNotifications:function(){if(this.isAttached)if("loading"===document.readyState){var t=this._requestResizeNotifications.bind(this);document.addEventListener("readystatechange",(function e(){document.removeEventListener("readystatechange",e),t()}))}else this._findParent(),this._parentResizable?this._parentResizable._interestedResizables.forEach((function(t){t!==this&&t._findParent()}),this):(mt.forEach((function(t){t!==this&&t._findParent()}),this),window.addEventListener("resize",this._boundNotifyResize),this.notifyResize())},_findParent:function(){this.assignParentResizable(null),this.fire("iron-request-resize-notifications",null,{node:this,bubbles:!0,cancelable:!0}),this._parentResizable?mt.delete(this):mt.add(this)}};var gt=i(14);
 /**
 @license
@@ -1346,83 +1345,82 @@ Object(bt.a)({is:"iron-iconset-svg",properties:{name:{type:String,observer:"_nam
 </g>
 </defs></svg>
 </iron-iconset-svg>`;function Mt(){return j`
-
-<style>
-  :host {
-    display: block;
-    width: 100%;
-    height: 60px;
-    background-color: black;
-    color: white;
-    z-index: 10000;
-  }
-
-  .layout {
-    margin: 0 0 0 20px;
-    display: flex;
-    height: 100%;
-    align-items: center;
-    -webkit-box-shadow: -2px 0px 6px 0px rgba(50, 50, 50, 0.75);
-    -moz-box-shadow:    -2px 0px 6px 0px rgba(50, 50, 50, 0.75);
-    box-shadow:         -2px 0px 6px 0px rgba(50, 50, 50, 0.75);
-  }
-
-  h1 {
-    font-weight: 400;
-    margin: 0;
-    padding: 0;
-    flex: 1;
-  }
-
-  .title-extra {
-    font-weight: 200;
-  }
-
-  a {
-    display: inline-block;
-    cursor: pointer;
-    color: white;
-    text-decoration: none;
-  }
-
-  .about:hover {
-    font-weight: bold;
-  }
-
-  .image {
-    padding: 15px 20px;
-    background-color: var(--app-color-interface-blue );
-  }
-
-  .image:hover {
-    background-color: var(--app-color-secondary-blue);
-  }
-
-  img {
-    vertical-align: middle;
-  }
-
-  @media(max-width: 825px) {
-    .title-extra {
-      display: none;
+  <style>
+    :host {
+      display: block;
+      width: 100%;
+      height: 60px;
+      background-color: var(--app-color-black);
+      color: var(--app-color-white);
+      z-index: 10000;
     }
-  }
-</style>
 
-<header class="layout">
-  <h1>
-    <span><a href="${this.baseUrl}">intertWINE</a></span>
-    <span class="title-extra">// California's Modern Wine Network<span>
-  </h1>
-  <div class="about" style="padding-right: 20px;">
-    <a @click="${this._onAboutClick}">ABOUT</a>
-  </div>
-  <div class="image">
-    <a href="https://www.library.ucdavis.edu/" target="_blank">
-      <img src="/images/ucd-lib-logo-white.png" />
-    </a>
-  </div>
-</header>
+    .layout {
+      margin: 0 0 0 20px;
+      display: flex;
+      height: 100%;
+      align-items: center;
+      -webkit-box-shadow: -2px 0px 6px 0px rgba(50, 50, 50, 0.75);
+      -moz-box-shadow:    -2px 0px 6px 0px rgba(50, 50, 50, 0.75);
+      box-shadow:         -2px 0px 6px 0px rgba(50, 50, 50, 0.75);
+    }
+
+    h1 {
+      font-weight: 400;
+      margin: 0;
+      padding: 0;
+      flex: 1;
+    }
+
+    .title-extra {
+      font-weight: 200;
+    }
+
+    a {
+      display: inline-block;
+      cursor: pointer;
+      color: var(--app-color-white);
+      text-decoration: none;
+    }
+
+    .about:hover {
+      font-weight: bold;
+    }
+
+    .image {
+      padding: 15px 20px;
+      background-color: var(--app-color-interface-blue );
+    }
+
+    .image:hover {
+      background-color: var(--app-color-secondary-blue);
+    }
+
+    img {
+      vertical-align: middle;
+    }
+
+    @media(max-width: 825px) {
+      .title-extra {
+        display: none;
+      }
+    }
+  </style>
+
+  <header class="layout">
+    <h1>
+      <span><a href="${this.baseUrl}">intertWINE</a></span>
+      <span class="title-extra">// California's Modern Wine Network<span>
+    </h1>
+    <div class="about" style="padding-right: 20px;">
+      <a @click="${this._onAboutClick}">ABOUT</a>
+    </div>
+    <div class="image">
+      <a href="https://www.library.ucdavis.edu/" target="_blank">
+        <img src="/images/ucd-lib-logo-white.png" />
+      </a>
+    </div>
+  </header>
 `}
 /**
  * @license
@@ -1437,394 +1435,380 @@ Object(bt.a)({is:"iron-iconset-svg",properties:{name:{type:String,observer:"_nam
  * subject to an additional IP rights grant found at
  * http://polymer.github.io/PATENTS.txt
  */document.head.appendChild(St.content);const Pt=new WeakMap,kt=(t=>(...e)=>{const i=t(...e);return n.set(i,!0),i})(t=>e=>{if(!(e instanceof S))throw new Error("unsafeHTML can only be used in text bindings");const i=Pt.get(e);if(void 0!==i&&w(t)&&t===i.value&&e.value===i.fragment)return;const n=document.createElement("template");n.innerHTML=t;const o=document.importNode(n.content,!0);e.setValue(o),Pt.set(e,{value:t,fragment:o})});function Tt(){return j`
-
-${lt}
-<style>
-  :host {
-    display: block;
-    background: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, .5);
-  }
-
-  a.internal {
-    display: inline;
-  }
-
-  .toggle {
-    background-color: var(--app-primary-color);
-    color: white;
-    width: 35px;
-    height: 50px;
-    position: absolute;
-    right: -35px;
-    bottom: 35px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  /* .toggle-sm {
-    display: none;
-  } */
-
-  .content {
-    overflow: auto;
-    height: 100%;
-    position: relative;
-  }
-
-  .content[moment-view] {
-    color: var(--app-color-white);
-    background-color: var(--app-color-interface-blue);
-  }
-
-  .moment-break {
-    margin-top: 50px;
-    border-bottom: 1px solid white;
-    margin-bottom: 18px;
-  }
-
-  #momentDescription {
-    padding-bottom: 18px;
-  }
-  #momentDescription p {
-    color: var(--app-color-white);
-  }
-
-  .content-padding {
-    padding: 30px 25px;
-  }
-
-  h3 {
-    margin-bottom: 5px;
-  }
-
-  .image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    height: 300px;
-
-    background-color: var(--app-color-smoke);
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-  .image iron-icon {
-    background-color: var(--app-color-smoke) !important;
-    --iron-icon-height: 150px;
-    --iron-icon-width: 150px;
-  }
-
-  .subject-type {
-    margin-bottom: 10px;
-  }
-
-  ul.events,
-  ul.related-links {
-    margin: 0;
-    padding: 0;
-  }
-
-  ul.events li,
-  ul.related-links li {
-    list-style-type: none;
-  }
-
-  #description > p {
-    padding: 14px 0 18px 9;
-  }
-
-  .location, .date {
-    font-style: italic;
-  }
-
-  .sub-title {
-    font-weight: bold;
-  }
-
-  .color-break {
-    height: 5px;
-    position: relative;
-  }
-
-  iron-icon[type] {
-    color: var(--app-color-white);
-    border-radius: 24px;
-    padding: 2px;
-  }
-
-  .color-break iron-icon {
-    position: absolute;
-    --iron-icon-height: 38px;
-    --iron-icon-width: 38px;
-    border-radius: 50px;
-    padding: 6px;
-    top: -21px;
-    right: 32px;
-    color: var(--app-color-white);
-  }
-
-  .dot {
-    display: inline-block;
-    height: 8px;
-    width: 8px;
-    margin: 8px 16px 8px 8px;
-    vertical-align: middle;
-    border-radius: 8px;
-  }
-
-  .subject-label {
-    margin-top: 15px;
-  }
-  .subject-label span {
-    margin-left: 3px;
-    vertical-align: bottom;
-  }
-
-  .type-color[type="cluster"], .type-color[type="connection"] {
-    color: var(--app-color-interface-blue);
-  }
-  .color-break[type="cluster"], iron-icon[type="cluster"],
-  .color-break[type="connection"], iron-icon[type="connection"] {
-    background-color: var(--app-color-interface-blue);
-  }
-  iron-icon.external-link[type="cluster"],
-  iron-icon.external-link[type="connection"] {
-    background-color: transparent;
-    fill: var(--app-color-interface-blue);
-  }
-  .image[type="cluster"] {
-    height: 200px;
-  }
-
-  .type-color[type="person"] {
-    color: var(--app-color-scarlet);
-  }
-  .color-break[type="person"], iron-icon[type="person"], .dot[type="person"] {
-    background-color: var(--app-color-scarlet);
-  }
-  iron-icon.external-link[type="person"] {
-    background-color: transparent;
-    fill: var(--app-color-scarlet);
-  }
-
-  .type-color[type="place"] {
-    color: var(--app-color-vine);
-  }
-  .color-break[type="place"], iron-icon[type="place"], .dot[type="place"] {
-    background-color: var(--app-color-vine);
-  }
-  iron-icon.external-link[type="place"] {
-    background-color: transparent;
-    fill: var(--app-color-vine);
-  }
-
-  .type-color[type="event"] {
-    color: var(--app-color-rose);
-  }
-  .color-break[type="event"], iron-icon[type="event"], .dot[type="event"] {
-    background-color: var(--app-color-rose);
-  }
-  iron-icon.external-link[type="event"] {
-    background-color: transparent;
-    fill: var(--app-color-rose);
-  }
-
-  .type-color[type="object"] {
-    color: var(--app-color-grape);
-  }
-  .color-break[type="object"], iron-icon[type="object"], .dot[type="object"] {
-    background-color: var(--app-color-grape);
-  }
-  iron-icon.external-link[type="object"] {
-    background-color: transparent;
-    fill: var(--app-color-interface-blue);
-  }
-
-  .connection-image-layout {
-    display: flex;
-  }
-  .connection-image-layout > div {
-    flex: 1;
-  }
-  .connection-image-layout > div:first-child {
-    border-right: 2px solid var(--app-color-white);
-  }
-  .connection-image-layout > div:nth-child(2) {
-    border-left: 2px solid var(--app-color-white);
-  }
-
-  @media(max-width: 600px) {
-    .toggle {
-      /* display: none; */
-      width: 50px;
-      height: 35px;
-      position: absolute;
-      right: initial;
-      top: -35px;
-      left: 35px;
-    }
-    .toggle iron-icon {
-      transform: rotate(-90deg);
-    }
-
-    .toggle-sm {
+  ${lt}
+  <style>
+    :host {
       display: block;
+      background: var(--app-color-white);
+      box-shadow: 0 0 5px rgba(0, 0, 0, .5);
     }
-  }
-</style>
 
-<div class="content" ?moment-view="${this.isMoment}">
-  <!--
-  <div class="toggle-sm" tabindex="0" @click="${this._fireToggleEvent}" @key-up="${this._onToggleKeyUp}">
-    <iron-icon icon="close"></iron-icon>
-  </div>
-  -->
+    a.internal {
+      display: inline;
+    }
 
-  <div ?hidden="${this.isMoment}">
-    <div ?hidden="${this.isLink}">
-      <div id="singleImage" class="image" type="${this.type}">
-        <iron-icon ?hidden="${this.thumbnail}" class="type-color" type="${this.type}" icon="intert-wine-icons:${this.type}"></iron-icon>
+    .toggle {
+      background-color: var(--app-primary-color);
+      color: var(--app-color-white);
+      width: 35px;
+      height: 50px;
+      position: absolute;
+      right: -35px;
+      bottom: 35px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .content {
+      overflow: auto;
+      height: 100%;
+      position: relative;
+    }
+
+    .content[moment-view] {
+      color: var(--app-color-white);
+      background-color: var(--app-color-interface-blue);
+    }
+
+    .moment-break {
+      margin-top: 50px;
+      border-bottom: 1px solid var(--app-color-white);
+      margin-bottom: 18px;
+    }
+
+    #momentDescription {
+      padding-bottom: 18px;
+    }
+    #momentDescription p {
+      color: var(--app-color-white);
+    }
+
+    .content-padding {
+      padding: 30px 25px;
+    }
+
+    h3 {
+      margin-bottom: 5px;
+    }
+
+    .image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      height: 300px;
+
+      background-color: var(--app-color-smoke);
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    .image iron-icon {
+      background-color: var(--app-color-smoke) !important;
+      --iron-icon-height: 150px;
+      --iron-icon-width: 150px;
+    }
+
+    .subject-type {
+      margin-bottom: 10px;
+    }
+
+    ul.events,
+    ul.related-links {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul.events li,
+    ul.related-links li {
+      list-style-type: none;
+    }
+
+    #description > p {
+      padding: 14px 0 18px 9;
+    }
+
+    .location, .date {
+      font-style: italic;
+    }
+
+    .sub-title {
+      font-weight: bold;
+    }
+
+    .color-break {
+      height: 5px;
+      position: relative;
+    }
+
+    iron-icon[type] {
+      color: var(--app-color-white);
+      border-radius: 24px;
+      padding: 2px;
+    }
+
+    .color-break iron-icon {
+      position: absolute;
+      --iron-icon-height: 38px;
+      --iron-icon-width: 38px;
+      border-radius: 50px;
+      padding: 6px;
+      top: -21px;
+      right: 32px;
+      color: var(--app-color-white);
+    }
+
+    .dot {
+      display: inline-block;
+      height: 8px;
+      width: 8px;
+      margin: 8px 16px 8px 8px;
+      vertical-align: middle;
+      border-radius: 8px;
+    }
+
+    .subject-label {
+      margin-top: 15px;
+    }
+    .subject-label span {
+      margin-left: 3px;
+      vertical-align: bottom;
+    }
+
+    .type-color[type="cluster"], .type-color[type="connection"] {
+      color: var(--app-color-interface-blue);
+    }
+    .color-break[type="cluster"], iron-icon[type="cluster"],
+    .color-break[type="connection"], iron-icon[type="connection"] {
+      background-color: var(--app-color-interface-blue);
+    }
+    iron-icon.external-link[type="cluster"],
+    iron-icon.external-link[type="connection"] {
+      background-color: transparent;
+      fill: var(--app-color-interface-blue);
+    }
+    .image[type="cluster"] {
+      height: 200px;
+    }
+
+    .type-color[type="person"] {
+      color: var(--app-color-scarlet);
+    }
+    .color-break[type="person"], iron-icon[type="person"], .dot[type="person"] {
+      background-color: var(--app-color-scarlet);
+    }
+    iron-icon.external-link[type="person"] {
+      background-color: transparent;
+      fill: var(--app-color-scarlet);
+    }
+
+    .type-color[type="place"] {
+      color: var(--app-color-vine);
+    }
+    .color-break[type="place"], iron-icon[type="place"], .dot[type="place"] {
+      background-color: var(--app-color-vine);
+    }
+    iron-icon.external-link[type="place"] {
+      background-color: transparent;
+      fill: var(--app-color-vine);
+    }
+
+    .type-color[type="event"] {
+      color: var(--app-color-rose);
+    }
+    .color-break[type="event"], iron-icon[type="event"], .dot[type="event"] {
+      background-color: var(--app-color-rose);
+    }
+    iron-icon.external-link[type="event"] {
+      background-color: transparent;
+      fill: var(--app-color-rose);
+    }
+
+    .type-color[type="object"] {
+      color: var(--app-color-grape);
+    }
+    .color-break[type="object"], iron-icon[type="object"], .dot[type="object"] {
+      background-color: var(--app-color-grape);
+    }
+    iron-icon.external-link[type="object"] {
+      background-color: transparent;
+      fill: var(--app-color-interface-blue);
+    }
+
+    .connection-image-layout {
+      display: flex;
+    }
+    .connection-image-layout > div {
+      flex: 1;
+    }
+    .connection-image-layout > div:first-child {
+      border-right: 2px solid var(--app-color-white);
+    }
+    .connection-image-layout > div:nth-child(2) {
+      border-left: 2px solid var(--app-color-white);
+    }
+
+    @media(max-width: 600px) {
+      .toggle {
+        width: 50px;
+        height: 35px;
+        position: absolute;
+        right: initial;
+        top: -35px;
+        left: 35px;
+      }
+      .toggle iron-icon {
+        transform: rotate(-90deg);
+      }
+
+      .toggle-sm {
+        display: block;
+      }
+    }
+  </style>
+
+  <div class="content" ?moment-view="${this.isMoment}">
+    <div ?hidden="${this.isMoment}">
+      <div ?hidden="${this.isLink}">
+        <div id="singleImage" class="image" type="${this.type}">
+          <iron-icon ?hidden="${this.thumbnail}" class="type-color" type="${this.type}" icon="intert-wine-icons:${this.type}"></iron-icon>
+        </div>
+      </div>
+
+      <div ?hidden="${!this.isLink}">
+        <div class="connection-image-layout">
+          <div class="image" type="${this.srctype}">
+            <iron-icon class="type-color" type="${this.srctype}" icon="intert-wine-icons:${this.srctype}"></iron-icon>
+          </div>
+          <div class="image" type="${this.dsttype}">
+            <iron-icon class="type-color" type="${this.dsttype}" icon="intert-wine-icons:${this.dsttype}"></iron-icon>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-break" type="${this.type}">
+        <iron-icon icon="intert-wine-icons:${this.type}" type="${this.type}"></iron-icon>
       </div>
     </div>
 
-    <div ?hidden="${!this.isLink}">
-      <div class="connection-image-layout">
-        <div class="image" type="${this.srctype}">
-          <iron-icon class="type-color" type="${this.srctype}" icon="intert-wine-icons:${this.srctype}"></iron-icon>
+    <div class="content-padding">
+      <iron-pages selected="${this.view}" attr-for-selected="id">
+        <!-- START EMPTY -->
+        <div id="moment">
+          <div class="subject-type">Explore</div>
+
+          <h1 style="margin-bottom: 3px" class="inverse">${this.momentInfo.title}</h1>
+          <h2 style="margin: 0 0 14px 0" class="inverse">${this.momentInfo.date}</h2>
+          <div>
+            Select a subject on the map to learn about their
+            connections to California wine history.
+          </div>
+
+          <div class="moment-break"></div>
+
+          <div ?hidden="${!this.momentEntryPoint}">
+            <h3 class="inverse">Connections in Context</h3>
+            <div id="momentDescription"></div>
+
+            <a class="btn inverse" ?hidden="${!this.momentEntryPointUrl}" href="${this.momentEntryPointUrl}">
+              Read Story
+            </a>
+          </div>
         </div>
-        <div class="image" type="${this.dsttype}">
-          <iron-icon class="type-color" type="${this.dsttype}" icon="intert-wine-icons:${this.dsttype}"></iron-icon>
-        </div>
-      </div>
-    </div>
-
-    <div class="color-break" type="${this.type}">
-      <iron-icon icon="intert-wine-icons:${this.type}" type="${this.type}"></iron-icon>
-    </div>
-  </div>
-
-  <div class="content-padding">
-    <iron-pages selected="${this.view}" attr-for-selected="id">
-      <!-- START EMPTY -->
-      <div id="moment">
-        <div class="subject-type">Explore</div>
-
-        <!--<app-moments-dropdown></app-moments-dropdown>-->
-
-        <h1 style="margin-bottom: 3px" class="inverse">${this.momentInfo.title}</h1>
-        <h2 style="margin: 0 0 14px 0" class="inverse">${this.momentInfo.date}</h2>
-        <div>
-          Select a subject on the map to learn about their
-          connections to California wine history.
-        </div>
-
-        <div class="moment-break"></div>
-
-        <div ?hidden="${!this.momentEntryPoint}">
-          <h3 class="inverse">Connections in Context</h3>
-          <div id="momentDescription"></div>
-
-          <a class="btn inverse" ?hidden="${!this.momentEntryPointUrl}" href="${this.momentEntryPointUrl}">
-            Read Story
-          </a>
-        </div>
-      </div>
-      <!-- END EMPTY -->
+        <!-- END EMPTY -->
 
 
-      <!-- START CLUSTER -->
-      <div id="cluster">
-        <h3>Select a Subject</h3>
+        <!-- START CLUSTER -->
+        <div id="cluster">
+          <h3>Select a Subject</h3>
 
-        ${this.clusterSubjectTypes.map(t=>j`
-          <div ?hidden="${!this.clusterSubjects[t].enabled}">
-            <div class="subject-label">
-              <iron-icon icon="intert-wine-icons:${t}" type="${t}"></iron-icon>
-              <span class="subject-type type-color" type="${t}">${this.clusterSubjects[t].label}</span>
+          ${this.clusterSubjectTypes.map(t=>j`
+            <div ?hidden="${!this.clusterSubjects[t].enabled}">
+              <div class="subject-label">
+                <iron-icon icon="intert-wine-icons:${t}" type="${t}"></iron-icon>
+                <span class="subject-type type-color" type="${t}">${this.clusterSubjects[t].label}</span>
+              </div>
+              ${this.clusterSubjects[t].nodes.map(e=>j`
+                <div>
+                  <div class="dot" type="${t}"></div>
+                  <span>
+                    <a class="internal" href="/map/${this.moment}/${t}/${e["@id"]}">${e.name}</a>
+                  </span>
+                </div>
+              `)}
             </div>
-            ${this.clusterSubjects[t].nodes.map(e=>j`
+          `)}
+        </div>
+        <!-- END CLUSTER -->
+
+        <!-- START ITEM -->
+        <div id="item">
+          <div class="subject-type type-color" type="${this.type}">${this.type}</div>
+
+          <div ?hidden="${!this.isLink}">
+            <h3>About the Connection</h3>
+            <h2>${this.title}</h2>
+          </div>
+
+          <div ?hidden="${!this.isNode}">
+            <h1 style="margin-bottom: 3px">${this.title}</h1>
+            <h2 style="margin: 0">${this.location}</h2>
+            <h2 style="margin: 0 0 14px 0">${this.date}</h2>
+          </div>
+
+          <!-- Filled from inside the parent js file -->
+          <div id="description"></div>
+
+          <div ?hidden="${!this.isNode}">
+            ${this.hasConnections?j`<h3 style="margin: 0 0 5px 0">Explore Connections</h3>`:j``}
+            <div>
+              ${this.connections.map(t=>j`
+                <div>
+                  <div class="dot" type="${t.node.type}"></div>
+                  <a class="internal" href="/map/${this.moment}/connection/${t.link["@id"]}">
+                  ${this.shortConnection?j`${kt(t.link.name)}`:j`<strong><em>${t.link.name}</em></strong>&nbsp;${t.node.name}`}
+                  </a>
+                </div>
+              `)}
+            </div>
+          </div>
+          <div ?hidden="${!this.isLink}">
+            <h3>Connections Subjects</h3>
+            ${this.connectionSubjects.map(t=>j`
               <div>
-                <div class="dot" type="${t}"></div>
+                <div class="dot" type="${t.type}"></div>
                 <span>
-                  <a class="internal" href="/map/${this.moment}/${t}/${e["@id"]}">${e.name}</a>
+                  <a class="internal" href="/map/${this.moment}/${t.type}/${t["@id"]}">
+                    ${t.name}
+                  </a>
                 </span>
               </div>
             `)}
           </div>
-        `)}
-      </div>
-      <!-- END CLUSTER -->
 
-      <!-- START ITEM -->
-      <div id="item">
-        <div class="subject-type type-color" type="${this.type}">${this.type}</div>
-
-        <div ?hidden="${!this.isLink}">
-          <h3>About the Connection</h3>
-          <h2>${this.title}</h2>
-        </div>
-
-        <div ?hidden="${!this.isNode}">
-          <h1 style="margin-bottom: 3px">${this.title}</h1>
-          <h2 style="margin: 0">${this.location}</h2>
-          <h2 style="margin: 0 0 14px 0">${this.date}</h2>
-        </div>
-
-        <!-- Filled from inside the parent js file -->
-        <div id="description"></div>
-
-        <div ?hidden="${!this.isNode}">
-          ${this.hasConnections?j`<h3 style="margin: 0 0 5px 0">Explore Connections</h3>`:j``}
-          <div>
-            ${this.connections.map(t=>j`
-              <div>
-                <div class="dot" type="${t.node.type}"></div>
-                <a class="internal" href="/map/${this.moment}/connection/${t.link["@id"]}">
-                ${this.shortConnection?j`${kt(t.link.name)}`:j`<strong><em>${t.link.name}</em></strong>&nbsp;${t.node.name}`}
-                </a>
-              </div>
+          <div ?hidden="${!this.relatedLinks.length}">
+            <h3>Learn More</h3>
+            <ul class="related-links">
+            ${this.relatedLinks.map(t=>j`
+              <li>
+                <iron-icon class="external-link" icon="intert-wine-icons:link" type="${this.type}"></iron-icon>
+                <a class="external type-color" type="${this.type}" href="${t.full}" target="_blank">${t.short}</a>
+              </li>
             `)}
+            </ul>
           </div>
         </div>
-        <div ?hidden="${!this.isLink}">
-          <h3>Connections Subjects</h3>
-          ${this.connectionSubjects.map(t=>j`
-            <div>
-              <div class="dot" type="${t.type}"></div>
-              <span>
-                <a class="internal" href="/map/${this.moment}/${t.type}/${t["@id"]}">
-                  ${t.name}
-                </a>
-              </span>
-            </div>
-          `)}
-        </div>
+        <!-- END ITEM -->
+      </iron-pages>
+    </div>
 
-        <div ?hidden="${!this.relatedLinks.length}">
-          <h3>Learn More</h3>
-          <ul class="related-links">
-          ${this.relatedLinks.map(t=>j`
-            <li>
-              <iron-icon class="external-link" icon="intert-wine-icons:link" type="${this.type}"></iron-icon>
-              <a class="external type-color" type="${this.type}" href="${t.full}" target="_blank">${t.short}</a>
-            </li>
-          `)}
-          </ul>
-        </div>
-      </div>
-      <!-- END ITEM -->
-    </iron-pages>
   </div>
 
-</div>
-
-<div class="toggle" ?open="${this.open}" tabindex="0" @click="${this._fireToggleEvent}" @key-up="${this._onToggleKeyUp}">
-  <iron-icon icon="chevron-right" ?hidden="${this.open}"></iron-icon>
-  <iron-icon icon="chevron-left" ?hidden="${!this.open}"></iron-icon>
-</div>
+  <div class="toggle" ?open="${this.open}" tabindex="0" @click="${this._fireToggleEvent}" @key-up="${this._onToggleKeyUp}">
+    <iron-icon icon="chevron-right" ?hidden="${this.open}"></iron-icon>
+    <iron-icon icon="chevron-left" ?hidden="${!this.open}"></iron-icon>
+  </div>
 
 `}var Et=i(30);
 /**
@@ -2148,38 +2132,12 @@ found at http://polymer.github.io/PATENTS.txt
 <g id="zoom-in"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zm2.5-4h-2v2H9v-2H7V9h2V7h1v2h2v1z"></path></g>
 <g id="zoom-out"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM7 9h5v1H7z"></path></g>
 </defs></svg>
-</iron-iconset-svg>`;function At(){return j`
+</iron-iconset-svg>`;document.head.appendChild(Ot.content);class At extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{open:{type:Boolean,reflect:!0},moment:{type:String},momentInfo:{type:Object},momentEntryPointUrl:{type:String},endpoint:{type:String},type:{type:String},srctype:{type:String},dsttype:{type:String},view:{type:String},title:{type:String},date:{type:String},events:{type:Array},connections:{type:Array},isNode:{type:Boolean},isLink:{type:Boolean},isMoment:{type:Boolean},relatedLinks:{type:Array},selectedIndex:{type:Number},hasConnections:{type:Boolean},shortConnection:{type:Boolean},connectionSubjects:{type:Array},clusterSubjects:{type:Object},clusterSubjectTypes:{type:Array}}}constructor(){super(),this.open=!0,this.title="",this.date="",this.view="",this.type="",this.description="",this.thumbnail="",this.srctype="",this.dsttype="",this.connections=[],this.isLink=!1,this.isNode=!1,this.isMoment=!1,this.moment="",this.momentInfo={},this.momentEntryPointUrl="",this.relatedLinks=[],this.events=[],this.shortConnection=!1,this.endpoint=APP_CONFIG.endpoint,this.hasConnections=!1,this.connectionSubjects=[],this.clusterSubjectTypes=["person","place","object","event"],this.resetClusterSubjects(),this.render=Tt.bind(this),this._injectModel("AppStateModel","MomentModel")}_onMomentGraphUpdate(t){"loaded"===t.state&&this.renderState(t.payload)}_onAppStateUpdate(t){this.moment=t.moment,this.selected=t.selectedNode,this.renderState()}firstUpdated(){this.descriptionEle=this.shadowRoot.querySelector("#description"),this.momentDescEle=this.shadowRoot.querySelector("#momentDescription"),this.singleImage=this.shadowRoot.querySelector("#singleImage")}updated(){this.isLink&&(this.title=""),this.connections.length>0?this.hasConnections=!0:this.hasConnections=!1}renderState(t){if(t){this.momentInfo=t,this.momentDescEle.innerHTML=Et.markdown.toHTML(t.description||""),this.momentEntryPointUrl="",this.events=[];for(let e in t.graph.nodes)"event"===t.graph.nodes[e].type&&this.events.push(t.graph.nodes[e]);this.events.length>0&&(this.momentInfo.title=this.events[0].name,this.events[0].temporal&&(this.momentInfo.date=this.events[0].temporal.replace("/"," - ")),this.momentEntryPoint=this.events[0].name,this.momentEntryPointUrl=`/map/${this.moment}/${this.events[0].type}/${this.events[0]["@id"]}`),this.graph=t.graph}if(this.isLink=!1,this.isNode=!1,this.isMoment=!1,this.thumbnail="",this.singleImage.style.backgroundImage="initial",this.selected){if(this.graph)if(this.type=this.selected.type,"cluster"===this.type)this.selected.ids&&this.renderCluster(this.selected.ids.map(t=>this.graph.nodes[t]));else if("connection"===this.type){this.isLink=!0;let t=this.graph.links[this.selected.id];this.renderItem(t)}else{this.isNode=!0;let t=this.graph.nodes[this.selected.id];this.renderItem(t)}}else this.renderEmpty()}renderEmpty(){if(!this.moment)return this.view="empty",void(this.type="empty");this.type="moment",this.view="moment",this.isMoment=!0}renderCluster(t){this.view="cluster",this.resetClusterSubjects(),t.forEach(t=>{this.clusterSubjects[t.type]&&(this.clusterSubjects[t.type].enabled=!0,this.clusterSubjects[t.type].nodes.push(t))});for(let t in this.clusterSubjects)this.clusterSubjects[t].nodes.sort((t,e)=>t.name>e.name?1:-1)}renderItem(t){this.view="item",this.title=t.name||"",this.location=t.location||"";let e="";if(void 0!==t.temporal&&(e=t.temporal.replace("/"," - ")),this.date=e||"",!1!==t.description&&"string"==typeof t.description&&(this.descriptionEle.innerHTML=Et.markdown.toHTML(t.description||"")),t.thumbnail&&(this.thumbnail=this.endpoint+"/"+this.moment+"/"+t.thumbnail.replace("z:",""),this.singleImage.style.backgroundImage="url("+this.thumbnail+")"),this.relatedLinks=[],Array.isArray(t.relatedLink)?this.relatedLinks=t.relatedLink:void 0!==t.relatedLink&&this.relatedLinks.push(t.relatedLink),this.relatedLinks=this.relatedLinks.map(t=>{return{short:t.replace(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/,"").split("/")[0],full:t}}),"connection"===t.type)this.connectionSubjects=[this.graph.nodes[t.src],this.graph.nodes[t.dst]],this.srctype=this.connectionSubjects[0].type,this.dsttype=this.connectionSubjects[1].type;else{let e,i=[];for(let n in this.graph.links)e=this.graph.links[n],e.src===t["@id"]?i.push({link:e,node:this.graph.nodes[e.src]}):e.dst===t["@id"]&&i.push({link:e,node:this.graph.nodes[e.dst]});i.map(t=>{if(Array.isArray(t.link.name)){let e=t.link.name[0],i=t.link.name[1];t.link.name=function(t,e){let i=new RegExp(e,"g");return i.test(t)?t.replace(i,"<b>"+e+"</b>"):"<b>"+e+"</b>&nbsp;"+t}(e,i),this.shortConnection=!0}}),i.sort((t,e)=>t.node.name>e.node.name?1:-1),this.connections=i}}renderLink(t){this.type="item",this.title=t.name,this.descriptionEle.innerHTML=Et.markdown.toHTML(t.description||"")}resetClusterSubjects(){this.clusterSubjects={person:{enabled:!1,label:"People",nodes:[]},place:{enabled:!1,label:"Places",nodes:[]},object:{enabled:!1,label:"Objects",nodes:[]},event:{enabled:!1,label:"Events",nodes:[]}}}_onToggleKeyUp(t){13===t.which&&this._fireToggleEvent()}_fireToggleEvent(){this.dispatchEvent(new CustomEvent("toggle"))}}function Ht(){return j`
   ${lt}
   <style>
     :host {
       display: block;
-    }
-
-    #moments {
-      padding: 5px 30px 5px 10px;
-      font-size: 1.0rem;
-      border: none;
-      height: 30px;
-      background-color: white;
-    }
-  </style>
-
-  <select
-    name="moments"
-    id="moments"
-    .value=${this.selectedMoment}
-    @change=${t=>this._onSelectMomentInputChange(t.currentTarget.value)}>
-    ${this.moments.map(t=>j`
-      <option value="${t}"
-        ?selected=${this.selectedMoment===t}>${t}</option>
-    `)}
-  </select>
-`}document.head.appendChild(Ot.content);class Ht extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{moments:{type:Array},selectedMoment:{type:String}}}constructor(){super(),this.moments=APP_CONFIG.moments,this.render=At.bind(this),this._injectModel("AppStateModel")}_onAppStateUpdate(t){this.selectedMoment=t.moment}_onSelectMomentInputChange(t){this.AppStateModel.setLocation("/map/"+t)}}customElements.define("app-moments-dropdown",Ht);class It extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{open:{type:Boolean,reflect:!0},moment:{type:String},momentInfo:{type:Object},momentEntryPointUrl:{type:String},endpoint:{type:String},type:{type:String},srctype:{type:String},dsttype:{type:String},view:{type:String},title:{type:String},date:{type:String},events:{type:Array},connections:{type:Array},isNode:{type:Boolean},isLink:{type:Boolean},isMoment:{type:Boolean},relatedLinks:{type:Array},selectedIndex:{type:Number},hasConnections:{type:Boolean},shortConnection:{type:Boolean},connectionSubjects:{type:Array},clusterSubjects:{type:Object},clusterSubjectTypes:{type:Array}}}constructor(){super(),this.open=!0,this.title="",this.date="",this.view="",this.type="",this.description="",this.thumbnail="",this.srctype="",this.dsttype="",this.connections=[],this.isLink=!1,this.isNode=!1,this.isMoment=!1,this.moment="",this.momentInfo={},this.momentEntryPointUrl="",this.relatedLinks=[],this.events=[],this.shortConnection=!1,this.endpoint=APP_CONFIG.endpoint,this.hasConnections=!1,this.connectionSubjects=[],this.clusterSubjectTypes=["person","place","object","event"],this.resetClusterSubjects(),this.render=Tt.bind(this),this._injectModel("AppStateModel","MomentModel")}_onMomentGraphUpdate(t){"loaded"===t.state&&this.renderState(t.payload)}_onAppStateUpdate(t){this.moment=t.moment,this.selected=t.selected,this.renderState()}firstUpdated(){this.descriptionEle=this.shadowRoot.querySelector("#description"),this.momentDescEle=this.shadowRoot.querySelector("#momentDescription"),this.singleImage=this.shadowRoot.querySelector("#singleImage")}updated(){this.isLink&&(this.title=""),this.connections.length>0?this.hasConnections=!0:this.hasConnections=!1}renderState(t){if(t){this.momentInfo=t,this.momentDescEle.innerHTML=Et.markdown.toHTML(t.description||""),this.momentEntryPointUrl="",this.events=[];for(let e in t.graph.nodes)"event"===t.graph.nodes[e].type&&this.events.push(t.graph.nodes[e]);this.events.length>0&&(this.momentInfo.title=this.events[0].name,this.events[0].temporal&&(this.momentInfo.date=this.events[0].temporal.replace("/"," - ")),this.momentEntryPoint=this.events[0].name,this.momentEntryPointUrl=`/map/${this.moment}/${this.events[0].type}/${this.events[0]["@id"]}`),this.graph=t.graph}if(this.isLink=!1,this.isNode=!1,this.isMoment=!1,this.thumbnail="",this.singleImage.style.backgroundImage="initial",this.selected){if(this.graph)if(this.type=this.selected.type,"cluster"===this.type)this.selected.ids&&this.renderCluster(this.selected.ids.map(t=>this.graph.nodes[t]));else if("connection"===this.type){this.isLink=!0;let t=this.graph.links[this.selected.id];this.renderItem(t)}else{this.isNode=!0;let t=this.graph.nodes[this.selected.id];this.renderItem(t)}}else this.renderEmpty()}renderEmpty(){if(!this.moment)return this.view="empty",void(this.type="empty");this.type="moment",this.view="moment",this.isMoment=!0}renderCluster(t){this.view="cluster",this.resetClusterSubjects(),t.forEach(t=>{this.clusterSubjects[t.type]&&(this.clusterSubjects[t.type].enabled=!0,this.clusterSubjects[t.type].nodes.push(t))});for(let t in this.clusterSubjects)this.clusterSubjects[t].nodes.sort((t,e)=>t.name>e.name?1:-1)}renderItem(t){this.view="item",this.title=t.name||"",this.location=t.location||"";let e="";if(void 0!==t.temporal&&(e=t.temporal.replace("/"," - ")),this.date=e||"",!1!==t.description&&"string"==typeof t.description&&(this.descriptionEle.innerHTML=Et.markdown.toHTML(t.description||"")),t.thumbnail&&(this.thumbnail=this.endpoint+"/"+this.moment+"/"+t.thumbnail.replace("z:",""),this.singleImage.style.backgroundImage="url("+this.thumbnail+")"),this.relatedLinks=[],Array.isArray(t.relatedLink)?this.relatedLinks=t.relatedLink:void 0!==t.relatedLink&&this.relatedLinks.push(t.relatedLink),this.relatedLinks=this.relatedLinks.map(t=>{return{short:t.replace(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/,"").split("/")[0],full:t}}),"connection"===t.type)this.connectionSubjects=[this.graph.nodes[t.src],this.graph.nodes[t.dst]],this.srctype=this.connectionSubjects[0].type,this.dsttype=this.connectionSubjects[1].type;else{let e,i=[];for(let n in this.graph.links)e=this.graph.links[n],e.src===t["@id"]?i.push({link:e,node:this.graph.nodes[e.src]}):e.dst===t["@id"]&&i.push({link:e,node:this.graph.nodes[e.dst]});i.map(t=>{if(Array.isArray(t.link.name)){let e=t.link.name[1],i=t.link.name[0];t.link.name=function(t,e){let i=new RegExp(e,"g");return i.test(t)?t.replace(i,"<b>"+e+"</b>"):"<b>"+e+"</b>&nbsp;"+t}(i,e),this.shortConnection=!0}}),i.sort((t,e)=>t.node.name>e.node.name?1:-1),this.connections=i}}renderLink(t){this.type="item",this.title=t.name,this.descriptionEle.innerHTML=Et.markdown.toHTML(t.description||"")}resetClusterSubjects(){this.clusterSubjects={person:{enabled:!1,label:"People",nodes:[]},place:{enabled:!1,label:"Places",nodes:[]},object:{enabled:!1,label:"Objects",nodes:[]},event:{enabled:!1,label:"Events",nodes:[]}}}_onToggleKeyUp(t){13===t.which&&this._fireToggleEvent()}_fireToggleEvent(){this.dispatchEvent(new CustomEvent("toggle"))}}function Nt(){return j`
-  ${lt}
-  <style>
-    :host {
-      display: block;
-      background-color: white;
+      background-color: var(--app-color-white);
     }
 
     main {
@@ -2198,7 +2156,7 @@ found at http://polymer.github.io/PATENTS.txt
       mollit anim id est laborum.
     </p>
   </main>
-`}customElements.define("app-map-info-panel",It);function jt(){return j`
+`}customElements.define("app-map-info-panel",At);function It(){return j`
     <style>
       :host {
         display: block;
@@ -2238,7 +2196,7 @@ found at http://polymer.github.io/PATENTS.txt
         width: 50%;
         max-width: 400px;
         line-height: 25px;
-        color: white;
+        color: var(--app-color-white);
       }
 
       header > .text-block {
@@ -2252,7 +2210,7 @@ found at http://polymer.github.io/PATENTS.txt
       header > div > h1 {
         margin: 0;
         padding: 0;
-        color: white;
+        color: var(--app-color-white);
         font-size: 30px;
         font-weight: normal;
         line-height: 35px;
@@ -2299,7 +2257,7 @@ found at http://polymer.github.io/PATENTS.txt
 
       .card {
         height: 100%;
-        background-color: white;
+        background-color: var(--app-color-white);
       }
 
       .card .feature-img {
@@ -2550,7 +2508,7 @@ found at http://polymer.github.io/PATENTS.txt
         </div>
       </div>
     </main>
-`}customElements.define("app-about",class extends at{static get properties(){return{active:{type:Boolean}}}constructor(){super(),this.render=Nt.bind(this),this.active=!0}});class Rt extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{active:{type:Boolean}}}constructor(){super(),this.render=jt.bind(this),this.active=!0,this._injectModel("AppStateModel")}_onReadStoryClick(t){this.AppStateModel.setLocation("/moment/"+t)}_onExploreMapClick(t){this.AppStateModel.setLocation("/map/"+t)}}function Vt(){return j`
+`}customElements.define("app-about",class extends at{static get properties(){return{active:{type:Boolean}}}constructor(){super(),this.render=Ht.bind(this),this.active=!0}});class Nt extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{active:{type:Boolean}}}constructor(){super(),this.render=It.bind(this),this.active=!0,this._injectModel("AppStateModel")}_onReadStoryClick(t){this.AppStateModel.setLocation("/moment/"+t)}_onExploreMapClick(t){this.AppStateModel.setLocation("/map/"+t)}}function jt(){return j`
   ${lt}
   <style>
     .floating-btn {
@@ -2578,7 +2536,7 @@ found at http://polymer.github.io/PATENTS.txt
     <iron-icon class="explore-map-icon" icon="intert-wine-icons:explore"></iron-icon>
     Explore the Map &gt;
   </button>
-  `}customElements.define("app-home",Rt);function Bt(){return j`
+  `}customElements.define("app-home",Nt);function Rt(){return j`
     ${lt}
     <style>
       :host {
@@ -2627,11 +2585,11 @@ found at http://polymer.github.io/PATENTS.txt
       }
 
       .bg-white {
-        background-color: white;
+        background-color: var(--app-color-white);
       }
 
       .bg-tan {
-        background-color: #F3F2F0;
+        background-color: var(--app-color-smoke);
       }
 
       .d-flex {
@@ -2667,7 +2625,7 @@ found at http://polymer.github.io/PATENTS.txt
 
       .container header .moment-header {
         padding: 50px 0;
-        color: white;
+        color: var(--app-color-white);
         overflow-x: hidden;
       }
 
@@ -2719,7 +2677,7 @@ found at http://polymer.github.io/PATENTS.txt
         margin: 0 auto;
         padding: 75px 0;
         max-width: 750px;
-        color: #333333;
+        color: var(--app-color-charcoal);
         font-size: 15px;
         font-weight: regular;
       }
@@ -2758,7 +2716,7 @@ found at http://polymer.github.io/PATENTS.txt
 
       .container .text-image-pairing .image span {
         padding: 10px 20px;
-        color: white;
+        color: var(--app-color-white);
         background: rgba(0, 0, 0, 0.5);
       }
 
@@ -2783,7 +2741,7 @@ found at http://polymer.github.io/PATENTS.txt
         align-items: flex-end;
         width: 33%;
         height: 200px;
-        color: white;
+        color: var(--app-color-white);
         background-color: var(--app-color-charcoal);
         background-size: cover;
         text-align: bottom;
@@ -2796,7 +2754,7 @@ found at http://polymer.github.io/PATENTS.txt
 
       .container .triptych div span {
         padding: 10px 20px;
-        color: white;
+        color: var(--app-color-white);
         background: rgba(0, 0, 0, 0.5);
       }
 
@@ -2809,7 +2767,7 @@ found at http://polymer.github.io/PATENTS.txt
 
       .container footer .map-wrapper .explore-map {
         padding: 75px;
-        color: white;
+        color: var(--app-color-white);
         background-color: var(--app-color-interface-blue);
       }
 
@@ -2823,8 +2781,8 @@ found at http://polymer.github.io/PATENTS.txt
 
       .container footer .bottom-content {
         padding: 30px 30px 50px 30px;
-        background-color: black;
-        color: #F3F2F0;
+        background-color: var(--app-color-black);
+        color: var(--app-color-smoke);
       }
 
       .container footer .bottom-content h6 {
@@ -2834,7 +2792,7 @@ found at http://polymer.github.io/PATENTS.txt
       }
 
       .container footer .bottom-content a {
-        color: #F3F2F0;
+        color: var(--app-color-smoke);
         font-size: 13px;
       }
 
@@ -2849,7 +2807,7 @@ found at http://polymer.github.io/PATENTS.txt
         counter-increment: my-awesome-counter;
         padding-bottom: 15px;
         font-size: 13px;
-        color: #F3F2F0;
+        color: var(--app-color-smoke);
       }
 
       .container footer .bottom-content ol li::before {
@@ -3002,56 +2960,29 @@ found at http://polymer.github.io/PATENTS.txt
       </div>
       </footer>
     </div>
-`}customElements.define("app-moment-float-btn",class extends at{static get properties(){return{active:{type:Boolean}}}constructor(){super(),this.render=Vt.bind(this),this.active=!0}});let Dt=i(69);class Zt extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{active:{type:Boolean},selectedMoment:{type:String},moment:{type:Object}}}constructor(){super(),this.render=Bt.bind(this),this.active=!0,this._injectModel("AppStateModel")}_onAppStateUpdate(t){this.selectedMomentName=t.moment,this.moment=Dt.moments[this.selectedMomentName]}async firstUpdated(){window.IntersectionObserver||(console.log("Injecting IntersectionObserver polyfill"),await i.e(0).then(i.t.bind(null,81,7))),this._initIntersectionObserver()}_initIntersectionObserver(){window,this.floatBtn=this.shadowRoot.getElementById("floatBtn"),this.footer=this.shadowRoot.querySelector("footer");new window.IntersectionObserver(t=>{t[0].isIntersecting?(this.floatBtn.style.visibility="hidden",this.floatBtn.style.opacity=0,this.floatBtn.style.transition="visibility 0s .5s, opacity .5s ease"):(this.floatBtn.style.visibility="visible",this.floatBtn.style.opacity=1)}).observe(this.footer)}_launchMap(){this.AppStateModel.setLocation("/map/"+this.selectedMomentName)}}customElements.define("app-moment",Zt);class Ft extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{baseUrl:{type:String},currentTopic:{type:String}}}constructor(){super(),this.render=Mt.bind(this),this.baseUrl=window.location.protocol+"//"+window.location.host,this._injectModel("AppStateModel")}async firstUpdated(){let t=await this.AppStateModel.get();this.currentTopic=t.moment}_onAboutClick(){this.AppStateModel.setLocation("/about/")}}function Ut(){return j`
-
-<style>
-  :host {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-
-  app-map-info-panel {
-    position: absolute;
-    z-index: 5000;
-    width: 400px;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    transform: translateX(-400px);
-    transition: transform 200ms ease-out, top 200ms ease-out;
-  }
-  app-map-info-panel[open] {
-    transform: translateX(0);
-  }
-
-  app-leaflet-map {
-    position: absolute;
-    left: 0;
-    bottom : 0;
-    top: 0;
-    right: 0;
-    transition: left 200ms ease-out, bottom 200ms ease-out;
-  }
-  app-leaflet-map[info-open] {
-    left: 400px;
-  }
-
-  @media(max-width: 600px) {
-    app-map-info-panel {
-      width: 100vw;
+`}customElements.define("app-moment-float-btn",class extends at{static get properties(){return{active:{type:Boolean}}}constructor(){super(),this.render=jt.bind(this),this.active=!0}});let Vt=i(69);class Bt extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{active:{type:Boolean},selectedMoment:{type:String},moment:{type:Object}}}constructor(){super(),this.render=Rt.bind(this),this.active=!0,this._injectModel("AppStateModel")}_onAppStateUpdate(t){this.selectedMomentName=t.moment,this.moment=Vt.moments[this.selectedMomentName]}async firstUpdated(){window.IntersectionObserver||(console.log("Injecting IntersectionObserver polyfill"),await i.e(0).then(i.t.bind(null,81,7))),this._initIntersectionObserver()}_initIntersectionObserver(){this.floatBtn=this.shadowRoot.getElementById("floatBtn"),this.footer=this.shadowRoot.querySelector("footer");new window.IntersectionObserver(t=>{t[0].isIntersecting?(this.floatBtn.style.visibility="hidden",this.floatBtn.style.opacity=0,this.floatBtn.style.transition="visibility 0s .5s, opacity .5s ease"):(this.floatBtn.style.visibility="visible",this.floatBtn.style.opacity=1)}).observe(this.footer)}_launchMap(){this.AppStateModel.setLocation("/map/"+this.selectedMomentName)}}customElements.define("app-moment",Bt);class Dt extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{baseUrl:{type:String},currentTopic:{type:String}}}constructor(){super(),this.render=Mt.bind(this),this.baseUrl=window.location.protocol+"//"+window.location.host,this._injectModel("AppStateModel")}async firstUpdated(){let t=await this.AppStateModel.get();this.currentTopic=t.moment}_onAboutClick(){this.AppStateModel.setLocation("/about/")}}function Zt(){return j`
+  <style>
+    :host {
+      display: block;
+      position: absolute;
+      top: 0;
       left: 0;
-      top: 100%;
-      bottom: 0;
       right: 0;
-      height: 50%;
-      transform: initial;
+      bottom: 0;
+    }
+
+    app-map-info-panel {
+      position: absolute;
+      z-index: 5000;
+      width: 400px;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      transform: translateX(-400px);
+      transition: transform 200ms ease-out, top 200ms ease-out;
     }
     app-map-info-panel[open] {
-      top: 50%;
+      transform: translateX(0);
     }
 
     app-leaflet-map {
@@ -3060,146 +2991,170 @@ found at http://polymer.github.io/PATENTS.txt
       bottom : 0;
       top: 0;
       right: 0;
+      transition: left 200ms ease-out, bottom 200ms ease-out;
     }
     app-leaflet-map[info-open] {
-      left: 0;
-      top: 0;
-      bottom: 50%;
+      left: 400px;
     }
-  }
-</style>
 
-<app-map-info-panel ?open="${this.infoPanelOpen}" @toggle="${this.toggleInfoPanel}"></app-map-info-panel>
-<app-leaflet-map
-  ?info-open="${this.infoPanelOpen}"
-  ?active="${this.visible}"
-  id="map"
-  @node-click="${this._onNodeClick}"
-  @cluster-click="${this._onClusterClick}"
-  @selected-cluster-ids="${this._onSelectedClusterIds}">
-</app-leaflet-map>
+    @media(max-width: 600px) {
+      app-map-info-panel {
+        width: 100vw;
+        left: 0;
+        top: 100%;
+        bottom: 0;
+        right: 0;
+        height: 50%;
+        transform: initial;
+      }
+      app-map-info-panel[open] {
+        top: 50%;
+      }
 
-`}customElements.define("app-header",Ft);var qt=i(40),$t=i.n(qt),Gt=i(41),Wt=i.n(Gt),Jt=i(42),Yt=i.n(Jt);function Kt(){return j`
+      app-leaflet-map {
+        position: absolute;
+        left: 0;
+        bottom : 0;
+        top: 0;
+        right: 0;
+      }
+      app-leaflet-map[info-open] {
+        left: 0;
+        top: 0;
+        bottom: 50%;
+      }
+    }
+  </style>
 
-<style>
-${$t.a}
-${Wt.a}
-${Yt.a}
-</style>
-<style>
-  :host {
-    display: block;
-  }
+  <app-map-info-panel ?open="${this.infoPanelOpen}" @toggle="${this.toggleInfoPanel}"></app-map-info-panel>
+  <app-leaflet-map
+    ?info-open="${this.infoPanelOpen}"
+    ?active="${this.visible}"
+    id="map"
+    @node-click="${this._onNodeClick}"
+    @cluster-click="${this._onClusterClick}"
+    @selected-cluster-ids="${this._onSelectedClusterIds}">
+  </app-leaflet-map>
 
-  #map {
-    height: 100%;
-  }
+`}customElements.define("app-header",Dt);var Ft=i(40),Ut=i.n(Ft),qt=i(41),$t=i.n(qt),Gt=i(42),Wt=i.n(Gt);function Jt(){return j`
+  <style>
+    ${Ut.a}
+    ${$t.a}
+    ${Wt.a}
+  </style>
+  <style>
+    :host {
+      display: block;
+    }
 
-  .border-top {
-    position: absolute;
-    /*box-shadow: 0 0 5px rgba(0, 0, 0, .8);*/
-    top: -1px;
-    right: 0;
-    left: 0;
-    z-index: 1000;
-    height: 1px;
-  }
+    #map {
+      height: 100%;
+    }
 
-  .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large  {
-    background-color: var(--app-color-cluster-blue-alpha);
-  }
-  .marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div {
-    background-color: var(--app-color-cluster-blue);
-    color: var(--app-color-white)
-  }
+    .border-top {
+      position: absolute;
+      top: -1px;
+      right: 0;
+      left: 0;
+      z-index: 1000;
+      height: 1px;
+    }
 
-  .leaflet-intertwine-icon {
-    border-radius: 10px;
-  }
+    .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large  {
+      background-color: var(--app-color-cluster-blue-alpha);
+    }
+    .marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div {
+      background-color: var(--app-color-cluster-blue);
+      color: var(--app-color-white)
+    }
 
-  .leaflet-person-icon {
-    background-color: var(--app-color-scarlet);
-  }
-  .leaflet-place-icon {
-    background-color: var(--app-color-vine);
-  }
-  .leaflet-event-icon {
-    background-color: var(--app-color-rose);
-  }
-  .leaflet-object-icon {
-    background-color: var(--app-color-grape);
-  }
+    .leaflet-intertwine-icon {
+      border-radius: 10px;
+    }
 
-  .intertwine-arrow {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 5px 25px 5px;
-    border-color: transparent transparent var(--app-color-charcoal) transparent;
-    top: 12px;
-    position: absolute;
-    z-index: 10001;
-    left: -5px;
-  }
-  .intertwine-arrow.top {
-    transform: rotate(180deg);
-    bottom: 12px;
-    top: initial;
-  }
-  .intertwine-arrow.top.point {
-    bottom: 6px;
-  }
-  .intertwine-arrow.bottom.point {
-    top: 6px;
-  }
+    .leaflet-person-icon {
+      background-color: var(--app-color-scarlet);
+    }
+    .leaflet-place-icon {
+      background-color: var(--app-color-vine);
+    }
+    .leaflet-event-icon {
+      background-color: var(--app-color-rose);
+    }
+    .leaflet-object-icon {
+      background-color: var(--app-color-grape);
+    }
 
-  .leaflet-intertwine-node-label > div:first-child {
-    color: var(--app-color-white);
-    background: var(--app-color-charcoal);
-    padding: 4px 8px;
-    position: absolute;
-    white-space: nowrap;
-    font-size: 13px;
-  }
+    .intertwine-arrow {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 5px 25px 5px;
+      border-color: transparent transparent var(--app-color-charcoal) transparent;
+      top: 12px;
+      position: absolute;
+      z-index: 10001;
+      left: -5px;
+    }
+    .intertwine-arrow.top {
+      transform: rotate(180deg);
+      bottom: 12px;
+      top: initial;
+    }
+    .intertwine-arrow.top.point {
+      bottom: 6px;
+    }
+    .intertwine-arrow.bottom.point {
+      top: 6px;
+    }
 
-  .leaflet-intertwine-node-label > div.fixed-width:first-child {
-    white-space: initial;
-    width: 150px;
-    left: -83px;
-    text-align: center;
-  }
+    .leaflet-intertwine-node-label > div:first-child {
+      color: var(--app-color-white);
+      background: var(--app-color-charcoal);
+      padding: 4px 8px;
+      position: absolute;
+      white-space: nowrap;
+      font-size: 13px;
+    }
 
-  .leaflet-intertwine-node-label > div.top:first-child {
-    bottom: 34px;
-  }
-  .leaflet-intertwine-node-label > div.top.point:first-child {
-    bottom: 28px;
-  }
+    .leaflet-intertwine-node-label > div.fixed-width:first-child {
+      white-space: initial;
+      width: 150px;
+      left: -83px;
+      text-align: center;
+    }
 
-  .leaflet-intertwine-node-label > div.bottom:first-child {
-    top : 32px;
-  }
-  .leaflet-intertwine-node-label > div.bottom.point:first-child {
-    top : 26px;
-  }
+    .leaflet-intertwine-node-label > div.top:first-child {
+      bottom: 34px;
+    }
+    .leaflet-intertwine-node-label > div.top.point:first-child {
+      bottom: 28px;
+    }
 
-  .leaflet-intertwine-connection-label > div:first-child {
-    color: var(--app-color-white);
-    background: var(--app-color-interface-blue);
-    padding: 4px 8px;
-    position: absolute;
-    white-space: nowrap;
-    left: -42px;
-    top: -16px;
-    font-size: 13px;
-    font-style: italic;
-  }
-</style>
+    .leaflet-intertwine-node-label > div.bottom:first-child {
+      top : 32px;
+    }
+    .leaflet-intertwine-node-label > div.bottom.point:first-child {
+      top : 26px;
+    }
 
-<div class="border-top"></div>
-<div id="map"></div>
+    .leaflet-intertwine-connection-label > div:first-child {
+      color: var(--app-color-white);
+      background: var(--app-color-interface-blue);
+      padding: 4px 8px;
+      position: absolute;
+      white-space: nowrap;
+      left: -42px;
+      top: -16px;
+      font-size: 13px;
+      font-style: italic;
+    }
+  </style>
 
-`}i(77),i(78);customElements.define("app-leaflet-map",class extends at{static get properties(){return{active:{type:Boolean},infoOpen:{type:Boolean,attribute:"info-open"}}}constructor(){super(),this.render=Kt.bind(this),this.linkLayers={},this.nodeLayers={},this.links={},this.nodes={},this.updateLinksTimer=-1,this.firstRender=!0,window.addEventListener("resize",()=>{this.active&&this.redraw()}),this.redrawTimer=-1}firstUpdated(){this.initMap()}initMap(){this.map=L.map(this.shadowRoot.querySelector("#map")).setView([0,0],3,{animate:!1}),this.pendingView?(this.setView(this.pendingView.latlng,this.pendingView.zoom),this.pendingView=null):this.infoOpen&&this.setView([0,0],3),L.tileLayer("http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",{attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(this.map),this.clusters=L.markerClusterGroup({animate:!1,showCoverageOnHover:!1,zoomToBoundsOnClick:!1,removeOutsideVisibleBounds:!1,maxClusterRadius:25,spiderfyOnMaxZoom:!1}),this.map.addLayer(this.clusters),this.map.zoomControl.setPosition("bottomright"),this.clusters.on("clusterclick",t=>this.onClusterClicked(t)),this.map.on("zoomend",()=>{this.repositionSelectedNode(),this.repositionSelectedLink(),this.updateLinks()}),this.lineColor=getComputedStyle(document.documentElement).getPropertyValue("--app-color-interface-blue").trim()}renderSelectedState(t){if(!t)return this.firstRender&&(0===Object.keys(this.nodes).length?this.zoomToClusters=!0:this.map.fitBounds(this.clusters.getBounds())),void(this.firstRender=!1);if(this.selectedNodeIcon){for(let t in this.selectedNodeIcon)this.map.removeLayer(this.selectedNodeIcon[t]);this.selectedNodeIcon=null,this.selectedNodeLayer=null}this.selectedLineIcon&&(this.map.removeLayer(this.selectedLineIcon),this.selectedLineIcon=null),"cluster"===t.selected.type?this.selectCluster(t.selected.latlng,t.selected.zoom):t.selected.type&&"connection"!==t.selected.type?this.selectNode(t.selected.id,void 0,this.firstRender):"connection"===t.selected.type&&this.selectLink(t.selected.id),this.updateLinks()}selectLink(t){let e=this.links[t];if(!e)return void(this.pendingLinkSelect=t);this.selectNode(e.src,"src"),this.selectNode(e.dst,"dst");let i=this._getMidPoint(this.selectedNodeIcon.src.getLatLng(),this.selectedNodeIcon.dst.getLatLng()),n=L.divIcon({className:"leaflet-intertwine-connection-label",iconSize:[0,0],html:"<div>connection</div>"});this.selectedLineIcon=L.marker(i,{icon:n}),this.map.addLayer(this.selectedLineIcon),this.selectedLineIcon.setZIndexOffset(5e3)}selectNode(t,e="src",i=!1){let n=this.clusters.getLayers().find(e=>e.inertWineId===t);if(!n)return this.pendingNodeSelect||(this.pendingNodeSelect={}),void(this.pendingNodeSelect[e]=t);this.selectedNodeLayer||(this.selectedNodeLayer={}),this.selectedNodeIcon||(this.selectedNodeIcon={}),this.selectedNodeLayer[e]=n,n=this.clusters.getVisibleParent(n)||n;let o=L.divIcon({className:"leaflet-intertwine-node-label",iconSize:[0,0],html:"<div>"+this.nodes[t].name+'</div><div class="intertwine-arrow"></div>'});this.selectedNodeIcon[e]=L.marker(n.getLatLng(),{icon:o}),this.map.addLayer(this.selectedNodeIcon[e]),this.selectedNodeIcon[e].setZIndexOffset(5e3),requestAnimationFrame(()=>{let t=!1;for(let i in this.selectedNodeIcon)i!==e&&this.selectedNodeLayer[i].getLatLng().lat>this.selectedNodeLayer[e].getLatLng().lat&&(t=!0);let o=this.selectedNodeIcon[e].getElement().firstChild,r=this.selectedNodeIcon[e].getElement().children[1];t?(o.classList.add("bottom"),r.classList.add("bottom")):(o.classList.add("top"),r.classList.add("top")),n.inertWineId&&(o.classList.add("point"),r.classList.add("point"));let s=o.offsetWidth;s>150?o.classList.add("fixed-width"):o.style.left=s/2*-1+"px",1===Object.keys(this.selectedNodeIcon).length&&(!i&&this.map.getBounds().contains(this.selectedNodeIcon.src.getLatLng())||this.setView(this.selectedNodeIcon.src.getLatLng(),this.map.getZoom()))})}_getMidPoint(t,e){let i=this.map.latLngToContainerPoint(t),n=this.map.latLngToContainerPoint(e),o=(n.x+i.x)/2,r=(n.y+i.y)/2;return this.map.containerPointToLatLng({x:o,y:r})}repositionSelectedLink(){if(!this.selectedNodeLayer||!this.selectedLineIcon)return;let t=this._getMidPoint(this.selectedNodeIcon.src.getLatLng(),this.selectedNodeIcon.dst.getLatLng());this.selectedLineIcon.setLatLng(t)}repositionSelectedNode(){if(this.selectedNodeLayer&&this.selectedNodeIcon)for(let t in this.selectedNodeLayer){let e=this.clusters.getVisibleParent(this.selectedNodeLayer[t])||this.selectedNodeLayer[t];this.selectedNodeIcon[t].setLatLng(e.getLatLng()),e.inertWineId?(this.selectedNodeIcon[t].getElement().firstChild.classList.add("point"),this.selectedNodeIcon[t].getElement().children[1].classList.add("point")):(this.selectedNodeIcon[t].getElement().firstChild.classList.remove("point"),this.selectedNodeIcon[t].getElement().children[1].classList.remove("point"))}}selectCluster(t,e){if(this.firstRender){if(this.setView(t,e),!this.map)return void(this.pendingClusterSelect={latlng:t,zoom:e});if(0===this.clusters.getLayers().length)return void(this.pendingClusterSelect={latlng:t,zoom:e})}let i=this.clusters._featureGroup.getLayers(),n=Number.MAX_SAFE_INTEGER,o=null;for(let e of i){if(e.inertWineId)continue;if(!e._group)continue;let i=e.getBounds().getCenter(),r=Math.abs(i.lat-t[0])+Math.abs(i.lng-t[1]);n>r&&(o=e,n=r)}if(!o)return console.warn("no clusters found to selected");let r=new CustomEvent("selected-cluster-ids",{detail:o.getAllChildMarkers().map(t=>t.inertWineId)});this.dispatchEvent(r)}onClusterClicked(t){let e=t.layer.getBounds().getCenter(),i=new CustomEvent("cluster-click",{detail:{latLng:[parseFloat(e.lat.toFixed(4)),parseFloat(e.lng.toFixed(4))],zoom:this.map.getZoom()}});this.dispatchEvent(i)}onNodeClicked(t){let e=new CustomEvent("node-click",{detail:{id:t.target.inertWineId}});this.dispatchEvent(e)}onLinkClicked(t){let e=new CustomEvent("link-click",{detail:{id:t.layer.inertWineId}});this.dispatchEvent(e)}setData(t){this.nodes=t.nodes,this.nodeLayers={},this.links=t.links,this.clusters.clearLayers();for(let t in this.nodes){let e=L.divIcon({className:`leaflet-intertwine-icon leaflet-${this.nodes[t].type}-icon`,iconSize:[15,15]}),i=L.marker(this.nodes[t].coordinates,{icon:e});i.on("click",t=>this.onNodeClicked(t)),i.inertWineId=t,this.nodeLayers[t]=i,this.clusters.addLayer(i)}if(this.pendingClusterSelect)this.selectCluster(this.pendingClusterSelect.latlng,this.pendingClusterSelect.zoom),this.pendingClusterSelect=null;else if(this.pendingNodeSelect){for(let t in this.pendingNodeSelect)this.selectNode(this.pendingNodeSelect[t],t,!0);this.pendingNodeSelect=null}else this.pendingLinkSelect?(this.selectLink(this.pendingLinkSelect),this.pendingLinkSelect=null):this.zoomToClusters&&(this.map.fitBounds(this.clusters.getBounds()),this.zoomToClusters=!1);this.updateLinks()}updateLinks(){-1!==this.updateLinksTimer&&clearTimeout(this.updateLinksTimer),this.updateLinksTimer=setTimeout(()=>{this.updateLinksTimer=-1,this._updateLinks()},100)}_updateLinks(){for(let t in this.linkLayers)this.map.removeLayer(this.linkLayers[t]);this.linkLayers={};for(let t in this.links){let e=this.links[t];if(e.weblink)continue;let i=this.getMarkerLatLng(e.src),n=this.getMarkerLatLng(e.dst),o=!1;this.selectedNodeLayer&&this.selectedNodeLayer.src&&this.selectedNodeLayer.dst&&e.src===this.selectedNodeLayer.src.inertWineId&&e.dst===this.selectedNodeLayer.dst.inertWineId&&(o=!0);let r=i.lat+"-"+i.lng+"-"+n.lat+"-"+n.lng;this.linkLayers[r]?o&&!this.linkLayers[r].selected&&(this.linkLayers[r].selected=!0,this.linkLayers[r].setStyle({opacity:1,weight:2})):(this.linkLayers[r]=L.polyline([i,n],{color:this.lineColor,weight:o?2:1,opacity:o?1:.3}).addTo(this.map),this.linkLayers[r].selected=o)}}setView(t,e){this.map?this.map.setView(t,e,{animate:!1}):this.pendingView={latlng:t,zoom:e}}getMarkerLatLng(t){let e=this.clusters.getVisibleParent(this.nodeLayers[t]);return e?e.getLatLng():L.latLng(this.nodes[t].coordinates)}updated(t){t.has("active")&&this.active&&this.redraw()}redraw(){this.redrawTimer&&clearTimeout(this.redrawTimer),this.redrawTimer=setTimeout(()=>{this.redrawTimer=-1,this.redrawNow()})}redrawNow(t){if(!this.map)return console.warn("attempting to redraw map, but map not initialized");this.map.invalidateSize({pan:!1})}});class Xt extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{visible:{type:Boolean},infoPanelOpen:{type:Boolean}}}constructor(){super(),this.render=Ut.bind(this),this.infoPanelOpen=!0,this._injectModel("MomentModel","AppStateModel")}firstUpdated(){this.mapEle=this.shadowRoot.querySelector("#map")}_onAppStateUpdate(t){this.selectedMoment=t.moment,t.selected?this.mapEle.renderSelectedState(t):this.mapEle.renderSelectedState()}_onMomentGraphUpdate(t){"loaded"===t.state&&(this.data=t.payload.graph,this.mapEle.setData(t.payload.graph))}_onNodeClick(t){let e=this.data.nodes[t.detail.id];this.AppStateModel.setLocation("/map/"+this.selectedMoment+"/"+e.type+"/"+e["@id"])}_onClusterClick(t){this.AppStateModel.setLocation("/map/"+this.selectedMoment+"/cluster/"+encodeURI(t.detail.latLng.join(","))+"/"+t.detail.zoom)}_onSelectedClusterIds(t){this.AppStateModel.setSelectedClusterIds(t.detail)}toggleInfoPanel(){this.infoPanelOpen=!this.infoPanelOpen,this.redrawMapAfterAnimation()}openInfoPanel(){this.infoPanelOpen=!0,this.redrawMapAfterAnimation()}closeInfoPanel(){this.infoPanelOpen=!1,this.redrawMapAfterAnimation()}redrawMapAfterAnimation(){let t=this.infoPanelOpen?350:-350;setTimeout(()=>{this.mapEle.redrawNow(t)},200)}}customElements.define("app-view-map",Xt),i.d(e,"default",(function(){return Qt})),window.APP_MODELS=dt.a;class Qt extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{view:{type:String},appRoutes:{type:Array}}}constructor(){super(),this.view="",this.appRoutes=APP_CONFIG.appRoutes,this.render=ht.bind(this),this._injectModel("AppStateModel")}_onAppStateUpdate(t){this.view=t.page}}customElements.define("intert-wine",Qt)},function(t,e,i){"use strict";i.r(e);var n=i(17),o=(i(11),i(9)),r=i(5);
+  <div class="border-top"></div>
+  <div id="map"></div>
+
+`}i(77),i(78);customElements.define("app-leaflet-map",class extends at{static get properties(){return{active:{type:Boolean},infoOpen:{type:Boolean,attribute:"info-open"}}}constructor(){super(),this.render=Jt.bind(this),this.linkLayers={},this.nodeLayers={},this.links={},this.nodes={},this.updateLinksTimer=-1,this.firstRender=!0,window.addEventListener("resize",()=>{this.active&&this.redraw()}),this.redrawTimer=-1}firstUpdated(){this.initMap()}initMap(){this.map=L.map(this.shadowRoot.querySelector("#map")).setView([0,0],3,{animate:!1}),this.pendingView?(this.setView(this.pendingView.latlng,this.pendingView.zoom),this.pendingView=null):this.infoOpen&&this.setView([0,0],3),L.tileLayer("http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",{attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(this.map),this.clusters=L.markerClusterGroup({animate:!1,showCoverageOnHover:!1,zoomToBoundsOnClick:!1,removeOutsideVisibleBounds:!1,maxClusterRadius:25,spiderfyOnMaxZoom:!1}),this.map.addLayer(this.clusters),this.map.zoomControl.setPosition("bottomright"),this.clusters.on("clusterclick",t=>this.onClusterClicked(t)),this.map.on("zoomend",()=>{this.repositionSelectedNode(),this.repositionSelectedLink(),this.updateLinks()}),this.lineColor=getComputedStyle(document.documentElement).getPropertyValue("--app-color-interface-blue").trim()}renderSelectedState(t){if(!t)return this.firstRender&&(0===Object.keys(this.nodes).length?this.zoomToClusters=!0:this.map.fitBounds(this.clusters.getBounds())),void(this.firstRender=!1);if(this.selectedNodeIcon){for(let t in this.selectedNodeIcon)this.map.removeLayer(this.selectedNodeIcon[t]);this.selectedNodeIcon=null,this.selectedNodeLayer=null}this.selectedLineIcon&&(this.map.removeLayer(this.selectedLineIcon),this.selectedLineIcon=null),"cluster"===t.selectedNode.type?this.selectCluster(t.selectedNode.latlng,t.selectedNode.zoom):t.selectedNode.type&&"connection"!==t.selectedNode.type?this.selectNode(t.selectedNode.id,void 0,this.firstRender):"connection"===t.selectedNode.type&&this.selectLink(t.selectedNode.id),this.updateLinks()}selectLink(t){let e=this.links[t];if(!e)return void(this.pendingLinkSelect=t);this.selectNode(e.src,"src"),this.selectNode(e.dst,"dst");let i=this._getMidPoint(this.selectedNodeIcon.src.getLatLng(),this.selectedNodeIcon.dst.getLatLng()),n=L.divIcon({className:"leaflet-intertwine-connection-label",iconSize:[0,0],html:"<div>connection</div>"});this.selectedLineIcon=L.marker(i,{icon:n}),this.map.addLayer(this.selectedLineIcon),this.selectedLineIcon.setZIndexOffset(5e3)}selectNode(t,e="src",i=!1){let n=this.clusters.getLayers().find(e=>e.inertWineId===t);if(!n)return this.pendingNodeSelect||(this.pendingNodeSelect={}),void(this.pendingNodeSelect[e]=t);this.selectedNodeLayer||(this.selectedNodeLayer={}),this.selectedNodeIcon||(this.selectedNodeIcon={}),this.selectedNodeLayer[e]=n,n=this.clusters.getVisibleParent(n)||n;let o=L.divIcon({className:"leaflet-intertwine-node-label",iconSize:[0,0],html:"<div>"+this.nodes[t].name+'</div><div class="intertwine-arrow"></div>'});this.selectedNodeIcon[e]=L.marker(n.getLatLng(),{icon:o}),this.map.addLayer(this.selectedNodeIcon[e]),this.selectedNodeIcon[e].setZIndexOffset(5e3),requestAnimationFrame(()=>{let t=!1;for(let i in this.selectedNodeIcon)i!==e&&this.selectedNodeLayer[i].getLatLng().lat>this.selectedNodeLayer[e].getLatLng().lat&&(t=!0);let o=this.selectedNodeIcon[e].getElement().firstChild,r=this.selectedNodeIcon[e].getElement().children[1];t?(o.classList.add("bottom"),r.classList.add("bottom")):(o.classList.add("top"),r.classList.add("top")),n.inertWineId&&(o.classList.add("point"),r.classList.add("point"));let s=o.offsetWidth;s>150?o.classList.add("fixed-width"):o.style.left=s/2*-1+"px",1===Object.keys(this.selectedNodeIcon).length&&(!i&&this.map.getBounds().contains(this.selectedNodeIcon.src.getLatLng())||this.setView(this.selectedNodeIcon.src.getLatLng(),this.map.getZoom()))})}_getMidPoint(t,e){let i=this.map.latLngToContainerPoint(t),n=this.map.latLngToContainerPoint(e),o=(n.x+i.x)/2,r=(n.y+i.y)/2;return this.map.containerPointToLatLng({x:o,y:r})}repositionSelectedLink(){if(!this.selectedNodeLayer||!this.selectedLineIcon)return;let t=this._getMidPoint(this.selectedNodeIcon.src.getLatLng(),this.selectedNodeIcon.dst.getLatLng());this.selectedLineIcon.setLatLng(t)}repositionSelectedNode(){if(this.selectedNodeLayer&&this.selectedNodeIcon)for(let t in this.selectedNodeLayer){let e=this.clusters.getVisibleParent(this.selectedNodeLayer[t])||this.selectedNodeLayer[t];this.selectedNodeIcon[t].setLatLng(e.getLatLng()),e.inertWineId?(this.selectedNodeIcon[t].getElement().firstChild.classList.add("point"),this.selectedNodeIcon[t].getElement().children[1].classList.add("point")):(this.selectedNodeIcon[t].getElement().firstChild.classList.remove("point"),this.selectedNodeIcon[t].getElement().children[1].classList.remove("point"))}}selectCluster(t,e){if(this.firstRender){if(this.setView(t,e),!this.map)return void(this.pendingClusterSelect={latlng:t,zoom:e});if(0===this.clusters.getLayers().length)return void(this.pendingClusterSelect={latlng:t,zoom:e})}let i=this.clusters._featureGroup.getLayers(),n=Number.MAX_SAFE_INTEGER,o=null;for(let e of i){if(e.inertWineId)continue;if(!e._group)continue;let i=e.getBounds().getCenter(),r=Math.abs(i.lat-t[0])+Math.abs(i.lng-t[1]);n>r&&(o=e,n=r)}if(!o)return console.warn("no clusters found to selected");let r=new CustomEvent("selected-cluster-ids",{detail:o.getAllChildMarkers().map(t=>t.inertWineId)});this.dispatchEvent(r)}onClusterClicked(t){let e=t.layer.getBounds().getCenter(),i=new CustomEvent("cluster-click",{detail:{latLng:[parseFloat(e.lat.toFixed(4)),parseFloat(e.lng.toFixed(4))],zoom:this.map.getZoom()}});this.dispatchEvent(i)}onNodeClicked(t){let e=new CustomEvent("node-click",{detail:{id:t.target.inertWineId}});this.dispatchEvent(e)}onLinkClicked(t){let e=new CustomEvent("link-click",{detail:{id:t.layer.inertWineId}});this.dispatchEvent(e)}setData(t){this.nodes=t.nodes,this.nodeLayers={},this.links=t.links,this.clusters.clearLayers();for(let t in this.nodes){let e=L.divIcon({className:`leaflet-intertwine-icon leaflet-${this.nodes[t].type}-icon`,iconSize:[15,15]}),i=L.marker(this.nodes[t].coordinates,{icon:e});i.on("click",t=>this.onNodeClicked(t)),i.inertWineId=t,this.nodeLayers[t]=i,this.clusters.addLayer(i)}if(this.pendingClusterSelect)this.selectCluster(this.pendingClusterSelect.latlng,this.pendingClusterSelect.zoom),this.pendingClusterSelect=null;else if(this.pendingNodeSelect){for(let t in this.pendingNodeSelect)this.selectNode(this.pendingNodeSelect[t],t,!0);this.pendingNodeSelect=null}else this.pendingLinkSelect?(this.selectLink(this.pendingLinkSelect),this.pendingLinkSelect=null):this.zoomToClusters&&(this.map.fitBounds(this.clusters.getBounds()),this.zoomToClusters=!1);this.updateLinks()}updateLinks(){-1!==this.updateLinksTimer&&clearTimeout(this.updateLinksTimer),this.updateLinksTimer=setTimeout(()=>{this.updateLinksTimer=-1,this._updateLinks()},100)}_updateLinks(){for(let t in this.linkLayers)this.map.removeLayer(this.linkLayers[t]);this.linkLayers={};for(let t in this.links){let e=this.links[t];if(e.weblink)continue;let i=this.getMarkerLatLng(e.src),n=this.getMarkerLatLng(e.dst),o=!1;this.selectedNodeLayer&&this.selectedNodeLayer.src&&this.selectedNodeLayer.dst&&e.src===this.selectedNodeLayer.src.inertWineId&&e.dst===this.selectedNodeLayer.dst.inertWineId&&(o=!0);let r=i.lat+"-"+i.lng+"-"+n.lat+"-"+n.lng;this.linkLayers[r]?o&&!this.linkLayers[r].selected&&(this.linkLayers[r].selected=!0,this.linkLayers[r].setStyle({opacity:1,weight:2})):(this.linkLayers[r]=L.polyline([i,n],{color:this.lineColor,weight:o?2:1,opacity:o?1:.3}).addTo(this.map),this.linkLayers[r].selected=o)}}setView(t,e){this.map?this.map.setView(t,e,{animate:!1}):this.pendingView={latlng:t,zoom:e}}getMarkerLatLng(t){let e=this.clusters.getVisibleParent(this.nodeLayers[t]);return e?e.getLatLng():L.latLng(this.nodes[t].coordinates)}updated(t){t.has("active")&&this.active&&this.redraw()}redraw(){this.redrawTimer&&clearTimeout(this.redrawTimer),this.redrawTimer=setTimeout(()=>{this.redrawTimer=-1,this.redrawNow()})}redrawNow(t){if(!this.map)return console.warn("attempting to redraw map, but map not initialized");this.map.invalidateSize({pan:!1})}});class Yt extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{visible:{type:Boolean},infoPanelOpen:{type:Boolean}}}constructor(){super(),this.render=Zt.bind(this),this.infoPanelOpen=!0,this._injectModel("MomentModel","AppStateModel")}firstUpdated(){this.mapEle=this.shadowRoot.querySelector("#map")}_onAppStateUpdate(t){this.selectedMoment=t.moment,t.selectedNode?this.mapEle.renderSelectedState(t):this.mapEle.renderSelectedState()}_onMomentGraphUpdate(t){"loaded"===t.state&&(this.data=t.payload.graph,this.mapEle.setData(t.payload.graph))}_onNodeClick(t){let e=this.data.nodes[t.detail.id];this.AppStateModel.setLocation("/map/"+this.selectedMoment+"/"+e.type+"/"+e["@id"])}_onClusterClick(t){this.AppStateModel.setLocation("/map/"+this.selectedMoment+"/cluster/"+encodeURI(t.detail.latLng.join(","))+"/"+t.detail.zoom)}_onSelectedClusterIds(t){this.AppStateModel.setSelectedClusterIds(t.detail)}toggleInfoPanel(){this.infoPanelOpen=!this.infoPanelOpen,this.redrawMapAfterAnimation()}openInfoPanel(){this.infoPanelOpen=!0,this.redrawMapAfterAnimation()}closeInfoPanel(){this.infoPanelOpen=!1,this.redrawMapAfterAnimation()}redrawMapAfterAnimation(){let t=this.infoPanelOpen?350:-350;setTimeout(()=>{this.mapEle.redrawNow(t)},200)}}customElements.define("app-view-map",Yt),i.d(e,"default",(function(){return Kt})),window.APP_MODELS=dt.a;class Kt extends(Mixin(at).with(LitCorkUtils)){static get properties(){return{view:{type:String},appRoutes:{type:Array}}}constructor(){super(),this.view="",this.appRoutes=APP_CONFIG.appRoutes,this.render=ht.bind(this),this._injectModel("AppStateModel")}_onAppStateUpdate(t){this.view=t.page}}customElements.define("intert-wine",Kt)},function(t,e,i){"use strict";i.r(e);var n=i(17),o=(i(11),i(9)),r=i(5);
 /**
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
