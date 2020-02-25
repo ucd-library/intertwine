@@ -14,6 +14,7 @@ export default function render() {
         overflow-y: auto;
         background-color: var(--app-color-smoke);
         background-image: url('./../../images/background.png');
+        background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
       }

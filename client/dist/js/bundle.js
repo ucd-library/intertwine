@@ -2211,6 +2211,7 @@ found at http://polymer.github.io/PATENTS.txt
         overflow-y: auto;
         background-color: var(--app-color-smoke);
         background-image: url('./../../images/background.png');
+        background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
       }
