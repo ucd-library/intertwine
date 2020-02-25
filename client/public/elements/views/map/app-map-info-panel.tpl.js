@@ -8,7 +8,7 @@ return html`
   <style>
     :host {
       display: block;
-      background: white;
+      background: var(--app-color-white);
       box-shadow: 0 0 5px rgba(0, 0, 0, .5);
     }
 
@@ -18,7 +18,7 @@ return html`
 
     .toggle {
       background-color: var(--app-primary-color);
-      color: white;
+      color: var(--app-color-white);
       width: 35px;
       height: 50px;
       position: absolute;
@@ -43,7 +43,7 @@ return html`
 
     .moment-break {
       margin-top: 50px;
-      border-bottom: 1px solid white;
+      border-bottom: 1px solid var(--app-color-white);
       margin-bottom: 18px;
     }
 

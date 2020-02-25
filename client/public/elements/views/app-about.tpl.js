@@ -7,7 +7,7 @@ export default function render() {
   <style>
     :host {
       display: block;
-      background-color: white;
+      background-color: var(--app-color-white);
     }
 
     main {

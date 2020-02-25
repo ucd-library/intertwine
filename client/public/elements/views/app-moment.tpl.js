@@ -56,11 +56,11 @@ export default function render() {
       }
 
       .bg-white {
-        background-color: white;
+        background-color: var(--app-color-white);
       }
 
       .bg-tan {
-        background-color: #F3F2F0;
+        background-color: var(--app-color-smoke);
       }
 
       .d-flex {
@@ -96,7 +96,7 @@ export default function render() {
 
       .container header .moment-header {
         padding: 50px 0;
-        color: white;
+        color: var(--app-color-white);
         overflow-x: hidden;
       }
 
@@ -148,7 +148,7 @@ export default function render() {
         margin: 0 auto;
         padding: 75px 0;
         max-width: 750px;
-        color: #333333;
+        color: var(--app-color-charcoal);
         font-size: 15px;
         font-weight: regular;
       }
@@ -187,7 +187,7 @@ export default function render() {
 
       .container .text-image-pairing .image span {
         padding: 10px 20px;
-        color: white;
+        color: var(--app-color-white);
         background: rgba(0, 0, 0, 0.5);
       }
 
@@ -212,7 +212,7 @@ export default function render() {
         align-items: flex-end;
         width: 33%;
         height: 200px;
-        color: white;
+        color: var(--app-color-white);
         background-color: var(--app-color-charcoal);
         background-size: cover;
         text-align: bottom;
@@ -225,7 +225,7 @@ export default function render() {
 
       .container .triptych div span {
         padding: 10px 20px;
-        color: white;
+        color: var(--app-color-white);
         background: rgba(0, 0, 0, 0.5);
       }
 
@@ -238,7 +238,7 @@ export default function render() {
 
       .container footer .map-wrapper .explore-map {
         padding: 75px;
-        color: white;
+        color: var(--app-color-white);
         background-color: var(--app-color-interface-blue);
       }
 
@@ -252,8 +252,8 @@ export default function render() {
 
       .container footer .bottom-content {
         padding: 30px 30px 50px 30px;
-        background-color: black;
-        color: #F3F2F0;
+        background-color: var(--app-color-black);
+        color: var(--app-color-smoke);
       }
 
       .container footer .bottom-content h6 {
@@ -263,7 +263,7 @@ export default function render() {
       }
 
       .container footer .bottom-content a {
-        color: #F3F2F0;
+        color: var(--app-color-smoke);
         font-size: 13px;
       }
 
@@ -278,7 +278,7 @@ export default function render() {
         counter-increment: my-awesome-counter;
         padding-bottom: 15px;
         font-size: 13px;
-        color: #F3F2F0;
+        color: var(--app-color-smoke);
       }
 
       .container footer .bottom-content ol li::before {

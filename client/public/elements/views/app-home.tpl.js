@@ -41,7 +41,7 @@ export default function render() {
         width: 50%;
         max-width: 400px;
         line-height: 25px;
-        color: white;
+        color: var(--app-color-white);
       }
 
       header > .text-block {
@@ -55,7 +55,7 @@ export default function render() {
       header > div > h1 {
         margin: 0;
         padding: 0;
-        color: white;
+        color: var(--app-color-white);
         font-size: 30px;
         font-weight: normal;
         line-height: 35px;
@@ -102,7 +102,7 @@ export default function render() {
 
       .card {
         height: 100%;
-        background-color: white;
+        background-color: var(--app-color-white);
       }
 
       .card .feature-img {
