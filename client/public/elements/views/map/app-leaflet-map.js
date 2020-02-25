@@ -117,12 +117,12 @@ export default class AppLeafletMap extends LitElement {
     }
 
     // now render based on selected type
-    if( e.selected.type === 'cluster' ) {
-      this.selectCluster(e.selected.latlng, e.selected.zoom);
-    } else if( e.selected.type && e.selected.type !== 'connection' ) {
-      this.selectNode(e.selected.id, undefined, this.firstRender);
-    } else if( e.selected.type === 'connection' ) {
-      this.selectLink(e.selected.id);
+    if( e.selectedNode.type === 'cluster' ) {
+      this.selectCluster(e.selectedNode.latlng, e.selectedNode.zoom);
+    } else if( e.selectedNode.type && e.selectedNode.type !== 'connection' ) {
+      this.selectNode(e.selectedNode.id, undefined, this.firstRender);
+    } else if( e.selectedNode.type === 'connection' ) {
+      this.selectLink(e.selectedNode.id);
     }
 
     // make sure our links are rendered correctly

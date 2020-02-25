@@ -22,13 +22,13 @@ class AppStateModelImpl extends AppStateModel {
   setSelectedClusterIds(ids) {
     let state = this.store.data;
 
-    if( !state.selected ) {
+    if( !state.selectedNode ) {
       return console.warn('Attempting to set cluster ids, but no selected object');
     }
-    if( state.selected.type !== 'cluster' ) {
+    if( state.selectedNode.type !== 'cluster' ) {
       return console.warn('Attempting to set cluster ids, but selected object is not a cluster');
     }
-    state.selected.ids = ids;
+    state.selectedNode.ids = ids;
 
     return super.set(state);
   }
@@ -41,7 +41,6 @@ class AppStateModelImpl extends AppStateModel {
     }
 
     // parse out selected object(s)
-    // TODO: selected => selectedNode
     if ( state.page === 'map' && state.location.path.length >= 1 ) {
       state.moment = state.location.path[1];
     }
@@ -51,18 +50,18 @@ class AppStateModelImpl extends AppStateModel {
     }
 
     if ( state.page === 'map' && state.location.path.length >= 3 ) {
-      state.selected = {
+      state.selectedNode = {
         type : state.location.path[2]
       }
 
       if( state.location.path[2] === 'cluster' ) {
-        state.selected.latlng = state.location.path[3].split(',').map(ll => parseFloat(ll));
-        state.selected.zoom = parseInt(state.location.path[4]);
+        state.selectedNode.latlng = state.location.path[3].split(',').map(ll => parseFloat(ll));
+        state.selectedNode.zoom = parseInt(state.location.path[4]);
       } else {
-        state.selected.id = state.location.path[3];
+        state.selectedNode.id = state.location.path[3];
       }
     } else {
-      state.selected = null;
+      state.selectedNode = null;
     }
 
     // Set a default moment if none has been set

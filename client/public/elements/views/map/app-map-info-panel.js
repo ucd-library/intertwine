@@ -85,7 +85,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
   _onAppStateUpdate(e) {
     this.moment   = e.moment;
-    this.selected = e.selected;
+    this.selected = e.selectedNode;
 
     this.renderState();
   }
