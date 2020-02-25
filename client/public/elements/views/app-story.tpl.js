@@ -94,24 +94,24 @@ export default function render() {
         /* sets reference point to scale from */
       }
 
-      .container header .moment-header {
+      .container header .story-header {
         padding: 50px 0;
         color: var(--app-color-white);
         overflow-x: hidden;
       }
 
-      .container header .moment-header ul {
+      .container header .story-header ul {
         display: flex;
         justify-content: center;
         list-style: none;
         flex-wrap: wrap;
       }
 
-      .container header .moment-header ul li {
+      .container header .story-header ul li {
         margin: 0 10px;
       }
 
-      .container header .moment-header ul li h2 {
+      .container header .story-header ul li h2 {
         margin-top: 15px;
         margin-bottom: 15px;
         font-size: 30px;
@@ -119,20 +119,20 @@ export default function render() {
         white-space: nowrap;
       }
 
-      .container header .moment-header ul li h4 {
+      .container header .story-header ul li h4 {
         font-size: 15px;
         font-weight: bold;
         white-space: nowrap;
       }
 
-      .container header .moment-header ul li .quote {
+      .container header .story-header ul li .quote {
         min-width: 250px;
         max-width: 300px;
         font-style: italic;
         font-size: 17px;
       }
 
-      .container header .moment-header ul li .quote ul.credit {
+      .container header .story-header ul li .quote ul.credit {
         margin: 0;
         padding: 0;
         font-size: 1.0rem;
@@ -140,7 +140,7 @@ export default function render() {
         list-style-position: outside;
       }
 
-      .container header .moment-header ul li .quote ul.credit li {
+      .container header .story-header ul li .quote ul.credit li {
         padding: 20px 0 0 10px;
       }
 
@@ -333,21 +333,21 @@ export default function render() {
 
     <div id="container" class="container" role="main">
       <header>
-        <div class="header-image" style="background-image: url('../../images/${this.moment.headerImage}');"></div>
-        <div class="moment-header">
+        <div class="header-image" style="background-image: url('../../images/${this.story.headerImage}');"></div>
+        <div class="story-header">
           <ul>
             <li style="text-align: right;">
               <h4>moments in wine history</h4>
-              <h2 class="inverse">${this.moment.title}</h2>
+              <h2 class="inverse">${this.story.title}</h2>
             </li>
 
             <li>
               <div class="quote">
-                ${this.moment.quote.text}
+                ${this.story.quote.text}
                 <ul class="credit">
                   <li>
-                    ${this.moment.quote.credit}<br />
-                    ${this.moment.quote.src}
+                    ${this.story.quote.credit}<br />
+                    ${this.story.quote.src}
                   </li>
                 </ul>
               </div>
@@ -357,46 +357,46 @@ export default function render() {
       </header>
 
       <div style="position: -webkit-sticky; position: sticky; top: 100%; z-index: 1; bottom: 0;">
-        <app-moment-float-btn id="floatBtn"></app-moment-float-btn>
+        <app-story-float-btn id="floatBtn"></app-story-float-btn>
       </div>
 
       <section class="text-blocks bg-white">
-        ${this.moment.text1.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
+        ${this.story.text1.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
       </section>
 
       <section class="text-image-pairing bg-tan">
-        <div class="image" style="background-image: url('../../images/${this.moment.text2.image.src}');">
-          <span>${this.moment.text2.image.title}</span>
+        <div class="image" style="background-image: url('../../images/${this.story.text2.image.src}');">
+          <span>${this.story.text2.image.title}</span>
         </div>
 
         <div class="text-blocks">
-          <h1>${this.moment.text2.title}</h1>
-          ${this.moment.text2.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
+          <h1>${this.story.text2.title}</h1>
+          ${this.story.text2.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
         </div>
       </section>
 
       <section class="text-blocks bg-white">
-        <h1>${this.moment.text3.title}</h1>
-        ${this.moment.text3.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
+        <h1>${this.story.text3.title}</h1>
+        ${this.story.text3.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
       </section>
 
       <div class="triptych">
-        ${this.moment.triptych.map(image => html`
+        ${this.story.triptych.map(image => html`
           <div style="background-image: url('../../images/${image.src}');"><span>${image.title}</span></div>
         `)}
       </div>
 
       <section class="text-blocks bg-white">
-        <h1>${this.moment.text4.title}</h1>
-        ${this.moment.text4.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
+        <h1>${this.story.text4.title}</h1>
+        ${this.story.text4.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
       </section>
 
       <section class="text-image-pairing bg-tan">
         <div class="text-blocks">
-          <h1>${this.moment.text5.title}</h1>
-          ${this.moment.text5.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
+          <h1>${this.story.text5.title}</h1>
+          ${this.story.text5.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
         </div>
-        <div class="image" style="background-image: url('../../images/${this.moment.text5.image.src}');"></div>
+        <div class="image" style="background-image: url('../../images/${this.story.text5.image.src}');"></div>
       </section>
 
       <footer>
@@ -406,11 +406,11 @@ export default function render() {
             <iron-icon class="explore-map-icon" icon="intert-wine-icons:explore"></iron-icon>
             <span style="display: inline-block;">
               <h6>Explore the Map</h6>
-              <h2 class="inverse">${this.moment.title}</h2>
+              <h2 class="inverse">${this.story.title}</h2>
             </span>
             <br />
-            Learn more about how the people, locations, and wines are connected to the ${this.moment.title} via the network
-            map of this moment in wine history.
+            Learn more about how the people, locations, and wines are connected to the ${this.story.title} via the network
+            map of this story in wine history.
             <br /><br />
             <a @click="${this._launchMap}" class="btn inverse">Launch Map</a>
           </div>
@@ -419,7 +419,7 @@ export default function render() {
         <div class="bottom-content">
           <h6>Sources</h6>
           <ol>
-          ${this.moment.sources.map(source => html`
+          ${this.story.sources.map(source => html`
             <li>
               <em>
                 ${source.text}

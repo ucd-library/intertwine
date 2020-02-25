@@ -2,7 +2,7 @@ import { LitElement } from 'lit-element';
 import render from './app-story.tpl.js'
 
 // This is temporary and can be replaced once we have a live source for the data
-let jsonData = require('../../../../mock/moments_json.json');
+let jsonData = require('../../../../mock/story_json.json');
 
 export default class AppStory extends Mixin(LitElement)
   .with(LitCorkUtils) {
@@ -11,7 +11,7 @@ export default class AppStory extends Mixin(LitElement)
     return {
       active: { type: Boolean },
       selectedMoment: { type: String },
-      moment: { type: Object }
+      story: { type: Object }
     }
   }
 
@@ -29,9 +29,8 @@ export default class AppStory extends Mixin(LitElement)
    * @param {Object} e
    */
   _onAppStateUpdate(e) {
-    console.log("X: ", e);
     this.selectedMomentName = e.moment;
-    this.moment = jsonData.moments[this.selectedMomentName];
+    this.story = jsonData.moments[this.selectedMomentName];
   }
 
   async firstUpdated() {
