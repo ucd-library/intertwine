@@ -24,7 +24,7 @@ export default class AppHome extends Mixin(LitElement)
    * @param {String} moment moment name
    */
   _onReadStoryClick(moment) {
-    this.AppStateModel.setLocation('/moment/' + moment);
+    this.AppStateModel.setLocation('/story/' + moment);
   }
 
   /**

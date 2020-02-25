@@ -45,7 +45,7 @@ class AppStateModelImpl extends AppStateModel {
       state.moment = state.location.path[1];
     }
 
-    if ( state.page === 'moment' ) {
+    if ( state.page === 'story' ) {
       state.moment = state.location.path[1];
     }
 

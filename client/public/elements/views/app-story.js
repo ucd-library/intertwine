@@ -1,12 +1,10 @@
 import { LitElement } from 'lit-element';
-import render from './app-moment.tpl.js'
+import render from './app-story.tpl.js'
 
-/**
-  This is temporary and can be replaced once we have a live source for the data
-*/
+// This is temporary and can be replaced once we have a live source for the data
 let jsonData = require('../../../../mock/moments_json.json');
 
-export default class AppMoment extends Mixin(LitElement)
+export default class AppStory extends Mixin(LitElement)
   .with(LitCorkUtils) {
 
   static get properties() {
@@ -31,6 +29,7 @@ export default class AppMoment extends Mixin(LitElement)
    * @param {Object} e
    */
   _onAppStateUpdate(e) {
+    console.log("X: ", e);
     this.selectedMomentName = e.moment;
     this.moment = jsonData.moments[this.selectedMomentName];
   }
@@ -76,4 +75,4 @@ export default class AppMoment extends Mixin(LitElement)
   }
 }
 
-customElements.define('app-moment', AppMoment);
+customElements.define('app-story', AppStory);

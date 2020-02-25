@@ -31,7 +31,7 @@ return html`
     <iron-pages selected="${this.view}" attr-for-selected="id" selected-attribute="visible">
       <app-home id="home"></app-home>
       <app-about id="about"></app-about>
-      <app-moment id="moment"></app-moment>
+      <app-story id="story"></app-story>
       <app-view-map id="map"></app-view-map>
     </iron-pages>
   </div>

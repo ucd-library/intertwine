@@ -4,7 +4,7 @@ import render from "./app-header.tpl.js"
 import "./views/map/app-map-info-panel"
 import "./views/app-about"
 import "./views/app-home"
-import "./views/app-moment"
+import "./views/app-story"
 
 export default class AppHeader extends Mixin(LitElement)
   .with(LitCorkUtils){
