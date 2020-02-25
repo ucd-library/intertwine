@@ -29,7 +29,7 @@ export default class AppHome extends Mixin(LitElement)
 
   /**
    * @method _onExploreMapClick
-   * @description send the user to the map page to view their selected moment
+   * @description send the user to the map page to view their selected moment on the map
    * @param {String} moment moment name
    */
   _onExploreMapClick(moment) {

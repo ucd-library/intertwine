@@ -4,7 +4,9 @@ import render from './app-moment-float-btn.tpl.js';
 export default class AppMomentFloatBtn extends LitElement {
   static get properties() {
     return {
-      active: { type: Boolean }
+      active: {
+        type: Boolean
+      }
     }
   }
 

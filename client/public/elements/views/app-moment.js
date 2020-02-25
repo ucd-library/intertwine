@@ -63,6 +63,11 @@ export default class AppMoment extends Mixin(LitElement)
     observer.observe(this.footer);
   }
 
+  /**
+   * @method _launchMap
+   * @description: send the user to the map where they will view the selected moment
+   * @param {*} e
+  */
   _launchMap() {
     this.AppStateModel.setLocation('/map/' + this.selectedMomentName);
   }

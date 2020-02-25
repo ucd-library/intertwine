@@ -30,10 +30,22 @@ class MomentModel extends BaseModel {
     return this.store.data[moment];
   }
 
+  /**
+   * @method transformLinks
+   * @description prepare the raw json to be used by the app
+   * @param {Object} data => the data object
+   * @returns {Object} nodes & links
+   */
   transformLinks(data) {
     let links = {}, nodes = {}, lookup = {};
 
     // Helper Functions - START
+    /**
+     * @method cleanType
+     * @description take the default type and strip unnecessary characters from the string(s)
+     * @param {*} type
+     * @returns {String}
+    */
     function cleanType(type) {
       let newType;
       if ( Array.isArray(type) ) {
@@ -57,8 +69,14 @@ class MomentModel extends BaseModel {
       }
     }
 
+    /**
+     * @method getLocation
+     * @description Locate and return a record matching the provided id
+     * @param {String} id
+     * @returns {Object}
+     */
     function getLocation(id) {
-      /* Possible Layouts:
+      /* Possible layouts we'll have to contend with:
         Jop:
           "spatial" : [
             "Saint-Julien-Beychevelle, France",
@@ -123,9 +141,7 @@ class MomentModel extends BaseModel {
       if( !lookup[id].isLink && lookup[id]['type'] !== 'connection' ) {
         let location;
 
-        /**
-         * Weed out the _:b items, which won't be needed in the final display
-        */
+        // Weed out the _:b items, which won't be needed in the final display
         const regex = new RegExp(/^_:b*/g);
         if ( !regex.test(lookup[id]["@id"]) ) {
 
@@ -161,8 +177,6 @@ class MomentModel extends BaseModel {
         dst: nodes[item.dst].coordinates
       }
     }
-
-    //console.log("nodes: ", nodes, " links: ", links);
 
     return { nodes, links }
   }

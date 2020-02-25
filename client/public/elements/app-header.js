@@ -32,8 +32,8 @@ export default class AppHeader extends Mixin(LitElement)
 
   /**
    * @method _onAboutClick
-   * @description ...
-   * @param {Object} e
+   * @description send the user to the About page
+   * @param {*} e
   */
   _onAboutClick() {
     this.AppStateModel.setLocation('/about/');

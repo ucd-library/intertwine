@@ -382,6 +382,7 @@ export default class AppLeafletMap extends LitElement {
   /**
    * @method setData
    * @description set node/link data, render map
+   * @param {Object} data
    */
   setData(data) {
     this.nodes = data.nodes;

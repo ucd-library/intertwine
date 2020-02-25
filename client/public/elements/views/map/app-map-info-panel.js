@@ -145,11 +145,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.isNode = false;
     this.isMoment = false;
 
-    /**
-     * Reset the thumbnail and the backgroundImage so if
-     * the user has navigated to a new item the old image
-     * isn't displayed
-    **/
+    /*
+     Reset the thumbnail and the backgroundImage so if
+     the user has navigated to a new item the old image
+     isn't displayed.
+    */
     this.thumbnail = '';
     this.singleImage.style.backgroundImage = 'initial';
 
@@ -278,8 +278,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
       connections.map(connection => {
         if ( Array.isArray(connection.link.name) ) {
-          let substring = connection.link.name[1];
           let string    = connection.link.name[0];
+          let substring = connection.link.name[1];
 
           connection.link.name = formatString(string, substring);
 
@@ -287,6 +287,13 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         }
       });
 
+      /**
+       * @method formatString
+       * @description this function identifies the connection type and bolds it.
+       *
+       * @param {String} string the complete connection string
+       * @param {String} substring the word/phrase you're looking to bold
+      */
       function formatString(string, substring) {
         let regex = new RegExp(substring, 'g');
 

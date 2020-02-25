@@ -18,7 +18,7 @@ class AppStateModelImpl extends AppStateModel {
    * @description when a cluster is selected in the UI, the center lat/lng and zoom
    * of the cluster will be set in the, this will be used by the map to figure out
    * the nodes in the cluster and set them
-   */
+  */
   setSelectedClusterIds(ids) {
     let state = this.store.data;
 
