@@ -4,8 +4,6 @@ import {markdown} from "markdown"
 
 import "@polymer/iron-icons"
 
-import "../../app-moments-dropdown"
-
 export default class AppMapInfoPanel extends Mixin(LitElement)
   .with(LitCorkUtils) {
 
