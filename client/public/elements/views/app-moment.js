@@ -1,7 +1,7 @@
 import { LitElement } from 'lit-element';
 import render from './app-moment.tpl.js'
 
-let _json = require('../../../../mock/moments_json.json');
+let jsonData = require('../../../../mock/moments_json.json');
 
 export default class AppMoment extends Mixin(LitElement)
   .with(LitCorkUtils) {
@@ -29,8 +29,7 @@ export default class AppMoment extends Mixin(LitElement)
    */
   _onAppStateUpdate(e) {
     this.selectedMomentName = e.moment;
-
-    this.moment = _json.moments[this.selectedMomentName];
+    this.moment = jsonData.moments[this.selectedMomentName];
   }
 
   async firstUpdated() {
