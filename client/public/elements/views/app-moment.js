@@ -1,6 +1,9 @@
 import { LitElement } from 'lit-element';
 import render from './app-moment.tpl.js'
 
+/**
+  This is temporary and can be replaced once we have a live source for the data
+*/
 let jsonData = require('../../../../mock/moments_json.json');
 
 export default class AppMoment extends Mixin(LitElement)

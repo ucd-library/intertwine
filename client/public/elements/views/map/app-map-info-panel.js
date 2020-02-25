@@ -197,7 +197,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       if( !this.clusterSubjects[node.type] ) return;
 
       this.clusterSubjects[node.type].enabled = true;
-
       this.clusterSubjects[node.type].nodes.push(node);
     });
 

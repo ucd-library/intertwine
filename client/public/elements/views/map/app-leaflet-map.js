@@ -108,7 +108,7 @@ export default class AppLeafletMap extends LitElement {
       for( let type in this.selectedNodeIcon ) {
         this.map.removeLayer(this.selectedNodeIcon[type]);
       }
-      this.selectedNodeIcon = null;
+      this.selectedNodeIcon  = null;
       this.selectedNodeLayer = null;
     }
     if( this.selectedLineIcon ) {

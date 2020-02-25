@@ -76,7 +76,7 @@ class MomentModel extends BaseModel {
      * @returns {Object}
      */
     function getLocation(id) {
-      /* Possible layouts we'll have to contend with:
+      /* Possible json layouts we'll have to contend with:
         Jop:
           "spatial" : [
             "Saint-Julien-Beychevelle, France",
