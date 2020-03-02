@@ -34,27 +34,36 @@ return html`
     }
 
     a {
-      display: inline-block;
       cursor: pointer;
       color: var(--app-color-white);
       text-decoration: none;
+    }
+
+    .about {
+      padding-right: 20px;
     }
 
     .about:hover {
       font-weight: bold;
     }
 
-    .image {
-      padding: 15px 20px;
-      background-color: var(--app-color-interface-blue );
+    .about > a {
+      display: inline-block;
     }
 
-    .image:hover {
+    .logo {
+      display: block;
+      width: 145px;
+      height: 100%;
+      background-image: url('/images/ucd-lib-logo-white.png');
+      background-repeat: no-repeat;
+      background-position: 20px 16px;
+      background-color: var(--app-color-interface-blue);
+      background-size: initial;
+    }
+
+    .logo:hover {
       background-color: var(--app-color-secondary-blue);
-    }
-
-    img {
-      vertical-align: middle;
     }
 
     @media(max-width: 825px) {
@@ -62,20 +71,29 @@ return html`
         display: none;
       }
     }
+
+    @media(max-width: 414px) {
+      :host {
+        height: 80px;
+      }
+
+      .logo {
+        width: 80px;
+        background-image: url('/images/ucd_lib-logo-nowords.svg');
+        background-position: center;
+        background-size: 30% auto;
+      }
+    }
   </style>
 
   <header class="layout">
     <h1>
       <span><a href="${this.baseUrl}">intertWINE</a></span>
-      <span class="title-extra">// California's Modern Wine Network<span>
+      <span class="title-extra">// California's Modern Wine Network</span>
     </h1>
-    <div class="about" style="padding-right: 20px;">
+    <div class="about">
       <a @click="${this._onAboutClick}">ABOUT</a>
     </div>
-    <div class="image">
-      <a href="https://www.library.ucdavis.edu/" target="_blank">
-        <img src="/images/ucd-lib-logo-white.png" />
-      </a>
-    </div>
+    <a class="logo" href="https://www.library.ucdavis.edu/" target="_blank"></a>
   </header>
 `;}
