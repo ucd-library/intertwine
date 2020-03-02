@@ -40,7 +40,7 @@ export default function render() {
         padding: 50px 15px 50px 15px;
         width: 50%;
         max-width: 400px;
-        line-height: 25px;
+        line-height: 25px;        
         color: var(--app-color-white);
       }
 
@@ -239,9 +239,10 @@ export default function render() {
         header {
           padding: 30px 0;
           flex-wrap: wrap;
-        }
+        }        
 
         header > div {
+          padding: 0 15px;
           width: 100%;
         }
 
@@ -250,7 +251,7 @@ export default function render() {
         }
 
         header .text-block {
-          padding-top: 20px;
+          padding: 0px 15px;
         }
 
         .arrow-down::after {
