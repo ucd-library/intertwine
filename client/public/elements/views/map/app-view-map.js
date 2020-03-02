@@ -24,7 +24,7 @@ export default class AppViewMap extends Mixin(LitElement)
 
     this.infoPanelOpen = true;
 
-    this._injectModel('MomentModel', 'AppStateModel');
+    this._injectModel('AppStateModel', 'MomentModel');
   }
 
   firstUpdated() {

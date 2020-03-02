@@ -91,11 +91,11 @@ return html`
   <header class="layout">
     <h1>
       <span><a href="${this.baseUrl}">intertWINE</a></span>
-      <span class="title-extra">// California's Modern Wine Network</span>
+      <span class="title-extra">// ${this.subtitle}</span>
     </h1>
     <div class="about">
       <a @click="${this._onAboutClick}">ABOUT</a>
     </div>
-    <a class="logo" href="https://www.library.ucdavis.edu/" target="_blank"></a>
+    <a class="logo" href="https://www.library.ucdavis.edu/" title="UC Davis Library Home Page" target="_blank"></a>
   </header>
 `;}

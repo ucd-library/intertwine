@@ -357,7 +357,7 @@ export default function render() {
       </header>
 
       <div style="position: -webkit-sticky; position: sticky; top: 100%; z-index: 1; bottom: 0;">
-        <app-story-float-btn id="floatBtn"></app-story-float-btn>
+        <app-story-float-btn id="floatBtn" @click="${this._launchMap}"></app-story-float-btn>
       </div>
 
       <section class="text-blocks bg-white">

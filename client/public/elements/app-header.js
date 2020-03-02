@@ -12,22 +12,32 @@ export default class AppHeader extends Mixin(LitElement)
   static get properties() {
     return {
       baseUrl: { type: String },
-      currentTopic: { type: String }
+      currentTopic: { type: String },
+      subtitle: { type: String },
+      momentTitle: { type: String }
     }
   }
 
   constructor() {
     super();
     this.render = render.bind(this);
-
     this.baseUrl = window.location.protocol + '//' + window.location.host;
-
+    this.subtitle = '';
+    this.momentTitle = '';
+    
     this._injectModel('AppStateModel');
   }
 
   async firstUpdated() {
     let _topic = await this.AppStateModel.get();
     this.currentTopic = _topic.moment;
+    this.subtitle = 'California\'s Modern Wine Network';
+  }
+
+  _onAppStateUpdate(e) {
+    if ( e.location.query.name ) {
+      this.subtitle = e.location.query.name;
+    }    
   }
 
   /**

@@ -298,60 +298,41 @@ export default function render() {
     <div class="arrow-down"></div>
 
     <main>
-      <div id="chardonnay" class="chardonnay">
-        <div class="card">
-          <div class="feature-img chardonnay"></div>
-          <div class="content">
-            <h4>Growth of Chardonnay</h4>
-            <em>1882 - 1960</em>
-            <p>
-              If Cabernet Sauvignon is the king of red grapes, Chardonnay is the queen of
-              whites. Chardonnay is the most popular wine in the U.S. and has maintained its
-              lead for the last decade. Historical references note California plantings of
-              Chardonnay dating back to the late 1800s, but production was limited due to low
-              yields. This is the story of California Chardonnay pre-1970s, when plantings of
-              the grape boomed as the wine grew in popularity.
-            </p>
+      ${this.moments.map((moment) => html`
+        <div id="${moment.entryPoint.shortName}" class="${moment.entryPoint.shortName}">
+          <div class="card">
+            <div class="feature-img ${moment.entryPoint.shortName}"></div>
+            <div class="content">
+              <h4>${moment.entryPoint.title}</h4>
+              <em>
+                ${moment.entryPoint.startDate} 
+                <span ?hidden="${!moment.entryPoint.endDate}">
+                  - ${moment.entryPoint.endDate}
+                </span>
+              </em>
+              <p>${moment.entryPoint.text}</p>
+            </div>
+            <div class="footer">
+              <button 
+                name="${moment.entryPoint.shortName}" 
+                title="${moment.entryPoint.title}"
+                type="button" 
+                @click="${e => this._onReadStoryClick(e.currentTarget)}">
+                  <span>Read Story</span>
+                  <iron-icon icon="intert-wine-icons:book"></iron-icon>
+              </button>
+              <span class="separator"></span>
+              <button 
+                name="${moment.entryPoint.shortName}" 
+                title="${moment.entryPoint.title}"
+                type="button" 
+                @click="${e => this._onExploreMapClick(e.currentTarget)}">
+                  <iron-icon icon="intert-wine-icons:explore"></iron-icon>
+                  <span>Explore Map</span>
+              </button>
           </div>
-          <div class="footer">
-            <button name="chardonnay" type="button" @click="${e => this._onReadStoryClick(e.currentTarget.name)}">
-              <span>Read Story</span>
-              <iron-icon icon="intert-wine-icons:book"></iron-icon>
-            </button>
-            <span class="separator"></span>
-            <button name="chardonnay" type="button" @click="${e => this._onExploreMapClick(e.currentTarget.name)}">
-              <iron-icon icon="intert-wine-icons:explore"></iron-icon>
-              <span>Explore Map</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div id="jop" class="jop">
-        <div class="card">
-          <div class="feature-img jop"></div>
-          <div class="content">
-            <h4>Judgment of Paris</h4>
-            <em>1976</em>
-            <p>
-              The Paris Wine Tasting of 1976 — known as the Judgment of Paris — was a wine
-              competition organized in Paris on 24 May 1976 by Steven Spurrier, a British wine
-              merchant, in which French judges carried out two blind tasting comparisons: one
-              of top-quality Chardonnays and another of red wines.
-            </p>
-          </div>
-          <div class="footer">
-            <button name="jop" type="button" @click="${e => this._onReadStoryClick(e.currentTarget.name)}">
-              <span>Read Story</span>
-              <iron-icon icon="intert-wine-icons:book"></iron-icon>
-            </button>
-            <span class="separator"></span>
-            <button name="jop" type="button" @click="${e => this._onExploreMapClick(e.currentTarget.name)}">
-              <iron-icon icon="intert-wine-icons:explore"></iron-icon>
-              <span>Explore Map</span>
-            </button>
           </div>
         </div>
-      </div>
-    </main>
+      `)}
+    </main>    
 `;}

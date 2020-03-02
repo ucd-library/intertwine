@@ -1,12 +1,16 @@
 import { LitElement } from 'lit-element';
 import render from './app-home.tpl.js';
 
+// This is temporary and can be replaced once we have a live source for the data
+let jsonData = require('../../../../mock/story_json.json');
+
 export default class AppHome extends Mixin(LitElement)
   .with(LitCorkUtils) {
 
   static get properties() {
     return {
-      active: { type: Boolean }
+      active: { type: Boolean },
+      moments: { type: Array }
     }
   }
 
@@ -14,8 +18,17 @@ export default class AppHome extends Mixin(LitElement)
     super();
     this.render = render.bind(this);
     this.active = true;
+    this.moments = [];
 
-    this._injectModel('AppStateModel');
+    this.loadMoments();
+
+    this._injectModel('AppStateModel', 'MomentModel');
+  }
+
+  loadMoments() {
+    for ( let key in jsonData.moments ) {
+      this.moments.push(jsonData.moments[key]);
+    }
   }
 
   /**
@@ -23,8 +36,8 @@ export default class AppHome extends Mixin(LitElement)
    * @description send the user to the correct moment overview page
    * @param {String} moment moment name
    */
-  _onReadStoryClick(moment) {
-    this.AppStateModel.setLocation('/story/' + moment);
+  _onReadStoryClick(e) {
+    this.AppStateModel.setLocation('/story/' + e.name + '?name=' + e.title);
   }
 
   /**
@@ -32,8 +45,8 @@ export default class AppHome extends Mixin(LitElement)
    * @description send the user to the map page to view their selected moment on the map
    * @param {String} moment moment name
    */
-  _onExploreMapClick(moment) {
-    this.AppStateModel.setLocation('/map/' + moment);
+  _onExploreMapClick(e) {
+    this.AppStateModel.setLocation('/map/' + e.name + '?name=' + e.title);
   }
 
 }
