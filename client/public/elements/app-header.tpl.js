@@ -10,6 +10,10 @@ return html`
       background-color: var(--app-color-black);
       color: var(--app-color-white);
       z-index: 10000;
+
+      -webkit-box-shadow: 0px 0px 6px 2px rgba(50, 50, 50, 0.75);
+      -moz-box-shadow:    0px 0px 6px 2px rgba(50, 50, 50, 0.75);
+      box-shadow:         0px 0px 6px 2px rgba(50, 50, 50, 0.75);
     }
 
     .layout {
@@ -17,16 +21,14 @@ return html`
       display: flex;
       height: 100%;
       align-items: center;
-      -webkit-box-shadow: -2px 0px 6px 0px rgba(50, 50, 50, 0.75);
-      -moz-box-shadow:    -2px 0px 6px 0px rgba(50, 50, 50, 0.75);
-      box-shadow:         -2px 0px 6px 0px rgba(50, 50, 50, 0.75);
     }
 
     h1 {
-      font-weight: 400;
+      flex: 1;
       margin: 0;
       padding: 0;
-      flex: 1;
+      font-size: 20px;
+      font-weight: 400;
     }
 
     .title-extra {
