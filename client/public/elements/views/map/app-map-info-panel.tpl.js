@@ -297,7 +297,7 @@ return html`
             <h3 class="inverse">Connections in Context</h3>
             <div id="momentDescription"></div>
 
-            <a class="btn inverse" ?hidden="${!this.momentEntryPointUrl}" href="${this.momentEntryPointUrl}">
+            <a class="btn inverse" href="/story/${this.moment}">
               Read Story
             </a>
           </div>
