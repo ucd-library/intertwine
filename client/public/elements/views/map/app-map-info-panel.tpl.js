@@ -153,7 +153,9 @@ return html`
     .type-color[type="person"] {
       color: var(--app-color-scarlet);
     }
-    .color-break[type="person"], iron-icon[type="person"], .dot[type="person"] {
+    .color-break[type="person"], 
+    iron-icon[type="person"], 
+    .dot[type="person"] {
       background-color: var(--app-color-scarlet);
     }
     iron-icon.external-link[type="person"] {
@@ -164,7 +166,9 @@ return html`
     .type-color[type="place"] {
       color: var(--app-color-vine);
     }
-    .color-break[type="place"], iron-icon[type="place"], .dot[type="place"] {
+    .color-break[type="place"], 
+    iron-icon[type="place"], 
+    .dot[type="place"] {
       background-color: var(--app-color-vine);
     }
     iron-icon.external-link[type="place"] {
@@ -175,7 +179,9 @@ return html`
     .type-color[type="event"] {
       color: var(--app-color-rose);
     }
-    .color-break[type="event"], iron-icon[type="event"], .dot[type="event"] {
+    .color-break[type="event"], 
+    iron-icon[type="event"], 
+    .dot[type="event"] {
       background-color: var(--app-color-rose);
     }
     iron-icon.external-link[type="event"] {
@@ -186,7 +192,9 @@ return html`
     .type-color[type="object"] {
       color: var(--app-color-grape);
     }
-    .color-break[type="object"], iron-icon[type="object"], .dot[type="object"] {
+    .color-break[type="object"], 
+    iron-icon[type="object"], 
+    .dot[type="object"] {
       background-color: var(--app-color-grape);
     }
     iron-icon.external-link[type="object"] {
@@ -264,11 +272,11 @@ return html`
 
       <div ?hidden="${!this.isLink}">
         <div class="connection-image-layout">
-          <div class="image" type="${this.srctype}">
-            <iron-icon class="type-color" type="${this.srctype}" icon="intert-wine-icons:${this.srctype}"></iron-icon>
+          <div id="connection-src-image" class="image" type="${this.srctype}">
+            <iron-icon ?hidden="${this.srcthumb}" class="type-color" type="${this.srctype}" icon="intert-wine-icons:${this.srctype}"></iron-icon>
           </div>
-          <div class="image" type="${this.dsttype}">
-            <iron-icon class="type-color" type="${this.dsttype}" icon="intert-wine-icons:${this.dsttype}"></iron-icon>
+          <div id="connection-dst-image" class="image" type="${this.dsttype}">
+            <iron-icon ?hidden="${this.dstthumb}" class="type-color" type="${this.dsttype}" icon="intert-wine-icons:${this.dsttype}"></iron-icon>
           </div>
         </div>
       </div>
@@ -282,8 +290,9 @@ return html`
       <iron-pages selected="${this.view}" attr-for-selected="id">
         <!-- START EMPTY -->
         <div id="moment">
-          <div class="subject-type">Explore</div>
-
+          <div class="subject-type">
+            Explore
+          </div>
           <h1 style="margin-bottom: 3px" class="inverse">${this.momentInfo.title}</h1>
           <h2 style="margin: 0 0 14px 0" class="inverse">${this.momentInfo.date}</h2>
           <div>

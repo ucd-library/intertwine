@@ -21,8 +21,10 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       momentEntryPointUrl : {type: String},
       endpoint: { type: String },
       type : {type : String},
-      srctype : {type: String},
-      dsttype : {type: String},
+      srctype : { type: String },
+      srcthumb: { type: String },
+      dsttype : { type: String },
+      dstthumb: { type: String },
       view : {type : String},
       title : {type : String},
       date : {type : String},
@@ -51,7 +53,9 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.description = '';
     this.thumbnail = '';
     this.srctype = '';
+    this.srcthumb = '';
     this.dsttype = '';
+    this.dstthumb = '';
     this.connections = [];
     this.isLink = false;
     this.isNode = false;
@@ -95,6 +99,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.descriptionEle = this.shadowRoot.querySelector('#description');
     this.momentDescEle  = this.shadowRoot.querySelector('#momentDescription');
     this.singleImage    = this.shadowRoot.querySelector('#singleImage');
+    this.connectionSrcImg  = this.shadowRoot.querySelector('#connection-src-image');
+    this.connectionDstImg = this.shadowRoot.querySelector('#connection-dst-image');
   }
 
   updated() {
@@ -151,12 +157,14 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.isMoment = false;
 
     /*
-     Reset the thumbnail and the backgroundImage so if
+     Reset the thumbnails and background images so if
      the user has navigated to a new item the old image
      isn't displayed.
     */
     this.thumbnail = '';
     this.singleImage.style.backgroundImage = 'initial';
+    this.connectionSrcImg.style.backgroundImage = 'initial';
+    this.connectionDstImg.style.backgroundImage = 'initial';
 
     if( !this.selected ) {
       this.renderEmpty();
@@ -260,6 +268,17 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       ];
       this.srctype = this.connectionSubjects[0].type;
       this.dsttype = this.connectionSubjects[1].type;
+
+      if ( this.connectionSubjects[0].thumbnail ) {
+        this.srcthumb = this.endpoint + '/' + this.moment + '/' + this.connectionSubjects[0].thumbnail.replace('z:', '');
+        this.connectionSrcImg.style.backgroundImage = 'url(' + this.srcthumb + ')';
+      }
+
+      if ( this.connectionSubjects[1].thumbnail ) {
+        this.dstthumb =  this.endpoint + '/' + this.moment + '/' + this.connectionSubjects[1].thumbnail.replace('z:', '');
+        this.connectionDstImg.style.backgroundImage = 'url(' + this.dstthumb + ')';
+      }
+
     } else {
       // find connections
       let connections = [];
