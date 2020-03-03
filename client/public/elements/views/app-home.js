@@ -1,7 +1,7 @@
 import { LitElement } from 'lit-element';
 import render from './app-home.tpl.js';
 
-// This is temporary and can be replaced once we have a live source for the data
+// TODO: This is temporary and can be replaced once we have a live source for the data
 let jsonData = require('../../../../mock/story_json.json');
 
 export default class AppHome extends Mixin(LitElement)

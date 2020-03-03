@@ -4,6 +4,9 @@ import {markdown} from "markdown"
 
 import "@polymer/iron-icons"
 
+// TODO: This is temporary and can be replaced once we have a live source for the data
+let jsonData = require('../../../../../mock/story_json.json');
+
 export default class AppMapInfoPanel extends Mixin(LitElement)
   .with(LitCorkUtils) {
 
@@ -104,6 +107,10 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   renderState(moment) {
     if( moment ) {
       this.momentInfo = moment;
+
+      // This is a TEMPORARY FIX to display the entryPoint data on the info-panel
+      moment.description = jsonData.moments[this.moment].entryPoint.text;
+
       this.momentDescEle.innerHTML = markdown.toHTML(moment.description || '');
       this.momentEntryPointUrl = '';
 

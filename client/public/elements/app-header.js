@@ -6,7 +6,7 @@ import "./views/app-about"
 import "./views/app-home"
 import "./views/app-story"
 
-// This is temporary and can be replaced once we have a live source for the data
+// TODO: This is temporary and can be replaced once we have a live source for the data
 let jsonData = require('../../../mock/story_json.json');
 
 export default class AppHeader extends Mixin(LitElement)
