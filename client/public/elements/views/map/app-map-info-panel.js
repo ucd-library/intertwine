@@ -31,7 +31,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       relatedLinks: { type: Array },
       selectedIndex: { type: Number },
       hasConnections: { type: Boolean },
-      shortConnection: { type: Boolean },
       connectionSubjects : {type: Array},
       clusterSubjects : {type: Object},
       clusterSubjectTypes : {type: Array}
@@ -59,7 +58,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.momentEntryPointUrl = '';
     this.relatedLinks = [];
     this.events       = [];
-    this.shortConnection = false;
 
     this.endpoint = APP_CONFIG.endpoint;
 
@@ -280,11 +278,9 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
           let string    = connection.link.name[0];
           let substring = connection.link.name[1];
 
-          connection.link.name = formatString(string, substring);
-
-          this.shortConnection = true;
+          connection.link.formattedConnection = formatString(string, substring);
         }
-      });
+      });      
 
       /**
        * @method formatString
@@ -293,9 +289,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
        * @param {String} string the complete connection string
        * @param {String} substring the word/phrase you're looking to bold
       */
-      function formatString(string, substring) {
+      function formatString(string, substring) {       
         let regex = new RegExp(substring, 'g');
-
         if ( regex.test(string) ) {
           return string.replace(regex, '<b>' + substring + '</b>');
         } else {

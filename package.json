@@ -17,7 +17,7 @@
     "@ucd-lib/cork-icon-set-generator": "git+https://github.com/UCDavisLibrary/cork-icon-set-generator.git",
     "nodemon": "^1.18.10",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9"
+    "webpack-cli": "^3.3.11"
   },
   "dependencies": {
     "@ucd-lib/spa-router-middleware": "^0.1.0",

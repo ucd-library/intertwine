@@ -332,13 +332,13 @@ return html`
           <div ?hidden="${!this.isNode}">
             ${this.hasConnections? html`<h3 style="margin: 0 0 5px 0">Explore Connections</h3>` : html``}
             <div>
-              ${this.connections.map(item => html`
+              ${this.connections.map(connection => html`
                 <div>
-                  <div class="dot" type="${item.node.type}"></div>
-                  <a class="internal" href="/map/${this.moment}/connection/${item.link['@id']}">
-                  ${this.shortConnection ?
-                    html`${unsafeHTML(item.link.name)}` :
-                    html`<strong><em>${item.link.name}</em></strong>&nbsp;${item.node.name}`
+                  <div class="dot" type="${connection.node.type}"></div>
+                  <a class="internal" href="/map/${this.moment}/connection/${connection.link['@id']}">
+                  ${connection.link.formattedConnection ?
+                    html`${unsafeHTML(connection.link.formattedConnection)}` :
+                    html`<strong><em>${connection.link.name}</em></strong>&nbsp;${connection.node.name}`
                   }
                   </a>
                 </div>

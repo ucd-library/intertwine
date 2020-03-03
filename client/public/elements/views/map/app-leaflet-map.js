@@ -92,7 +92,7 @@ export default class AppLeafletMap extends LitElement {
    * to the current state
    *
    * @param {Object} e app-state-update event object
-   */
+  */
   renderSelectedState(e) {
     if( !e ) {
       if( this.firstRender ) {
@@ -135,7 +135,7 @@ export default class AppLeafletMap extends LitElement {
    * the center connection line label
    *
    * @param {String} id connection id
-   */
+  */
   selectLink(id) {
     // get the link object
     let link = this.links[id];
@@ -150,7 +150,7 @@ export default class AppLeafletMap extends LitElement {
 
     // set our source and destination node labels
     this.selectNode(link.src, 'src');
-    this.selectNode(link.dst, 'dst');
+    this.selectNode(link.dst, 'dst');  
 
     // find the screen midpoint of the line
     let ll = this._getMidPoint(
@@ -158,11 +158,16 @@ export default class AppLeafletMap extends LitElement {
       this.selectedNodeIcon.dst.getLatLng()
     );
 
-    // creat the line label
+    /*
+      The Trello board moments have link names that are 2 item Arrays w/the 
+      short word being stored in the second slot
+    */
+    let connectionName = (Array.isArray(link.name) ? link.name[1] : link.name);
+    // create the line label
     let icon = L.divIcon({
       className: `leaflet-intertwine-connection-label`,
       iconSize: [0, 0],
-      html : '<div>connection</div>'
+      html : '<div>' + connectionName + '</div>'
     });
     this.selectedLineIcon = L.marker(ll, {icon});
     this.map.addLayer(this.selectedLineIcon);
