@@ -6,38 +6,39 @@ import "./views/app-about"
 import "./views/app-home"
 import "./views/app-story"
 
+// This is temporary and can be replaced once we have a live source for the data
+let jsonData = require('../../../mock/story_json.json');
+
 export default class AppHeader extends Mixin(LitElement)
   .with(LitCorkUtils){
 
   static get properties() {
     return {
       baseUrl: { type: String },
-      currentTopic: { type: String },
-      subtitle: { type: String },
-      momentTitle: { type: String }
+      subtitle: { type: String }
     }
   }
 
   constructor() {
-    super();
-    this.render = render.bind(this);
+    super();  
     this.baseUrl = window.location.protocol + '//' + window.location.host;
     this.subtitle = '';
-    this.momentTitle = '';
-    
+   
+    this.render = render.bind(this);
+
     this._injectModel('AppStateModel');
   }
 
-  async firstUpdated() {
-    let _topic = await this.AppStateModel.get();
-    this.currentTopic = _topic.moment;
-    this.subtitle = 'California\'s Modern Wine Network';
-  }
-
   _onAppStateUpdate(e) {
-    if ( e.location.query.name ) {
-      this.subtitle = e.location.query.name;
-    }    
+    if ( e.page === 'home' ) {
+      this.subtitle = 'California\'s Modern Wine Network';
+    } else {
+      for ( let key in jsonData.moments ) {
+        if ( e.moment === key) {
+          this.subtitle = jsonData.moments[key].title;
+        }
+      }
+    }
   }
 
   /**

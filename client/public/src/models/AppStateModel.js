@@ -36,10 +36,10 @@ class AppStateModelImpl extends AppStateModel {
   set(state) {
     // parse out page
     if ( state.location ) {
-      let page = state.location.path ? state.location.path[0] : this.DEFAULT_VIEW;
+      let page = state.location.path ? state.location.path[0] : this.DEFAULT_VIEW;      
       state.page = page || this.DEFAULT_VIEW;
     }
-
+        
     // parse out selected object(s)
     if ( state.page === 'map' && state.location.path.length >= 1 ) {
       state.moment = state.location.path[1];

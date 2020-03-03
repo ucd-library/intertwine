@@ -19,6 +19,7 @@ export default class AppStory extends Mixin(LitElement)
     super();
     this.render = render.bind(this);
     this.active = true;
+
     this._injectModel('AppStateModel');
   }
 

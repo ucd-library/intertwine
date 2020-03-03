@@ -317,7 +317,7 @@ export default function render() {
                 name="${moment.entryPoint.shortName}" 
                 title="${moment.entryPoint.title}"
                 type="button" 
-                @click="${e => this._onReadStoryClick(e.currentTarget)}">
+                @click="${e => this._onReadStoryClick(e.currentTarget.name)}">
                   <span>Read Story</span>
                   <iron-icon icon="intert-wine-icons:book"></iron-icon>
               </button>
@@ -326,7 +326,7 @@ export default function render() {
                 name="${moment.entryPoint.shortName}" 
                 title="${moment.entryPoint.title}"
                 type="button" 
-                @click="${e => this._onExploreMapClick(e.currentTarget)}">
+                @click="${e => this._onExploreMapClick(e.currentTarget.name)}">
                   <iron-icon icon="intert-wine-icons:explore"></iron-icon>
                   <span>Explore Map</span>
               </button>

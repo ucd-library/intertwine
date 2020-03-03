@@ -36,8 +36,8 @@ export default class AppHome extends Mixin(LitElement)
    * @description send the user to the correct moment overview page
    * @param {String} moment moment name
    */
-  _onReadStoryClick(e) {
-    this.AppStateModel.setLocation('/story/' + e.name + '?name=' + e.title);
+  _onReadStoryClick(moment) {
+    this.AppStateModel.setLocation('/story/' + moment);
   }
 
   /**
@@ -45,8 +45,8 @@ export default class AppHome extends Mixin(LitElement)
    * @description send the user to the map page to view their selected moment on the map
    * @param {String} moment moment name
    */
-  _onExploreMapClick(e) {
-    this.AppStateModel.setLocation('/map/' + e.name + '?name=' + e.title);
+  _onExploreMapClick(moment) {
+    this.AppStateModel.setLocation('/map/' + moment);
   }
 
 }
