@@ -79,10 +79,11 @@ return html`
       --iron-icon-width: 150px;
     }
 
-    .subject-type {
-      margin-bottom: 10px;
+    .cluster-icon {
+      width: 100px;
+      height: 100px;
     }
-
+    
     ul.events,
     ul.related-links {
       margin: 0;
@@ -117,7 +118,7 @@ return html`
       padding: 2px;
     }
 
-    .color-break iron-icon {
+    .color-break > iron-icon {
       position: absolute;
       --iron-icon-height: 38px;
       --iron-icon-width: 38px;
@@ -128,35 +129,23 @@ return html`
       color: var(--app-color-white);
     }
 
-    .dot {
-      display: inline-block;
-      height: 8px;
-      width: 8px;
-      margin: 8px 16px 8px 8px;
-      vertical-align: middle;
-      border-radius: 8px;
-    }
-
-    .subject-label {
-      margin-top: 15px;
-    }
-    .subject-label span {
-      margin-left: 3px;
-      vertical-align: bottom;
-    }
-
-    .type-color[type="cluster"], .type-color[type="connection"] {
+    .type-color[type="connection"] {
       color: var(--app-color-interface-blue);
     }
-    .color-break[type="cluster"], iron-icon[type="cluster"],
-    .color-break[type="connection"], iron-icon[type="connection"] {
+
+    .color-break[type="cluster"], 
+    iron-icon[type="cluster"],
+    .color-break[type="connection"], 
+    iron-icon[type="connection"] {
       background-color: var(--app-color-interface-blue);
     }
+
     iron-icon.external-link[type="cluster"],
     iron-icon.external-link[type="connection"] {
       background-color: transparent;
       fill: var(--app-color-interface-blue);
     }
+
     .image[type="cluster"] {
       height: 200px;
     }
@@ -205,6 +194,30 @@ return html`
       fill: var(--app-color-interface-blue);
     }
 
+    .subject-wrapper .subject-type {
+      margin-bottom: 10px;
+    }
+    .subject-wrapper .subject-label {
+      margin-top: 15px;
+    }
+    .subject-wrapper .subject-label > span {
+      margin-left: 3px;
+      vertical-align: bottom;
+    }
+    .subject-wrapper > ul {
+      margin: 0;
+      padding: 4px 0;
+      list-style-type: none;
+    }
+    .subject-wrapper > ul > li > .dot {
+      display: inline-block;
+      height: 8px;
+      width: 8px;
+      margin: 8px 16px 8px 8px;
+      vertical-align: middle;
+      border-radius: 8px;
+    }
+
     .connection-image-layout {
       display: flex;
     }
@@ -241,7 +254,11 @@ return html`
     <div ?hidden="${this.isMoment}">
       <div ?hidden="${this.isLink}">
         <div id="singleImage" class="image" type="${this.type}">
-          <iron-icon ?hidden="${this.thumbnail}" class="type-color" type="${this.type}" icon="intert-wine-icons:${this.type}"></iron-icon>
+          ${(this.type === 'cluster') ? 
+            html`<iron-icon ?hidden="${this.thumbnail}" class="cluster-icon" type="${this.type}" icon="intert-wine-icons:cluster-colored"></iron-icon>` 
+              : 
+            html`<iron-icon ?hidden="${this.thumbnail}" class="type-color" type="${this.type}" icon="intert-wine-icons:${this.type}"></iron-icon>`
+          }
         </div>
       </div>
 
@@ -290,21 +307,23 @@ return html`
 
         <!-- START CLUSTER -->
         <div id="cluster">
-          <h3>Select a Subject</h3>
+          <h1>Select a Subject</h1>
 
           ${this.clusterSubjectTypes.map(type => html`
-            <div ?hidden="${!this.clusterSubjects[type].enabled}">
+            <div class="subject-wrapper" ?hidden="${!this.clusterSubjects[type].enabled}">
               <div class="subject-label">
                 <iron-icon icon="intert-wine-icons:${type}" type="${type}"></iron-icon>
                 <span class="subject-type type-color" type="${type}">${this.clusterSubjects[type].label}</span>
               </div>
               ${this.clusterSubjects[type].nodes.map(node => html`
-                <div>
-                  <div class="dot" type="${type}"></div>
-                  <span>
-                    <a class="internal" href="/map/${this.moment}/${type}/${node['@id']}">${node.name}</a>
-                  </span>
-                </div>
+                <ul>
+                  <li>
+                    <div class="dot" type="${type}"></div>
+                    <a class="internal" href="/map/${this.moment}/${type}/${node['@id']}">
+                      ${node.name}
+                    </a>
+                  </li>
+                </ul>
               `)}
             </div>
           `)}

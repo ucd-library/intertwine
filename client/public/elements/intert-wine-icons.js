@@ -29,6 +29,18 @@ const template = html`<iron-iconset-svg name="intert-wine-icons" size="24">
     <circle cx="5.61" cy="8.31" r="2.37"/>
   </g>
 </g>
+<g id="cluster-colored">
+<title>icon-cluster-colored</title>
+<g id="UK_Dot_Red" data-name="UK Dot Red">
+  <circle cx="5.61" cy="8.31" r="2.37" style="fill:#231f20"/>
+  <circle cx="12" cy="4.62" r="2.37" style="fill:#e8544b"/>
+  <circle cx="18.39" cy="8.31" r="2.37" style="fill:#f0ab2e"/>
+  <circle cx="18.39" cy="15.69" r="2.37" style="fill:#1aa665"/>
+  <circle cx="12" cy="19.38" r="2.37" style="fill:#16779a"/>
+  <circle cx="5.61" cy="15.69" r="2.37" style="fill:#ba5b92"/>
+  <circle cx="5.61" cy="8.31" r="2.37" style="fill:#ec77a4"/>
+</g>
+</g>
 <g id="connection">
   <title>icon-connection</title>
   <path d="M19.33,4.74l-.07-.07a4,4,0,0,0-5.68,0L10,8.29A4,4,0,0,0,10,14L10,14a4.59,4.59,0,0,0,.41.36l1.33-1.33a2.24,2.24,0,0,1-.43-.33l-.07-.07a2.17,2.17,0,0,1,0-3.07L14.88,6A2.2,2.2,0,0,1,18,6L18,6a2.2,2.2,0,0,1,0,3.08l-1.64,1.64a5.54,5.54,0,0,1,.4,2.2l2.54-2.54A4,4,0,0,0,19.33,4.74ZM14,10a4.59,4.59,0,0,0-.41-.36l-1.33,1.33a2.24,2.24,0,0,1,.43.33l.07.07a2.17,2.17,0,0,1,0,3.07L9.12,18A2.2,2.2,0,0,1,6,18L6,18a2.2,2.2,0,0,1,0-3.08l1.64-1.64a5.54,5.54,0,0,1-.4-2.2L4.67,13.58a4,4,0,0,0,0,5.68l.07.07a4,4,0,0,0,5.68,0L14,15.71A4,4,0,0,0,14,10Z"/>
