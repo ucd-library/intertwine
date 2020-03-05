@@ -84,23 +84,23 @@ return html`
       height: 100px;
     }
 
-    ul {
-      margin: 0;
-      padding: 0;
-      list-style-type: none;
+    .dot-list {
+      padding: 5px 0;
     }
 
-    ul > li {
-      padding: 4px 0;
-    }
-
-    ul > li > .dot {
-      display: inline-block;
+    .dot-list > .dot {
+      float: left;
       margin: 8px;
       height: 8px;
       width: 8px;
       vertical-align: middle;
       border-radius: 8px;
+    }
+
+    .related-links > .link-wrapper {
+      display: flex;
+      flex-direction: row;
+      padding: 5px 0;
     }
 
     #description > p {
@@ -116,9 +116,8 @@ return html`
     }
 
     .imageCredit {
-      padding: 10px 0;
+      padding: 20px 0 0 0;
     }
-
     .imageCredit,
     .imageCredit > a {
       color: var(--app-color-stone);
@@ -323,7 +322,6 @@ return html`
         <!-- START CLUSTER -->
         <div id="cluster">
           <h1>Select a Subject</h1>
-
           ${this.clusterSubjectTypes.map(type => html`
             <div class="subject-wrapper" ?hidden="${!this.clusterSubjects[type].enabled}">
               <div class="subject-label">
@@ -331,14 +329,12 @@ return html`
                 <span class="subject-type type-color" type="${type}">${this.clusterSubjects[type].label}</span>
               </div>
               ${this.clusterSubjects[type].nodes.map(node => html`
-                <ul>
-                  <li>
-                    <div class="dot" type="${type}"></div>
-                    <a class="internal" href="/map/${this.moment}/${type}/${node['@id']}">
-                      ${node.name}
-                    </a>
-                  </li>
-                </ul>
+                <div class="dot-list">
+                  <div class="dot" type="${type}"></div>
+                  <a class="internal" href="/map/${this.moment}/${type}/${node['@id']}">
+                    ${node.name}
+                  </a>
+                </div>
               `)}
             </div>
           `)}
@@ -355,63 +351,57 @@ return html`
           </div>
 
           <div ?hidden="${!this.isNode}">
-            <h1 style="margin-bottom: 3px">${this.title}</h1>
-            <h2 style="margin: 0">${this.location}</h2>
-            <h2 style="margin: 0 0 14px 0">${this.date}</h2>
+            <h1 style="margin-bottom: 3px;">${this.title}</h1>
+            <h2 style="margin: 0;">${this.location}</h2>
+            <h2 style="margin: 0 0 14px 0";>${this.date}</h2>
           </div>
 
           <!-- Filled from inside the parent js file -->
           <div id="description"></div>
 
           <div ?hidden="${!this.isNode}">
-            ${this.hasConnections? html`<h3 style="margin: 0 0 5px 0">Explore Connections</h3>` : html``}
-            <div>
+            ${this.hasConnections? html`<h3 style="margin: 0 0 5px 0;">Explore Connections</h3>` : html``}
               ${this.connections.map(connection => html`
-                <ul>
-                  <li>
-                    <div class="dot" type="${connection.node.type}"></div>
-                    <a class="internal" href="/map/${this.moment}/connection/${connection.link['@id']}">
-                    ${connection.link.formattedConnection ?
-                      html`${unsafeHTML(connection.link.formattedConnection)}` :
-                      html`<strong><em>${connection.link.name}</em></strong>&nbsp;${connection.node.name}`
-                    }
-                    </a>
-                  </li>
-                </ul>
+                <div class="dot-list">
+                  <div class="dot" type="${connection.node.type}"></div>
+                  <a class="internal" href="/map/${this.moment}/connection/${connection.link['@id']}">
+                  ${connection.link.formattedConnection ?
+                    html`${unsafeHTML(connection.link.formattedConnection)}` :
+                    html`<strong><em>${connection.link.name}</em></strong>&nbsp;${connection.node.name}`
+                  }
+                  </a>
+                </div>
               `)}
-            </div>
           </div>
           <div ?hidden="${!this.isLink}">
             <h3>Connections Subjects</h3>
             ${this.connectionSubjects.map(node => html`
-              <div>
-                <ul>
-                  <li>
-                    <div class="dot" type="${node.type}"></div>
-                    <span>
-                      <a class="internal" href="/map/${this.moment}/${node.type}/${node['@id']}">
-                        ${node.name}
-                      </a>
-                    </span>
-                  </li>
-                </ul>
+              <div class="dot-list">
+                <div class="dot" type="${node.type}"></div>
+                <a class="internal" href="/map/${this.moment}/${node.type}/${node['@id']}">
+                  ${node.name}
+                </a>
               </div>
             `)}
           </div>
 
           <div ?hidden="${!this.relatedLinks.length}">
             <h3>Learn More</h3>
-            <ul class="related-links">
+            <div class="related-links">
             ${this.relatedLinks.map(link => html`
-              <li>
-                <iron-icon class="external-link" icon="intert-wine-icons:link" type="${this.type}"></iron-icon>
-                <a class="external type-color" type="${this.type}" href="${link.fullLink}" target="_blank">
-                  ${link.shortLink}
-                </a>
-                "${link.title}"
-              </li>
+              <div class="link-wrapper">
+                <div class="icon-wrapper">
+                  <iron-icon class="external-link" icon="intert-wine-icons:link" type="${this.type}"></iron-icon>
+                </div>
+                <span>
+                  <a class="external type-color" type="${this.type}" href="${link.fullLink}" target="_blank">
+                    ${link.shortLink}
+                  </a>
+                  <span>${link.title}</span>
+                </span>
+              </div>
             `)}
-            </ul>
+            </div>
           </div>
 
           <div ?hidden="${!this.imageCreditLink}" class="imageCredit">

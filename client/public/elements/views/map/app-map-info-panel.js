@@ -169,6 +169,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.singleImage.style.backgroundImage = 'initial';
     this.connectionSrcImg.style.backgroundImage = 'initial';
     this.connectionDstImg.style.backgroundImage = 'initial';
+    this.imageCreditLink  = '';
+    this.imageCreditTitle = '';
 
     if( !this.selected ) {
       this.renderEmpty();
@@ -224,7 +226,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   renderItem(node) {
-    console.log(node)
     this.view = 'item';
 
     this.title = node.name || '';
@@ -257,6 +258,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     if ( node.relatedLink && Array.isArray(node.relatedLink) ) {
       let fullLinks = node.relatedLink.filter(link => link['@id'] !== undefined);
       let titles    = node.relatedLink.filter(link => typeof link === 'string');
+
       for ( let i=0; i < fullLinks.length; i++ ) {
         let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
         let obj = {
@@ -264,6 +266,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
           shortLink: fullLinks[i]['@id'].replace(re, '').split('/')[0],
           title: titles[i]
         }
+
         this.relatedLinks.push(obj);
       }
     }
