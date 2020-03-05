@@ -34,6 +34,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       isLink : {type: Boolean},
       isMoment : {type: Boolean},
       relatedLinks: { type: Array },
+      imageCreditLink: { type: String },
+      imageCreditTitle: { type: String },
       selectedIndex: { type: Number },
       hasConnections: { type: Boolean },
       connectionSubjects : {type: Array},
@@ -64,7 +66,9 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.momentInfo = {};
     this.momentEntryPointUrl = '';
     this.relatedLinks = [];
-    this.events       = [];
+    this.imageCreditLink  = '';
+    this.imageCreditTitle = '';
+    this.events  = [];
 
     this.endpoint = APP_CONFIG.endpoint;
 
@@ -220,6 +224,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   renderItem(node) {
+    console.log(node)
     this.view = 'item';
 
     this.title = node.name || '';
@@ -243,23 +248,25 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       this.singleImage.style.backgroundImage = 'url(' + this.thumbnail + ')';
     }
 
-    // TODO:
-    //    1. There should be associated page titles to display next to the url with the data from trello
-    this.relatedLinks = [];
-    if ( Array.isArray(node.relatedLink) ) {
-      this.relatedLinks = node.relatedLink;
-    } else if ( node.relatedLink !== undefined ) {
-      this.relatedLinks.push(node.relatedLink)
+    if ( node.creator ) {
+      this.imageCreditLink  = node.creator.find(c => c['@id'] !== undefined);
+      this.imageCreditTitle = node.creator.find(c => c['@id'] === undefined);
     }
 
-    this.relatedLinks = this.relatedLinks.map(link => {
-      let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
-      let obj = {
-        'short': link.replace(re, '').split('/')[0],
-        'full': link
+    this.relatedLinks = [];
+    if ( node.relatedLink && Array.isArray(node.relatedLink) ) {
+      let fullLinks = node.relatedLink.filter(link => link['@id'] !== undefined);
+      let titles    = node.relatedLink.filter(link => typeof link === 'string');
+      for ( let i=0; i < fullLinks.length; i++ ) {
+        let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
+        let obj = {
+          fullLink: fullLinks[i]['@id'],
+          shortLink: fullLinks[i]['@id'].replace(re, '').split('/')[0],
+          title: titles[i]
+        }
+        this.relatedLinks.push(obj);
       }
-      return obj;
-    });
+    }
 
     if( node.type === 'connection' ) {
       this.connectionSubjects = [
@@ -306,7 +313,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
           connection.link.formattedConnection = formatString(string, substring);
         }
-      });      
+      });
 
       /**
        * @method formatString
@@ -315,7 +322,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
        * @param {String} string the complete connection string
        * @param {String} substring the word/phrase you're looking to bold
       */
-      function formatString(string, substring) {       
+      function formatString(string, substring) {
         let regex = new RegExp(substring, 'g');
         if ( regex.test(string) ) {
           return string.replace(regex, '<b>' + substring + '</b>');

@@ -14,10 +14,11 @@ html {
   --app-color-smoke : #F3F2F0;
   --app-color-pewter : #D4DADC;
   --app-color-charcoal : #333333;
+  --app-color-stone : #767676;
   --app-color-black : #000000;
   --app-color-white : #FFFFFF;
 
-  
+
   --app-primary-color   : var(--app-color-interface-blue);
   --app-background-color : var(--app-color-white);
   --app-text-color      : var(--app-color-black);

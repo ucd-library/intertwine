@@ -83,16 +83,24 @@ return html`
       width: 100px;
       height: 100px;
     }
-    
-    ul.events,
-    ul.related-links {
+
+    ul {
       margin: 0;
       padding: 0;
+      list-style-type: none;
     }
 
-    ul.events li,
-    ul.related-links li {
-      list-style-type: none;
+    ul > li {
+      padding: 4px 0;
+    }
+
+    ul > li > .dot {
+      display: inline-block;
+      margin: 8px;
+      height: 8px;
+      width: 8px;
+      vertical-align: middle;
+      border-radius: 8px;
     }
 
     #description > p {
@@ -105,6 +113,17 @@ return html`
 
     .sub-title {
       font-weight: bold;
+    }
+
+    .imageCredit {
+      padding: 10px 0;
+    }
+
+    .imageCredit,
+    .imageCredit > a {
+      color: var(--app-color-stone);
+      font-size: 12px;
+      font-style: italic;
     }
 
     .color-break {
@@ -133,9 +152,9 @@ return html`
       color: var(--app-color-interface-blue);
     }
 
-    .color-break[type="cluster"], 
+    .color-break[type="cluster"],
     iron-icon[type="cluster"],
-    .color-break[type="connection"], 
+    .color-break[type="connection"],
     iron-icon[type="connection"] {
       background-color: var(--app-color-interface-blue);
     }
@@ -153,8 +172,8 @@ return html`
     .type-color[type="person"] {
       color: var(--app-color-scarlet);
     }
-    .color-break[type="person"], 
-    iron-icon[type="person"], 
+    .color-break[type="person"],
+    iron-icon[type="person"],
     .dot[type="person"] {
       background-color: var(--app-color-scarlet);
     }
@@ -166,8 +185,8 @@ return html`
     .type-color[type="place"] {
       color: var(--app-color-vine);
     }
-    .color-break[type="place"], 
-    iron-icon[type="place"], 
+    .color-break[type="place"],
+    iron-icon[type="place"],
     .dot[type="place"] {
       background-color: var(--app-color-vine);
     }
@@ -179,8 +198,8 @@ return html`
     .type-color[type="event"] {
       color: var(--app-color-rose);
     }
-    .color-break[type="event"], 
-    iron-icon[type="event"], 
+    .color-break[type="event"],
+    iron-icon[type="event"],
     .dot[type="event"] {
       background-color: var(--app-color-rose);
     }
@@ -192,38 +211,14 @@ return html`
     .type-color[type="object"] {
       color: var(--app-color-grape);
     }
-    .color-break[type="object"], 
-    iron-icon[type="object"], 
+    .color-break[type="object"],
+    iron-icon[type="object"],
     .dot[type="object"] {
       background-color: var(--app-color-grape);
     }
     iron-icon.external-link[type="object"] {
       background-color: transparent;
       fill: var(--app-color-interface-blue);
-    }
-
-    .subject-wrapper .subject-type {
-      margin-bottom: 10px;
-    }
-    .subject-wrapper .subject-label {
-      margin-top: 15px;
-    }
-    .subject-wrapper .subject-label > span {
-      margin-left: 3px;
-      vertical-align: bottom;
-    }
-    .subject-wrapper > ul {
-      margin: 0;
-      padding: 4px 0;
-      list-style-type: none;
-    }
-    .subject-wrapper > ul > li > .dot {
-      display: inline-block;
-      height: 8px;
-      width: 8px;
-      margin: 8px 16px 8px 8px;
-      vertical-align: middle;
-      border-radius: 8px;
     }
 
     .connection-image-layout {
@@ -237,6 +232,17 @@ return html`
     }
     .connection-image-layout > div:nth-child(2) {
       border-left: 2px solid var(--app-color-white);
+    }
+
+    .subject-wrapper .subject-type {
+      margin-bottom: 10px;
+    }
+    .subject-wrapper .subject-label {
+      margin-top: 15px;
+    }
+    .subject-wrapper .subject-label > span {
+      margin-left: 3px;
+      vertical-align: bottom;
     }
 
     @media(max-width: 600px) {
@@ -262,9 +268,9 @@ return html`
     <div ?hidden="${this.isMoment}">
       <div ?hidden="${this.isLink}">
         <div id="singleImage" class="image" type="${this.type}">
-          ${(this.type === 'cluster') ? 
-            html`<iron-icon ?hidden="${this.thumbnail}" class="cluster-icon" type="${this.type}" icon="intert-wine-icons:cluster-colored"></iron-icon>` 
-              : 
+          ${(this.type === 'cluster') ?
+            html`<iron-icon ?hidden="${this.thumbnail}" class="cluster-icon" type="${this.type}" icon="intert-wine-icons:cluster-colored"></iron-icon>`
+              :
             html`<iron-icon ?hidden="${this.thumbnail}" class="type-color" type="${this.type}" icon="intert-wine-icons:${this.type}"></iron-icon>`
           }
         </div>
@@ -361,15 +367,17 @@ return html`
             ${this.hasConnections? html`<h3 style="margin: 0 0 5px 0">Explore Connections</h3>` : html``}
             <div>
               ${this.connections.map(connection => html`
-                <div>
-                  <div class="dot" type="${connection.node.type}"></div>
-                  <a class="internal" href="/map/${this.moment}/connection/${connection.link['@id']}">
-                  ${connection.link.formattedConnection ?
-                    html`${unsafeHTML(connection.link.formattedConnection)}` :
-                    html`<strong><em>${connection.link.name}</em></strong>&nbsp;${connection.node.name}`
-                  }
-                  </a>
-                </div>
+                <ul>
+                  <li>
+                    <div class="dot" type="${connection.node.type}"></div>
+                    <a class="internal" href="/map/${this.moment}/connection/${connection.link['@id']}">
+                    ${connection.link.formattedConnection ?
+                      html`${unsafeHTML(connection.link.formattedConnection)}` :
+                      html`<strong><em>${connection.link.name}</em></strong>&nbsp;${connection.node.name}`
+                    }
+                    </a>
+                  </li>
+                </ul>
               `)}
             </div>
           </div>
@@ -377,12 +385,16 @@ return html`
             <h3>Connections Subjects</h3>
             ${this.connectionSubjects.map(node => html`
               <div>
-                <div class="dot" type="${node.type}"></div>
-                <span>
-                  <a class="internal" href="/map/${this.moment}/${node.type}/${node['@id']}">
-                    ${node.name}
-                  </a>
-                </span>
+                <ul>
+                  <li>
+                    <div class="dot" type="${node.type}"></div>
+                    <span>
+                      <a class="internal" href="/map/${this.moment}/${node.type}/${node['@id']}">
+                        ${node.name}
+                      </a>
+                    </span>
+                  </li>
+                </ul>
               </div>
             `)}
           </div>
@@ -390,13 +402,20 @@ return html`
           <div ?hidden="${!this.relatedLinks.length}">
             <h3>Learn More</h3>
             <ul class="related-links">
-            ${this.relatedLinks.map(node => html`
+            ${this.relatedLinks.map(link => html`
               <li>
                 <iron-icon class="external-link" icon="intert-wine-icons:link" type="${this.type}"></iron-icon>
-                <a class="external type-color" type="${this.type}" href="${node.full}" target="_blank">${node.short}</a>
+                <a class="external type-color" type="${this.type}" href="${link.fullLink}" target="_blank">
+                  ${link.shortLink}
+                </a>
+                "${link.title}"
               </li>
             `)}
             </ul>
+          </div>
+
+          <div ?hidden="${!this.imageCreditLink}" class="imageCredit">
+            Image Credit: <a href="${this.imageCreditLink['@id']}">${this.imageCreditTitle}</a>
           </div>
         </div>
         <!-- END ITEM -->
