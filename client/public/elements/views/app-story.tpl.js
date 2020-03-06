@@ -75,6 +75,10 @@ export default function render() {
         width: 100%;
       }
 
+      .spacer {
+        padding: 10px;
+      }
+
       .container {
         position: relative;
       }
@@ -141,6 +145,7 @@ export default function render() {
       }
 
       .container header .story-header ul li .quote ul.credit li {
+        width: 100%;
         padding: 20px 0 0 10px;
       }
 
@@ -183,6 +188,7 @@ export default function render() {
         min-height: 750px;
         background-size: cover;
         background-repeat: no-repeat;
+        background-position: center center;
       }
 
       .container .text-image-pairing .image span {
@@ -361,6 +367,7 @@ export default function render() {
       </div>
 
       <section class="text-blocks bg-white">
+        <h1 ?hidden="${!this.story.text1.title}">${this.story.text1.title}</h1>
         ${this.story.text1.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
       </section>
 
@@ -370,13 +377,13 @@ export default function render() {
         </div>
 
         <div class="text-blocks">
-          <h1>${this.story.text2.title}</h1>
+          <h1 ?hidden="${!this.story.text2.title}">${this.story.text2.title}</h1>
           ${this.story.text2.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
         </div>
       </section>
 
       <section class="text-blocks bg-white">
-        <h1>${this.story.text3.title}</h1>
+        <h1 ?hidden="${!this.story.text3.title}">${this.story.text3.title}</h1>
         ${this.story.text3.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
       </section>
 
@@ -386,18 +393,25 @@ export default function render() {
         `)}
       </div>
 
-      <section class="text-blocks bg-white">
-        <h1>${this.story.text4.title}</h1>
-        ${this.story.text4.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
-      </section>
+      ${this.story.text4?
+        html`
+        <section class="text-blocks bg-white">
+          <h1>${this.story.text4.title}</h1>
+          ${this.story.text4.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
+        </section>
+        `:html`<div class="spacer"></div>`
+      }
 
-      <section class="text-image-pairing bg-tan">
-        <div class="text-blocks">
-          <h1>${this.story.text5.title}</h1>
-          ${this.story.text5.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
-        </div>
-        <div class="image" style="background-image: url('../../images/${this.story.text5.image.src}');"></div>
-      </section>
+      ${this.story.text5?
+        html`
+        <section class="text-image-pairing bg-tan">
+          <div class="text-blocks">
+            <h1>${this.story.text5.title}</h1>
+            ${this.story.text5.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
+          </div>
+          <div class="image" style="background-image: url('../../images/${this.story.text5.image.src}');"></div>
+        </section>
+        `:html`<div class="spacer"></div>`}
 
       <footer>
         <div class="map-wrapper w-100 d-flex">
