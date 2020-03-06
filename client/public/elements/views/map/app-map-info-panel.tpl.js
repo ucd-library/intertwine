@@ -86,10 +86,11 @@ return html`
 
     .dot-list {
       padding: 5px 0;
+      display: flex;
+      flex-direction: row;
     }
 
-    .dot-list > .dot {
-      float: left;
+    .dot-list > .dot-wrapper > .dot {
       margin: 8px;
       height: 8px;
       width: 8px;
@@ -330,10 +331,14 @@ return html`
               </div>
               ${this.clusterSubjects[type].nodes.map(node => html`
                 <div class="dot-list">
-                  <div class="dot" type="${type}"></div>
-                  <a class="internal" href="/map/${this.moment}/${type}/${node['@id']}">
-                    ${node.name}
-                  </a>
+                  <div class="dot-wrapper">
+                    <div class="dot" type="${type}"></div>
+                  </div>
+                  <div>
+                    <a class="internal" href="/map/${this.moment}/${type}/${node['@id']}">
+                      ${node.name}
+                    </a>
+                  </div>
                 </div>
               `)}
             </div>
@@ -353,23 +358,30 @@ return html`
           <div ?hidden="${!this.isNode}">
             <h1 style="margin-bottom: 3px;">${this.title}</h1>
             <h2 style="margin: 0;">${this.location}</h2>
-            <h2 style="margin: 0 0 14px 0";>${this.date}</h2>
+            <h2 style="margin: 0 0 14px 0;">${this.date}</h2>
           </div>
 
           <!-- Filled from inside the parent js file -->
           <div id="description"></div>
 
           <div ?hidden="${!this.isNode}">
-            ${this.hasConnections? html`<h3 style="margin: 0 0 5px 0;">Explore Connections</h3>` : html``}
+            ${this.hasConnections? html`
+              <h3 style="margin: 0 0 5px 0;">
+                Explore Connections
+              </h3>` : html``}
               ${this.connections.map(connection => html`
                 <div class="dot-list">
-                  <div class="dot" type="${connection.node.type}"></div>
-                  <a class="internal" href="/map/${this.moment}/connection/${connection.link['@id']}">
-                  ${connection.link.formattedConnection ?
-                    html`${unsafeHTML(connection.link.formattedConnection)}` :
-                    html`<strong><em>${connection.link.name}</em></strong>&nbsp;${connection.node.name}`
-                  }
-                  </a>
+                  <div class="dot-wrapper">
+                    <div class="dot" type="${connection.node.type}"></div>
+                  </div>
+                  <div>
+                    <a class="internal" href="/map/${this.moment}/connection/${connection.link['@id']}">
+                    ${connection.link.formattedConnection ?
+                      html`${unsafeHTML(connection.link.formattedConnection)}` :
+                      html`<strong><em>${connection.link.name}</em></strong>&nbsp;${connection.node.name}`
+                    }
+                    </a>
+                  </div>
                 </div>
               `)}
           </div>
@@ -377,10 +389,14 @@ return html`
             <h3>Connections Subjects</h3>
             ${this.connectionSubjects.map(node => html`
               <div class="dot-list">
-                <div class="dot" type="${node.type}"></div>
-                <a class="internal" href="/map/${this.moment}/${node.type}/${node['@id']}">
-                  ${node.name}
-                </a>
+                <div class="dot-wrapper">
+                  <div class="dot" type="${node.type}"></div>
+                </div>
+                <div>
+                  <a class="internal" href="/map/${this.moment}/${node.type}/${node['@id']}">
+                    ${node.name}
+                  </a>
+                </div>
               </div>
             `)}
           </div>
