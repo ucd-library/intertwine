@@ -20,13 +20,13 @@ export default function render() {
       }
 
       header {
+        min-height: 200px;
+
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: center;
-        flex-shrink: 0;
-
-        min-height: 200px;
+        flex-shrink: 0;     
 
         background-color: var(--app-color-interface-blue);
         background-image: url('./../../images/header-connectedicons.svg');
@@ -36,20 +36,24 @@ export default function render() {
       }
 
       header > div {
+        padding-top: 50px;
+        padding-bottom: 50px;
         align-self: top;
-        padding: 50px 15px 50px 15px;
         width: 50%;
         max-width: 400px;
         line-height: 25px;        
         color: var(--app-color-white);
       }
 
-      header > .text-block {
-        padding: 50px 15px 50px 15px;
+      header > div:first-of-type {
+        padding-left: 25px;
+        padding-right: 15px;
+        text-align: right;
       }
 
-      header > div:first-of-type {
-        text-align: right;
+      header > div:last-of-type {
+        padding-left: 15px;
+        padding-right: 25px;
       }
 
       header > div > h1 {
@@ -79,11 +83,11 @@ export default function render() {
       }
 
       main {
+        padding: 0px 25px;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        padding: 0 30px;
       }
 
       main > div {
@@ -237,21 +241,30 @@ export default function render() {
 
       @media(max-width: 414px) {
         header {
-          padding: 30px 0;
           flex-wrap: wrap;
         }        
 
         header > div {
-          padding: 0 15px;
           width: 100%;
         }
 
         header > div:first-of-type {
+          padding-top: 30px;
+          padding-left: 25px;
+          padding-right: 25px;
+          padding-bottom: 0;
           text-align: initial;
         }
 
-        header .text-block {
-          padding: 0px 15px;
+        header > div:last-of-type {
+          padding-top: 15px;
+          padding-left: 25px;
+          padding-right: 25px;
+          padding-bottom: 40px;
+        }
+
+        .arrow-down {
+          margin-bottom: 0px;
         }
 
         .arrow-down::after {

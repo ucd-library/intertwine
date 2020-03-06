@@ -17,8 +17,8 @@ return html`
     }
 
     .layout {
-      margin: 0 0 0 20px;
       display: flex;
+      padding: 0 0 0 25px;
       height: 100%;
       align-items: center;
     }

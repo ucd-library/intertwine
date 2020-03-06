@@ -41,6 +41,10 @@ return html`
       background-color: var(--app-color-interface-blue);
     }
 
+    .content-padding {
+      padding: 30px 25px;
+    }
+
     .moment-break {
       margin-top: 50px;
       border-bottom: 1px solid var(--app-color-white);
@@ -52,10 +56,6 @@ return html`
     }
     #momentDescription p {
       color: var(--app-color-white);
-    }
-
-    .content-padding {
-      padding: 30px 25px;
     }
 
     h3 {
