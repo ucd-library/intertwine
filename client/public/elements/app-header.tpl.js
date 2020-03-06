@@ -77,14 +77,14 @@ return html`
 
     @media(max-width: 414px) {
       :host {
-        height: 80px;
+        height: 50px;
       }
 
       .logo {
-        width: 80px;
+        width: 50px;
         background-image: url('/images/ucd_lib-logo-nowords.svg');
         background-position: center;
-        background-size: 30% auto;
+        background-size: 37% auto;
       }
     }
   </style>
