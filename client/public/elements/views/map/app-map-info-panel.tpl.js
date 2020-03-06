@@ -104,7 +104,7 @@ return html`
     }
 
     #description > p {
-      padding: 14px 0 18px 9;
+      padding: 0;
     }
 
     .location, .date {
