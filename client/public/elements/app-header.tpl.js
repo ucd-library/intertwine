@@ -32,6 +32,7 @@ return html`
     }
 
     .title-extra {
+      color: var(--app-color-pewter);
       font-weight: 200;
     }
 
