@@ -72,6 +72,7 @@ return html`
       background-color: var(--app-color-smoke);
       background-size: cover;
       background-repeat: no-repeat;
+      background-position: center center;
     }
     .image iron-icon {
       background-color: var(--app-color-smoke) !important;
@@ -101,7 +102,7 @@ return html`
     .related-links > .link-wrapper {
       display: flex;
       flex-direction: row;
-      padding: 5px 0;
+      padding: 2px 0;
     }
 
     #description > p {
@@ -413,7 +414,7 @@ return html`
                   <a class="external type-color" type="${this.type}" href="${link.fullLink}" target="_blank">
                     ${link.shortLink}
                   </a>
-                  <span>${link.title}</span>
+                  <span>&quot;${link.title}&quot;</span>
                 </span>
               </div>
             `)}
