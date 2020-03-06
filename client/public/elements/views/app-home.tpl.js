@@ -118,7 +118,7 @@ export default function render() {
       }
 
       .card .jop {
-        background: url('./../../images/jop.jpg') no-repeat center;
+        background: url('./../../images/jop-feature.jpg') no-repeat center;
         background-size: cover;
       }
 
