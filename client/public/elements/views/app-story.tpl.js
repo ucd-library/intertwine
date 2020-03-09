@@ -40,9 +40,12 @@ export default function render() {
         line-height: 1.0em;
       }
 
+      h3 {
+        font-size: 22px;
+      }
+
       h4 {
         font-size: 15px;
-        font-weight: bold;
         text-transform: uppercase;
       }
 
@@ -63,80 +66,64 @@ export default function render() {
         background-color: var(--app-color-smoke);
       }
 
-      .d-flex {
-        display: flex;
-      }
-
-      .w-50 {
-        width: 50%;
-      }
-
-      .w-100 {
-        width: 100%;
-      }
-
-      .spacer {
-        padding: 10px;
-      }
-
       .container {
         position: relative;
       }
 
-      .container header {
+      header {
         margin: 0 auto;
         width: 100%;
         background-color: var(--app-color-interface-blue);
       }
 
-      .container header .header-image {
+      header > .header-image {
+        padding-top: 56.25%;
         width: 100%;
-        height: 790px;
         background-size: cover;
         background-repeat: no-repeat;
-        background-position: center;
+        background-position: center center;
         /* sets reference point to scale from */
       }
 
-      .container header .story-header {
+      header > .story-header {
         padding: 50px 0;
         color: var(--app-color-white);
         overflow-x: hidden;
       }
 
-      .container header .story-header ul {
+      header > .story-header > ul {
         display: flex;
         justify-content: center;
         list-style: none;
         flex-wrap: wrap;
       }
 
-      .container header .story-header ul li {
-        margin: 0 10px;
+      header > .story-header > ul > li {
+        margin: 0 20px;
       }
 
-      .container header .story-header ul li h2 {
-        margin-top: 15px;
+      header > .story-header > ul > li:first-of-type {
+        text-align: right;
+      }
+
+      header > .story-header > ul > li > h2 {
+        margin-top: 10px;
         margin-bottom: 15px;
-        font-size: 30px;
-        font-weight: normal;
         white-space: nowrap;
       }
 
-      .container header .story-header ul li h4 {
-        font-size: 15px;
+      header > .story-header > ul > li > h4 {
         font-weight: bold;
         white-space: nowrap;
       }
 
-      .container header .story-header ul li .quote {
+      header > .story-header > ul > li > .quote {
         min-width: 250px;
         max-width: 300px;
-        font-style: italic;
         font-size: 17px;
       }
 
-      .container header .story-header ul li .quote ul.credit {
+      header > .story-header > ul > li > .quote > ul.credit {
         margin: 0;
         padding: 0;
         font-size: 1.0rem;
@@ -144,68 +131,21 @@ export default function render() {
         list-style-position: outside;
       }
 
-      .container header .story-header ul li .quote ul.credit li {
+      header > .story-header > ul > li > .quote > ul.credit > li {
         width: 100%;
         padding: 20px 0 0 10px;
       }
 
-      .container .text-blocks {
+      section.text-blocks {
         margin: 0 auto;
-        padding: 75px 0;
+        padding: 75px;
         max-width: 750px;
         color: var(--app-color-charcoal);
         font-size: 15px;
         font-weight: regular;
       }
 
-      .container .text-blocks p,
-      .container .text-blocks h1 {
-        margin: 0 auto;
-        padding: 10px 75px;
-      }
-
-      .container .text-blocks h1 {
-        padding-bottom: 14px;
-      }
-
-      .container .text-blocks p {
-        padding-top: 0px;
-      }
-
-      .container .text-image-pairing {
-        display: flex;
-        flex-direction: row;
-      }
-
-      .container .text-image-pairing>div {
-        width: 50%;
-      }
-
-      .container .text-image-pairing .image {
-        margin: 0 auto;
-        display: flex;
-        align-items: flex-end;
-        min-height: 750px;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
-      }
-
-      .container .text-image-pairing .image span {
-        padding: 10px 20px;
-        color: var(--app-color-white);
-        background: rgba(0, 0, 0, 0.5);
-      }
-
-      .container .text-image-pairing .wentechardonnay {
-        min-height: 700px;
-        background-size: cover;
-        background-position-y: bottom;
-        background-position-x: center;
-        background-repeat: no-repeat;
-      }
-
-      .container .triptych {
+      .triptych {
         display: flex;
         width: 100%;
         justify-content: center;
@@ -213,126 +153,222 @@ export default function render() {
         flex-direction: row;
       }
 
-      .container .triptych div {
+      .triptych div {
         display: flex;
         align-items: flex-end;
+        padding-top: 33%;
         width: 33%;
-        height: 200px;
+        max-height: 200px;
+
         color: var(--app-color-white);
+        text-align: bottom;
+
         background-color: var(--app-color-charcoal);
         background-size: cover;
-        text-align: bottom;
+        background-repeat: no-repeat;
+        background-position: center center;
       }
 
-      .container .triptych div:nth-of-type(2),
-      .container .triptych div:nth-of-type(3) {
+      .triptych div:nth-of-type(2),
+      .triptych div:nth-of-type(3) {
         margin: 0 0 0 10px;
       }
 
-      .container .triptych div span {
+      .triptych div span {
         padding: 10px 20px;
         color: var(--app-color-white);
         background: rgba(0, 0, 0, 0.5);
       }
 
-      .container footer .map-wrapper .map {
+      .text-image-pairing {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+      }
+
+      .text-image-pairing > div {
         padding: 75px;
+        width: 50%;
+        position: relative;
+
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        /* sets reference point to scale from */
+      }
+
+      .text-image-pairing > .text-blocks {
+        padding: 75px;
+      }
+
+      .text-image-pairing > .image {
+        padding: 75px;
+        min-height: 700px;
+        position: relative;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+
+      .text-image-pairing > .image > span {
+        padding: 10px 20px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        color: var(--app-color-white);
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      footer > .map-wrapper {
+        display: flex;
+        flex-direction: row;
+      }
+
+      footer > .map-wrapper > .map,
+      footer > .map-wrapper > .explore-map {
+        padding: 75px;
+        width: 50%;
+      }
+
+      footer > .map-wrapper > .explore-map {
+        background-color: var(--app-color-interface-blue);
+      }
+
+      footer > .map-wrapper > .map {
+        min-height: 200px;
         background-image: url("../../images/worldmap.jpg");
         background-position-y: center;
         background-position-x: center;
       }
 
-      .container footer .map-wrapper .explore-map {
-        padding: 75px;
+      footer > .map-wrapper > .explore-map > div,
+      footer > .map-wrapper > .explore-map > div > p {
         color: var(--app-color-white);
-        background-color: var(--app-color-interface-blue);
       }
 
-      .container footer .map-wrapper .explore-map iron-icon.explore-map-icon {
+      footer > .map-wrapper > .explore-map > div > iron-icon.explore-map-icon {
         margin-right: 10px;
         display: inline-block;
         vertical-align: top;
-        width: 55px;
-        height: 55px;
+        width: 40px;
+        height: 40px;
       }
 
-      .container footer .bottom-content {
+      footer > .bottom-content {
         padding: 30px 30px 50px 30px;
         background-color: var(--app-color-black);
-        color: var(--app-color-smoke);
+        color: var(--app-color-stone);
       }
 
-      .container footer .bottom-content h6 {
+      footer > .bottom-content h6 {
         margin-bottom: 15px;
         font-size: 15px;
         font-weight: bold;
       }
 
-      .container footer .bottom-content a {
-        color: var(--app-color-smoke);
+      footer > .bottom-content a {
+        color: var(--app-color-stone);
         font-size: 13px;
       }
 
-      .container footer .bottom-content ol {
-        list-style: none;
-        counter-reset: my-awesome-counter;
+      footer > .bottom-content > ol {
         margin: 0;
-        padding: 0;
+        padding-left: 40px;
+        counter-reset: my-awesome-counter;
+        list-style: none;
       }
 
-      .container footer .bottom-content ol li {
-        counter-increment: my-awesome-counter;
+      footer > .bottom-content > ol > li {
+        position: relative;
         padding-bottom: 15px;
+        counter-increment: my-awesome-counter;
+        color: var(--app-color-stone);
         font-size: 13px;
-        color: var(--app-color-smoke);
       }
 
-      .container footer .bottom-content ol li::before {
+      footer > .bottom-content > ol > li::before {
+        position: absolute;
+        top: -1px;
+        left: -2.0rem;
         content: counter(my-awesome-counter);
+        color: var(--app-color-stone);
         font-weight: bold;
         font-size: 13px;
-        margin-left: 0;
-        margin-right: 1.0rem;
       }
 
       @media screen and (min-width: 700px) and (max-width: 999px) {
-        .container .text-blocks p,
-        .container .text-blocks h1 {
-          padding: 10px 50px;
-        }
-        .container .map-wrapper .explore-map {
+        section.text-blocks,
+        .text-image-pairing > div,
+        .text-image-pairing > .text-blocks,
+        .text-image-pairing > .image,
+        footer > .map-wrapper > .map,
+        footer > .map-wrapper > .explore-map {
           padding: 50px;
         }
       }
 
       @media screen and (max-width: 699px) {
-        .container .text-image-pairing {
-          flex-direction: column;
+        header > .story-header > ul > li:first-of-type {
+          text-align: initial;
         }
-        .container .text-image-pairing>div {
-          width: 100%;
+
+        header > .story-header {
+          padding: 20px 0;
+          color: var(--app-color-white);
+          overflow-x: hidden;
         }
-        .container .text-blocks p,
-        .container .text-blocks h1 {
-          padding: 10px 20px;
+
+        header > .story-header > ul {
+          justify-content: flex-start;
         }
-        .container .map-wrapper .explore-map {
+
+        header > .story-header > ul > li {
+          margin: initial;
+        }
+
+        header > .story-header > ul > li > .quote {
+          max-width: 100%;
+        }
+
+        section.text-blocks,
+        .text-image-pairing > div,
+        .text-image-pairing > .text-blocks,
+        .text-image-pairing > .image,
+        footer > .map-wrapper > .map,
+        footer > .map-wrapper > .explore-map {
           padding: 20px;
         }
-        .container .triptych {
+
+        .text-image-pairing {
+          flex-direction: column;
+        }
+        .text-image-pairing > div {
+          width: 100%;
+        }
+
+        .triptych {
           height: initial;
           flex-direction: column;
           align-items: stretch;
         }
-        .container .triptych div {
+        .triptych div {
           width: 100%;
         }
-        .container .triptych div:first-of-type,
-        .container .triptych div:nth-of-type(2) {
+        .triptych div:first-of-type,
+        .triptych div:nth-of-type(2) {
           margin: 0 0 10px 0;
         }
-        .container .triptych div:nth-of-type(3) {
+        .triptych div:nth-of-type(3) {
           margin: 0;
+        }
+
+        footer > .map-wrapper {
+          flex-direction: column;
+        }
+
+        footer > .map-wrapper > .map,
+        footer > .map-wrapper > .explore-map {
+          width: 100%;
         }
       }
     </style>
@@ -342,7 +378,7 @@ export default function render() {
         <div class="header-image" style="background-image: url('../../images/${this.story.headerImage}');"></div>
         <div class="story-header">
           <ul>
-            <li style="text-align: right;">
+            <li>
               <h4>moments in wine history</h4>
               <h2 class="inverse">${this.story.title}</h2>
             </li>
@@ -375,7 +411,6 @@ export default function render() {
         <div class="image" style="background-image: url('../../images/${this.story.text2.image.src}');">
           <span>${this.story.text2.image.title}</span>
         </div>
-
         <div class="text-blocks">
           <h1 ?hidden="${!this.story.text2.title}">${this.story.text2.title}</h1>
           ${this.story.text2.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
@@ -409,24 +444,28 @@ export default function render() {
             <h1>${this.story.text5.title}</h1>
             ${this.story.text5.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
           </div>
-          <div class="image" style="background-image: url('../../images/${this.story.text5.image.src}');"></div>
+          <div class="image" style="background-image: url('../../images/${this.story.text5.image.src}'); background-position: bottom center;">
+            <span>${this.story.text5.image.title}</span>
+          </div>
         </section>
         `:html`<div class="spacer"></div>`}
 
       <footer>
-        <div class="map-wrapper w-100 d-flex">
-          <div class="map w-50"></div>
-          <div class="explore-map w-50">
-            <iron-icon class="explore-map-icon" icon="intert-wine-icons:explore"></iron-icon>
-            <span style="display: inline-block;">
-              <h6>Explore the Map</h6>
-              <h2 class="inverse">${this.story.title}</h2>
-            </span>
-            <br />
-            Learn more about how the people, locations, and wines are connected to the ${this.story.title} via the network
-            map of this story in wine history.
-            <br /><br />
-            <a @click="${this._launchMap}" class="btn inverse">Launch Map</a>
+        <div class="map-wrapper">
+          <div class="map"></div>
+          <div class="explore-map">
+            <div class="map-textbox-wrapper">
+              <iron-icon class="explore-map-icon" icon="intert-wine-icons:explore"></iron-icon>
+              <span style="display: inline-block;">
+                <h4>Explore the Map</h4>
+                <h3 class="inverse">${this.story.title}</h3>
+              </span>
+              <p>
+                Learn more about how the people, locations, and wines are connected to
+                the ${this.story.title} via the network map of this story in wine history.
+              </p>
+              <a @click="${this._launchMap}" class="btn inverse">Launch Map</a>
+            </div>
           </div>
         </div>
 
@@ -437,7 +476,7 @@ export default function render() {
             <li>
               <em>
                 ${source.text}
-                <a ?hidden="${!source.link}" href="${source.href}">${source.link}</a>
+                <a ?hidden="${!source.link}" href="${source.href}">"${source.link}"</a>
               </em>
             </li>
           `)}

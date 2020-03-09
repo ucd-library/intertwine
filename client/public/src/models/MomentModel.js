@@ -37,6 +37,7 @@ class MomentModel extends BaseModel {
    * @returns {Object} nodes & links
    */
   transformLinks(data) {
+    console.log(data);
     let links = {}, nodes = {}, lookup = {};
 
     // Helper Functions - START

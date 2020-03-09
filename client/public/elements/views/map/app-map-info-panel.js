@@ -250,8 +250,14 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     }
 
     if ( node.creator ) {
-      this.imageCreditLink  = node.creator.find(c => c['@id'] !== undefined);
-      this.imageCreditTitle = node.creator.find(c => c['@id'] === undefined);
+      console.log(node);
+      if ( Array.isArray(node.creator) ) {
+        this.imageCreditLink  = node.creator.find(c => c['@id'] !== undefined);
+        this.imageCreditTitle = node.creator.find(c => c['@id'] === undefined);
+      } else {
+        // It's a string and there is no title present
+        this.imageCreditLink = node.creator;
+      }
     }
 
     this.relatedLinks = [];
@@ -259,15 +265,17 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       let fullLinks = node.relatedLink.filter(link => link['@id'] !== undefined);
       let titles    = node.relatedLink.filter(link => typeof link === 'string');
 
-      for ( let i=0; i < fullLinks.length; i++ ) {
-        let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
-        let obj = {
-          fullLink: fullLinks[i]['@id'],
-          shortLink: fullLinks[i]['@id'].replace(re, '').split('/')[0],
-          title: titles[i]
-        }
+      if ( fullLinks.length > 0 ) {
+        for ( let i=0; i < fullLinks.length; i++ ) {
+          let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
+          let obj = {
+            fullLink: fullLinks[i]['@id'],
+            shortLink: fullLinks[i]['@id'].replace(re, '').split('/')[0],
+            title: titles[i].replace('\"', '\'')
+          }
 
-        this.relatedLinks.push(obj);
+          this.relatedLinks.push(obj);
+        }
       }
     }
 

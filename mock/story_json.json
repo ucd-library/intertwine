@@ -35,6 +35,7 @@
         }
       },
       "text3": {
+        "title": "Chardonnay Comes to California",
         "paragraphs": [
           "Chardonnay's presence among early California wines is hard to trace due to the absence of varietal labeling before the 1930s, variations on the grape’s spelling, and mistakes in identification. It wasn't uncommon for Chardonnay to be mistaken for Pinot Blanc and Melon de Bourgogne.",
           "The grape's stateside story begins to come into focus in 1882, when Charles Wetmore imported budwood from Meursault and established his Cresta Blanca vineyard in Livermore. Chardonnay roots developed in Livermore nurseries and vineyards as well as in the Santa Cruz Mountains, where Livermore winegrower Paul Masson planted a second vineyard to Pinot Noir and Chardonnay, using cuttings from Burgundy purportedly from the vineyards of winegrower Louis Latour."
@@ -69,6 +70,7 @@
           "Heitz's acumen as a businessman and winemaker; the publication of the first volume of Julia Child’s book Mastering the Art of French Cooking, in 1961, with volume 2 following in 1970; and the Judgment of Paris were further fuel for Chardonnay’s rise. The rest, as they say, is history."
         ],
         "image": {
+          "title": "1936 Wente Bros Chardonnay",
           "src": "wentechardonnay_1936.jpg"
         }
       },

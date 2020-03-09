@@ -26,7 +26,7 @@ export default function render() {
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: center;
-        flex-shrink: 0;     
+        flex-shrink: 0;
 
         background-color: var(--app-color-interface-blue);
         background-image: url('./../../images/header-connectedicons.svg');
@@ -41,7 +41,7 @@ export default function render() {
         align-self: top;
         width: 50%;
         max-width: 400px;
-        line-height: 25px;        
+        line-height: 25px;
         color: var(--app-color-white);
       }
 
@@ -107,6 +107,8 @@ export default function render() {
       .card {
         height: 100%;
         background-color: var(--app-color-white);
+        background-repeat: no-repeat;
+        background-position: center center;
       }
 
       .card .feature-img {
@@ -242,7 +244,7 @@ export default function render() {
       @media(max-width: 414px) {
         header {
           flex-wrap: wrap;
-        }        
+        }
 
         header > div {
           width: 100%;
@@ -318,7 +320,7 @@ export default function render() {
             <div class="content">
               <h4>${moment.entryPoint.title}</h4>
               <em>
-                ${moment.entryPoint.startDate} 
+                ${moment.entryPoint.startDate}
                 <span ?hidden="${!moment.entryPoint.endDate}">
                   - ${moment.entryPoint.endDate}
                 </span>
@@ -326,19 +328,19 @@ export default function render() {
               <p>${moment.entryPoint.text}</p>
             </div>
             <div class="footer">
-              <button 
-                name="${moment.entryPoint.shortName}" 
+              <button
+                name="${moment.entryPoint.shortName}"
                 title="${moment.entryPoint.title}"
-                type="button" 
+                type="button"
                 @click="${e => this._onReadStoryClick(e.currentTarget.name)}">
                   <span>Read Story</span>
                   <iron-icon icon="intert-wine-icons:book"></iron-icon>
               </button>
               <span class="separator"></span>
-              <button 
-                name="${moment.entryPoint.shortName}" 
+              <button
+                name="${moment.entryPoint.shortName}"
                 title="${moment.entryPoint.title}"
-                type="button" 
+                type="button"
                 @click="${e => this._onExploreMapClick(e.currentTarget.name)}">
                   <iron-icon icon="intert-wine-icons:explore"></iron-icon>
                   <span>Explore Map</span>
@@ -347,5 +349,5 @@ export default function render() {
           </div>
         </div>
       `)}
-    </main>    
+    </main>
 `;}

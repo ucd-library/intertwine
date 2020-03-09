@@ -11,7 +11,7 @@ export default function render() {
     .floating-btn {
       position: absolute;
       bottom: 14px;
-      right: 14px;
+      right: 0px;
 
       font-weight: normal;
       text-transform: none;
@@ -19,9 +19,11 @@ export default function render() {
       border: 0;
       white-space: nowrap;
 
-      -webkit-box-shadow: -2px 0px 6px 0px rgba(50, 50, 50, 0.75);
-      -moz-box-shadow:    -2px 0px 6px 0px rgba(50, 50, 50, 0.75);
-      box-shadow:         -2px 0px 6px 0px rgba(50, 50, 50, 0.75);
+      background-color: var(--app-color-charcoal);
+
+      -webkit-box-shadow: -2px 0px 6px 0px rgba(50, 50, 50, 0.3);
+      -moz-box-shadow:    -2px 0px 6px 0px rgba(50, 50, 50, 0.3);
+      box-shadow:         -2px 0px 6px 0px rgba(50, 50, 50, 0.3);
 
       visibility: visible;
       opacity: 1;
@@ -31,7 +33,8 @@ export default function render() {
 
   <button class="floating-btn btn secondary-blue-bg">
     <iron-icon class="explore-map-icon" icon="intert-wine-icons:explore"></iron-icon>
-    Explore the Map &gt;
+    Explore the Map
+    <iron-icon class="chevron-right" icon="chevron-right"></iron-icon>
   </button>
   `;
 }

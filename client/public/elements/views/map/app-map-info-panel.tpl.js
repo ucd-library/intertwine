@@ -421,8 +421,11 @@ return html`
             </div>
           </div>
 
-          <div ?hidden="${!this.imageCreditLink}" class="imageCredit">
+          <div ?hidden="${!this.imageCreditTitle}" class="imageCredit">
             Image Credit: <a href="${this.imageCreditLink['@id']}">${this.imageCreditTitle}</a>
+          </div>
+          <div ?hidden="${this.imageCreditTitle}" class="imageCredit">
+            <a href="${this.imageCreditLink}">Image Credit</a>
           </div>
         </div>
         <!-- END ITEM -->
