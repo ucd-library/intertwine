@@ -66,6 +66,10 @@ export default function render() {
         background-color: var(--app-color-smoke);
       }
 
+      .spacer {
+        padding-bottom: 10px;
+      }
+
       .container {
         position: relative;
       }

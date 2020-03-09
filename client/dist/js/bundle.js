@@ -2681,6 +2681,10 @@ found at http://polymer.github.io/PATENTS.txt
         background-color: var(--app-color-smoke);
       }
 
+      .spacer {
+        padding-bottom: 10px;
+      }
+
       .container {
         position: relative;
       }
