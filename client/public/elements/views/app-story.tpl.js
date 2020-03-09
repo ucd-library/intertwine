@@ -75,7 +75,6 @@ export default function render() {
         width: 100%;
         background-color: var(--app-color-interface-blue);
       }
-
       header > .header-image {
         padding-top: 56.25%;
         width: 100%;
@@ -84,45 +83,37 @@ export default function render() {
         background-position: center center;
         /* sets reference point to scale from */
       }
-
       header > .story-header {
         padding: 50px 0;
         color: var(--app-color-white);
         overflow-x: hidden;
       }
-
       header > .story-header > ul {
         display: flex;
         justify-content: center;
         list-style: none;
         flex-wrap: wrap;
       }
-
       header > .story-header > ul > li {
         margin: 0 20px;
       }
-
       header > .story-header > ul > li:first-of-type {
         text-align: right;
       }
-
       header > .story-header > ul > li > h2 {
         margin-top: 10px;
         margin-bottom: 15px;
         white-space: nowrap;
       }
-
       header > .story-header > ul > li > h4 {
         font-weight: bold;
         white-space: nowrap;
       }
-
       header > .story-header > ul > li > .quote {
         min-width: 250px;
         max-width: 300px;
         font-size: 17px;
       }
-
       header > .story-header > ul > li > .quote > ul.credit {
         margin: 0;
         padding: 0;
@@ -130,7 +121,6 @@ export default function render() {
         list-style-type: '-';
         list-style-position: outside;
       }
-
       header > .story-header > ul > li > .quote > ul.credit > li {
         width: 100%;
         padding: 20px 0 0 10px;
@@ -152,7 +142,6 @@ export default function render() {
         align-items: flex-end;
         flex-direction: row;
       }
-
       .triptych div {
         display: flex;
         align-items: flex-end;
@@ -168,12 +157,10 @@ export default function render() {
         background-repeat: no-repeat;
         background-position: center center;
       }
-
       .triptych div:nth-of-type(2),
       .triptych div:nth-of-type(3) {
         margin: 0 0 0 10px;
       }
-
       .triptych div span {
         padding: 10px 20px;
         color: var(--app-color-white);
@@ -185,7 +172,6 @@ export default function render() {
         flex-direction: row;
         align-items: stretch;
       }
-
       .text-image-pairing > div {
         padding: 75px;
         width: 50%;
@@ -196,11 +182,9 @@ export default function render() {
         background-position: center center;
         /* sets reference point to scale from */
       }
-
       .text-image-pairing > .text-blocks {
         padding: 75px;
       }
-
       .text-image-pairing > .image {
         padding: 75px;
         min-height: 700px;
@@ -209,7 +193,6 @@ export default function render() {
         background-repeat: no-repeat;
         background-position: center center;
       }
-
       .text-image-pairing > .image > span {
         padding: 10px 20px;
         position: absolute;
@@ -223,29 +206,24 @@ export default function render() {
         display: flex;
         flex-direction: row;
       }
-
       footer > .map-wrapper > .map,
       footer > .map-wrapper > .explore-map {
         padding: 75px;
         width: 50%;
       }
-
       footer > .map-wrapper > .explore-map {
         background-color: var(--app-color-interface-blue);
       }
-
       footer > .map-wrapper > .map {
         min-height: 200px;
         background-image: url("../../images/worldmap.jpg");
         background-position-y: center;
         background-position-x: center;
       }
-
       footer > .map-wrapper > .explore-map > div,
       footer > .map-wrapper > .explore-map > div > p {
         color: var(--app-color-white);
       }
-
       footer > .map-wrapper > .explore-map > div > iron-icon.explore-map-icon {
         margin-right: 10px;
         display: inline-block;
@@ -253,31 +231,26 @@ export default function render() {
         width: 40px;
         height: 40px;
       }
-
       footer > .bottom-content {
         padding: 30px 30px 50px 30px;
         background-color: var(--app-color-black);
         color: var(--app-color-stone);
       }
-
       footer > .bottom-content h6 {
         margin-bottom: 15px;
         font-size: 15px;
         font-weight: bold;
       }
-
       footer > .bottom-content a {
         color: var(--app-color-stone);
         font-size: 13px;
       }
-
       footer > .bottom-content > ol {
         margin: 0;
         padding-left: 40px;
         counter-reset: my-awesome-counter;
         list-style: none;
       }
-
       footer > .bottom-content > ol > li {
         position: relative;
         padding-bottom: 15px;
@@ -285,7 +258,6 @@ export default function render() {
         color: var(--app-color-stone);
         font-size: 13px;
       }
-
       footer > .bottom-content > ol > li::before {
         position: absolute;
         top: -1px;
@@ -311,21 +283,17 @@ export default function render() {
         header > .story-header > ul > li:first-of-type {
           text-align: initial;
         }
-
         header > .story-header {
           padding: 20px 0;
           color: var(--app-color-white);
           overflow-x: hidden;
         }
-
         header > .story-header > ul {
           justify-content: flex-start;
         }
-
         header > .story-header > ul > li {
           margin: initial;
         }
-
         header > .story-header > ul > li > .quote {
           max-width: 100%;
         }
@@ -352,6 +320,7 @@ export default function render() {
           align-items: stretch;
         }
         .triptych div {
+          padding-top: 56.25%;
           width: 100%;
         }
         .triptych div:first-of-type,

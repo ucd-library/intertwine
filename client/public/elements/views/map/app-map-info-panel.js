@@ -250,7 +250,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     }
 
     if ( node.creator ) {
-      console.log(node);
       if ( Array.isArray(node.creator) ) {
         this.imageCreditLink  = node.creator.find(c => c['@id'] !== undefined);
         this.imageCreditTitle = node.creator.find(c => c['@id'] === undefined);
