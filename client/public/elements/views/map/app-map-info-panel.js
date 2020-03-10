@@ -226,10 +226,16 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   renderItem(node) {
+    console.log(node)
     this.view = 'item';
 
     this.title = node.name || '';
-    this.location = node.location || '';
+
+    if ( node['schema:spatial'] ) {
+      this.location = node['schema:spatial'];
+    } else {
+      this.location = node.location || '';
+    }
 
     let temporal = '';
     if ( node.temporal !== undefined ) {
@@ -263,14 +269,13 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     if ( node.relatedLink && Array.isArray(node.relatedLink) ) {
       let fullLinks = node.relatedLink.filter(link => link['@id'] !== undefined);
       let titles    = node.relatedLink.filter(link => typeof link === 'string');
-
       if ( fullLinks.length > 0 ) {
         for ( let i=0; i < fullLinks.length; i++ ) {
           let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
           let obj = {
             fullLink: fullLinks[i]['@id'],
             shortLink: fullLinks[i]['@id'].replace(re, '').split('/')[0],
-            title: titles[i].replace('\"', '\'')
+            title: (titles[i] ? titles[i].replace('\"', '\'') : '')
           }
 
           this.relatedLinks.push(obj);
