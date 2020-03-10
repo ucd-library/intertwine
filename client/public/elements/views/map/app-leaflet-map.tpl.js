@@ -117,6 +117,10 @@ return html`
       font-size: 13px;
       font-style: italic;
     }
+
+    .selectedMarker > div {
+      background-color: var(--app-color-charcoal);
+    }
   </style>
 
   <div class="border-top"></div>

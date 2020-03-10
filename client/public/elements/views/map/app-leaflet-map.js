@@ -12,7 +12,8 @@ export default class AppLeafletMap extends LitElement {
       infoOpen : {
         type: Boolean,
         attribute: 'info-open'
-      }
+      },
+      selectedMarkerId: { type: Number }
     }
   }
 
@@ -74,6 +75,7 @@ export default class AppLeafletMap extends LitElement {
 
     // wire up layer and map events
     this.clusters.on('clusterclick', e => this.onClusterClicked(e));
+
     this.map.on('zoomend', () => {
       this.repositionSelectedNode();
       this.repositionSelectedLink();
@@ -150,7 +152,7 @@ export default class AppLeafletMap extends LitElement {
 
     // set our source and destination node labels
     this.selectNode(link.src, 'src');
-    this.selectNode(link.dst, 'dst');  
+    this.selectNode(link.dst, 'dst');
 
     // find the screen midpoint of the line
     let ll = this._getMidPoint(
@@ -159,7 +161,7 @@ export default class AppLeafletMap extends LitElement {
     );
 
     /*
-      The Trello board moments have link names that are 2 item Arrays w/the 
+      The Trello board moments have link names that are 2 item Arrays w/the
       short word being stored in the second slot
     */
     let connectionName = (Array.isArray(link.name) ? link.name[1] : link.name);
@@ -356,13 +358,28 @@ export default class AppLeafletMap extends LitElement {
   /**
    * @method onClusterClicked
    * @description bound to cluster click event
-   */
+  */
   onClusterClicked(e) {
     let center = e.layer.getBounds().getCenter();
-    let event = new CustomEvent('cluster-click', {detail : {
-      latLng : [parseFloat(center.lat.toFixed(4)), parseFloat(center.lng.toFixed(4))],
-      zoom : this.map.getZoom()
-    }});
+    let event = new CustomEvent('cluster-click', {
+      detail : {
+        latLng : [parseFloat(center.lat.toFixed(4)), parseFloat(center.lng.toFixed(4))],
+        zoom : this.map.getZoom()
+      }
+    });
+
+    // Get all the markers & clear any instances of the class selectedMarker
+    this.map.eachLayer((layer) => {
+      if ( layer._icon !== undefined ) {
+        if ( layer._icon.classList.contains('selectedMarker') ) {
+          layer._icon.classList.remove('selectedMarker');
+        }
+      }
+    });
+
+    // Add a class to the selected cluster icon
+    e.layer._icon.classList.add('selectedMarker');
+
     this.dispatchEvent(event);
   }
 
