@@ -368,6 +368,7 @@ export default class AppLeafletMap extends LitElement {
       }
     });
 
+    // TODO: is this the best way to do this?
     // Get all the markers & clear any instances of the class selectedMarker
     this.map.eachLayer((layer) => {
       if ( layer._icon !== undefined ) {
