@@ -219,7 +219,7 @@ return html`
     }
     iron-icon.external-link[type="object"] {
       background-color: transparent;
-      fill: var(--app-color-interface-blue);
+      fill: var(--app-color-grape);
     }
 
     .connection-image-layout {
