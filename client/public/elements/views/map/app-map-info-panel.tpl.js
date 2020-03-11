@@ -167,7 +167,7 @@ return html`
     }
 
     .image[type="cluster"] {
-      height: 200px;
+      height: 150px;
     }
 
     .type-color[type="person"] {
@@ -243,7 +243,7 @@ return html`
     }
     .subject-wrapper .subject-label > span {
       margin-left: 3px;
-      vertical-align: bottom;
+      vertical-align: middle;
     }
 
     @media(max-width: 600px) {
@@ -323,7 +323,7 @@ return html`
 
         <!-- START CLUSTER -->
         <div id="cluster">
-          <h1>Select a Subject</h1>
+          <h1 style="margin-top: 0px;">Select a Subject</h1>
           ${this.clusterSubjectTypes.map(type => html`
             <div class="subject-wrapper" ?hidden="${!this.clusterSubjects[type].enabled}">
               <div class="subject-label">
