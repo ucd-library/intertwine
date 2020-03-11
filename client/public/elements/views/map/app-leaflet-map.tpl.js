@@ -159,6 +159,9 @@ return html`
       font-style: italic;
     }
 
+    .selectedMarker {
+      background-color: var(--app-color-cluster-charcoal-alpha);
+    }
     .selectedMarker > div {
       background-color: var(--app-color-charcoal);
     }

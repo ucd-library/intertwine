@@ -1631,7 +1631,7 @@ Object(bt.a)({is:"iron-iconset-svg",properties:{name:{type:String,observer:"_nam
     }
 
     .image[type="cluster"] {
-      height: 200px;
+      height: 150px;
     }
 
     .type-color[type="person"] {
@@ -1707,7 +1707,7 @@ Object(bt.a)({is:"iron-iconset-svg",properties:{name:{type:String,observer:"_nam
     }
     .subject-wrapper .subject-label > span {
       margin-left: 3px;
-      vertical-align: bottom;
+      vertical-align: middle;
     }
 
     @media(max-width: 600px) {
@@ -1783,7 +1783,7 @@ Object(bt.a)({is:"iron-iconset-svg",properties:{name:{type:String,observer:"_nam
 
         <!-- START CLUSTER -->
         <div id="cluster">
-          <h1>Select a Subject</h1>
+          <h1 style="margin-top: 0px;">Select a Subject</h1>
           ${this.clusterSubjectTypes.map(t=>j`
             <div class="subject-wrapper" ?hidden="${!this.clusterSubjects[t].enabled}">
               <div class="subject-label">

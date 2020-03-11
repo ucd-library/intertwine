@@ -11,6 +11,7 @@ html {
   --app-color-secondary-blue : #015E80;
   --app-color-cluster-blue : var(--app-color-secondary-blue);
   --app-color-cluster-blue-alpha : rgba(1, 94, 128, 0.5);
+  --app-color-cluster-charcoal-alpha : rgba(51, 51, 51, 0.5);
   --app-color-smoke : #F3F2F0;
   --app-color-pewter : #D4DADC;
   --app-color-charcoal : #333333;
