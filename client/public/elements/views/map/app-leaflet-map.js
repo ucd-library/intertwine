@@ -13,7 +13,9 @@ export default class AppLeafletMap extends LitElement {
         type: Boolean,
         attribute: 'info-open'
       },
-      selectedMarkerId: { type: Number }
+      connectionName: {
+        type: String
+      }
     }
   }
 
@@ -27,6 +29,7 @@ export default class AppLeafletMap extends LitElement {
     this.nodes = {};
     this.updateLinksTimer = -1;
     this.firstRender = true;
+    this.connectionName = '';
 
     window.addEventListener('resize', () => {
       if( !this.active ) return;
@@ -58,7 +61,7 @@ export default class AppLeafletMap extends LitElement {
     }
 
     L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
 
     // create the clulster layer
@@ -75,6 +78,9 @@ export default class AppLeafletMap extends LitElement {
 
     // wire up layer and map events
     this.clusters.on('clusterclick', e => this.onClusterClicked(e));
+
+    this.clusters.on('mouseover', e => this.onMarkerMouseOver(e));
+    this.clusters.on('mouseout', e  => this.onMarkerMouseOut(e));
 
     this.map.on('zoomend', () => {
       this.repositionSelectedNode();
@@ -353,6 +359,50 @@ export default class AppLeafletMap extends LitElement {
       detail: selectedCluster.getAllChildMarkers().map(l => l.inertWineId)
     })
     this.dispatchEvent(event);
+  }
+
+  /**
+   * @method onMarkerMouseOver
+   * @description bound to marker mouseover event
+   * @param {Object} e event object
+  */
+  // TODO: is this the best way to accomplish this?
+  // RE: https://github.com/ucd-library/intertwine/issues/23
+  onMarkerMouseOver(e) {
+    let latlng = e.latlng;
+    let id = e.sourceTarget.inertWineId;
+
+    // Don't show the popup if its label is already being displayed
+    if ( this.selectedNodeIcon && this.selectedNodeIcon.src._latlng === latlng ) {
+      return;
+    }
+
+    // Create the popup and attach to the map
+    this.popup = L.popup({ closeButton: false })
+      .setLatLng(latlng)
+      .setContent('<div>'+this.nodes[id].name+'</div>')
+      .openOn(this.map);
+
+    // we need to let the popup render so we can adjust the left offset based
+    // on the popup width.  We will do a little bit of additional css work as well
+    requestAnimationFrame(() => {
+      let w = this.popup._container.offsetWidth;
+
+      this.popup._container.style.left = (-1*(w/2))+'px';
+      this.popup._container.style.bottom = '-15px';
+      this.popup._container.style.marginLeft = '9px';
+
+      this.popup._contentNode.style.width = 'initial';
+    });
+  }
+
+  /**
+   * @method onMarkerMouseOut
+   * @description bound to marker mouseout event
+   * @param {Object} e event object
+  */
+  onMarkerMouseOut(e) {
+    this.map.closePopup();
   }
 
   /**

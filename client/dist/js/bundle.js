@@ -1683,7 +1683,7 @@ Object(bt.a)({is:"iron-iconset-svg",properties:{name:{type:String,observer:"_nam
     }
     iron-icon.external-link[type="object"] {
       background-color: transparent;
-      fill: var(--app-color-interface-blue);
+      fill: var(--app-color-grape);
     }
 
     .connection-image-layout {

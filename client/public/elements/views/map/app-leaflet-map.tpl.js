@@ -76,6 +76,47 @@ return html`
       top: 6px;
     }
 
+    /* Popup Styling */
+    .leaflet-popup-content-wrapper {
+      margin: 0;
+      padding: 0;
+      color: var(--app-color-white);
+      text-align: center;
+      border-radius: initial;
+      background: var(--app-color-charcoal);
+      box-shadow: initial;
+    }
+    .leaflet-popup-content {
+      margin: 0;
+      padding: 4px 8px;
+      font-size: 13px;
+      line-height: initial;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .leaflet-popup-tip-container {
+      margin: 0 auto;
+      padding: 0;
+      width: 0;
+      height: 0;
+
+      position: relative;
+      left: 0;
+
+      font-size: 13px;
+
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 25px solid var(--app-color-charcoal);
+
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .leaflet-popup-tip {
+      display: none;
+    }
+
+    /* Node Label Styling */
     .leaflet-intertwine-node-label > div:first-child {
       color: var(--app-color-white);
       background: var(--app-color-charcoal);

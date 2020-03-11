@@ -226,7 +226,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   renderItem(node) {
-    console.log(node)
     this.view = 'item';
 
     this.title = node.name || '';
