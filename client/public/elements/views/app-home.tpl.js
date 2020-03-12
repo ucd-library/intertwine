@@ -116,16 +116,10 @@ export default function render() {
         width: 100%;
         max-width: 600px;
         max-height: 350px;
-      }
 
-      .card .chardonnay {
-        background: url('./../../images/chardonnaygrapes.jpg') no-repeat center;
         background-size: cover;
-      }
-
-      .card .jop {
-        background: url('./../../images/jop-feature.jpg') no-repeat center;
-        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
       }
 
       .card .content {
@@ -316,7 +310,8 @@ export default function render() {
       ${this.moments.map((moment) => html`
         <div id="${moment.entryPoint.shortName}" class="${moment.entryPoint.shortName}">
           <div class="card">
-            <div class="feature-img ${moment.entryPoint.shortName}"></div>
+            <div class="feature-img ${moment.entryPoint.shortName}"
+              style="background-image: url('./../../images/${moment.headerImage}');"></div>
             <div class="content">
               <h4>${moment.entryPoint.title}</h4>
               <em>
