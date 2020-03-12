@@ -23,6 +23,7 @@ export default class AppLeafletMap extends LitElement {
 
     this.linkLayers = {};
     this.nodeLayers = {};
+    this.layerLabel = '';
     this.links = {};
     this.nodes = {};
     this.updateLinksTimer = -1;
@@ -384,26 +385,42 @@ export default class AppLeafletMap extends LitElement {
     }
 
     let icon = L.divIcon({
-      className: `leaflet-intertwine-icon leaflet-${this.nodes[id].type}-icon`,
-      iconSize: [15, 15]
+      className: `leaflet-intertwine-node-label`,
+      iconSize: [0, 0],
+      html: '<div>' + this.nodes[id].name + '</div><div class="intertwine-arrow"></div>'
     });
 
-    // Create the popup and attach to the map
-    this.popup = L.popup({ closeButton: false })
-      .setLatLng(latlng)
-      .setContent('<div>'+this.nodes[id].name+'</div>')
-      .openOn(this.map);
+    let layer = L.marker(latlng, {
+      icon: icon,
+      inertWineId: id,
+      zIndexOffset: 5000
+    });
+    this.layerLabel = layer;
+    this.layerLabel.inertWineId = id;
+    this.layerLabel.addTo(this.map);
 
-    // we need to let the popup render so we can adjust the left offset based
-    // on the popup width.  We will do a little bit of additional css work as well
+    // we need to let the marker render so we can adjust the left offset based
+    // on the marker width.  We will do a little bit of additional css work as well
     requestAnimationFrame(() => {
-      let w = this.popup._container.offsetWidth;
+      if ( !this.layerLabel ) return;
 
-      this.popup._container.style.left = (-1*(w/2))+'px';
-      this.popup._container.style.bottom = '-15px';
-      this.popup._container.style.marginLeft = '9px';
+      let labelEle = this.layerLabel.getElement().firstChild;
+      let labelArrow = this.layerLabel.getElement().children[1];
 
-      this.popup._contentNode.style.width = 'initial';
+      labelEle.classList.add('top');
+      labelArrow.classList.add('top');
+
+      if ( layer.intertWineId ) {
+        labelEle.classList.add('point');
+        labelArrow.classList.add('point');
+      }
+
+      let w = labelEle.offsetWidth;
+      if ( w > 150 ) {
+        labelEle.classList.add('fixed-width');
+      } else {
+        labelEle.style.left = (-1*(w/2))+'px';
+      }
     });
   }
 
@@ -413,7 +430,10 @@ export default class AppLeafletMap extends LitElement {
    * @param {Object} e event object
   */
   onMarkerMouseOut(e) {
-    this.map.closePopup();
+    if ( this.layerLabel ) {
+      this.map.removeLayer(this.layerLabel);
+      this.layerLabel = null;
+    }
   }
 
   resetMarkerColors() {

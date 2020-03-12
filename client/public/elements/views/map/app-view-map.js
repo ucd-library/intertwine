@@ -38,7 +38,16 @@ export default class AppViewMap extends Mixin(LitElement)
    * @param {Object} e
    */
   async _onAppStateUpdate(e) {
-    this.selectedMoment = e.moment;
+    if ( this.moment === e.moment && this.selected === e.selectedNode ) {
+      return;
+    }
+
+    this.moment   = e.moment;
+    this.selected = e.selectedNode;
+
+    let state = await this.MomentModel.get(this.moment);
+    this.mapEle.setData(state.payload.graph);
+
     if( e.selectedNode ) this.mapEle.renderSelectedState(e);
     else this.mapEle.renderSelectedState();
   }
@@ -63,7 +72,7 @@ export default class AppViewMap extends Mixin(LitElement)
    */
   _onNodeClick(e) {
     let node = this.data.nodes[e.detail.id];
-    this.AppStateModel.setLocation('/map/'+this.selectedMoment+'/'+node.type+'/'+node['@id']);
+    this.AppStateModel.setLocation('/map/'+this.moment+'/'+node.type+'/'+node['@id']);
   }
 
   /**
@@ -73,7 +82,7 @@ export default class AppViewMap extends Mixin(LitElement)
    * @param {Object} e
    */
   _onClusterClick(e) {
-    this.AppStateModel.setLocation('/map/'+this.selectedMoment+'/cluster/'+
+    this.AppStateModel.setLocation('/map/'+this.moment+'/cluster/'+
       encodeURI(e.detail.latLng.join(','))+'/'+e.detail.zoom
     );
   }
