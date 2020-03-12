@@ -8,14 +8,12 @@ export default class AppLeafletMap extends LitElement {
 
   static get properties() {
     return {
-      active : {type: Boolean},
+      active : { type: Boolean },
       infoOpen : {
         type: Boolean,
         attribute: 'info-open'
       },
-      connectionName: {
-        type: String
-      }
+      connectionName : { type: String }
     }
   }
 
@@ -40,6 +38,12 @@ export default class AppLeafletMap extends LitElement {
 
   firstUpdated() {
     this.initMap();
+  }
+
+  updated(props) {
+    if( props.has('active') && this.active ) {
+      this.redraw();
+    }
   }
 
   /**
@@ -103,6 +107,8 @@ export default class AppLeafletMap extends LitElement {
   */
   renderSelectedState(e) {
     if( !e ) {
+      this.resetMarkerColors();
+
       if( this.firstRender ) {
         if( Object.keys(this.nodes).length === 0 ) this.zoomToClusters = true;
         else this.map.fitBounds(this.clusters.getBounds());
@@ -377,6 +383,11 @@ export default class AppLeafletMap extends LitElement {
       return;
     }
 
+    let icon = L.divIcon({
+      className: `leaflet-intertwine-icon leaflet-${this.nodes[id].type}-icon`,
+      iconSize: [15, 15]
+    });
+
     // Create the popup and attach to the map
     this.popup = L.popup({ closeButton: false })
       .setLatLng(latlng)
@@ -405,6 +416,18 @@ export default class AppLeafletMap extends LitElement {
     this.map.closePopup();
   }
 
+  resetMarkerColors() {
+    // TODO: is this the best way to do this?
+    // Get all the markers & clear any instances of the class selectedMarker
+    this.map.eachLayer(layer => {
+      if ( layer._icon !== undefined ) {
+        if ( layer._icon.classList.contains('selectedMarker') ) {
+          layer._icon.classList.remove('selectedMarker');
+        }
+      }
+    });
+  }
+
   /**
    * @method onClusterClicked
    * @description bound to cluster click event
@@ -418,15 +441,7 @@ export default class AppLeafletMap extends LitElement {
       }
     });
 
-    // TODO: is this the best way to do this?
-    // Get all the markers & clear any instances of the class selectedMarker
-    this.map.eachLayer((layer) => {
-      if ( layer._icon !== undefined ) {
-        if ( layer._icon.classList.contains('selectedMarker') ) {
-          layer._icon.classList.remove('selectedMarker');
-        }
-      }
-    });
+    this.resetMarkerColors();
 
     // Add a class to the selected cluster icon
     e.layer._icon.classList.add('selectedMarker');
@@ -442,7 +457,11 @@ export default class AppLeafletMap extends LitElement {
     let event = new CustomEvent('node-click', {detail : {
       id : e.target.inertWineId
     }});
+
     this.dispatchEvent(event);
+
+    // If a node has been clicked on, if there is a highlighted cluster, it needs to have that color reset.
+    this.resetMarkerColors();
   }
 
   onLinkClicked(e) {
@@ -501,7 +520,7 @@ export default class AppLeafletMap extends LitElement {
    * @method updateLinks
    * @description redraw links from current cluster locations.  Should be
    * called whenever data changes or map zoom level changes
-   */
+  */
   updateLinks() {
     if( this.updateLinksTimer !== -1 ) clearTimeout(this.updateLinksTimer);
     this.updateLinksTimer = setTimeout(() => {
@@ -574,12 +593,6 @@ export default class AppLeafletMap extends LitElement {
     let clusterLayer = this.clusters.getVisibleParent(this.nodeLayers[id]);
     if( clusterLayer ) return clusterLayer.getLatLng();
     return L.latLng(this.nodes[id].coordinates);
-  }
-
-  updated(props) {
-    if( props.has('active') && this.active ) {
-      this.redraw();
-    }
   }
 
   /**

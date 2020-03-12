@@ -300,19 +300,18 @@ return html`
           <div class="subject-type">
             Explore
           </div>
-          <h1 style="margin-bottom: 3px" class="inverse">${this.momentInfo.title}</h1>
-          <h2 style="margin: 0 0 14px 0" class="inverse">${this.momentInfo.date}</h2>
+
+          <h1 style="margin-bottom: 3px" class="inverse">${this.momentEntryPoint.title}</h1>
+          <h2 style="margin: 0 0 14px 0" class="inverse">${this.momentEntryPoint.temporal}</h2>
           <div>
             Select a subject on the map to learn about their
             connections to California wine history.
           </div>
 
           <div class="moment-break"></div>
-
           <div ?hidden="${!this.momentEntryPoint}">
             <h3 class="inverse">Connections in Context</h3>
             <div id="momentDescription"></div>
-
             <a class="btn inverse" href="/story/${this.moment}">
               Read Story
             </a>

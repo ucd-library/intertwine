@@ -17,7 +17,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         reflect: true
       },
       moment : {type: String},
-      momentInfo : {type: Object},
+      momentEntryPoint : { type: Object },
       momentEntryPointUrl : {type: String},
       endpoint: { type: String },
       type : {type : String},
@@ -63,7 +63,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.isNode = false;
     this.isMoment = false;
     this.moment = '';
-    this.momentInfo = {};
+    this.momentEntryPoint = {};
     this.momentEntryPointUrl = '';
     this.relatedLinks = [];
     this.imageCreditLink  = '';
@@ -92,65 +92,43 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.renderState(e.payload);
   }
 
-  _onAppStateUpdate(e) {
+  async _onAppStateUpdate(e) {
+    if ( this.moment === e.moment && this.selected === e.selectedNode ) {
+      return;
+    }
+
     this.moment   = e.moment;
     this.selected = e.selectedNode;
 
-    this.renderState();
+    let state = await this.MomentModel.get(this.moment);
+
+    this.renderState(state.payload);
   }
 
   firstUpdated() {
     this.descriptionEle = this.shadowRoot.querySelector('#description');
     this.momentDescEle  = this.shadowRoot.querySelector('#momentDescription');
     this.singleImage    = this.shadowRoot.querySelector('#singleImage');
-    this.connectionSrcImg  = this.shadowRoot.querySelector('#connection-src-image');
+    this.connectionSrcImg = this.shadowRoot.querySelector('#connection-src-image');
     this.connectionDstImg = this.shadowRoot.querySelector('#connection-dst-image');
   }
 
   updated() {
     if ( this.isLink ) this.title = '';
-
     if ( this.connections.length > 0 ) this.hasConnections = true;
     else this.hasConnections = false;
   }
 
   renderState(moment) {
     if( moment ) {
-      this.momentInfo = moment;
-
-      // This is a TEMPORARY FIX to display the entryPoint data on the info-panel
-      moment.description = jsonData.moments[this.moment].entryPoint.text;
-
-      this.momentDescEle.innerHTML = markdown.toHTML(moment.description || '');
-      this.momentEntryPointUrl = '';
+      this.momentGraph = moment;
 
       // TODO: Need to add entryPoint to data in Trello
-      /*
-      if( moment.entryPoint ) {
-        for( let id in moment.graph.nodes ) {
-          let node = moment.graph.nodes[id];
-          if( node['@id'] !== moment.entryPoint ) continue;
-          this.momentEntryPointUrl = `/map/${this.moment}/${node.type}/${node['@id']}`;
-          break;
-        }
-      }
-      */
-
-      // Temp entry point
-      this.events = [];
-      for ( let id in moment.graph.nodes ) {
-        if (moment.graph.nodes[id].type === 'event') {
-          this.events.push(moment.graph.nodes[id]);
-        }
-      }
-
-      if ( this.events.length > 0 ) {
-        this.momentInfo.title    = this.events[0]['name'];
-        if ( this.events[0]['temporal'] ) {
-          this.momentInfo.date   = this.events[0]['temporal'].replace('/', ' - ');
-        }
-        this.momentEntryPoint    = this.events[0]['name'];
-        this.momentEntryPointUrl = `/map/${this.moment}/${this.events[0].type}/${this.events[0]['@id']}`;
+      // This is a TEMPORARY FIX to display the entryPoint data on the info-panel
+      let momentEntryPoint = jsonData.moments[this.moment].entryPoint;
+      if( momentEntryPoint ) {
+        this.momentEntryPoint = momentEntryPoint;
+        this.momentDescEle.innerHTML = markdown.toHTML(momentEntryPoint.text || '');
       }
 
       this.graph = moment.graph;
@@ -202,7 +180,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       this.type = 'empty';
       return;
     }
-
     this.type = 'moment';
     this.view = 'moment';
     this.isMoment = true;

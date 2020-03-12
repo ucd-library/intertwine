@@ -4,8 +4,7 @@
       "entryPoint": {
         "shortName": "chardonnay",
         "title": "Growth of Chardonnay",
-        "startDate": "1882",
-        "endDate": "1960",
+        "temporal": "1882 - 1960",
         "text": "If Cabernet Sauvignon is the king of red grapes, Chardonnay is the queen of whites. Chardonnay is the most popular wine in the U.S. and has maintained its lead for the last decade. Historical references note California plantings of Chardonnay dating back to the late 1800s, but production was limited due to low yields. This is the story of California Chardonnay pre - 1970s, when plantings of the grape boomed as the wine grew in popularity."
       },
       "title": "Growth of Chardonnay",
@@ -100,7 +99,7 @@
       "entryPoint": {
         "shortName": "jop",
         "title": "Judgment of Paris",
-        "startDate": "1976",
+        "temporal": "1976",
         "text": "The Paris Wine Tasting of 1976 — known as the Judgment of Paris — was a wine competition organized in Paris on 24 May 1976 by Steven Spurrier, a British wine merchant, in which French judges carried out two blind tasting comparisons: one of top-quality Chardonnays and another of red wines."
       },
       "title": "Judgment of Paris",
