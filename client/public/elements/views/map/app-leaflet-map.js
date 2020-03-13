@@ -340,16 +340,16 @@ export default class AppLeafletMap extends LitElement {
     requestAnimationFrame(() => {
       if ( !this.layerLabel ) return;
 
+      /**
+       * TODO: Figure out how to handle a situation where a
+       * pop-upped label is overlapping an already displayed marker label
+      */
+
       let labelEle = this.layerLabel.getElement().firstChild;
       let labelArrow = this.layerLabel.getElement().children[1];
 
-      labelEle.classList.add('top');
-      labelArrow.classList.add('top');
-
-      if ( layer.intertWineId ) {
-        labelEle.classList.add('point');
-        labelArrow.classList.add('point');
-      }
+      labelEle.classList.add('top','point');
+      labelArrow.classList.add('top','point');
 
       let w = labelEle.offsetWidth;
       if ( w > 150 ) {

@@ -45,6 +45,7 @@ export default class AppViewMap extends Mixin(LitElement)
 
     let state = await this.MomentModel.get(this.moment);
 
+    this.data = state.payload.graph;
     this.mapEle.setData(state.payload.graph);
 
     if( e.selectedNode ) this.mapEle.renderSelectedState(e);
