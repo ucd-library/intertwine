@@ -83,6 +83,8 @@ export default class AppLeafletMap extends LitElement {
 
     // wire up layer and map events
     this.clusters.on('clusterclick', e => this.onClusterClicked(e));
+    this.clusters.on('clustermouseover', e => this.onClusterMouseOver(e));
+    this.clusters.on('clustermouseout', e => this.onClusterMouseOut(e));
     this.clusters.on('mouseover', e => this.onMarkerMouseOver(e));
     this.clusters.on('mouseout', e  => this.onMarkerMouseOut(e));
 
@@ -428,6 +430,14 @@ export default class AppLeafletMap extends LitElement {
     }
   }
 
+  onClusterMouseOver(e) {
+    e.layer._icon.classList.add('selectedMarker');
+  }
+
+  onClusterMouseOut(e) {
+    e.layer._icon.classList.remove('selectedMarker');
+  }
+
   selectCluster(latlng, zoom) {
     if( this.firstRender ) {
       this.setView(latlng, zoom);
@@ -481,11 +491,6 @@ export default class AppLeafletMap extends LitElement {
       }
     });
 
-    this.resetMarkerColors();
-
-    // Add a class to the selected cluster icon
-    e.layer._icon.classList.add('selectedMarker');
-
     this.dispatchEvent(event);
   }
 
@@ -501,7 +506,7 @@ export default class AppLeafletMap extends LitElement {
     this.dispatchEvent(event);
 
     // If a node has been clicked on, if there is a highlighted cluster, it needs to have that color reset.
-    this.resetMarkerColors();
+    //this.resetMarkerColors();
   }
 
   onLinkClicked(e) {
