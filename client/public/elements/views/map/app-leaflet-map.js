@@ -83,7 +83,6 @@ export default class AppLeafletMap extends LitElement {
 
     // wire up layer and map events
     this.clusters.on('clusterclick', e => this.onClusterClicked(e));
-
     this.clusters.on('mouseover', e => this.onMarkerMouseOver(e));
     this.clusters.on('mouseout', e  => this.onMarkerMouseOut(e));
 
@@ -115,6 +114,15 @@ export default class AppLeafletMap extends LitElement {
           this.map.fitBounds(this.clusters.getBounds());
         }
       }
+
+      // reset state, remove current markers
+      if( this.selectedNodeIcon ) {
+        for ( let type in this.selectedNodeIcon ) {
+          this.map.removeLayer(this.selectedNodeIcon[type]);
+        }
+        this.selectedNodeIcon = null;
+      }
+
       this.firstRender = false;
       return;
     }
@@ -190,6 +198,14 @@ export default class AppLeafletMap extends LitElement {
     this.selectedLineIcon.setZIndexOffset(5000);
   }
 
+  getMarkerLabelIcon(id){
+    return new L.divIcon({
+      className: `leaflet-intertwine-node-label`,
+      iconSize: [0, 0],
+      html : '<div>'+this.nodes[id].name+'</div><div class="intertwine-arrow"></div>'
+    });
+  }
+
   /**
    * @method selectNode
    * @description set a node label.  The type should be either src or dst.  For single
@@ -197,14 +213,19 @@ export default class AppLeafletMap extends LitElement {
    *
    * @param {String} id node id
    * @param {String} type either src|dst
-   */
+  */
   selectNode(id, type='src', firstRender=false) {
+    // If there is a layerLabel present for this item, we need to remove it
+    // or it conflicts w/the marker label created down below
+    if ( this.layerLabel ) {
+      this.map.removeLayer(this.layerLabel);
+      this.layerLabel = null;
+    }
+
     // find the marker layer based on id in the cluster
     let layer = this.clusters
       .getLayers()
       .find(layer => layer.inertWineId === id);
-
-    console.log(layer)
 
     // if not found, assume either graph hasn't loaded or the layer hasn't rendered
     // set the pendingNodeSelect attribute which will be cheched when the graph
@@ -230,14 +251,13 @@ export default class AppLeafletMap extends LitElement {
     layer = this.clusters.getVisibleParent(layer) || layer;
 
     // render the icon
-    let icon = L.divIcon({
-      className: `leaflet-intertwine-node-label`,
-      iconSize: [0, 0],
-      html : '<div>'+this.nodes[id].name+'</div><div class="intertwine-arrow"></div>'
+    let icon = this.getMarkerLabelIcon(id);
+    this.selectedNodeIcon[type] = L.marker(layer.getLatLng(), {
+      icon: icon,
+      inertWineId: id,
+      zIndexOffset: 5000
     });
-    this.selectedNodeIcon[type] = L.marker(layer.getLatLng(), {icon});
     this.map.addLayer(this.selectedNodeIcon[type]);
-    this.selectedNodeIcon[type].setZIndexOffset(5000);
 
     // we need to let the marker render so we can adjust the left offset based
     // on the marker width.  We will do a little bit of additional css work as well
@@ -282,6 +302,83 @@ export default class AppLeafletMap extends LitElement {
       if( Object.keys(this.selectedNodeIcon).length === 1 ) {
         if( firstRender || !this.map.getBounds().contains(this.selectedNodeIcon.src.getLatLng()) ) {
           this.setView(this.selectedNodeIcon.src.getLatLng(), this.map.getZoom());
+        }
+      }
+    });
+  }
+
+  /**
+   * @method onMarkerMouseOver
+   * @description bound to marker mouseover event
+   * @param {Object} e event object
+  */
+  // TODO: is this the best way to accomplish this?
+  // RE: https://github.com/ucd-library/intertwine/issues/23
+  onMarkerMouseOver(e) {
+    let latlng = e.latlng;
+
+    // Don't show mouseover label if the node has already been selected
+    // and is displaying the label
+    if ( this.selectedNodeIcon ) {
+      if ( this.selectedNodeIcon.src._latlng.lat === latlng.lat &&
+           this.selectedNodeIcon.src._latlng.lng === latlng.lng ) return;
+    };
+
+    let id = e.sourceTarget.inertWineId;
+    let icon = this.getMarkerLabelIcon(id);
+    let layer = L.marker(latlng, {
+      icon: icon,
+      inertWineId: id,
+      zIndexOffset: 5000
+    });
+    this.layerLabel = layer;
+    this.layerLabel.inertWineId = id;
+    this.map.addLayer(this.layerLabel);
+
+    // We need to let the marker render so we can adjust the left offset based
+    // on the marker width.  We will do a little bit of additional css work as well
+    requestAnimationFrame(() => {
+      if ( !this.layerLabel ) return;
+
+      let labelEle = this.layerLabel.getElement().firstChild;
+      let labelArrow = this.layerLabel.getElement().children[1];
+
+      labelEle.classList.add('top');
+      labelArrow.classList.add('top');
+
+      if ( layer.intertWineId ) {
+        labelEle.classList.add('point');
+        labelArrow.classList.add('point');
+      }
+
+      let w = labelEle.offsetWidth;
+      if ( w > 150 ) {
+        labelEle.classList.add('fixed-width');
+      } else {
+        labelEle.style.left = (-1*(w/2))+'px';
+      }
+    });
+  }
+
+  /**
+   * @method onMarkerMouseOut
+   * @description bound to marker mouseout event
+   * @param {Object} e event object
+  */
+  onMarkerMouseOut(e) {
+    if ( this.layerLabel ) {
+      this.map.removeLayer(this.layerLabel);
+      this.layerLabel = null;
+    }
+  }
+
+  resetMarkerColors() {
+    // TODO: is this the best way to do this?
+    // Get all the markers & clear any instances of the class selectedMarker
+    this.map.eachLayer(layer => {
+      if ( layer._icon !== undefined ) {
+        if ( layer._icon.classList.contains('selectedMarker') ) {
+          layer._icon.classList.remove('selectedMarker');
         }
       }
     });
@@ -369,88 +466,6 @@ export default class AppLeafletMap extends LitElement {
       detail: selectedCluster.getAllChildMarkers().map(l => l.inertWineId)
     })
     this.dispatchEvent(event);
-  }
-
-  /**
-   * @method onMarkerMouseOver
-   * @description bound to marker mouseover event
-   * @param {Object} e event object
-  */
-  // TODO: is this the best way to accomplish this?
-  // RE: https://github.com/ucd-library/intertwine/issues/23
-  onMarkerMouseOver(e) {
-    let latlng = e.latlng;
-
-    // Don't show mouseover label if the node has already been selected
-    // and is displaying the label
-    if ( this.selectedNodeIcon ) {
-      if ( this.selectedNodeIcon.src._latlng.lat === latlng.lat &&
-           this.selectedNodeIcon.src._latlng.lng === latlng.lng ) return;
-    };
-
-    let id = e.sourceTarget.inertWineId;
-    let icon = L.divIcon({
-      className: `leaflet-intertwine-node-label`,
-      iconSize: [0, 0],
-      html: '<div>' + this.nodes[id].name + '</div><div class="intertwine-arrow"></div>'
-    });
-
-    let layer = L.marker(latlng, {
-      icon: icon,
-      inertWineId: id,
-      zIndexOffset: 5000
-    });
-    this.layerLabel = layer;
-    this.layerLabel.inertWineId = id;
-    this.layerLabel.addTo(this.map);
-
-    // we need to let the marker render so we can adjust the left offset based
-    // on the marker width.  We will do a little bit of additional css work as well
-    requestAnimationFrame(() => {
-      if ( !this.layerLabel ) return;
-
-      let labelEle = this.layerLabel.getElement().firstChild;
-      let labelArrow = this.layerLabel.getElement().children[1];
-
-      labelEle.classList.add('top');
-      labelArrow.classList.add('top');
-
-      if ( layer.intertWineId ) {
-        labelEle.classList.add('point');
-        labelArrow.classList.add('point');
-      }
-
-      let w = labelEle.offsetWidth;
-      if ( w > 150 ) {
-        labelEle.classList.add('fixed-width');
-      } else {
-        labelEle.style.left = (-1*(w/2))+'px';
-      }
-    });
-  }
-
-  /**
-   * @method onMarkerMouseOut
-   * @description bound to marker mouseout event
-   * @param {Object} e event object
-  */
-  onMarkerMouseOut(e) {
-    if ( this.layerLabel ) {
-      this.map.removeLayer(this.layerLabel);
-      this.layerLabel = null;
-    }
-  }
-
-  resetMarkerColors() {
-    // TODO: is this the best way to do this?
-    // Get all the markers & clear any instances of the class selectedMarker
-    this.map.eachLayer(layer => {
-      if ( layer._icon !== undefined ) {
-        if ( layer._icon.classList.contains('selectedMarker') ) {
-          layer._icon.classList.remove('selectedMarker');
-        }
-      }
-    });
   }
 
   /**
