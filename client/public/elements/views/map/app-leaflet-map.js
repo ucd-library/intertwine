@@ -90,7 +90,7 @@ export default class AppLeafletMap extends LitElement {
     this.map.on('zoomend', () => {
       this.repositionSelectedNode();
       this.repositionSelectedLink();
-      this.updateLinks()
+      this.updateLinks();
     });
 
     // grab the css color defined by our custom variable
@@ -108,11 +108,12 @@ export default class AppLeafletMap extends LitElement {
   */
   renderSelectedState(e) {
     if( !e ) {
-      //this.resetMarkerColors();
-
       if( this.firstRender ) {
-        if( Object.keys(this.nodes).length === 0 ) this.zoomToClusters = true;
-        else this.map.fitBounds(this.clusters.getBounds());
+        if( Object.keys(this.nodes).length === 0 ) {
+          this.zoomToClusters = true;
+        } else {
+          this.map.fitBounds(this.clusters.getBounds());
+        }
       }
       this.firstRender = false;
       return;
@@ -461,7 +462,7 @@ export default class AppLeafletMap extends LitElement {
       }
     });
 
-    //this.resetMarkerColors();
+    this.resetMarkerColors();
 
     // Add a class to the selected cluster icon
     e.layer._icon.classList.add('selectedMarker');
@@ -481,7 +482,7 @@ export default class AppLeafletMap extends LitElement {
     this.dispatchEvent(event);
 
     // If a node has been clicked on, if there is a highlighted cluster, it needs to have that color reset.
-    //this.resetMarkerColors();
+    this.resetMarkerColors();
   }
 
   onLinkClicked(e) {
@@ -635,7 +636,6 @@ export default class AppLeafletMap extends LitElement {
     if( !this.map ) return console.warn('attempting to redraw map, but map not initialized');
     this.map.invalidateSize({pan: false});
   }
-
 }
 
 customElements.define('app-leaflet-map', AppLeafletMap);

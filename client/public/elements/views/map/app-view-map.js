@@ -38,10 +38,13 @@ export default class AppViewMap extends Mixin(LitElement)
    * @param {Object} e
    */
   async _onAppStateUpdate(e) {
+    if ( e.page !== 'map' ) return;
+
     this.moment   = e.moment;
     this.selected = e.selectedNode;
 
     let state = await this.MomentModel.get(this.moment);
+
     this.mapEle.setData(state.payload.graph);
 
     if( e.selectedNode ) this.mapEle.renderSelectedState(e);
@@ -85,7 +88,7 @@ export default class AppViewMap extends Mixin(LitElement)
 
   /**
    * @method _onSelectedClusterIds
-   * @description bound tp app-leaflet-map selected-cluster-ids event.  This is fired
+   * @description bound to app-leaflet-map selected-cluster-ids event.  This is fired
    * when a cluster zoom/latlng is set.  After which the map makes sure it is rendered
    * then looks up the closest rendered cluster to the latlng at the zoom level.  Finally
    * the map fires the selected-cluster-ids containing the ids inside the cluster

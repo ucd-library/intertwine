@@ -20,10 +20,10 @@ export default class AppHeader extends Mixin(LitElement)
   }
 
   constructor() {
-    super();  
+    super();
     this.baseUrl = window.location.protocol + '//' + window.location.host;
     this.subtitle = '';
-   
+
     this.render = render.bind(this);
 
     this._injectModel('AppStateModel');
