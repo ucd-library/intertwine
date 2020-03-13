@@ -204,6 +204,8 @@ export default class AppLeafletMap extends LitElement {
       .getLayers()
       .find(layer => layer.inertWineId === id);
 
+    console.log(layer)
+
     // if not found, assume either graph hasn't loaded or the layer hasn't rendered
     // set the pendingNodeSelect attribute which will be cheched when the graph
     // loads calling this function again
@@ -378,13 +380,15 @@ export default class AppLeafletMap extends LitElement {
   // RE: https://github.com/ucd-library/intertwine/issues/23
   onMarkerMouseOver(e) {
     let latlng = e.latlng;
+
+    // Don't show mouseover label if the node has already been selected
+    // and is displaying the label
+    if ( this.selectedNodeIcon ) {
+      if ( this.selectedNodeIcon.src._latlng.lat === latlng.lat &&
+           this.selectedNodeIcon.src._latlng.lng === latlng.lng ) return;
+    };
+
     let id = e.sourceTarget.inertWineId;
-
-    // Don't show the popup if its label is already being displayed
-    if ( this.selectedNodeIcon && this.selectedNodeIcon.src._latlng === latlng ) {
-      return;
-    }
-
     let icon = L.divIcon({
       className: `leaflet-intertwine-node-label`,
       iconSize: [0, 0],
