@@ -120,10 +120,10 @@ return html`
       font-style: italic;
     }
 
-    .selectedMarker {
+    .selectedCluster {
       background-color: var(--app-color-cluster-charcoal-alpha);
     }
-    .selectedMarker > div {
+    .selectedCluster > div {
       background-color: var(--app-color-charcoal);
     }
   </style>

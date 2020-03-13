@@ -376,11 +376,11 @@ export default class AppLeafletMap extends LitElement {
 
   resetMarkerColors() {
     // TODO: is this the best way to do this?
-    // Get all the markers & clear any instances of the class selectedMarker
+    // Get all the markers & clear any instances of the class selectedCluster
     this.map.eachLayer(layer => {
       if ( layer._icon !== undefined ) {
-        if ( layer._icon.classList.contains('selectedMarker') ) {
-          layer._icon.classList.remove('selectedMarker');
+        if ( layer._icon.classList.contains('selectedCluster') ) {
+          layer._icon.classList.remove('selectedCluster');
         }
       }
     });
@@ -431,11 +431,11 @@ export default class AppLeafletMap extends LitElement {
   }
 
   onClusterMouseOver(e) {
-    e.layer._icon.classList.add('selectedMarker');
+    e.layer._icon.classList.add('selectedCluster');
   }
 
   onClusterMouseOut(e) {
-    e.layer._icon.classList.remove('selectedMarker');
+    e.layer._icon.classList.remove('selectedCluster');
   }
 
   selectCluster(latlng, zoom) {
@@ -504,9 +504,6 @@ export default class AppLeafletMap extends LitElement {
     }});
 
     this.dispatchEvent(event);
-
-    // If a node has been clicked on, if there is a highlighted cluster, it needs to have that color reset.
-    //this.resetMarkerColors();
   }
 
   onLinkClicked(e) {
@@ -520,7 +517,7 @@ export default class AppLeafletMap extends LitElement {
    * @method setData
    * @description set node/link data, render map
    * @param {Object} data
-   */
+  */
   setData(data) {
     this.nodes = data.nodes;
     this.nodeLayers = {};
