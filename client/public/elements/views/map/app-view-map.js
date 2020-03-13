@@ -38,10 +38,6 @@ export default class AppViewMap extends Mixin(LitElement)
    * @param {Object} e
    */
   async _onAppStateUpdate(e) {
-    if ( this.moment === e.moment && this.selected === e.selectedNode ) {
-      return;
-    }
-
     this.moment   = e.moment;
     this.selected = e.selectedNode;
 

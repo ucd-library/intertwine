@@ -108,7 +108,7 @@ export default class AppLeafletMap extends LitElement {
   */
   renderSelectedState(e) {
     if( !e ) {
-      this.resetMarkerColors();
+      //this.resetMarkerColors();
 
       if( this.firstRender ) {
         if( Object.keys(this.nodes).length === 0 ) this.zoomToClusters = true;
@@ -461,7 +461,7 @@ export default class AppLeafletMap extends LitElement {
       }
     });
 
-    this.resetMarkerColors();
+    //this.resetMarkerColors();
 
     // Add a class to the selected cluster icon
     e.layer._icon.classList.add('selectedMarker');
@@ -481,7 +481,7 @@ export default class AppLeafletMap extends LitElement {
     this.dispatchEvent(event);
 
     // If a node has been clicked on, if there is a highlighted cluster, it needs to have that color reset.
-    this.resetMarkerColors();
+    //this.resetMarkerColors();
   }
 
   onLinkClicked(e) {
