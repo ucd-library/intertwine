@@ -220,7 +220,7 @@ export default function render() {
       }
       footer > .map-wrapper > .map {
         min-height: 200px;
-        background-image: url("../../images/worldmap.jpg");
+        background-image: url("/images/worldmap.jpg");
         background-position-y: center;
         background-position-x: center;
       }
@@ -348,7 +348,7 @@ export default function render() {
 
     <div id="container" class="container" role="main">
       <header>
-        <div class="header-image" style="background-image: url('../../images/${this.story.headerImage}');"></div>
+        <div class="header-image" style="background-image: url('/images/${this.story.headerImage}');"></div>
         <div class="story-header">
           <ul>
             <li>
@@ -381,7 +381,7 @@ export default function render() {
       </section>
 
       <section class="text-image-pairing bg-tan">
-        <div class="image" style="background-image: url('../../images/${this.story.text2.image.src}');">
+        <div class="image" style="background-image: url('/images/${this.story.text2.image.src}');">
           <span>${this.story.text2.image.title}</span>
         </div>
         <div class="text-blocks">
@@ -397,7 +397,7 @@ export default function render() {
 
       <div class="triptych">
         ${this.story.triptych.map(image => html`
-          <div style="background-image: url('../../images/${image.src}');"><span>${image.title}</span></div>
+          <div style="background-image: url('/images/${image.src}');"><span>${image.title}</span></div>
         `)}
       </div>
 
@@ -417,7 +417,7 @@ export default function render() {
             <h1>${this.story.text5.title}</h1>
             ${this.story.text5.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
           </div>
-          <div class="image" style="background-image: url('../../images/${this.story.text5.image.src}'); background-position: bottom center;">
+          <div class="image" style="background-image: url('/images/${this.story.text5.image.src}'); background-position: bottom center;">
             <span>${this.story.text5.image.title}</span>
           </div>
         </section>

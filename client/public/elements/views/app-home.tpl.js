@@ -13,7 +13,7 @@ export default function render() {
         left: 0;
         overflow-y: auto;
         background-color: var(--app-color-smoke);
-        background-image: url('./../../images/background.png');
+        background-image: url('/images/background.png');
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -29,7 +29,7 @@ export default function render() {
         flex-shrink: 0;
 
         background-color: var(--app-color-interface-blue);
-        background-image: url('./../../images/header-connectedicons.svg');
+        background-image: url('/images/header-connectedicons.svg');
         background-repeat: no-repeat;
         background-size: 1500px 1500px;
         background-position: center center;
@@ -311,7 +311,7 @@ export default function render() {
         <div id="${moment.entryPoint.shortName}" class="${moment.entryPoint.shortName}">
           <div class="card">
             <div class="feature-img ${moment.entryPoint.shortName}"
-              style="background-image: url('./../../images/${moment.headerImage}');"></div>
+              style="background-image: url('/images/${moment.headerImage}');"></div>
             <div class="content">
               <h4>${moment.entryPoint.title}</h4>
               <em>
