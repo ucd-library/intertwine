@@ -15,7 +15,8 @@ export default class AppHeader extends Mixin(LitElement)
   static get properties() {
     return {
       baseUrl: { type: String },
-      subtitle: { type: String }
+      subtitle: { type: String },
+      jsonData: { type: Object }
     }
   }
 
@@ -23,6 +24,8 @@ export default class AppHeader extends Mixin(LitElement)
     super();
     this.baseUrl = window.location.protocol + '//' + window.location.host;
     this.subtitle = '';
+
+    this.jsonData = jsonData;
 
     this.render = render.bind(this);
 
@@ -33,9 +36,9 @@ export default class AppHeader extends Mixin(LitElement)
     if ( e.page === 'home' ) {
       this.subtitle = 'California\'s Modern Wine Network';
     } else {
-      for ( let key in jsonData.moments ) {
+      for ( let key in this.jsonData.moments ) {
         if ( e.moment === key) {
-          this.subtitle = jsonData.moments[key].title;
+          this.subtitle = this.jsonData.moments[key].title;
         }
       }
     }

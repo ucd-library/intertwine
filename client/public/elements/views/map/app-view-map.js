@@ -4,6 +4,26 @@ import render from "./app-view-map.tpl.js"
 import "./app-leaflet-map"
 import "./app-map-info-panel"
 
+/**
+ * Update the css class of the cluster icon
+ * 1. When node is clicked
+ * https://github.com/ucd-library/intertwine/blob/dev/client/public/elements/views/map/app-leaflet-map.js#L501
+ * 2. Icon creation
+ * https://github.com/ucd-library/intertwine/blob/dev/client/public/elements/views/map/app-leaflet-map.js#L529
+ * Custom event on node click has a reference to the marker
+ * Toggle the class on/off when a user clicks elsewhere
+ * Set a window click-listener
+ * 
+ * "so you have to wire up to the window and toggle class off.  To do this correctly, 
+ * you must prevent the initial event from bubbling up to the window when a node is clicked on.  
+ * otherwise you will turn the node on, the click event will bubble to the window, then your window handler 
+ * will toggle the node off."
+ * the final issue you may face, I think the event object you get from leaflet is a wrapper.  
+ * you may need to look at that object to find the actual browser click event, so you can cancel propagation
+ * ttps://leafletjs.com/reference-1.6.0.html#mouseevent-originalevent
+ * e.originalEvent.stopPropagation()
+*/
+
 export default class AppViewMap extends Mixin(LitElement)
   .with(LitCorkUtils) {
 

@@ -11,7 +11,8 @@ export default class AppStory extends Mixin(LitElement)
     return {
       active: { type: Boolean },
       selectedMoment: { type: String },
-      story: { type: Object }
+      story: { type: Object },
+      jsonData: { type: Object }
     }
   }
 
@@ -19,6 +20,9 @@ export default class AppStory extends Mixin(LitElement)
     super();
     this.render = render.bind(this);
     this.active = true;
+    this.story = {};
+
+    this.jsonData = jsonData;
 
     this._injectModel('AppStateModel');
   }
@@ -31,7 +35,7 @@ export default class AppStory extends Mixin(LitElement)
    */
   _onAppStateUpdate(e) {
     this.selectedMomentName = e.moment;
-    this.story = jsonData.moments[this.selectedMomentName];
+    this.story = this.jsonData.moments[this.selectedMomentName];
   }
 
   async firstUpdated() {

@@ -76,10 +76,30 @@ export default class AppLeafletMap extends LitElement {
       zoomToBoundsOnClick: false,
       removeOutsideVisibleBounds: false,
       maxClusterRadius : 25,
-      spiderfyOnMaxZoom : false
+      spiderfyOnMaxZoom : false,
+      iconCreateFunction: function(cluster) {
+        let markers = cluster.getAllChildMarkers();
+        
+        for ( let i=0; i < markers.length; i++ ) {
+          if ( markers[i].changed ) {
+            return L.divIcon({
+              html: '<div><span>' + cluster.getChildCount() + '</span></div>',
+              className: 'selectedCluster',
+              iconSize: L.point(40,40)
+            });
+          }
+        }
+
+        return L.divIcon({
+          html: '<div><span>' + cluster.getChildCount() + '</span></div>',
+          className: 'marker-cluster marker-cluster-small',
+          iconSize: L.point(40,40)
+        });
+      }
     });
     this.map.addLayer(this.clusters);
     this.map.zoomControl.setPosition('bottomright');
+
 
     // wire up layer and map events
     this.clusters.on('clusterclick', e => this.onClusterClicked(e));
@@ -430,14 +450,6 @@ export default class AppLeafletMap extends LitElement {
     }
   }
 
-  onClusterMouseOver(e) {
-    e.layer._icon.classList.add('selectedCluster');
-  }
-
-  onClusterMouseOut(e) {
-    e.layer._icon.classList.remove('selectedCluster');
-  }
-
   selectCluster(latlng, zoom) {
     if( this.firstRender ) {
       this.setView(latlng, zoom);
@@ -478,11 +490,21 @@ export default class AppLeafletMap extends LitElement {
     this.dispatchEvent(event);
   }
 
+  onClusterMouseOver(e) {
+   e.layer._icon.classList.add('selectedCluster');
+  }
+
+  onClusterMouseOut(e) {
+    //e.layer._icon.classList.remove('selectedCluster');
+  }
+
   /**
    * @method onClusterClicked
    * @description bound to cluster click event
   */
   onClusterClicked(e) {
+    e.layer._icon.classList.add('selectedCluster');
+
     let center = e.layer.getBounds().getCenter();
     let event = new CustomEvent('cluster-click', {
       detail : {
