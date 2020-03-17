@@ -59,6 +59,7 @@ export default class AppViewMap extends Mixin(LitElement)
    */
   async _onAppStateUpdate(e) {
     if ( e.page !== 'map' ) return;
+    this.appState = e;
 
     this.moment   = e.moment;
     this.selected = e.selectedNode;
@@ -82,6 +83,9 @@ export default class AppViewMap extends Mixin(LitElement)
     if( e.state !== 'loaded' ) return;
     this.data = e.payload.graph;
     this.mapEle.setData(e.payload.graph);
+
+    if( this.appState.selectedNode ) this.mapEle.renderSelectedState(this.appState);
+    else this.mapEle.renderSelectedState();
   }
 
   /**

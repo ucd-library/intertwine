@@ -112,6 +112,9 @@ export default class AppLeafletMap extends LitElement {
       this.repositionSelectedNode();
       this.repositionSelectedLink();
       this.updateLinks();
+      if( this.appState && this.appState.selectedNode && this.appState.selectedNode.type === 'cluster' ) {
+        this.findAndRenderSelectedCluster(this.appState.selectedNode.latlng, this.appState.selectedNode.zoom);
+      }
     });
 
     // grab the css color defined by our custom variable
@@ -128,6 +131,8 @@ export default class AppLeafletMap extends LitElement {
    * @param {Object} e app-state-update event object
   */
   renderSelectedState(e) {
+    this.appState = e;
+
     if( !e ) {
       if( this.firstRender ) {
         if( Object.keys(this.nodes).length === 0 ) {
@@ -468,11 +473,22 @@ export default class AppLeafletMap extends LitElement {
       }
     }
 
+    let selectedCluster = this.findAndRenderSelectedCluster(latlng, zoom);
+    if( !selectedCluster ) return console.warn('no clusters found to selected');
+
+    let event = new CustomEvent('selected-cluster-ids', {
+      detail: selectedCluster.getAllChildMarkers().map(l => l.inertWineId)
+    })
+    this.dispatchEvent(event);
+  }
+
+  findAndRenderSelectedCluster(latlng, zoom) {
+    this.resetClusterStyles();
+    if( this.map.getZoom() !== zoom ) return;
+
     let clusterMarkers = this.clusters._featureGroup.getLayers();
     let closest = Number.MAX_SAFE_INTEGER;
     let selectedCluster = null;
-
-    this.resetClusterStyles();
 
     for( let layer of clusterMarkers ) {
       // HACK.  Is there better type checking for this?
@@ -487,13 +503,10 @@ export default class AppLeafletMap extends LitElement {
       }
     }
 
-    if( !selectedCluster ) return console.warn('no clusters found to selected');
+    if( !selectedCluster ) return;
 
     selectedCluster._icon.classList.add('selected-cluster');
-    let event = new CustomEvent('selected-cluster-ids', {
-      detail: selectedCluster.getAllChildMarkers().map(l => l.inertWineId)
-    })
-    this.dispatchEvent(event);
+    return selectedCluster;
   }
 
   onClusterMouseOver(e) {
