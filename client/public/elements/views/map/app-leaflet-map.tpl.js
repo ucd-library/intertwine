@@ -120,10 +120,10 @@ return html`
       font-style: italic;
     }
 
-    .selectedCluster {
+    .hover-cluster, .selected-cluster {
       background-color: var(--app-color-cluster-charcoal-alpha);
     }
-    .selectedCluster > div {
+    .hover-cluster > div, .selected-cluster > div {
       background-color: var(--app-color-charcoal);
     }
   </style>

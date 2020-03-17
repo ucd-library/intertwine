@@ -78,17 +78,17 @@ export default class AppLeafletMap extends LitElement {
       maxClusterRadius : 25,
       spiderfyOnMaxZoom : false,
       iconCreateFunction: function(cluster) {
-        let markers = cluster.getAllChildMarkers();
+        // let markers = cluster.getAllChildMarkers();
         
-        for ( let i=0; i < markers.length; i++ ) {
-          if ( markers[i].changed ) {
-            return L.divIcon({
-              html: '<div><span>' + cluster.getChildCount() + '</span></div>',
-              className: 'selectedCluster',
-              iconSize: L.point(40,40)
-            });
-          }
-        }
+        // for ( let i=0; i < markers.length; i++ ) {
+        //   if ( markers[i].changed ) {
+        //     return L.divIcon({
+        //       html: '<div><span>' + cluster.getChildCount() + '</span></div>',
+        //       className: 'selectedCluster',
+        //       iconSize: L.point(40,40)
+        //     });
+        //   }
+        // }
 
         return L.divIcon({
           html: '<div><span>' + cluster.getChildCount() + '</span></div>',
@@ -394,13 +394,16 @@ export default class AppLeafletMap extends LitElement {
     }
   }
 
-  resetMarkerColors() {
+  resetClusterStyles() {
     // TODO: is this the best way to do this?
     // Get all the markers & clear any instances of the class selectedCluster
     this.map.eachLayer(layer => {
       if ( layer._icon !== undefined ) {
-        if ( layer._icon.classList.contains('selectedCluster') ) {
-          layer._icon.classList.remove('selectedCluster');
+        if ( layer._icon.classList.contains('selected-cluster') ) {
+          layer._icon.classList.remove('selected-cluster');
+        }
+        if ( layer._icon.classList.contains('hover-cluster') ) {
+          layer._icon.classList.remove('hover-cluster');
         }
       }
     });
@@ -469,6 +472,8 @@ export default class AppLeafletMap extends LitElement {
     let closest = Number.MAX_SAFE_INTEGER;
     let selectedCluster = null;
 
+    this.resetClusterStyles();
+
     for( let layer of clusterMarkers ) {
       // HACK.  Is there better type checking for this?
       if( layer.inertWineId ) continue;
@@ -484,6 +489,7 @@ export default class AppLeafletMap extends LitElement {
 
     if( !selectedCluster ) return console.warn('no clusters found to selected');
 
+    selectedCluster._icon.classList.add('selected-cluster');
     let event = new CustomEvent('selected-cluster-ids', {
       detail: selectedCluster.getAllChildMarkers().map(l => l.inertWineId)
     })
@@ -491,11 +497,11 @@ export default class AppLeafletMap extends LitElement {
   }
 
   onClusterMouseOver(e) {
-   e.layer._icon.classList.add('selectedCluster');
+    e.layer._icon.classList.add('hover-cluster');
   }
 
   onClusterMouseOut(e) {
-    //e.layer._icon.classList.remove('selectedCluster');
+    e.layer._icon.classList.remove('hover-cluster');
   }
 
   /**
@@ -503,7 +509,7 @@ export default class AppLeafletMap extends LitElement {
    * @description bound to cluster click event
   */
   onClusterClicked(e) {
-    e.layer._icon.classList.add('selectedCluster');
+    e.layer._icon.classList.add('selected-cluster');
 
     let center = e.layer.getBounds().getCenter();
     let event = new CustomEvent('cluster-click', {
