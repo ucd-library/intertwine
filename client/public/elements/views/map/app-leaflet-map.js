@@ -509,8 +509,6 @@ export default class AppLeafletMap extends LitElement {
    * @description bound to cluster click event
   */
   onClusterClicked(e) {
-    e.layer._icon.classList.add('selected-cluster');
-
     let center = e.layer.getBounds().getCenter();
     let event = new CustomEvent('cluster-click', {
       detail : {
