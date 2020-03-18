@@ -4,7 +4,7 @@ let fetch   = require('node-fetch');
 const config   = require('../../config');
 const endpoint = config.server.endpoint;
 
-router.get('/:id', (req, res) => {
+router.get('/:id', (req, res, next) => {
   if ( req.params.id !== 'undefined' ) {
     const moment = req.params.id;
 
@@ -15,8 +15,8 @@ router.get('/:id', (req, res) => {
         const response = await fetch(url);
         const json = await response.json();
         res.json(json);
-      } catch (error) {
-        console.error(error);
+      } catch (err) {        
+        next(err); // pass errors to Express
       }
     };
 
