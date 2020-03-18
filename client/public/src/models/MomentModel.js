@@ -25,7 +25,12 @@ class MomentModel extends BaseModel {
       } else if( state.state !== 'loaded' ) {
         await this.service.get(moment, this.transformLinks);
       }
-    } catch(e) { console.error(e) };
+    } catch(e) {
+      console.log(e);
+      // handle network error here if you want to handle in model
+      // but error state should be capture by store and UI elements 
+      // should react to the error state event
+    };
 
     return this.store.data[moment];
   }

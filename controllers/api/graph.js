@@ -15,8 +15,11 @@ router.get('/:id', (req, res, next) => {
         const response = await fetch(url);
         const json = await response.json();
         res.json(json);
-      } catch (err) {        
-        next(err); // pass errors to Express
+      } catch (e) {
+        res.status(400).json({
+          error: true,
+          message: e.message
+        });
       }
     };
 

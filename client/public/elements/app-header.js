@@ -29,10 +29,27 @@ export default class AppHeader extends Mixin(LitElement)
 
     this.render = render.bind(this);
 
-    this._injectModel('AppStateModel');
+    this._injectModel('AppStateModel', 'MomentModel');
   }
 
-  _onAppStateUpdate(e) {
+  firstUpdated() {
+    /**
+     * TODO: set up some minor error handling so if state.state == error the home page buttons are all disabled
+     */
+  }
+
+  async _onAppStateUpdate(e) {
+    let state = await this.MomentModel.get(e.moment);
+
+    if ( state.state === 'error' ) {
+      // Redirect user to the home page
+      this.AppStateModel.setLocation('/');
+
+      // E.preventDefault() on links?
+
+      return;
+    }
+
     if ( e.page === 'home' ) {
       this.subtitle = 'California\'s Modern Wine Network';
     } else {
