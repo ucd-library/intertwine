@@ -16,7 +16,8 @@ export default class AppHeader extends Mixin(LitElement)
     return {
       baseUrl: { type: String },
       subtitle: { type: String },
-      jsonData: { type: Object }
+      jsonData: { type: Object },
+      offline: { type: Boolean }
     }
   }
 
@@ -24,6 +25,7 @@ export default class AppHeader extends Mixin(LitElement)
     super();
     this.baseUrl = window.location.protocol + '//' + window.location.host;
     this.subtitle = '';
+    this.offline = false;
 
     this.jsonData = jsonData;
 
@@ -32,25 +34,16 @@ export default class AppHeader extends Mixin(LitElement)
     this._injectModel('AppStateModel', 'MomentModel');
   }
 
-  firstUpdated() {
-    /**
-     * TODO: set up some minor error handling so if state.state == error the home page buttons are all disabled
-     */
-  }
-
   async _onAppStateUpdate(e) {
     let state = await this.MomentModel.get(e.moment);
 
-    if ( state.state === 'error' ) {
-      // Redirect user to the home page
-      this.AppStateModel.setLocation('/');
+    if ( state.state === 'error' ) this.offline = true;
 
-      // E.preventDefault() on links?
-
-      return;
+    if ( state.state === 'error' && e.page !== 'about' && e.page !== 'home' ) {      
+      this.AppStateModel.setLocation('/'); // redirect user to the home page
     }
 
-    if ( e.page === 'home' ) {
+    if ( e.page === 'home' || e.page === 'about' ) {
       this.subtitle = 'California\'s Modern Wine Network';
     } else {
       for ( let key in this.jsonData.moments ) {

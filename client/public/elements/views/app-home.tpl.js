@@ -19,6 +19,27 @@ export default function render() {
         background-attachment: fixed;
       }
 
+      #offline {
+        padding-top: 50px;
+        text-align: center;
+      }
+
+      #offline iron-icon {
+        color: var(--app-color-scarlet);
+        --iron-icon-height: 40px;
+        --iron-icon-width: 40px;
+      }
+
+      #offline h1 {
+        margin-top: 25px;
+        font-size: 30px;
+        color: var(--app-color-charcoal);
+      }
+
+      #offline p {
+        color: var(--app-color-charcoal);
+      }
+
       header {
         min-height: 200px;
 
@@ -290,59 +311,71 @@ export default function render() {
       }
     </style>
 
-    <header>
-      <div style="float: left;">
-        <h1>
-          Enter a Moment in
-          <br />
-          California Wine History
-        </h1>
-      </div>
-      <div class="text-block" style="float: right; font-size: 17px;">
-        Get the story behind the people, places, and things connected to a particular time
-        or event in wine history, then dive into an interactive map to explore the
-        specific connections between them.
-      </div>
-    </header>
-    <div class="arrow-down"></div>
+    <section id="offline" ?hidden="${!this.offline}">
+      <iron-icon class="error" icon="error"></iron-icon>      
+      <h1>
+        IntertWINE is currently offline
+      </h1>
+      <p>
+        It seems we're experiencing some technical difficulties. Sorry for the inconvenience!
+      </p>
+    </section>
 
-    <main>
-      ${this.moments.map((moment) => html`
-        <div id="${moment.entryPoint.shortName}" class="${moment.entryPoint.shortName}">
-          <div class="card">
-            <div class="feature-img ${moment.entryPoint.shortName}"
-              style="background-image: url('/images/${moment.headerImage}');"></div>
-            <div class="content">
-              <h4>${moment.entryPoint.title}</h4>
-              <em>
-                ${moment.entryPoint.startDate}
-                <span ?hidden="${!moment.entryPoint.endDate}">
-                  - ${moment.entryPoint.endDate}
-                </span>
-              </em>
-              <p>${moment.entryPoint.text}</p>
-            </div>
-            <div class="footer">
-              <button
-                name="${moment.entryPoint.shortName}"
-                title="${moment.entryPoint.title}"
-                type="button"
-                @click="${e => this._onReadStoryClick(e.currentTarget.name)}">
-                  <span>Read Story</span>
-                  <iron-icon icon="intert-wine-icons:book"></iron-icon>
-              </button>
-              <span class="separator"></span>
-              <button
-                name="${moment.entryPoint.shortName}"
-                title="${moment.entryPoint.title}"
-                type="button"
-                @click="${e => this._onExploreMapClick(e.currentTarget.name)}">
-                  <iron-icon icon="intert-wine-icons:explore"></iron-icon>
-                  <span>Explore Map</span>
-              </button>
-          </div>
-          </div>
+    <section ?hidden="${this.offline}">
+      <header>
+        <div style="float: left;">
+          <h1>
+            Enter a Moment in
+            <br />
+            California Wine History
+          </h1>
         </div>
-      `)}
-    </main>
+        <div class="text-block" style="float: right; font-size: 17px;">
+          Get the story behind the people, places, and things connected to a particular time
+          or event in wine history, then dive into an interactive map to explore the
+          specific connections between them.
+        </div>
+      </header>
+      <div class="arrow-down"></div>
+
+      <main>
+        ${this.moments.map((moment) => html`
+          <div id="${moment.entryPoint.shortName}" class="${moment.entryPoint.shortName}">
+            <div class="card">
+              <div class="feature-img ${moment.entryPoint.shortName}"
+                style="background-image: url('/images/${moment.headerImage}');"></div>
+              <div class="content">
+                <h4>${moment.entryPoint.title}</h4>
+                <em>
+                  ${moment.entryPoint.startDate}
+                  <span ?hidden="${!moment.entryPoint.endDate}">
+                    - ${moment.entryPoint.endDate}
+                  </span>
+                </em>
+                <p>${moment.entryPoint.text}</p>
+              </div>
+              <div class="footer">
+                <button
+                  name="${moment.entryPoint.shortName}"
+                  title="${moment.entryPoint.title}"
+                  type="button"
+                  @click="${e => this._onReadStoryClick(e.currentTarget.name)}">
+                    <span>Read Story</span>
+                    <iron-icon icon="intert-wine-icons:book"></iron-icon>
+                </button>
+                <span class="separator"></span>
+                <button
+                  name="${moment.entryPoint.shortName}"
+                  title="${moment.entryPoint.title}"
+                  type="button"
+                  @click="${e => this._onExploreMapClick(e.currentTarget.name)}">
+                    <iron-icon icon="intert-wine-icons:explore"></iron-icon>
+                    <span>Explore Map</span>
+                </button>
+            </div>
+            </div>
+          </div>
+        `)}
+      </main>
+    </section>
 `;}
