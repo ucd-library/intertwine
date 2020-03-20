@@ -16,8 +16,7 @@ export default class AppHeader extends Mixin(LitElement)
     return {
       baseUrl: { type: String },
       subtitle: { type: String },
-      jsonData: { type: Object },
-      offline: { type: Boolean }
+      jsonData: { type: Object }
     }
   }
 
@@ -25,24 +24,15 @@ export default class AppHeader extends Mixin(LitElement)
     super();
     this.baseUrl = window.location.protocol + '//' + window.location.host;
     this.subtitle = '';
-    this.offline = false;
 
     this.jsonData = jsonData;
 
     this.render = render.bind(this);
 
-    this._injectModel('AppStateModel', 'MomentModel');
+    this._injectModel('AppStateModel');
   }
 
-  async _onAppStateUpdate(e) {
-    let state = await this.MomentModel.get(e.moment);
-
-    if ( state.state === 'error' ) this.offline = true;
-
-    if ( state.state === 'error' && e.page !== 'about' && e.page !== 'home' ) {      
-      this.AppStateModel.setLocation('/'); // redirect user to the home page
-    }
-
+  _onAppStateUpdate(e) {    
     if ( e.page === 'home' || e.page === 'about' ) {
       this.subtitle = 'California\'s Modern Wine Network';
     } else {

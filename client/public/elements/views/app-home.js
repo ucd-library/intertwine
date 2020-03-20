@@ -10,8 +10,7 @@ export default class AppHome extends Mixin(LitElement)
   static get properties() {
     return {
       active: { type: Boolean },
-      moments: { type: Array },
-      offline: { type: Boolean }
+      moments: { type: Array }
     }
   }
 
@@ -20,19 +19,10 @@ export default class AppHome extends Mixin(LitElement)
     this.render = render.bind(this);
     this.active = true;
     this.moments = [];
-    this.offline = false;
 
     this.loadMoments();
 
-    this._injectModel('AppStateModel', 'MomentModel');
-  }
-
-  async _onAppStateUpdate(e) {    
-    let state = await this.MomentModel.get(e.moment);
-
-    if ( state.state === 'error' ) {
-      this.offline = true;
-    }
+    this._injectModel('AppStateModel');
   }
 
   loadMoments() {

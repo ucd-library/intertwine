@@ -17,28 +17,7 @@ export default function render() {
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
-      }
-
-      #offline {
-        padding-top: 50px;
-        text-align: center;
-      }
-
-      #offline iron-icon {
-        color: var(--app-color-scarlet);
-        --iron-icon-height: 40px;
-        --iron-icon-width: 40px;
-      }
-
-      #offline h1 {
-        margin-top: 25px;
-        font-size: 30px;
-        color: var(--app-color-charcoal);
-      }
-
-      #offline p {
-        color: var(--app-color-charcoal);
-      }
+      }     
 
       header {
         min-height: 200px;
@@ -309,19 +288,9 @@ export default function render() {
           height: 60px;
         }
       }
-    </style>
+    </style>   
 
-    <section id="offline" ?hidden="${!this.offline}">
-      <iron-icon class="error" icon="error"></iron-icon>      
-      <h1>
-        IntertWINE is currently offline
-      </h1>
-      <p>
-        It seems we're experiencing some technical difficulties. Sorry for the inconvenience!
-      </p>
-    </section>
-
-    <section ?hidden="${this.offline}">
+    <section>
       <header>
         <div style="float: left;">
           <h1>
