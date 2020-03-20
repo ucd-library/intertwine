@@ -9,8 +9,14 @@ class AppStateModelImpl extends AppStateModel {
 
     this.DEFAULT_VIEW = 'home';
 
-    this.EventBus.on(this.store.events.APP_STATE_UPDATE, () => this._sendGA());
-    this._sendGA();
+    this.EventBus.on(this.store.events.APP_STATE_UPDATE, async (e) => {
+      // TODO: Doesn't work, doesn't pass error state ever
+      let state = await this.get(e.moment);
+      if ( state.state === 'error' && e.page !== 'about' && e.page !== 'home' ) {
+        AppStateModel.setLocation('/');
+      }
+      this._sendGA();
+    });
   }
 
   /**

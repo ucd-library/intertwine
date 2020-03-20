@@ -86,7 +86,7 @@ export default class AppViewMap extends Mixin(LitElement)
     this.data = e.payload.graph;
     this.mapEle.setData(e.payload.graph);
 
-    if( this.appState.selectedNode ) this.mapEle.renderSelectedState(this.appState);
+    if( this.appState && this.appState.selectedNode ) this.mapEle.renderSelectedState(this.appState);
     else this.mapEle.renderSelectedState();
   }
 

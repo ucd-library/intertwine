@@ -99,8 +99,7 @@ export default class AppLeafletMap extends LitElement {
     });
     this.map.addLayer(this.clusters);
     this.map.zoomControl.setPosition('bottomright');
-
-
+    
     // wire up layer and map events
     this.clusters.on('clusterclick', e => this.onClusterClicked(e));
     this.clusters.on('clustermouseover', e => this.onClusterMouseOver(e));
@@ -112,6 +111,7 @@ export default class AppLeafletMap extends LitElement {
       this.repositionSelectedNode();
       this.repositionSelectedLink();
       this.updateLinks();
+
       if( this.appState && this.appState.selectedNode && this.appState.selectedNode.type === 'cluster' ) {
         this.findAndRenderSelectedCluster(this.appState.selectedNode.latlng, this.appState.selectedNode.zoom);
       }
@@ -138,6 +138,7 @@ export default class AppLeafletMap extends LitElement {
         if( Object.keys(this.nodes).length === 0 ) {
           this.zoomToClusters = true;
         } else {
+          // Zooms the map to the clusters
           this.map.fitBounds(this.clusters.getBounds());
         }
       }
@@ -149,8 +150,9 @@ export default class AppLeafletMap extends LitElement {
         }
         this.selectedNodeIcon = null;
       }
-
+           
       this.firstRender = false;
+
       return;
     }
 
@@ -590,6 +592,7 @@ export default class AppLeafletMap extends LitElement {
       this.selectLink(this.pendingLinkSelect);
       this.pendingLinkSelect = null;
     } else if( this.zoomToClusters ) {
+      // Zooms the map to where the clusters are located
       this.map.fitBounds(this.clusters.getBounds());
       this.zoomToClusters = false;
     }

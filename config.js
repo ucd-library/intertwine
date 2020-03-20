@@ -6,7 +6,7 @@ module.exports = {
     assets : (env === 'prod') ? 'dist' : 'public',
     endpoint : process.env.ENDPOINT_URL || 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/moments',
     appRoutes : ['about', 'home', 'map', 'story'],
-    moments : ['chardonnay', 'jop'],
+    moments : ['chardonnay', 'cats', 'jop'],
     port : process.env.APP_PORT || process.env.PORT || 3000
   },
   client : {

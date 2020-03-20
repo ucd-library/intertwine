@@ -9,9 +9,14 @@ class MomentModel extends BaseModel {
     this.store   = MomentStore;
     this.service = MomentService;
 
-    this.EventBus.on('app-state-update', e => {
+    this.EventBus.on('app-state-update', async (e) => {
+      let state = await this.get(e.moment);
+      
+      // TODO: Error displays correctly here, but how to pass this data over to AppStateModel????
+      if ( state.state === 'error' ) console.log();
+
       if( e.page === 'map' ) this.get(e.moment);
-    })
+    });
 
     this.register('MomentModel');
   }
@@ -25,9 +30,7 @@ class MomentModel extends BaseModel {
       } else if( state.state !== 'loaded' ) {
         await this.service.get(moment, this.transformLinks);
       }
-    } catch(e) {
-      //console.log(e);
-      
+    } catch(err) {
       // handle network error here if you want to handle in model
       // but error state should be capture by store and UI elements 
       // should react to the error state event

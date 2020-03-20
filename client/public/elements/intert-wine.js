@@ -38,19 +38,11 @@ export default class IntertWine extends Mixin(LitElement)
     this.appRoutes = APP_CONFIG.appRoutes;
 
     this.render = render.bind(this);
-
-    this._injectModel('AppStateModel', 'MomentModel');
+    
+    this._injectModel('AppStateModel');
   }
 
-  async _onAppStateUpdate(e) {
-    let state = await this.MomentModel.get(e.moment);
-
-    if ( state.state === 'error' ) this.offline = true;
-
-    if ( state.state === 'error' && e.page !== 'about' && e.page !== 'home' ) {      
-      this.AppStateModel.setLocation('/'); // redirect user to this page
-    }    
-
+  _onAppStateUpdate(e) {
     this.view = e.page;
   }
 
