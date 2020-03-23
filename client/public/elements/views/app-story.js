@@ -27,17 +27,6 @@ export default class AppStory extends Mixin(LitElement)
     this._injectModel('AppStateModel', 'MomentModel');
   }
 
-  
-  /**
-   * @method _onAppStateUpdate
-   * @description bound to AppStateModel app-state-update events
-   *
-   * @param {Object} e
-   */
-  _onAppStateUpdate(e) {
-    this.moment = e.moment;
-  }
-
   /**
    * @method _onMomentGraphUpdate
    * @description bound to graph-update events from the MomentModel
@@ -48,10 +37,20 @@ export default class AppStory extends Mixin(LitElement)
     if( e.state !== 'loaded' ) return;
     this.renderStory(e.payload);
   }
+  
+  /**
+   * @method _onAppStateUpdate
+   * @description bound to AppStateModel app-state-update events
+   *
+   * @param {Object} e
+   */
+  _onAppStateUpdate(e) {
+    this.moment = e.moment;
+  }  
 
   renderStory(story) {
     if ( story ) {
-      this.story = this.jsonData.moments[this.moment] || story.graph.story;
+      this.story = story.graph.entryPoint || this.jsonData.moments[this.moment];
     }
   }
 
