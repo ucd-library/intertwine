@@ -46,7 +46,7 @@ class MomentModel extends BaseModel {
    * @returns {Object} nodes & links
    */
   transformLinks(data) {
-    let links = {}, nodes = {}, lookup = {};
+    let links = {}, nodes = {}, lookup = {}, story = {};
 
     // Helper Functions - START
     /**
@@ -146,8 +146,8 @@ class MomentModel extends BaseModel {
 
     // Nodes
     for( let id in lookup ) {
-      // Can't be a link or a connection
-      if( !lookup[id].isLink && lookup[id]['type'] !== 'connection' ) {
+      // Can't be a link or a connection OR a Story
+      if( !lookup[id].isLink && lookup[id]['type'] !== 'connection' && lookup[id]['type'] !== 'story' ) {
         let location;
 
         // Weed out the _:b items, which won't be needed in the final display
@@ -170,6 +170,8 @@ class MomentModel extends BaseModel {
 
           nodes[lookup[id]['@id']] = lookup[id];
         }
+      } else if ( lookup[id]['type'] === 'story' ) {
+        story[lookup[id]['@id']] = lookup[id];
       }
     }
 
@@ -187,7 +189,7 @@ class MomentModel extends BaseModel {
       }
     }
 
-    return { nodes, links }
+    return { nodes, links, story }
   }
 }
 

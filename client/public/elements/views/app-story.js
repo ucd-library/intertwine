@@ -24,9 +24,10 @@ export default class AppStory extends Mixin(LitElement)
 
     this.jsonData = jsonData;
 
-    this._injectModel('AppStateModel');
+    this._injectModel('AppStateModel', 'MomentModel');
   }
 
+  
   /**
    * @method _onAppStateUpdate
    * @description bound to AppStateModel app-state-update events
@@ -34,8 +35,24 @@ export default class AppStory extends Mixin(LitElement)
    * @param {Object} e
    */
   _onAppStateUpdate(e) {
-    this.selectedMomentName = e.moment;
-    this.story = this.jsonData.moments[this.selectedMomentName];
+    this.moment = e.moment;
+  }
+
+  /**
+   * @method _onMomentGraphUpdate
+   * @description bound to graph-update events from the MomentModel
+   *
+   * @param {*} e
+   */
+  _onMomentGraphUpdate(e) {
+    if( e.state !== 'loaded' ) return;
+    this.renderStory(e.payload);
+  }
+
+  renderStory(story) {
+    if ( story ) {
+      this.story = this.jsonData.moments[this.moment] || story.graph.story;
+    }
   }
 
   async firstUpdated() {
@@ -75,7 +92,7 @@ export default class AppStory extends Mixin(LitElement)
    * @param {*} e
   */
   _launchMap() {
-    this.AppStateModel.setLocation('/map/' + this.selectedMomentName);
+    this.AppStateModel.setLocation('/map/' + this.moment);
   }
 }
 

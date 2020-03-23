@@ -345,8 +345,8 @@ export default function render() {
         }
       }
     </style>
-
-    <div id="container" class="container" role="main">
+    
+    <div id="container" class="container" role="main">      
       <header>
         <div class="header-image" style="background-image: url('/images/${this.story.headerImage}');"></div>
         <div class="story-header">
@@ -357,6 +357,7 @@ export default function render() {
             </li>
 
             <li>
+              ${this.story.quote? html`
               <div class="quote">
                 ${this.story.quote.text}
                 <ul class="credit">
@@ -365,7 +366,7 @@ export default function render() {
                     ${this.story.quote.src}
                   </li>
                 </ul>
-              </div>
+              </div>`:html``}              
             </li>
           </ul>
         </div>
@@ -375,39 +376,49 @@ export default function render() {
         <app-story-float-btn id="floatBtn" @click="${this._launchMap}"></app-story-float-btn>
       </div>
 
-      <section class="text-blocks bg-white">
-        <h1 ?hidden="${!this.story.text1.title}">${this.story.text1.title}</h1>
-        ${this.story.text1.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
-      </section>
+      ${this.story.text1?
+        html`
+        <section class="text-blocks bg-white">
+          <h1 ?hidden="${!this.story.text1.title}">${this.story.text1.title}</h1>
+          ${this.story.text1.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
+        </section>`:html``
+      }     
 
-      <section class="text-image-pairing bg-tan">
-        <div class="image" style="background-image: url('/images/${this.story.text2.image.src}');">
-          <span>${this.story.text2.image.title}</span>
-        </div>
-        <div class="text-blocks">
-          <h1 ?hidden="${!this.story.text2.title}">${this.story.text2.title}</h1>
-          ${this.story.text2.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
-        </div>
-      </section>
+      ${this.story.text2?
+        html`
+        <section class="text-image-pairing bg-tan">
+          <div class="image" style="background-image: url('/images/${this.story.text2.image.src}');">
+            <span>${this.story.text2.image.title}</span>
+          </div>
+          <div class="text-blocks">
+            <h1 ?hidden="${!this.story.text2.title}">${this.story.text2.title}</h1>
+            ${this.story.text2.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
+          </div>
+        </section>`:html``
+      }
 
-      <section class="text-blocks bg-white">
-        <h1 ?hidden="${!this.story.text3.title}">${this.story.text3.title}</h1>
-        ${this.story.text3.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
-      </section>
-
-      <div class="triptych">
-        ${this.story.triptych.map(image => html`
-          <div style="background-image: url('/images/${image.src}');"><span>${image.title}</span></div>
-        `)}
-      </div>
+      ${this.story.text3?
+        html`
+        <section class="text-blocks bg-white">
+          <h1 ?hidden="${!this.story.text3.title}">${this.story.text3.title}</h1>
+          ${this.story.text3.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
+        </section>`:html``}
+      
+      ${this.story.triptych?
+        html`
+        <div class="triptych">
+          ${this.story.triptych.map(image => html`
+            <div style="background-image: url('/images/${image.src}');"><span>${image.title}</span></div>
+          `)}
+        </div>`:html``
+      }
 
       ${this.story.text4?
         html`
         <section class="text-blocks bg-white">
           <h1>${this.story.text4.title}</h1>
           ${this.story.text4.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
-        </section>
-        `:html`<div class="spacer"></div>`
+        </section>`:html`<div class="spacer"></div>`
       }
 
       ${this.story.text5?
@@ -420,8 +431,7 @@ export default function render() {
           <div class="image" style="background-image: url('/images/${this.story.text5.image.src}'); background-position: bottom center;">
             <span>${this.story.text5.image.title}</span>
           </div>
-        </section>
-        `:html`<div class="spacer"></div>`}
+        </section>`:html`<div class="spacer"></div>`}
 
       <footer>
         <div class="map-wrapper">
@@ -442,19 +452,22 @@ export default function render() {
           </div>
         </div>
 
-        <div class="bottom-content">
-          <h6>Sources</h6>
-          <ol>
-          ${this.story.sources.map(source => html`
-            <li>
-              <em>
-                ${source.text}
-                <a ?hidden="${!source.link}" href="${source.href}">"${source.link}"</a>
-              </em>
-            </li>
-          `)}
-          </ol>
-      </div>
+        ${this.story.sources?
+          html`
+          <div class="bottom-content">
+            <h6>Sources</h6>
+            <ol>          
+            ${this.story.sources.map(source => html`
+              <li>
+                <em>
+                  ${source.text}
+                  <a ?hidden="${!source.link}" href="${source.href}">"${source.link}"</a>
+                </em>
+              </li>
+            `)}
+            </ol>
+          </div>`:html``
+        }        
       </footer>
-    </div>
-`;}
+  </div>
+`}
