@@ -46,7 +46,7 @@ class MomentModel extends BaseModel {
    * @returns {Object} nodes & links
    */
   transformLinks(data) {
-    let links = {}, nodes = {}, lookup = {}, story = {};
+    let links = {}, nodes = {}, lookup = {}, story = {}, entryPoint = {};
 
     // Helper Functions - START
     /**
@@ -175,6 +175,15 @@ class MomentModel extends BaseModel {
       }
     }
 
+    // EntryPoint
+    for ( let id in story ) {
+      let item =story[id];
+
+      if ( item.name === 'Beginning' ) {
+        entryPoint = item;
+      }
+    }
+
     // Links
     for ( let id in links ) {
       let item = links[id];
@@ -189,7 +198,7 @@ class MomentModel extends BaseModel {
       }
     }
 
-    return { nodes, links, story }
+    return { nodes, links, entryPoint }
   }
 }
 

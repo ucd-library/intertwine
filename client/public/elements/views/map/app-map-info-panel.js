@@ -125,10 +125,10 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
       // TODO: Need to add entryPoint to data in Trello
       // This is a TEMPORARY FIX to display the entryPoint data on the info-panel
-      let momentEntryPoint = jsonData.moments[this.moment].entryPoint;
+      let momentEntryPoint = this.momentGraph.graph.entryPoint || jsonData.moments[this.moment].entryPoint;
       if( momentEntryPoint ) {
         this.momentEntryPoint = momentEntryPoint;
-        this.momentDescEle.innerHTML = markdown.toHTML(momentEntryPoint.text || '');
+        this.momentDescEle.innerHTML = markdown.toHTML(momentEntryPoint.description);
       }
 
       this.graph = moment.graph;
