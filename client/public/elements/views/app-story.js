@@ -10,8 +10,11 @@ export default class AppStory extends Mixin(LitElement)
   static get properties() {
     return {
       active: { type: Boolean },
+      endpoint: { type: String },
+      headerImgUrl: { type: String },
       selectedMoment: { type: String },
       story: { type: Object },
+      title: { type: String },
       jsonData: { type: Object }
     }
   }
@@ -20,7 +23,10 @@ export default class AppStory extends Mixin(LitElement)
     super();
     this.render = render.bind(this);
     this.active = true;
+    this.endpoint = APP_CONFIG.endpoint;
+    this.headerImgUrl = '';
     this.story = {};
+    this.title = '';
 
     this.jsonData = jsonData;
 
@@ -37,6 +43,15 @@ export default class AppStory extends Mixin(LitElement)
     if( e.state !== 'loaded' ) return;
     this.renderStory(e.payload);
   }
+
+  async firstUpdated() {
+    // If IntersectionObserver is not defined, inject the polyfill.  IE only
+    if( !window.IntersectionObserver ) {
+      console.log('Injecting IntersectionObserver polyfill');
+      await import(/* webpackChunkName: "intersection-observer-polyfill" */ 'intersection-observer');
+    }
+    this._initIntersectionObserver();
+  }
   
   /**
    * @method _onAppStateUpdate
@@ -46,21 +61,25 @@ export default class AppStory extends Mixin(LitElement)
    */
   _onAppStateUpdate(e) {
     this.moment = e.moment;
+    this.renderStory(); // temp workaround while using local mock data
   }  
 
   renderStory(story) {
     if ( story ) {
-      this.story = story.graph.entryPoint || this.jsonData.moments[this.moment];
-    }
-  }
+      this.story = story.graph.story;
+      console.log(this.story)
+      this.title = story.graph.story.entrypoint.headline;        
+      this.headerImgUrl = this.endpoint + '/' + this.moment + '/' + story.graph.story.entrypoint.thumbnail.replace('z:', '');
+      this.triptychID = this.story.triptych['@id'];
+      return;
+    } 
 
-  async firstUpdated() {
-    // If IntersectionObserver is not defined, inject the polyfill.  IE only
-    if( !window.IntersectionObserver ) {
-      console.log('Injecting IntersectionObserver polyfill');
-      await import(/* webpackChunkName: "intersection-observer-polyfill" */ 'intersection-observer');
-    }
-    this._initIntersectionObserver();
+    // More temp functionality while using mocked data
+    if ( this.jsonData.moments[this.moment] ) {      
+      this.story = this.jsonData.moments[this.moment];
+      this.title = this.story.entrypoint.headline;
+      this.headerImgUrl = '/images/' + this.story.entrypoint.thumbnail;
+    }    
   }
 
   _initIntersectionObserver() {

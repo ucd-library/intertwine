@@ -309,24 +309,24 @@ export default function render() {
 
       <main>
         ${this.moments.map((moment) => html`
-          <div id="${moment.entryPoint.shortName}" class="${moment.entryPoint.shortName}">
+          <div id="${moment.entrypoint.shortName}" class="${moment.entrypoint.shortName}">
             <div class="card">
-              <div class="feature-img ${moment.entryPoint.shortName}"
+              <div class="feature-img ${moment.entrypoint.shortName}"
                 style="background-image: url('/images/${moment.headerImage}');"></div>
               <div class="content">
-                <h4>${moment.entryPoint.title}</h4>
+                <h4>${moment.entrypoint.title}</h4>
                 <em>
-                  ${moment.entryPoint.startDate}
-                  <span ?hidden="${!moment.entryPoint.endDate}">
-                    - ${moment.entryPoint.endDate}
+                  ${moment.entrypoint.startDate}
+                  <span ?hidden="${!moment.entrypoint.endDate}">
+                    - ${moment.entrypoint.endDate}
                   </span>
                 </em>
-                <p>${moment.entryPoint.text}</p>
+                <p>${moment.entrypoint.text}</p>
               </div>
               <div class="footer">
                 <button
-                  name="${moment.entryPoint.shortName}"
-                  title="${moment.entryPoint.title}"
+                  name="${moment.entrypoint.shortName}"
+                  title="${moment.entrypoint.title}"
                   type="button"
                   @click="${e => this._onReadStoryClick(e.currentTarget.name)}">
                     <span>Read Story</span>
@@ -334,8 +334,8 @@ export default function render() {
                 </button>
                 <span class="separator"></span>
                 <button
-                  name="${moment.entryPoint.shortName}"
-                  title="${moment.entryPoint.title}"
+                  name="${moment.entrypoint.shortName}"
+                  title="${moment.entrypoint.title}"
                   type="button"
                   @click="${e => this._onExploreMapClick(e.currentTarget.name)}">
                     <iron-icon icon="intert-wine-icons:explore"></iron-icon>

@@ -1,4 +1,5 @@
 import { html } from 'lit-element';
+import { repeat } from 'lit-html/directives/repeat';
 import sharedStyles from './../styles/shared-styles'
 
 import '@polymer/iron-icon';
@@ -52,6 +53,10 @@ export default function render() {
       h6 {
         font-size: 13px;
         text-transform: uppercase;
+      }
+
+      .capitalize {
+        text-transform: capitalize;
       }
 
       .secondary-blue-bg {
@@ -348,22 +353,22 @@ export default function render() {
     
     <div id="container" class="container" role="main">      
       <header>
-        <div class="header-image" style="background-image: url('/images/${this.story.headerImage}');"></div>
+        <div class="header-image" style="background-image: url('${this.headerImgUrl}');"></div>
         <div class="story-header">
           <ul>
             <li>
               <h4>moments in wine history</h4>
-              <h2 class="inverse">${this.story.title}</h2>
+              <h2 class="inverse capitalize">${this.title}</h2>
             </li>
 
             <li>
               ${this.story.quote? html`
               <div class="quote">
-                ${this.story.quote.text}
+                ${this.story.quote.description}
                 <ul class="credit">
                   <li>
-                    ${this.story.quote.credit}<br />
-                    ${this.story.quote.src}
+                    ${this.story.quote.author}<br />
+                    ${this.story.quote.publication}
                   </li>
                 </ul>
               </div>`:html``}              
@@ -406,11 +411,9 @@ export default function render() {
       
       ${this.story.triptych?
         html`
-        <div class="triptych">
-          ${this.story.triptych.map(image => html`
-            <div style="background-image: url('/images/${image.src}');"><span>${image.title}</span></div>
-          `)}
-        </div>`:html``
+          ${this.story.triptych.image.map(i => html`            
+            <div style="background-image: url('${this.endpoint}/${this.moment}/${i.contentUrl}');"><span>${i.caption}</span></div>`)}
+        `:html``
       }
 
       ${this.story.text4?
@@ -441,11 +444,11 @@ export default function render() {
               <iron-icon class="explore-map-icon" icon="intert-wine-icons:explore"></iron-icon>
               <span style="display: inline-block;">
                 <h4>Explore the Map</h4>
-                <h3 class="inverse">${this.story.title}</h3>
+                <h3 class="inverse capitalize">${this.title}</h3>
               </span>
               <p>
                 Learn more about how the people, locations, and wines are connected to
-                the ${this.story.title} via the network map of this story in wine history.
+                the <span class="capitalize">${this.title}</span> via the network map of this story in wine history.
               </p>
               <a @click="${this._launchMap}" class="btn inverse">Launch Map</a>
             </div>

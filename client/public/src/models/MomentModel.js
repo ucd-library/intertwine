@@ -46,7 +46,7 @@ class MomentModel extends BaseModel {
    * @returns {Object} nodes & links
    */
   transformLinks(data) {
-    let links = {}, nodes = {}, lookup = {}, story = {}, entryPoint = {};
+    let links = {}, nodes = {}, lookup = {}, story = {};
 
     // Helper Functions - START
     /**
@@ -79,12 +79,12 @@ class MomentModel extends BaseModel {
     }
 
     /**
-     * @method getLocation
+     * @method getBNode
      * @description Locate and return a record matching the provided id
      * @param {String} id
      * @returns {Object}
      */
-    function getLocation(id) {
+    function getBNode(id) {
       /* Possible json layouts we'll have to contend with:
         Jop:
           "spatial" : [
@@ -155,9 +155,9 @@ class MomentModel extends BaseModel {
         if ( !regex.test(lookup[id]["@id"]) ) {
 
           if ( lookup[id]['spatial'] ) {
-            location = getLocation(lookup[id]['spatial']);
+            location = getBNode(lookup[id]['spatial']);
           } else if ( lookup[id]['type'] === 'place' ) {
-            location = getLocation(lookup[id]['@id']);
+            location = getBNode(lookup[id]['@id']);
           }
 
           if ( location === undefined ) continue;
@@ -171,16 +171,13 @@ class MomentModel extends BaseModel {
           nodes[lookup[id]['@id']] = lookup[id];
         }
       } else if ( lookup[id]['type'] === 'story' ) {
-        story[lookup[id]['@id']] = lookup[id];
-      }
-    }
-
-    // EntryPoint
-    for ( let id in story ) {
-      let item =story[id];
-
-      if ( item.name === 'Beginning' ) {
-        entryPoint = item;
+        if ( lookup[id]['image'] ) {
+          let image;
+          for ( let key in lookup[id]['image'] ) {
+            lookup[id]['image'][key] = getBNode(lookup[id]['image'][key]);
+          }
+        }
+        story[lookup[id]['name'].toLowerCase()] = lookup[id];
       }
     }
 
@@ -198,7 +195,7 @@ class MomentModel extends BaseModel {
       }
     }
 
-    return { nodes, links, entryPoint }
+    return { nodes, links, story }
   }
 }
 
