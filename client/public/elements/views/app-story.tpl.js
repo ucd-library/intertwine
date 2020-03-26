@@ -407,14 +407,7 @@ export default function render() {
         <section class="text-blocks bg-white">
           <h1 ?hidden="${!this.story.text3.title}">${this.story.text3.title}</h1>
           ${this.story.text3.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
-        </section>`:html``}
-      
-      ${this.story.triptych?
-        html`
-          ${this.story.triptych.image.map(i => html`            
-            <div style="background-image: url('${this.endpoint}/${this.moment}/${i.contentUrl}');"><span>${i.caption}</span></div>`)}
-        `:html``
-      }
+        </section>`:html``}    
 
       ${this.story.text4?
         html`
@@ -422,6 +415,13 @@ export default function render() {
           <h1>${this.story.text4.title}</h1>
           ${this.story.text4.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
         </section>`:html`<div class="spacer"></div>`
+      }
+
+      ${this.story.triptych?
+        html`
+          ${this.story.triptych.map(i => html`            
+            <div style="background-image: url('${this.endpoint}/${this.moment}/${i.contentUrl}');"><span>${i.caption}</span></div>`)}
+        `:html``
       }
 
       ${this.story.text5?
