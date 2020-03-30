@@ -1,5 +1,6 @@
-var router  = require('express').Router();
-let fetch   = require('node-fetch');
+var router   = require('express').Router();
+const fetch  = require('node-fetch');
+const https  = require('https');
 
 const config   = require('../../config');
 const endpoint = config.server.endpoint;
@@ -9,7 +10,7 @@ router.get('/:id', (req, res) => {
     const moment = req.params.id;
 
     const url = endpoint + '/' + moment + '/' + moment + '.json';
-  
+
     const getData = async url => {
       try {
         const response = await fetch(url);
@@ -23,7 +24,17 @@ router.get('/:id', (req, res) => {
       }
     };
 
-    getData(url);
+    // Check for top level error
+    var req = https.get(url, (res) => {      
+      if ( res.statusCode !== 200 ) {
+        console.log('statusCode: ', res.statusCode);
+        console.log('statusMessage: ', res.statusMessage);
+        res.on('data', (d) => process.stdout.write(d));
+        return;
+      }
+      
+      getData(url);
+    });
   }
 });
 
