@@ -381,41 +381,58 @@ export default function render() {
         <app-story-float-btn id="floatBtn" @click="${this._launchMap}"></app-story-float-btn>
       </div>
 
-      ${this.story.text1?
+      ${this.story.paragraph1?
         html`
-        <section class="text-blocks bg-white">
-          <h1 ?hidden="${!this.story.text1.title}">${this.story.text1.title}</h1>
-          ${this.story.text1.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
-        </section>`:html``
-      }     
-
-      ${this.story.text2?
-        html`
-        <section class="text-image-pairing bg-tan">
-          <div class="image" style="background-image: url('/images/${this.story.text2.image.src}');">
-            <span>${this.story.text2.image.title}</span>
-          </div>
+        <section class="${this.story.paragraph1.image ? `text-image-pairing bg-tan` : `text-blocks bg-white`}">
+          ${this.story.paragraph1.image? html`
+            <div class="image" style="background-image: url('/images/${this.story.paragraph1.image.src}');">
+              <span>${this.story.paragraph1.image.title}</span>
+            </div>
+          ` : html``} 
           <div class="text-blocks">
-            <h1 ?hidden="${!this.story.text2.title}">${this.story.text2.title}</h1>
-            ${this.story.text2.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
+            <h1 ?hidden="${!this.story.paragraph1.headline}">${this.story.paragraph1.headline}</h1>
+            <p>${this.story.paragraph1.text}</p>
           </div>
-        </section>`:html``
-      }
+        </section>`:html``}   
+      
+      ${this.story.paragraph2?
+        html`<section class="${this.story.paragraph2.image ? `text-image-pairing bg-tan` : `text-blocks bg-white`}">
+          ${this.story.paragraph2.image? html`
+            <div class="image" style="background-image: url('/images/${this.story.paragraph2.image.src}');">
+              <span>${this.story.paragraph2.image.title}</span>
+            </div>
+          ` : html``}          
+          <div class="text-blocks">
+            <h1 ?hidden="${!this.story.paragraph2.headline}">${this.story.paragraph2.headline}</h1>
+            <p>${this.story.paragraph2.text}</p>
+          </div>
+        </section>`:html``}
 
-      ${this.story.text3?
-        html`
-        <section class="text-blocks bg-white">
-          <h1 ?hidden="${!this.story.text3.title}">${this.story.text3.title}</h1>
-          ${this.story.text3.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
-        </section>`:html``}    
+      ${this.story.paragraph3?
+        html`<section class="${this.story.paragraph3.image ? `text-image-pairing bg-tan` : `text-blocks bg-white`}">
+          ${this.story.paragraph3.image? html`
+            <div class="image" style="background-image: url('/images/${this.story.paragraph3.image.src}');">
+              <span>${this.story.paragraph3.image.title}</span>
+            </div>
+          ` : html``}          
+          <div class="text-blocks">
+            <h1 ?hidden="${!this.story.paragraph3.headline}">${this.story.paragraph3.headline}</h1>
+            <p>${this.story.paragraph3.text}</p>
+          </div>
+        </section>`:html``}
 
-      ${this.story.text4?
-        html`
-        <section class="text-blocks bg-white">
-          <h1>${this.story.text4.title}</h1>
-          ${this.story.text4.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
-        </section>`:html`<div class="spacer"></div>`
-      }
+      ${this.story.paragraph4?
+        html`<section class="${this.story.paragraph4.image ? `text-image-pairing bg-tan` : `text-blocks bg-white`}">
+          ${this.story.paragraph4.image? html`
+            <div class="image" style="background-image: url('/images/${this.story.paragraph4.image.src}');">
+              <span>${this.story.paragraph4.image.title}</span>
+            </div>
+          ` : html``}          
+          <div class="text-blocks">
+            <h1 ?hidden="${!this.story.paragraph4.headline}">${this.story.paragraph4.headline}</h1>
+            <p>${this.story.paragraph4.text}</p>
+          </div>
+        </section>`:html``}
 
       ${this.story.triptych[`@id`]?
         html`
@@ -434,20 +451,19 @@ export default function render() {
                 </span>
               </div>
             `)}
-          </div>
-        `
-      }
+          </div>`}
 
-      ${this.story.text5?
-        html`
-        <section class="text-image-pairing bg-tan">
+      ${this.story.paragraph5?
+        html`<section class="${this.story.paragraph5.image ? `text-image-pairing bg-tan` : `text-blocks bg-white`}">                   
           <div class="text-blocks">
-            <h1>${this.story.text5.title}</h1>
-            ${this.story.text5.paragraphs.map(paragraph => html`<p>${paragraph}</p>`)}
+            <h1 ?hidden="${!this.story.paragraph5.headline}">${this.story.paragraph5.headline}</h1>
+            <p>${this.story.paragraph5.text}</p>
           </div>
-          <div class="image" style="background-image: url('/images/${this.story.text5.image.src}'); background-position: bottom center;">
-            <span>${this.story.text5.image.title}</span>
-          </div>
+          ${this.story.paragraph5.image? html`
+            <div class="image" style="background-image: url('/images/${this.story.paragraph5.image.src}');">
+              <span>${this.story.paragraph5.image.title}</span>
+            </div>
+          ` : html``} 
         </section>`:html`<div class="spacer"></div>`}
 
       <footer>

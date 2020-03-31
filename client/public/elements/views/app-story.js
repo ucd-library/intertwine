@@ -72,7 +72,7 @@ export default class AppStory extends Mixin(LitElement)
       this.story = story.graph.story;
       this.title = story.graph.story.entrypoint.headline;        
       this.headerImgUrl = this.endpoint + '/' + this.moment + '/' + story.graph.story.entrypoint.thumbnail.replace('z:', '');
-      console.log(this.story.triptych);
+      console.log(this.story);
       return;
     } 
 

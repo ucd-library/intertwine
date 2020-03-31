@@ -175,7 +175,7 @@ class MomentModel extends BaseModel {
             lookup[id]['image'][key] = getBNode(lookup[id]['image'][key]);
           }
         }
-        story[lookup[id]['name'].toLowerCase()] = lookup[id];
+        story[lookup[id]['name'].replace(' ', '').toLowerCase()] = lookup[id];
       }
     }
 
