@@ -12,7 +12,7 @@ export default class AppStory extends Mixin(LitElement)
       active: { type: Boolean },
       endpoint: { type: String },
       headerImgUrl: { type: String },
-      selectedMoment: { type: String },
+      moment: { type: String },
       story: { type: Object },
       title: { type: String },
       jsonData: { type: Object }
@@ -24,6 +24,7 @@ export default class AppStory extends Mixin(LitElement)
     this.render = render.bind(this);
     this.active = true;
     this.endpoint = APP_CONFIG.endpoint;
+    this.moment = '';
     this.headerImgUrl = '';
     this.story = {};
     this.title = '';
@@ -65,21 +66,22 @@ export default class AppStory extends Mixin(LitElement)
   }  
 
   renderStory(story) {
-    if ( story ) {
+    if ( !story ) return;
+    
+    if ( Object.keys(story.graph.story).length !== 0) {
       this.story = story.graph.story;
-      console.log(this.story)
       this.title = story.graph.story.entrypoint.headline;        
       this.headerImgUrl = this.endpoint + '/' + this.moment + '/' + story.graph.story.entrypoint.thumbnail.replace('z:', '');
-      this.triptychID = this.story.triptych['@id'];
+      console.log(this.story.triptych);
       return;
     } 
 
     // More temp functionality while using mocked data
-    if ( this.jsonData.moments[this.moment] ) {      
+    if ( this.jsonData.moments[this.moment] ) {  
       this.story = this.jsonData.moments[this.moment];
       this.title = this.story.entrypoint.headline;
       this.headerImgUrl = '/images/' + this.story.entrypoint.thumbnail;
-    }    
+    }
   }
 
   _initIntersectionObserver() {

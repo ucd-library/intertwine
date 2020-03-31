@@ -23,7 +23,6 @@ class MomentModel extends BaseModel {
 
   async get(moment) {
     let state = this.store.data[moment] || {};
-
     try {
       if( state.request ) {
         await state.request;
@@ -145,7 +144,7 @@ class MomentModel extends BaseModel {
     }
 
     // Nodes
-    for( let id in lookup ) {
+    for( let id in lookup ) {     
       // Can't be a link or a connection OR a Story
       if( !lookup[id].isLink && lookup[id]['type'] !== 'connection' && lookup[id]['type'] !== 'story' ) {
         let location;
@@ -172,7 +171,6 @@ class MomentModel extends BaseModel {
         }
       } else if ( lookup[id]['type'] === 'story' ) {
         if ( lookup[id]['image'] ) {
-          let image;
           for ( let key in lookup[id]['image'] ) {
             lookup[id]['image'][key] = getBNode(lookup[id]['image'][key]);
           }

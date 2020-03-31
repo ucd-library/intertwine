@@ -417,11 +417,25 @@ export default function render() {
         </section>`:html`<div class="spacer"></div>`
       }
 
-      ${this.story.triptych?
+      ${this.story.triptych[`@id`]?
         html`
-          ${this.story.triptych.map(i => html`            
-            <div style="background-image: url('${this.endpoint}/${this.moment}/${i.contentUrl}');"><span>${i.caption}</span></div>`)}
-        `:html``
+          <div class="triptych">
+          ${repeat(this.story.triptych.image, (i) => html`            
+            <div style="background-image: url('${this.endpoint}/${this.moment}/triptych/${this.story.triptych[`@id`]}/${i.contentUrl}');">
+              <span>${i.caption}</span>
+            </div>`)}
+          </div>
+        `:html`
+          <div class="triptych">
+            ${this.story.triptych.image.map(i => html`
+              <div style="background-image: url('/images/${i.contentUrl}');">
+                <span>
+                  ${i.caption}
+                </span>
+              </div>
+            `)}
+          </div>
+        `
       }
 
       ${this.story.text5?

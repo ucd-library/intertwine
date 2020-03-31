@@ -41,20 +41,22 @@
           "The grape's stateside story begins to come into focus in 1882, when Charles Wetmore imported budwood from Meursault and established his Cresta Blanca vineyard in Livermore. Chardonnay roots developed in Livermore nurseries and vineyards as well as in the Santa Cruz Mountains, where Livermore winegrower Paul Masson planted a second vineyard to Pinot Noir and Chardonnay, using cuttings from Burgundy purportedly from the vineyards of winegrower Louis Latour."
         ]
       },
-      "triptych": [
-        {
-          "src": "livermorevalley_1896.jpg",
-          "title": "1806 Cresta Blanca Farm"
-        },
-        {
-          "src": "prohibitionagents.jpg",
-          "title": "Prohibition"
-        },
-        {
-          "src": "wentefamily_1895.jpg",
-          "title": "The Wente Family"
-        }
-      ],
+      "triptych": {
+        "image": [
+          {
+            "contentUrl": "livermorevalley_1896.jpg",
+            "caption": "1806 Cresta Blanca Farm"
+          },
+          {
+            "contentUrl": "prohibitionagents.jpg",
+            "caption": "Prohibition"
+          },
+          {
+            "contentUrl": "wentefamily_1895.jpg",
+            "caption": "The Wente Family"
+          }
+        ]
+      },
       "text4": {
         "title": "Prohibition",
         "paragraphs": [
@@ -134,20 +136,22 @@
           "The repercussions of the wine tasting were as dramatic. The horizon expanded for winemakers throughout the world, who were encouraged to imagine previously unconsidered regions for the production of fine wines made with the noble varieties. The wide-reaching spirit of competition and possibility that the tasting engendered also caused experimentation with winemaking methods and grape varieties to increase. Reflecting on the event forty years later for Time, Spurrier said, \"The most important thing in my view is the Judgment of Paris created a template whereby unknown wines of high quality could go up against known benchmark wines of high quality, blind, provided they were in front of an incredibly reputable panel of judges. Davids from all over felt power to take on Goliaths. It was a great democratizing moment for vintners.\""
         ]
       },
-      "triptych": [
-        {
-          "src": "jop-tasting1.jpg",
-          "title": "Patricia Gallagher, Steven Spurrier, Odette Kahn"
-        },
-        {
-          "src": "jop-article.jpg",
-          "title": "George Taber's Article"
-        },
-        {
-          "src": "jop-tasting2.jpg",
-          "title": "Judgment of Paris Tasting"
-        }
-      ],
+      "triptych": {
+        "image": [
+          {
+            "contentUrl": "jop-tasting1.jpg",
+            "caption": "Patricia Gallagher, Steven Spurrier, Odette Kahn"
+          },
+          {
+            "contentUrl": "jop-article.jpg",
+            "caption": "George Taber's Article"
+          },
+          {
+            "contentUrl": "jop-tasting2.jpg",
+            "caption": "Judgment of Paris Tasting"
+          }
+        ]
+      },
       "sources": [
         {
           "text": "Elaine C. Brown",
