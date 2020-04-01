@@ -63,14 +63,6 @@ export default function render() {
         background-color: var(--app-color-secondary-blue);
       }
 
-      .bg-white {
-        background-color: var(--app-color-white);
-      }
-
-      .bg-tan {
-        background-color: var(--app-color-smoke);
-      }
-
       .spacer {
         padding-bottom: 10px;
       }
@@ -144,6 +136,50 @@ export default function render() {
         font-weight: regular;
       }
 
+      section.text-blocks:nth-of-type(odd) {
+        background-color: var(--app-color-white);
+      }
+
+      section.text-blocks:nth-of-type(even) {
+        background-color: var(--app-color-smoke);
+      }      
+
+      .text-image-pairing {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        background-color: var(--app-color-smoke);
+      }
+      .text-image-pairing > div {
+        padding: 75px;
+        width: 50%;
+        position: relative;
+
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        /* sets reference point to scale from */
+      }
+      .text-image-pairing > .text-blocks {
+        padding: 75px;
+      }
+      .text-image-pairing > .image {
+        padding: 75px;
+        min-height: 700px;
+        position: relative;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+      .text-image-pairing > .image > span {
+        padding: 10px 20px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        color: var(--app-color-white);
+        background: rgba(0, 0, 0, 0.5);
+      }
+
       .triptych {
         display: flex;
         width: 100%;
@@ -172,41 +208,6 @@ export default function render() {
       }
       .triptych div span {
         padding: 10px 20px;
-        color: var(--app-color-white);
-        background: rgba(0, 0, 0, 0.5);
-      }
-
-      .text-image-pairing {
-        display: flex;
-        flex-direction: row;
-        align-items: stretch;
-      }
-      .text-image-pairing > div {
-        padding: 75px;
-        width: 50%;
-        position: relative;
-
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
-        /* sets reference point to scale from */
-      }
-      .text-image-pairing > .text-blocks {
-        padding: 75px;
-      }
-      .text-image-pairing > .image {
-        padding: 75px;
-        min-height: 700px;
-        position: relative;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
-      }
-      .text-image-pairing > .image > span {
-        padding: 10px 20px;
-        position: absolute;
-        bottom: 0;
-        left: 0;
         color: var(--app-color-white);
         background: rgba(0, 0, 0, 0.5);
       }
@@ -383,7 +384,7 @@ export default function render() {
 
       ${this.story.paragraph1?
         html`
-        <section class="${this.story.paragraph1.image ? `text-image-pairing bg-tan` : `text-blocks bg-white`}">
+        <section class="${this.story.paragraph1.image ? `text-image-pairing` : `text-blocks`}">
           ${this.story.paragraph1.image? html`
             <div class="image" style="background-image: url('/images/${this.story.paragraph1.image.src}');">
               <span>${this.story.paragraph1.image.title}</span>
@@ -396,7 +397,7 @@ export default function render() {
         </section>`:html``}   
       
       ${this.story.paragraph2?
-        html`<section class="${this.story.paragraph2.image ? `text-image-pairing bg-tan` : `text-blocks bg-white`}">
+        html`<section class="${this.story.paragraph2.image ? `text-image-pairing` : `text-blocks`}">
           ${this.story.paragraph2.image? html`
             <div class="image" style="background-image: url('/images/${this.story.paragraph2.image.src}');">
               <span>${this.story.paragraph2.image.title}</span>
@@ -409,7 +410,7 @@ export default function render() {
         </section>`:html``}
 
       ${this.story.paragraph3?
-        html`<section class="${this.story.paragraph3.image ? `text-image-pairing bg-tan` : `text-blocks bg-white`}">
+        html`<section class="${this.story.paragraph3.image ? `text-image-pairing` : `text-blocks`}">
           ${this.story.paragraph3.image? html`
             <div class="image" style="background-image: url('/images/${this.story.paragraph3.image.src}');">
               <span>${this.story.paragraph3.image.title}</span>
@@ -422,7 +423,7 @@ export default function render() {
         </section>`:html``}
 
       ${this.story.paragraph4?
-        html`<section class="${this.story.paragraph4.image ? `text-image-pairing bg-tan` : `text-blocks bg-white`}">
+        html`<section class="${this.story.paragraph4.image ? `text-image-pairing` : `text-blocks`}">
           ${this.story.paragraph4.image? html`
             <div class="image" style="background-image: url('/images/${this.story.paragraph4.image.src}');">
               <span>${this.story.paragraph4.image.title}</span>
@@ -454,7 +455,7 @@ export default function render() {
           </div>`}
 
       ${this.story.paragraph5?
-        html`<section class="${this.story.paragraph5.image ? `text-image-pairing bg-tan` : `text-blocks bg-white`}">                   
+        html`<section class="${this.story.paragraph5.image ? `text-image-pairing` : `text-blocks`}">                   
           <div class="text-blocks">
             <h1 ?hidden="${!this.story.paragraph5.headline}">${this.story.paragraph5.headline}</h1>
             <p>${this.story.paragraph5.text}</p>
