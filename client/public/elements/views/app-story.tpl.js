@@ -491,7 +491,7 @@ export default function render() {
           <div class="bottom-content">
             <h6>Sources</h6>
             <ol>          
-            ${this.story.sources.map(source => html`
+            ${this.sources.map(source => html`
               <li>
                 <em>
                   ${source.text}

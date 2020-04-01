@@ -249,8 +249,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     }
 
     if ( node.relatedLink ) {
-      this.relatedLinks = node.relatedLink.map((v, i) => {
-        let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
+      let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
+      this.relatedLinks = node.relatedLink.map((v, i) => {        
         return {
           fullLink: v,
           shortLink: v.replace(re, '').split('/')[0],

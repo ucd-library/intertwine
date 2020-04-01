@@ -72,7 +72,18 @@ export default class AppStory extends Mixin(LitElement)
       this.story = story.graph.story;
       this.title = story.graph.story.entrypoint.headline;        
       this.headerImgUrl = this.endpoint + '/' + this.moment + '/' + story.graph.story.entrypoint.thumbnail.replace('z:', '');
-      console.log(this.story);
+            
+      this.sources = [];      
+      for (let key in this.story.sources.publication) {        
+        let arr = this.story.sources.publication[key].split(/\[|\]/);
+        let obj = {
+          "text": arr[0],
+          "link": arr[1],
+          "href": (arr[2] ? arr[2].replace(/\(|\)/,'') : '')
+        }
+        this.sources.push(obj);
+      }
+      
       return;
     } 
 
