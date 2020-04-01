@@ -192,7 +192,7 @@ class MomentModel extends BaseModel {
         dst: nodes[item.dst].coordinates
       }
     }
-
+    
     return { nodes, links, story }
   }
 }
