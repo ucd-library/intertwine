@@ -363,8 +363,7 @@ export default function render() {
             </li>
 
             <li>
-              ${this.story.quote? html`
-              <div class="quote">
+              ${this.story.quote? html`<div class="quote">
                 ${this.story.quote.description}
                 <ul class="credit">
                   <li>
@@ -383,13 +382,7 @@ export default function render() {
       </div>
 
       ${this.story.paragraph1?
-        html`
-        <section class="${this.story.paragraph1.image ? `text-image-pairing` : `text-blocks`}">
-          ${this.story.paragraph1.image? html`
-            <div class="image" style="background-image: url('/images/${this.story.paragraph1.image.src}');">
-              <span>${this.story.paragraph1.image.title}</span>
-            </div>
-          ` : html``} 
+        html`<section class="text-blocks">
           <div class="text-blocks">
             <h1 ?hidden="${!this.story.paragraph1.headline}">${this.story.paragraph1.headline}</h1>
             <p>${this.story.paragraph1.text}</p>
@@ -398,9 +391,13 @@ export default function render() {
         
       ${this.story.imageleft?
         html`<section class="text-image-pairing">
-          <div class="image" style="background-image: url('${this.endpoint}/${this.moment}/${this.story.imageleft.thumbnail}');">
+        ${this.story.imageleft.thumbnail ? 
+          html`<div class="image" style="background-image: url('${this.endpoint}/${this.moment}/${this.story.imageleft.thumbnail}');">
             <span>${this.story.imageleft.caption}</span>
-          </div>
+          </div>` : 
+          html`<div class="image" style="background-image: url('/images/${this.story.imageleft.src}');">
+            <span>${this.story.imageleft.caption}</span>
+          </div>`}            
           <div class="text-blocks">
             <h1 ?hidden="${!this.story.imageleft.headline}">${this.story.imageleft.headline}</h1>
             <p>${this.story.imageleft.text}</p>
@@ -408,25 +405,23 @@ export default function render() {
         </section>`:html``}
 
       ${this.story.paragraph2?
-        html`<section class="${this.story.paragraph2.image ? `text-image-pairing` : `text-blocks`}">
-          ${this.story.paragraph2.image? html`
-            <div class="image" style="background-image: url('/images/${this.story.paragraph2.image.src}');">
-              <span>${this.story.paragraph2.image.title}</span>
-            </div>
-          ` : html``}          
+        html`<section class="text-blocks">        
           <div class="text-blocks">
             <h1 ?hidden="${!this.story.paragraph2.headline}">${this.story.paragraph2.headline}</h1>
             <p>${this.story.paragraph2.text}</p>
           </div>
         </section>`:html``}
+      
+      ${this.story.paragraph3?
+        html`<section class="text-blocks">    
+          <div class="text-blocks">
+            <h1 ?hidden="${!this.story.paragraph3.headline}">${this.story.paragraph3.headline}</h1>
+            <p>${this.story.paragraph3.text}</p>
+          </div>
+        </section>`:html``}
 
       ${this.story.paragraph4?
-        html`<section class="${this.story.paragraph4.image ? `text-image-pairing` : `text-blocks`}">
-          ${this.story.paragraph4.image? html`
-            <div class="image" style="background-image: url('/images/${this.story.paragraph4.image.src}');">
-              <span>${this.story.paragraph4.image.title}</span>
-            </div>
-          ` : html``}          
+        html`<section class="text-blocks">    
           <div class="text-blocks">
             <h1 ?hidden="${!this.story.paragraph4.headline}">${this.story.paragraph4.headline}</h1>
             <p>${this.story.paragraph4.text}</p>
