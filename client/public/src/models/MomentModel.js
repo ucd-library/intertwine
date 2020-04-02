@@ -144,7 +144,12 @@ class MomentModel extends BaseModel {
     }
 
     // Nodes
-    for( let id in lookup ) {     
+    for( let id in lookup ) {      
+      // put global tidying here
+      if ( lookup[id]['thumbnail'] ) {
+        lookup[id]['thumbnail'] = lookup[id]['thumbnail'].replace('z:', '');
+      }      
+
       // Can't be a link or a connection OR a Story
       if( !lookup[id].isLink && lookup[id]['type'] !== 'connection' && lookup[id]['type'] !== 'story' ) {
         let location;

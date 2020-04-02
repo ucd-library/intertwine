@@ -14,6 +14,7 @@ export default class AppStory extends Mixin(LitElement)
       headerImgUrl: { type: String },
       moment: { type: String },
       story: { type: Object },
+      sources: { type: Array },
       title: { type: String },
       jsonData: { type: Object }
     }
@@ -27,6 +28,7 @@ export default class AppStory extends Mixin(LitElement)
     this.moment = '';
     this.headerImgUrl = '';
     this.story = {};
+    this.sources = [];
     this.title = '';
 
     this.jsonData = jsonData;
@@ -67,13 +69,12 @@ export default class AppStory extends Mixin(LitElement)
 
   renderStory(story) {
     if ( !story ) return;
-    
+
     if ( Object.keys(story.graph.story).length !== 0) {
       this.story = story.graph.story;
       this.title = story.graph.story.entrypoint.headline;        
       this.headerImgUrl = this.endpoint + '/' + this.moment + '/' + story.graph.story.entrypoint.thumbnail.replace('z:', '');
-            
-      this.sources = [];      
+                       
       for (let key in this.story.sources.publication) {        
         let arr = this.story.sources.publication[key].split(/\[|\]/);
         let obj = {
@@ -92,6 +93,7 @@ export default class AppStory extends Mixin(LitElement)
       this.story = this.jsonData.moments[this.moment];
       this.title = this.story.entrypoint.headline;
       this.headerImgUrl = '/images/' + this.story.entrypoint.thumbnail;
+      this.sources = this.story.sources;
     }
   }
 

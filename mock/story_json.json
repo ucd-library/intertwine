@@ -30,6 +30,16 @@
         "headline": "Chardonnay Comes to California",
         "text": "Chardonnay's presence among early California wines is hard to trace due to the absence of varietal labeling before the 1930s, variations on the grape’s spelling, and mistakes in identification. It wasn't uncommon for Chardonnay to be mistaken for Pinot Blanc and Melon de Bourgogne.\n\nThe grape's stateside story begins to come into focus in 1882, when Charles Wetmore imported budwood from Meursault and established his Cresta Blanca vineyard in Livermore. Chardonnay roots developed in Livermore nurseries and vineyards as well as in the Santa Cruz Mountains, where Livermore winegrower Paul Masson planted a second vineyard to Pinot Noir and Chardonnay, using cuttings from Burgundy purportedly from the vineyards of winegrower Louis Latour."
       },
+      "paragraph4": {
+        "headline": "Prohibition",
+        "text": "During Prohibition, vineyards planted to white varieties were pulled up and the land was planted to durable cultivars that could better survive cross-continental transportation, such as Alicante Bouschet. In \"The Story of California Chardonnay,\" wine writer Elaine Chukan Brown notes that \"In the grape harvest report of 1930, total vineyard acreage in California was around 600,000 acres, with the statewide total of white grapes planted, across all varieties, being just 7,000 acres, consisting primarily of Riesling and Sémillon. Plantings of Chardonnay were so small that the variety was not recorded specifically\".\n\nBy the end of Prohibition the Wente and Masson vineyards were the only substantial sources for Chardonnay budwood in California."
+      },
+      "imageright": {
+        "headline": "Chardonnay's Rise",
+        "text": "After Prohibition, an insistence on varietal labeling by men like Frank Schoonmaker, the Wentes, and Martin Ray led to Chardonnay’s acknowledgment nationally as a distinct wine of value.\n\nThe story of a private dinner in Rome, in 1960, during which Hanzell’s 1957 Chardonnay stood up to a 1955 Corton Charlemagne, circulated among California vintners, and after Zellerbach died, in 1963, winegrower Joseph Heitz purchased the last of his vintages at auction.\n\nHeitz's acumen as a businessman and winemaker; the publication of the first volume of Julia Child’s book Mastering the Art of French Cooking, in 1961, with volume 2 following in 1970; and the Judgment of Paris were further fuel for Chardonnay’s rise. The rest, as they say, is history.",
+        "caption":"1936 Wente Bros Chardonnay",
+        "thumbnail": "NAt6jyUG/1936-wente-chardonnay.jpg"
+      },
       "triptych": {
         "image": [
           {
@@ -45,19 +55,7 @@
             "caption": "The Wente Family"
           }
         ]
-      },
-      "paragraph4": {
-        "headline": "Prohibition",
-        "text": "During Prohibition, vineyards planted to white varieties were pulled up and the land was planted to durable cultivars that could better survive cross-continental transportation, such as Alicante Bouschet. In \"The Story of California Chardonnay,\" wine writer Elaine Chukan Brown notes that \"In the grape harvest report of 1930, total vineyard acreage in California was around 600,000 acres, with the statewide total of white grapes planted, across all varieties, being just 7,000 acres, consisting primarily of Riesling and Sémillon. Plantings of Chardonnay were so small that the variety was not recorded specifically\".\n\nBy the end of Prohibition the Wente and Masson vineyards were the only substantial sources for Chardonnay budwood in California."
-      },
-      "paragraph5": {
-        "headline": "Chardonnay's Rise",
-        "text": "After Prohibition, an insistence on varietal labeling by men like Frank Schoonmaker, the Wentes, and Martin Ray led to Chardonnay’s acknowledgment nationally as a distinct wine of value.\n\nThe story of a private dinner in Rome, in 1960, during which Hanzell’s 1957 Chardonnay stood up to a 1955 Corton Charlemagne, circulated among California vintners, and after Zellerbach died, in 1963, winegrower Joseph Heitz purchased the last of his vintages at auction.\n\nHeitz's acumen as a businessman and winemaker; the publication of the first volume of Julia Child’s book Mastering the Art of French Cooking, in 1961, with volume 2 following in 1970; and the Judgment of Paris were further fuel for Chardonnay’s rise. The rest, as they say, is history.",
-        "image": {
-          "title": "1936 Wente Bros Chardonnay",
-          "src": "wentechardonnay_1936.jpg"
-        }
-      },
+      },      
       "sources": [
         {
           "text": "Elaine C. Brown",
@@ -100,16 +98,14 @@
         "text": "The legendary wine tasting of 1976 memorialized as the Judgment of Paris was a tasting competition held in Paris on May 24, 1976, and organized by wine merchants Patricia Gastaud-Gallagher and Steven Spurrier in honor of the U.S. bicentennial. Spurrier invited nine of France’s wine experts to participate in a blind tasting that pitted esteemed reds from Bordeaux and whites from Burgundy against Cabernet Sauvignons and Chardonnays from California. Spurrier curated the selection of Napa Valley wines with help from Gastaud-Gallagher and an American wine tour organizer, Joanne DePuy, who would later transport the California wines to Paris for the tasting."
       },
       "paragraph2": {
-        "headline": "And the winner is...",
-        "text": "Although France was widely regarded as the top producer of fine Cabernet Sauvignon and Chardonnay, and California wines were little known, a California wine rated best in the red and white categories.\n\nGeorge Taber, the sole journalist present at the tasting, memorialized the event for Time magazine. His article’s headline, \"Judgment of Paris,\" recalled the Greek myth in which Paris, son of a king, is asked to name the fairest among the goddesses Hera, Athena, and Aphrodite. Paris chooses Aphrodite, in exchange for her gift of Helen of Sparta, and his decision ignited the series of events that lead to the Trojan war.",
-        "image": {
-          "src": "jop-wines.jpg",
-          "title": "The Winning Wines"
-        }
-      },
-      "paragraph3": {
         "headline": "Ramifications on the Wine Industry",
         "text": "The repercussions of the wine tasting were as dramatic. The horizon expanded for winemakers throughout the world, who were encouraged to imagine previously unconsidered regions for the production of fine wines made with the noble varieties. The wide-reaching spirit of competition and possibility that the tasting engendered also caused experimentation with winemaking methods and grape varieties to increase. Reflecting on the event forty years later for Time, Spurrier said, \"The most important thing in my view is the Judgment of Paris created a template whereby unknown wines of high quality could go up against known benchmark wines of high quality, blind, provided they were in front of an incredibly reputable panel of judges. Davids from all over felt power to take on Goliaths. It was a great democratizing moment for vintners.\""
+      },
+      "imageleft": {
+        "headline": "And the winner is...",
+        "text": "Although France was widely regarded as the top producer of fine Cabernet Sauvignon and Chardonnay, and California wines were little known, a California wine rated best in the red and white categories.\n\nGeorge Taber, the sole journalist present at the tasting, memorialized the event for Time magazine. His article’s headline, \"Judgment of Paris,\" recalled the Greek myth in which Paris, son of a king, is asked to name the fairest among the goddesses Hera, Athena, and Aphrodite. Paris chooses Aphrodite, in exchange for her gift of Helen of Sparta, and his decision ignited the series of events that lead to the Trojan war.",
+        "caption":"The Winning Wines",
+        "thumbnail": "sk79HEjl/1973slv.jpg"
       },
       "triptych": {
         "image": [
