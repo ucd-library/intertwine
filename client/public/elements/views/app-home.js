@@ -20,14 +20,19 @@ export default class AppHome extends Mixin(LitElement)
     this.active = true;
     this.moments = [];
 
+
     this.loadMoments();
 
-    this._injectModel('AppStateModel');
+    this._injectModel('AppStateModel', 'MomentModel');
   }
 
   loadMoments() {
-    for ( let key in jsonData.moments ) {
-      this.moments.push(jsonData.moments[key]);
+    for (let key in APP_CONFIG.moments ) {
+      if ( jsonData.moments[APP_CONFIG.moments[key]] === undefined ) {
+        //this.moments.push(state.payload.graph.story);        
+      } else {
+        this.moments.push(jsonData.moments[APP_CONFIG.moments[key]]);
+      }
     }
   }
 

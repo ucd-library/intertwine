@@ -132,7 +132,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         momentEntryPoint = jsonData.moments[this.moment].entrypoint;
       }
 
-
       if( momentEntryPoint ) {        
         this.momentEntryPoint = momentEntryPoint;
         this.momentDescEle.innerHTML = markdown.toHTML(momentEntryPoint.description);
@@ -211,7 +210,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
   renderItem(node) {
     this.view = 'item';
-
     this.title = node.name || '';
 
     if ( node['schema:spatial'] ) {
@@ -249,14 +247,17 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     }
 
     if ( node.relatedLink ) {
-      let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
-      this.relatedLinks = node.relatedLink.map((v, i) => {        
-        return {
-          fullLink: v,
-          shortLink: v.replace(re, '').split('/')[0],
-          title: node.relatedLinkText[i]
-        }
-      });
+      if ( Array.isArray(node.relatedLink) ) {
+        let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
+        this.relatedLinks = node.relatedLink.map((v, i) => {        
+          return {
+            fullLink: v,
+            shortLink: v.replace(re, '').split('/')[0],
+            title: node.relatedLinkText[i]
+          }
+        });
+      }
+      
     }
 
     if( node.type === 'connection' ) {

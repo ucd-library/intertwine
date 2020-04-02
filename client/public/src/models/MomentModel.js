@@ -63,6 +63,10 @@ class MomentModel extends BaseModel {
           if ( type[t].toLowerCase().includes('thing') ) {
             type[t] = 'object';
           }
+
+          if ( type[t].toLowerCase().includes('animal') ) {
+            type[t] = 'person';
+          }
         }
 
         newType = type.find(t => t.toLowerCase().includes('significantlink'));

@@ -306,12 +306,11 @@ export default function render() {
         </div>
       </header>
       <div class="arrow-down"></div>
-
       <main>
         ${this.moments.map((moment) => html`
-          <div id="${moment.entrypoint.shortName}" class="${moment.entrypoint.shortName}">
+          <div id="${moment.entrypoint.headline}" class="${moment.entrypoint.headline}">
             <div class="card">
-              <div class="feature-img ${moment.entrypoint.shortName}"
+              <div class="feature-img ${moment.entrypoint.headline}"
                 style="background-image: url('/images/${moment.headerImage}');"></div>
               <div class="content">
                 <h4>${moment.entrypoint.title}</h4>
