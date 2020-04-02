@@ -404,29 +404,13 @@ export default function render() {
           </div>
         </section>`:html``}
 
-      ${this.story.paragraph2?
-        html`<section class="text-blocks">        
-          <div class="text-blocks">
-            <h1 ?hidden="${!this.story.paragraph2.headline}">${this.story.paragraph2.headline}</h1>
-            <p>${this.story.paragraph2.text}</p>
-          </div>
-        </section>`:html``}
-      
-      ${this.story.paragraph3?
-        html`<section class="text-blocks">    
-          <div class="text-blocks">
-            <h1 ?hidden="${!this.story.paragraph3.headline}">${this.story.paragraph3.headline}</h1>
-            <p>${this.story.paragraph3.text}</p>
-          </div>
-        </section>`:html``}
-
-      ${this.story.paragraph4?
-        html`<section class="text-blocks">    
-          <div class="text-blocks">
-            <h1 ?hidden="${!this.story.paragraph4.headline}">${this.story.paragraph4.headline}</h1>
-            <p>${this.story.paragraph4.text}</p>
-          </div>
-        </section>`:html``}
+      ${this.paragraphs.map(p => html`<section class="text-blocks">
+        <div class="text-blocks">
+          <h1 ?hidden="${!p.headline}">${p.headline}</h1>
+          <p>${p.text}</p>
+        </div>
+      </section>   
+      `)}
 
       ${this.story.triptych[`@id`]?
         html`
@@ -480,7 +464,8 @@ export default function render() {
         ${this.story.sources?
           html`<div class="bottom-content">
             <h6>Sources</h6>
-            <ol>          
+            <ol>
+                 
             ${this.sources.map(source => html`
               <li>
                 <em>

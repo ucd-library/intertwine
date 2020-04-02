@@ -13,6 +13,7 @@ export default class AppStory extends Mixin(LitElement)
       endpoint: { type: String },
       headerImgUrl: { type: String },
       moment: { type: String },
+      paragraphs: { type: Array },
       story: { type: Object },
       sources: { type: Array },
       title: { type: String },
@@ -27,8 +28,10 @@ export default class AppStory extends Mixin(LitElement)
     this.endpoint = APP_CONFIG.endpoint;
     this.moment = '';
     this.headerImgUrl = '';
+    this.paragraphs = [];
     this.story = {};
     this.sources = [];
+    this.paragraphs = [];
     this.title = '';
 
     this.jsonData = jsonData;
@@ -84,8 +87,6 @@ export default class AppStory extends Mixin(LitElement)
         }
         this.sources.push(obj);
       }
-      
-      return;
     } 
 
     // More temp functionality while using mocked data
@@ -94,6 +95,13 @@ export default class AppStory extends Mixin(LitElement)
       this.title = this.story.entrypoint.headline;
       this.headerImgUrl = '/images/' + this.story.entrypoint.thumbnail;
       this.sources = this.story.sources;
+    }
+
+    this.paragraphs = [];
+    for ( let key in this.story ) {
+      if ( key.includes('paragraph') && !key.includes('1')) {
+        this.paragraphs.push(this.story[key]);
+      }
     }
   }
 
