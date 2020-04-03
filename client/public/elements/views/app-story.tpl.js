@@ -412,17 +412,17 @@ export default function render() {
       </section>   
       `)}
 
-      ${this.story.triptych[`@id`]?
+      ${this.story.triptych && this.story.triptych[`@id`]?
         html`
           <div class="triptych">
-          ${repeat(this.story.triptych.image, (i) => html`            
+          ${repeat(this.story.triptych && this.story.triptych.image, (i) => html`            
             <div style="background-image: url('${this.endpoint}/${this.moment}/triptych/${this.story.triptych[`@id`]}/${i.contentUrl}');">
               <span>${i.caption}</span>
             </div>`)}
           </div>
         `:html`
           <div class="triptych">
-            ${this.story.triptych.image.map(i => html`
+            ${this.story.triptych && this.story.triptych.image.map(i => html`
               <div style="background-image: url('${i.contentUrl}');">
                 <span>
                   ${i.caption}
