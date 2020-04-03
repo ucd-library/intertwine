@@ -16,7 +16,8 @@ export default class AppHeader extends Mixin(LitElement)
     return {
       baseUrl: { type: String },
       subtitle: { type: String },
-      jsonData: { type: Object }
+      jsonData: { type: Object },
+      moments: { type: Array }
     }
   }
 
@@ -24,38 +25,38 @@ export default class AppHeader extends Mixin(LitElement)
     super();
     this.baseUrl = window.location.protocol + '//' + window.location.host;
     this.subtitle = '';
-
     this.jsonData = jsonData;
+    this.moments = [];
 
     this.render = render.bind(this);
 
     this._injectModel('AppStateModel', 'MomentModel');
   }
 
-  _onMomentGraphUpdate(e) {
-    if ( e.state !== 'loaded' ) return;
-    let payload = e.payload;
-    this._setSubtitle(payload.graph.story);
-  }
-
-  _onAppStateUpdate(e) {  
+  /**
+   * @method _onAppStateUpdate
+   * @description bound to AppStateModel app-state-update events
+   *
+   * @param {Object} e
+  */
+  async _onAppStateUpdate(e) {  
     if ( e.page === 'home' || e.page === 'about' ) {
       this.subtitle = 'California\'s Modern Wine Network';
     } else {
       this.moment = e.moment;
-      this._setSubtitle();
+
+      let payload = await this.MomentModel.get(this.moment);
+
+      this._setSubtitle(payload.payload);
     }
   }
 
   _setSubtitle(data) {
-    if ( !data && this.jsonData.moments[this.moment] ) { // temp while using mock data
-      this.subtitle = this.jsonData.moments[this.moment].title;
-      return;
+    if ( Object.keys(data.graph.story).length !== 0 ) {
+      this.subtitle = data.graph.story.entrypoint.headline;
+    } else { // TEMP while using mock data
+      this.subtitle = this.jsonData.moments[this.moment].entrypoint.headline;  
     }
-
-    if ( data !== undefined && Object.keys(data).length > 0 ) {
-      this.subtitle = data.entrypoint.headline;
-    };
   }
 
   /**

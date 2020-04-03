@@ -39,17 +39,6 @@ export default class AppStory extends Mixin(LitElement)
     this._injectModel('AppStateModel', 'MomentModel');
   }
 
-  /**
-   * @method _onMomentGraphUpdate
-   * @description bound to graph-update events from the MomentModel
-   *
-   * @param {*} e
-   */
-  _onMomentGraphUpdate(e) {
-    if( e.state !== 'loaded' ) return;
-    this.renderStory(e.payload);
-  }
-
   async firstUpdated() {
     // If IntersectionObserver is not defined, inject the polyfill.  IE only
     if( !window.IntersectionObserver ) {
@@ -65,18 +54,20 @@ export default class AppStory extends Mixin(LitElement)
    *
    * @param {Object} e
    */
-  _onAppStateUpdate(e) {
+  async _onAppStateUpdate(e) {
     this.moment = e.moment;
-    this.renderStory(); // temp workaround while using local mock data
+
+    let payload = await this.MomentModel.get(this.moment);
+    this.renderStory(payload.payload);
   }  
 
   renderStory(story) {
     if ( !story ) return;
-
+    
     if ( Object.keys(story.graph.story).length !== 0) {
       this.story = story.graph.story;
       this.title = story.graph.story.entrypoint.headline;        
-      this.headerImgUrl = this.endpoint + '/' + this.moment + '/' + story.graph.story.entrypoint.thumbnail.replace('z:', '');
+      this.headerImgUrl = story.graph.story.entrypoint.thumbnail;
                        
       for (let key in this.story.sources.publication) {        
         let arr = this.story.sources.publication[key].split(/\[|\]/);

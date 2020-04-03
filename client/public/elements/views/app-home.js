@@ -53,10 +53,6 @@ export default class AppHome extends Mixin(LitElement)
     this.loadMoments(state.payload.graph.story);
   }
 
-  updated() {
-    console.log(this.moments)
-  }
-
   /**
    * @method _onReadStoryClick
    * @description send the user to the correct moment overview page
