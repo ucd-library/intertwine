@@ -93,7 +93,7 @@ export default class AppStory extends Mixin(LitElement)
     if ( this.jsonData.moments[this.moment] ) {  
       this.story = this.jsonData.moments[this.moment];
       this.title = this.story.entrypoint.headline;
-      this.headerImgUrl = '/images/' + this.story.entrypoint.thumbnail;
+      this.headerImgUrl = this.story.entrypoint.thumbnail;
       this.sources = this.story.sources;
     }
 

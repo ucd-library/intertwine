@@ -19,7 +19,6 @@ export default class AppHome extends Mixin(LitElement)
     super();
     this.render = render.bind(this);
     this.active = true;
-
     this.moments  = [];
     this.moment   = '';
 
@@ -29,7 +28,8 @@ export default class AppHome extends Mixin(LitElement)
   } 
 
   /**
-   * A lot of this functionality can be streamlined/removed once the chardonnay/jop stories are completed
+   * A lot of this functionality will be streamlined/removed once the chardonnay/jop stories 
+   * are completed & posted in fcrepo
   */
   loadMoments(data) {
     if ( !data ) {
@@ -41,15 +41,20 @@ export default class AppHome extends Mixin(LitElement)
         }
       }  
     } else {
-      data.entrypoint.thumbnail = APP_CONFIG.endpoint + '/' + this.moment + '/' + data.entrypoint.thumbnail;
       this.moments.push(data);
       this.requestUpdate();
     }
   }
 
-  async _onAppStateUpdate(e) {
+  async firstUpdated(e) {
     let state = await this.MomentModel.get(this.moment);
+    let data  = state.payload.graph.story;
+    data.entrypoint.thumbnail = APP_CONFIG.endpoint + '/' + this.moment + '/' + data.entrypoint.thumbnail;
     this.loadMoments(state.payload.graph.story);
+  }
+
+  updated() {
+    console.log(this.moments)
   }
 
   /**

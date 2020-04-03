@@ -314,11 +314,11 @@ export default function render() {
               <div class="content">
                 <h4>${moment.entrypoint.headline}</h4>
                 <em>${moment.entrypoint.temporal}</em>
-                <p>${moment.entrypoint.text}</p>
+                <p>${moment.entrypoint.description}</p>
               </div>
               <div class="footer">
                 <button
-                  name="${moment.entrypoint.shortName}"
+                  name="${moment.entrypoint.story}"
                   title="${moment.entrypoint.headline}"
                   type="button"
                   @click="${e => this._onReadStoryClick(e.currentTarget.name)}">
@@ -327,7 +327,7 @@ export default function render() {
                 </button>
                 <span class="separator"></span>
                 <button
-                  name="${moment.entrypoint.shortName}"
+                  name="${moment.entrypoint.story}"
                   title="${moment.entrypoint.headline}"
                   type="button"
                   @click="${e => this._onExploreMapClick(e.currentTarget.name)}">

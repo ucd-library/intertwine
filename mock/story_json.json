@@ -2,7 +2,7 @@
   "moments": {
     "chardonnay": {
       "entrypoint": {
-        "shortName": "chardonnay",
+        "story": "chardonnay",
         "headline": "Growth of Chardonnay",
         "temporal": "1882 - 1960",
         "description": "If Cabernet Sauvignon is the king of red grapes, Chardonnay is the queen of whites. Chardonnay is the most popular wine in the U.S. and has maintained its lead for the last decade. Historical references note California plantings of Chardonnay dating back to the late 1800s, but production was limited due to low yields. This is the story of California Chardonnay pre - 1970s, when plantings of the grape boomed as the wine grew in popularity.",
@@ -28,7 +28,7 @@
         "headline": "From 300 Acres to 100,000",
         "text": "At the start of the 1960s there were only 300 acres of Chardonnay planted in all of California. Today the grape is planted to more than 100,000 acres.\n\nThe California Chardonnay that wine writer Hugh Johnson describes in Vintage: The Story of Wine as having the \"buttery, half-smoked aromas and flavours that had … spelt only Meursault, Montrachet, and Corton-Charlemagne\" didn't have a well-defined presence in California until after Joseph Heitz bought, blended, and sold James D. Zellerbach's last vintages, and showed that California could produce wine that would stand up to top white Burgundies.\n\nTiming, skill, doggedness, a knack for promotion, and the Judgment of Paris propelled Heitz's Chardonnays into an international arena, but the stage for Chardonnay's rise in California had been set decades before Prohibition, in Livermore, by a group of immigrant winemakers and a San Franciscan whose dry white wine won California's first international wine award at the 1889 Paris Exposition.",
         "caption": "Stanley Ranch Vineyards",
-        "src": "stanlyranch.jpg"
+        "src": "/images/stanlyranch.jpg"
       },
       "imageright": {
         "headline": "Chardonnay's Rise",
@@ -39,15 +39,15 @@
       "triptych": {
         "image": [
           {
-            "contentUrl": "livermorevalley_1896.jpg",
+            "contentUrl": "/images/livermorevalley_1896.jpg",
             "caption": "1806 Cresta Blanca Farm"
           },
           {
-            "contentUrl": "prohibitionagents.jpg",
+            "contentUrl": "/images/prohibitionagents.jpg",
             "caption": "Prohibition"
           },
           {
-            "contentUrl": "wentefamily_1895.jpg",
+            "contentUrl": "/images/wentefamily_1895.jpg",
             "caption": "The Wente Family"
           }
         ]
@@ -76,7 +76,7 @@
     },
     "jop": {
       "entrypoint": {
-        "shortName": "jop",
+        "story": "jop",
         "headline": "Judgment of Paris",
         "temporal": "1976",
         "description": "The Paris Wine Tasting of 1976 — known as the Judgment of Paris — was a wine competition organized in Paris on 24 May 1976 by Steven Spurrier, a British wine merchant, in which French judges carried out two blind tasting comparisons: one of top-quality Chardonnays and another of red wines.",
@@ -104,15 +104,15 @@
       "triptych": {
         "image": [
           {
-            "contentUrl": "jop-tasting1.jpg",
+            "contentUrl": "/images/jop-tasting1.jpg",
             "caption": "Patricia Gallagher, Steven Spurrier, Odette Kahn"
           },
           {
-            "contentUrl": "jop-article.jpg",
+            "contentUrl": "/images/jop-article.jpg",
             "caption": "George Taber's Article"
           },
           {
-            "contentUrl": "jop-tasting2.jpg",
+            "contentUrl": "/images/jop-tasting2.jpg",
             "caption": "Judgment of Paris Tasting"
           }
         ]

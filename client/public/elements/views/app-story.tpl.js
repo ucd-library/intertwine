@@ -395,7 +395,7 @@ export default function render() {
           html`<div class="image" style="background-image: url('${this.endpoint}/${this.moment}/${this.story.imageleft.thumbnail}');">
             <span>${this.story.imageleft.caption}</span>
           </div>` : 
-          html`<div class="image" style="background-image: url('/images/${this.story.imageleft.src}');">
+          html`<div class="image" style="background-image: url('${this.story.imageleft.src}');">
             <span>${this.story.imageleft.caption}</span>
           </div>`}            
           <div class="text-blocks">
@@ -423,7 +423,7 @@ export default function render() {
         `:html`
           <div class="triptych">
             ${this.story.triptych.image.map(i => html`
-              <div style="background-image: url('/images/${i.contentUrl}');">
+              <div style="background-image: url('${i.contentUrl}');">
                 <span>
                   ${i.caption}
                 </span>
