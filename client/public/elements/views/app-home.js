@@ -10,7 +10,8 @@ export default class AppHome extends Mixin(LitElement)
   static get properties() {
     return {
       active: { type: Boolean },
-      moments: { type: Array }
+      moments: { type: Array },
+      moment: { type: String }
     }
   }
 
@@ -18,22 +19,37 @@ export default class AppHome extends Mixin(LitElement)
     super();
     this.render = render.bind(this);
     this.active = true;
-    this.moments = [];
 
+    this.moments  = [];
+    this.moment   = '';
 
     this.loadMoments();
 
     this._injectModel('AppStateModel', 'MomentModel');
+  } 
+
+  /**
+   * A lot of this functionality can be streamlined/removed once the chardonnay/jop stories are completed
+  */
+  loadMoments(data) {
+    if ( !data ) {
+      for (let key in APP_CONFIG.moments ) {
+        if ( jsonData.moments[APP_CONFIG.moments[key]] === undefined ) {
+          this.moment = APP_CONFIG.moments[key];
+        } else {
+          this.moments.push(jsonData.moments[APP_CONFIG.moments[key]]);
+        }
+      }  
+    } else {
+      data.entrypoint.thumbnail = APP_CONFIG.endpoint + '/' + this.moment + '/' + data.entrypoint.thumbnail;
+      this.moments.push(data);
+      this.requestUpdate();
+    }
   }
 
-  loadMoments() {
-    for (let key in APP_CONFIG.moments ) {
-      if ( jsonData.moments[APP_CONFIG.moments[key]] === undefined ) {
-        //this.moments.push(state.payload.graph.story);        
-      } else {
-        this.moments.push(jsonData.moments[APP_CONFIG.moments[key]]);
-      }
-    }
+  async _onAppStateUpdate(e) {
+    let state = await this.MomentModel.get(this.moment);
+    this.loadMoments(state.payload.graph.story);
   }
 
   /**

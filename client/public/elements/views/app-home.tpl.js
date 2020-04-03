@@ -308,24 +308,18 @@ export default function render() {
       <div class="arrow-down"></div>
       <main>
         ${this.moments.map((moment) => html`
-          <div id="${moment.entrypoint.headline}" class="${moment.entrypoint.headline}">
+          <div>
             <div class="card">
-              <div class="feature-img ${moment.entrypoint.headline}"
-                style="background-image: url('/images/${moment.headerImage}');"></div>
+              <div class="feature-img" style="background-image: url('${moment.entrypoint.thumbnail}');"></div>
               <div class="content">
-                <h4>${moment.entrypoint.title}</h4>
-                <em>
-                  ${moment.entrypoint.startDate}
-                  <span ?hidden="${!moment.entrypoint.endDate}">
-                    - ${moment.entrypoint.endDate}
-                  </span>
-                </em>
+                <h4>${moment.entrypoint.headline}</h4>
+                <em>${moment.entrypoint.temporal}</em>
                 <p>${moment.entrypoint.text}</p>
               </div>
               <div class="footer">
                 <button
                   name="${moment.entrypoint.shortName}"
-                  title="${moment.entrypoint.title}"
+                  title="${moment.entrypoint.headline}"
                   type="button"
                   @click="${e => this._onReadStoryClick(e.currentTarget.name)}">
                     <span>Read Story</span>
@@ -334,7 +328,7 @@ export default function render() {
                 <span class="separator"></span>
                 <button
                   name="${moment.entrypoint.shortName}"
-                  title="${moment.entrypoint.title}"
+                  title="${moment.entrypoint.headline}"
                   type="button"
                   @click="${e => this._onExploreMapClick(e.currentTarget.name)}">
                     <iron-icon icon="intert-wine-icons:explore"></iron-icon>

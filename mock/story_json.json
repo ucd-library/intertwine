@@ -6,10 +6,8 @@
         "headline": "Growth of Chardonnay",
         "temporal": "1882 - 1960",
         "description": "If Cabernet Sauvignon is the king of red grapes, Chardonnay is the queen of whites. Chardonnay is the most popular wine in the U.S. and has maintained its lead for the last decade. Historical references note California plantings of Chardonnay dating back to the late 1800s, but production was limited due to low yields. This is the story of California Chardonnay pre - 1970s, when plantings of the grape boomed as the wine grew in popularity.",
-        "thumbnail": "growthchardonnay3.jpg"
+        "thumbnail": "/images/growthchardonnay3.jpg"
       },
-      "title": "Growth of Chardonnay",
-      "headerImage": "growthchardonnay3.jpg",
       "quote": {
         "description":"Since Chardonnay has been from time immemorial the great white grape variety of the Burgundy district of France, it is surprising how short its history is as a major factor in the California wine scene",
         "author": "Eleanor McCrea",
@@ -82,10 +80,8 @@
         "headline": "Judgment of Paris",
         "temporal": "1976",
         "description": "The Paris Wine Tasting of 1976 — known as the Judgment of Paris — was a wine competition organized in Paris on 24 May 1976 by Steven Spurrier, a British wine merchant, in which French judges carried out two blind tasting comparisons: one of top-quality Chardonnays and another of red wines.",
-        "thumbnail": "jop-feature.jpg"
+        "thumbnail": "/images/jop-feature.jpg"
       },
-      "title": "Judgment of Paris",
-      "headerImage": "jop-feature.jpg",
       "quote": {
         "description":"\"It opened up the doors not only to Napa but other regions in the world. That helped other people say 'Gee, we can too,' whether it was in New Zealand, Australia, Oregon, Washington, Chile.\"",
         "author": "Ted Baseler",
