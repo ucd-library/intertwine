@@ -79,7 +79,7 @@ export default class AppLeafletMap extends LitElement {
       spiderfyOnMaxZoom : false,
       iconCreateFunction: function(cluster) {
         // let markers = cluster.getAllChildMarkers();
-        
+
         // for ( let i=0; i < markers.length; i++ ) {
         //   if ( markers[i].changed ) {
         //     return L.divIcon({
@@ -99,7 +99,7 @@ export default class AppLeafletMap extends LitElement {
     });
     this.map.addLayer(this.clusters);
     this.map.zoomControl.setPosition('bottomright');
-    
+
     // wire up layer and map events
     this.clusters.on('clusterclick', e => this.onClusterClicked(e));
     this.clusters.on('clustermouseover', e => this.onClusterMouseOver(e));
@@ -134,13 +134,10 @@ export default class AppLeafletMap extends LitElement {
     this.appState = e;
 
     if( !e ) {
-      if( this.firstRender ) {
-        if( Object.keys(this.nodes).length === 0 ) {
-          this.zoomToClusters = true;
-        } else {
-          // Zooms the map to the clusters
-          this.map.fitBounds(this.clusters.getBounds());
-        }
+      if( Object.keys(this.nodes).length === 0 ) {
+        this.zoomToClusters = true;
+      } else {
+        this.map.fitBounds(this.clusters.getBounds()); // Zooms the map to the clusters
       }
 
       // reset state, remove current markers
@@ -150,7 +147,7 @@ export default class AppLeafletMap extends LitElement {
         }
         this.selectedNodeIcon = null;
       }
-           
+
       this.firstRender = false;
 
       return;

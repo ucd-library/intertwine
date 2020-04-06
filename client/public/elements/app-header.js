@@ -6,7 +6,7 @@ import "./views/app-about"
 import "./views/app-home"
 import "./views/app-story"
 
-// TODO: This is temporary and can be replaced once we have a live source for the data
+// TODO: This is temporary and will be replaced once we have a live source for the data
 let jsonData = require('../../../mock/story_json.json');
 
 export default class AppHeader extends Mixin(LitElement)
@@ -25,7 +25,7 @@ export default class AppHeader extends Mixin(LitElement)
     super();
     this.baseUrl = window.location.protocol + '//' + window.location.host;
     this.subtitle = '';
-    this.jsonData = jsonData;
+    this.jsonData = jsonData; // temp while using mock data
     this.moments = [];
 
     this.render = render.bind(this);
@@ -39,7 +39,7 @@ export default class AppHeader extends Mixin(LitElement)
    *
    * @param {Object} e
   */
-  async _onAppStateUpdate(e) {  
+  async _onAppStateUpdate(e) {
     if ( e.page === 'home' || e.page === 'about' ) {
       this.subtitle = 'California\'s Modern Wine Network';
     } else {
@@ -55,7 +55,7 @@ export default class AppHeader extends Mixin(LitElement)
     if ( Object.keys(data.graph.story).length !== 0 ) {
       this.subtitle = data.graph.story.entrypoint.headline;
     } else { // TEMP while using mock data
-      this.subtitle = this.jsonData.moments[this.moment].entrypoint.headline;  
+      this.subtitle = this.jsonData.moments[this.moment].entrypoint.headline;
     }
   }
 
