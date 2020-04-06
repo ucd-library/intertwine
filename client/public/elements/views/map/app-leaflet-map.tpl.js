@@ -41,6 +41,7 @@ return html`
       border-radius: 10px;
     }
 
+    .leaflet-breed-icon,
     .leaflet-person-icon {
       background-color: var(--app-color-scarlet);
     }

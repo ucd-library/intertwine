@@ -169,15 +169,19 @@ return html`
     .image[type="cluster"] {
       height: 150px;
     }
-
+    .type-color[type="breed"],
     .type-color[type="person"] {
       color: var(--app-color-scarlet);
     }
+    .color-break[type="breed"],
     .color-break[type="person"],
+    iron-icon[type="breed"],
     iron-icon[type="person"],
+    .dot[type="breed"],
     .dot[type="person"] {
       background-color: var(--app-color-scarlet);
     }
+    .type-color[type="breed"],
     iron-icon.external-link[type="person"] {
       background-color: transparent;
       fill: var(--app-color-scarlet);
@@ -420,12 +424,9 @@ return html`
             </div>
           </div>
 
-          <div ?hidden="${!this.imageCreditTitle}" class="imageCredit">
-            Image Credit: <a href="${this.imageCreditLink['@id']}">${this.imageCreditTitle}</a>
-          </div>
-          <div ?hidden="${this.imageCreditTitle}" class="imageCredit">
-            <a href="${this.imageCreditLink}">Image Credit</a>
-          </div>
+          ${this.imageCreditTitle ? html`<div class="imageCredit">
+            Image Credit: <a href="${this.imageCreditLink}">${this.imageCreditTitle}</a>
+          </div>` : html``}
         </div>
         <!-- END ITEM -->
       </iron-pages>
