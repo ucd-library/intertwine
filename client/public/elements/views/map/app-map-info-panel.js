@@ -127,12 +127,12 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       // This is a TEMPORARY FIX to display the entryPoint data on the info-panel
       let momentEntryPoint;
       if ( Object.keys(this.momentGraph.graph.story).length !== 0 ) {
-        momentEntryPoint = this.momentGraph.graph.story.entrypoint;        
+        momentEntryPoint = this.momentGraph.graph.story.entrypoint;
       } else {
         momentEntryPoint = jsonData.moments[this.moment].entrypoint;
       }
 
-      if( momentEntryPoint ) {        
+      if( momentEntryPoint ) {
         this.momentEntryPoint = momentEntryPoint;
         this.momentDescEle.innerHTML = markdown.toHTML(momentEntryPoint.description);
       }
@@ -209,6 +209,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   renderItem(node) {
+    if ( !node ) return;
+
     this.view = 'item';
     this.title = node.name || '';
 
@@ -249,7 +251,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     if ( node.relatedLink ) {
       if ( Array.isArray(node.relatedLink) ) {
         let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
-        this.relatedLinks = node.relatedLink.map((v, i) => {        
+        this.relatedLinks = node.relatedLink.map((v, i) => {
           return {
             fullLink: v,
             shortLink: v.replace(re, '').split('/')[0],
@@ -257,7 +259,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
           }
         });
       }
-      
+
     }
 
     if( node.type === 'connection' ) {
