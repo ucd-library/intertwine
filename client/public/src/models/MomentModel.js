@@ -148,11 +148,11 @@ class MomentModel extends BaseModel {
     }
 
     // Nodes
-    for( let id in lookup ) {      
+    for( let id in lookup ) {   
       // put global tidying here
       if ( lookup[id]['thumbnail'] ) {
         lookup[id]['thumbnail'] = lookup[id]['thumbnail'].replace('z:', '');
-      }      
+      }
 
       // Can't be a link or a connection OR a Story
       if( !lookup[id].isLink && lookup[id]['type'] !== 'connection' && lookup[id]['type'] !== 'story' ) {
@@ -184,7 +184,9 @@ class MomentModel extends BaseModel {
             lookup[id]['image'][key] = getBNode(lookup[id]['image'][key]);
           }
         }
-        story[lookup[id]['name'].replace(' ', '').toLowerCase()] = lookup[id];
+
+        let label = lookup[id]['label'].replace(/\s/g, '').toLowerCase();
+        story[label.replace('story:', '')] = lookup[id];
       }
     }
 
