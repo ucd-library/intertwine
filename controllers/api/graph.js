@@ -20,9 +20,9 @@ router.get('/:id', (req, res) => {
           message: e.message
         });
       }
-    };
+    };  
 
-    // Check for top level error
+    // Check for top level error from server
     var req = https.get(url, (res) => {      
       if ( res.statusCode !== 200 ) {
         console.log('statusCode: ', res.statusCode);
