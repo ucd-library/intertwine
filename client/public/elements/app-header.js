@@ -53,9 +53,9 @@ export default class AppHeader extends Mixin(LitElement)
 
   _setSubtitle(data) {
     if ( Object.keys(data.graph.story).length !== 0 ) {
-      this.subtitle = data.graph.story.entrypoint.headline;
+      this.subtitle = data.graph.story.entrypoint.name;
     } else { // TEMP while using mock data
-      this.subtitle = this.jsonData.moments[this.moment].entrypoint.headline;
+      this.subtitle = this.jsonData.moments[this.moment].entrypoint.name;
     }
   }
 

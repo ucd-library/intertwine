@@ -385,32 +385,37 @@ export default function render() {
         html`<section class="text-blocks">
           <div class="text-blocks">
             <h1 ?hidden="${!this.story.paragraph1.headline}">${this.story.paragraph1.headline}</h1>
-            <p>${this.story.paragraph1.text}</p>
+            ${Array.isArray(this.story.paragraph1.text) ? 
+                html`${this.story.paragraph1.text.map((p) => html`<p>${p}</p>`)}` : 
+                html`<p>${this.story.paragraph1.text}</p>`}
           </div>
         </section>`:html``}  
         
-      ${this.story.imageleft?
+      ${this.story['image/text']?
         html`<section class="text-image-pairing">
-        ${this.story.imageleft.thumbnail ? 
-          html`<div class="image" style="background-image: url('${this.endpoint}/${this.moment}/${this.story.imageleft.thumbnail}');">
-            <span>${this.story.imageleft.caption}</span>
+        ${this.story['image/text'].thumbnail ? 
+          html`<div class="image" style="background-image: url(${this.endpoint}/${this.moment}/${this.story[`image/text`].thumbnail});">
+            <span>${this.story['image/text'].caption}</span>
           </div>` : 
-          html`<div class="image" style="background-image: url('${this.story.imageleft.src}');">
-            <span>${this.story.imageleft.caption}</span>
+          html`<div class="image" style="background-image: url('${this.story[`image/text`].src}');">
+            <span>${this.story['image/text'].caption}</span>
           </div>`}            
           <div class="text-blocks">
-            <h1 ?hidden="${!this.story.imageleft.headline}">${this.story.imageleft.headline}</h1>
-            <p>${this.story.imageleft.text}</p>
+            <h1 ?hidden="${!this.story['image/text'].headline}">${this.story[`image/text`].headline}</h1>
+            ${Array.isArray(this.story['image/text'].text) ? 
+              html`${this.story['image/text'].text.map((p) => html`<p>${p}</p>`)}` : 
+              html`<p>${this.story['image/text'].text}</p>`}
           </div>
         </section>`:html``}
 
       ${this.paragraphs.map(p => html`<section class="text-blocks">
         <div class="text-blocks">
           <h1 ?hidden="${!p.headline}">${p.headline}</h1>
-          <p>${p.text}</p>
+          ${Array.isArray(p.text) ? 
+            html`${p.text.map((i) => html`<p>${i}</p>`)}` : 
+            html`<p>${p.text}</p>`}
         </div>
-      </section>   
-      `)}
+      </section>`)}
 
       ${this.story.triptych && this.story.triptych[`@id`]?
         html`
@@ -420,8 +425,7 @@ export default function render() {
               <span>${i.caption}</span>
             </div>`)}
           </div>
-        `:html`
-          <div class="triptych">
+        `:html`<div class="triptych">
             ${this.story.triptych && this.story.triptych.image.map(i => html`
               <div style="background-image: url('${i.contentUrl}');">
                 <span>
@@ -431,14 +435,16 @@ export default function render() {
             `)}
           </div>`}
   
-      ${this.story.imageright?
+      ${this.story['text/image']?
         html`<section class="text-image-pairing">            
           <div class="text-blocks">
-            <h1 ?hidden="${!this.story.imageright.headline}">${this.story.imageright.headline}</h1>
-            <p>${this.story.imageright.text}</p>
+            <h1 ?hidden="${!this.story['text/image'].headline}">${this.story[`text/image`].headline}</h1>
+            ${Array.isArray(this.story['text/image'].text) ? 
+                html`${this.story['text/image'].text.map((p) => html`<p>${p}</p>`)}` : 
+                html`<p>${this.story['text/image'].text}</p>`}
           </div>
-          <div class="image" style="background-image: url('${this.endpoint}/${this.moment}/${this.story.imageright.thumbnail}');">
-            <span>${this.story.imageright.caption}</span>
+          <div class="image" style="background-image: url('${this.endpoint}/${this.moment}/${this.story[`text/image`].thumbnail}');">
+            <span>${this.story['text/image'].caption}</span>
           </div>
         </section>`:html`<div class="spacer"></div>`}
 
@@ -464,8 +470,7 @@ export default function render() {
         ${this.story.sources?
           html`<div class="bottom-content">
             <h6>Sources</h6>
-            <ol>
-                 
+            <ol>                 
             ${this.sources.map(source => html`
               <li>
                 <em>

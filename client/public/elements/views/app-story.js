@@ -59,17 +59,22 @@ export default class AppStory extends Mixin(LitElement)
 
     let payload = await this.MomentModel.get(this.moment);
     this.renderStory(payload.payload);
-  }  
+  }   
 
   renderStory(story) {
     if ( !story ) return;
     
     if ( Object.keys(story.graph.story).length !== 0) {
       this.story = story.graph.story;
-      this.title = story.graph.story.entrypoint.headline;        
-      this.headerImgUrl = story.graph.story.entrypoint.thumbnail;
+      this.title = story.graph.story.entrypoint.name;
+      
+      if ( story.graph.story.entrypoint.thumbnail.match(/^https?:\/\//g) === null ) {
+        this.headerImgUrl = APP_CONFIG.endpoint + '/' + this.moment + '/' + story.graph.story.entrypoint.thumbnail;
+      } else {
+        this.headerImgUrl = story.graph.story.entrypoint.thumbnail;
+      }
                        
-      for (let key in this.story.sources.publication) {        
+      for (let key in this.story.sources.publication) {
         let arr = this.story.sources.publication[key].split(/\[|\]/);
         let obj = {
           "text": arr[0],
@@ -83,7 +88,7 @@ export default class AppStory extends Mixin(LitElement)
     // More temp functionality while using mocked data
     if ( this.jsonData.moments[this.moment] ) {  
       this.story = this.jsonData.moments[this.moment];
-      this.title = this.story.entrypoint.headline;
+      this.title = this.story.entrypoint.name;
       this.headerImgUrl = this.story.entrypoint.thumbnail;
       this.sources = this.story.sources;
     }

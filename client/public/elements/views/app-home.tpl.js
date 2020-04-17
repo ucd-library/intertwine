@@ -312,14 +312,14 @@ export default function render() {
             <div class="card">
               <div class="feature-img" style="background-image: url('${moment.entrypoint.thumbnail}');"></div>
               <div class="content">
-                <h4>${moment.entrypoint.headline}</h4>
+                <h4>${moment.entrypoint.name}</h4>
                 <em>${moment.entrypoint.temporal}</em>
                 <p>${moment.entrypoint.description}</p>
               </div>
               <div class="footer">
                 <button
                   name="${moment.entrypoint.story}"
-                  title="${moment.entrypoint.headline}"
+                  title="${moment.entrypoint.name}"
                   type="button"
                   @click="${e => this._onReadStoryClick(e.currentTarget.name)}">
                     <span>Read Story</span>
@@ -328,7 +328,7 @@ export default function render() {
                 <span class="separator"></span>
                 <button
                   name="${moment.entrypoint.story}"
-                  title="${moment.entrypoint.headline}"
+                  title="${moment.entrypoint.name}"
                   type="button"
                   @click="${e => this._onExploreMapClick(e.currentTarget.name)}">
                     <iron-icon icon="intert-wine-icons:explore"></iron-icon>
