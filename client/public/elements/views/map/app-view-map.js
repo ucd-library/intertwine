@@ -26,24 +26,18 @@ import "./app-map-info-panel"
 
 export default class AppViewMap extends Mixin(LitElement)
   .with(LitCorkUtils) {
-
+    
   static get properties() {
     return {
-      visible: {
-        type: Boolean
-      },
-      infoPanelOpen: {
-        type: Boolean
-      }
+      visible: { type: Boolean },
+      infoPanelOpen: { type: Boolean }
     }
   }
 
   constructor() {
     super();
     this.render = render.bind(this);
-
     this.infoPanelOpen = true;
-
     this._injectModel('AppStateModel', 'MomentModel');
   }
 
@@ -56,7 +50,7 @@ export default class AppViewMap extends Mixin(LitElement)
    * @description bound to AppStateModel app-state-update events
    *
    * @param {Object} e
-   */
+  */
   async _onAppStateUpdate(e) {
     if ( e.page !== 'map' ) return;
     this.appState = e;

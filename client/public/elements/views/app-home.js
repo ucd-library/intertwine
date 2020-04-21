@@ -9,7 +9,6 @@ export default class AppHome extends Mixin(LitElement)
 
   static get properties() {
     return {
-      active: { type: Boolean },
       moments: { type: Array },
       moment: { type: String }
     }
@@ -18,7 +17,6 @@ export default class AppHome extends Mixin(LitElement)
   constructor() {
     super();
     this.render = render.bind(this);
-    this.active = true;
     this.moments  = [];
     this.moment   = '';
 
@@ -46,7 +44,7 @@ export default class AppHome extends Mixin(LitElement)
     }
   }
 
-  async firstUpdated(e) {
+  async firstUpdated(e) {   
     let state = await this.MomentModel.get(this.moment);
     let data  = state.payload.graph.story;
     data.entrypoint.thumbnail = APP_CONFIG.endpoint + '/' + this.moment + '/' + data.entrypoint.thumbnail;

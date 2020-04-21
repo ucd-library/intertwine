@@ -9,7 +9,6 @@ export default class AppStory extends Mixin(LitElement)
 
   static get properties() {
     return {
-      active: { type: Boolean },
       endpoint: { type: String },
       headerImgUrl: { type: String },
       moment: { type: String },
@@ -24,7 +23,6 @@ export default class AppStory extends Mixin(LitElement)
   constructor() {
     super();
     this.render = render.bind(this);
-    this.active = true;
     this.endpoint = APP_CONFIG.endpoint;
     this.moment = '';
     this.headerImgUrl = '';
@@ -34,12 +32,14 @@ export default class AppStory extends Mixin(LitElement)
     this.paragraphs = [];
     this.title = '';
 
-    this.jsonData = jsonData;
+    this.jsonData = jsonData; // temp
 
     this._injectModel('AppStateModel', 'MomentModel');
   }
 
   async firstUpdated() {
+    this.container = this.shadowRoot.querySelector('#container');
+
     // If IntersectionObserver is not defined, inject the polyfill.  IE only
     if( !window.IntersectionObserver ) {
       console.log('Injecting IntersectionObserver polyfill');
@@ -47,7 +47,7 @@ export default class AppStory extends Mixin(LitElement)
     }
     this._initIntersectionObserver();
   }
-  
+
   /**
    * @method _onAppStateUpdate
    * @description bound to AppStateModel app-state-update events
@@ -55,6 +55,8 @@ export default class AppStory extends Mixin(LitElement)
    * @param {Object} e
    */
   async _onAppStateUpdate(e) {
+    this.container.scrollTo(0,0); // return to top of page
+
     this.moment = e.moment;
 
     let payload = await this.MomentModel.get(this.moment);
@@ -69,7 +71,7 @@ export default class AppStory extends Mixin(LitElement)
       this.title = story.graph.story.entrypoint.name;
       
       if ( story.graph.story.entrypoint.thumbnail.match(/^https?:\/\//g) === null ) {
-        this.headerImgUrl = APP_CONFIG.endpoint + '/' + this.moment + '/' + story.graph.story.entrypoint.thumbnail;
+        this.headerImgUrl = this.endpoint + '/' + this.moment + '/' + story.graph.story.entrypoint.thumbnail;
       } else {
         this.headerImgUrl = story.graph.story.entrypoint.thumbnail;
       }
