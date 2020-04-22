@@ -17,6 +17,7 @@
     "@ucd-lib/cork-app-utils": "^4.3.3",
     "intersection-observer": "^0.7.0",
     "leaflet": "^1.5.1",
+    "leaflet-polylinedecorator": "^1.6.0",
     "leaflet.markercluster": "^1.4.1",
     "lit-element": "^2.2.1",
     "markdown": "^0.5.0"

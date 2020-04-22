@@ -3,6 +3,7 @@ import render from "./app-leaflet-map.tpl.js"
 
 import "leaflet"
 import "leaflet.markercluster"
+import "leaflet-polylinedecorator"
 
 export default class AppLeafletMap extends LitElement {
 
@@ -52,10 +53,10 @@ export default class AppLeafletMap extends LitElement {
    * @description called when the element is first rendered.  Sets up the map
    * and the clister laters.  Checks if there is a pending view state and sets the
    * map to that location, otherwise renders at 0,0
-   */
+  */
   initMap() {
     // create the leaflet map object
-    this.map = L.map(this.shadowRoot.querySelector('#map')).setView([0,0], 3, {animate: false});
+    this.map = L.map(this.shadowRoot.querySelector('#map')).setView([0,0], 3, { animate: false });
 
     // pending view state? use that lat/lng instead
     if( this.pendingView ) {
@@ -78,18 +79,6 @@ export default class AppLeafletMap extends LitElement {
       maxClusterRadius : 25,
       spiderfyOnMaxZoom : false,
       iconCreateFunction: function(cluster) {
-        // let markers = cluster.getAllChildMarkers();
-
-        // for ( let i=0; i < markers.length; i++ ) {
-        //   if ( markers[i].changed ) {
-        //     return L.divIcon({
-        //       html: '<div><span>' + cluster.getChildCount() + '</span></div>',
-        //       className: 'selectedCluster',
-        //       iconSize: L.point(40,40)
-        //     });
-        //   }
-        // }
-
         return L.divIcon({
           html: '<div><span>' + cluster.getChildCount() + '</span></div>',
           className: 'marker-cluster marker-cluster-small',
@@ -100,6 +89,7 @@ export default class AppLeafletMap extends LitElement {
 
     this.map.addLayer(this.clusters);
     this.map.zoomControl.setPosition('bottomright');
+    
     // wire up layer and map events
     this.clusters.on('clusterclick', e => this.onClusterClicked(e));
     this.clusters.on('clustermouseover', e => this.onClusterMouseOver(e));
@@ -208,11 +198,9 @@ export default class AppLeafletMap extends LitElement {
       this.selectedNodeIcon.src.getLatLng(),
       this.selectedNodeIcon.dst.getLatLng()
     );
-
-    /*
-      The Trello board moments have link names that are 2 item Arrays w/the
-      short word being stored in the second slot
-    */
+    
+    //  The Trello board moments have link names that are 2 item Arrays w/the
+    //  short word being stored in the second slot
     let connectionName = (Array.isArray(link.name) ? link.name[1] : link.name);
     // create the line label
     let icon = L.divIcon({
@@ -223,6 +211,38 @@ export default class AppLeafletMap extends LitElement {
     this.selectedLineIcon = L.marker(ll, {icon});
     this.map.addLayer(this.selectedLineIcon);
     this.selectedLineIcon.setZIndexOffset(5000);
+
+    // Latlngs must be formatted as Arrays for the polyline in dddArrowHead()
+    this.latlngs = [link.coordinates.src, link.coordinates.dst];
+    this.addArrowHead();    
+  }
+
+  addArrowHead() {
+    // Create the polyline
+    let polyline  = L.polyline(this.latlngs, { stroke: false }).addTo(this.map);
+    let decorator = L.polylineDecorator(polyline, {
+      patterns: [
+        { 
+          offset: '100%',
+          repeat: 0, 
+          symbol: L.Symbol.arrowHead({ 
+            polygon: false,
+            pixelSize: 15,
+            headAngle: 60,
+            pathOptions: {
+              stroke: true,
+              weight: 4,
+              color: this.lineColor,
+              opacity: 1.0,
+              className: 'arrow'
+            }
+          })
+        }
+      ]
+    }).addTo(this.map);
+
+    // zoom the map into the polyline
+    this.map.fitBounds(polyline.getBounds());
   }
 
   getMarkerLabelIcon(id){
@@ -367,10 +387,8 @@ export default class AppLeafletMap extends LitElement {
     requestAnimationFrame(() => {
       if ( !this.layerLabel ) return;
 
-      /**
-       * TODO: Figure out how to handle a situation where a
-       * pop-upped label is overlapping an already displayed marker label
-      */
+      // TODO: Figure out how to handle a situation where a
+      // pop-upped label is overlapping an already displayed marker label
 
       let labelEle = this.layerLabel.getElement().firstChild;
       let labelArrow = this.layerLabel.getElement().children[1];
@@ -623,7 +641,7 @@ export default class AppLeafletMap extends LitElement {
       if ( item.weblink ) continue;
 
       let src = this.getMarkerLatLng(item.src);
-      let dst = this.getMarkerLatLng(item.dst);
+      let dst = this.getMarkerLatLng(item.dst);     
 
       let selected = false;
       if( this.selectedNodeLayer && this.selectedNodeLayer.src && this.selectedNodeLayer.dst ) {
@@ -636,16 +654,17 @@ export default class AppLeafletMap extends LitElement {
       if( this.linkLayers[lid] ) {
         if( selected && !this.linkLayers[lid].selected ) {
           this.linkLayers[lid].selected = true;
-          this.linkLayers[lid].setStyle({opacity: 1, weight: 2});
+          this.linkLayers[lid].setStyle({ opacity: 1, weight: 2 });
         }
         continue;
       }
 
       this.linkLayers[lid] = L.polyline([src, dst], {
         color: this.lineColor,
-        weight: selected ? 2: 1,
+        weight: selected ? 2 : 1,
         opacity : selected ? 1 : 0.3
       }).addTo(this.map);
+
       this.linkLayers[lid].selected = selected;
     }
   }
