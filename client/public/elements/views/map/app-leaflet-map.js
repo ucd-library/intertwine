@@ -14,7 +14,8 @@ export default class AppLeafletMap extends LitElement {
         type: Boolean,
         attribute: 'info-open'
       },
-      connectionName : { type: String }
+      connectionName : { type: String },
+      arrow: { type: Object }
     }
   }
 
@@ -30,6 +31,8 @@ export default class AppLeafletMap extends LitElement {
     this.updateLinksTimer = -1;
     this.firstRender = true;
     this.connectionName = '';
+
+    this.arrow = {};
 
     window.addEventListener('resize', () => {
       if( !this.active ) return;
@@ -120,7 +123,7 @@ export default class AppLeafletMap extends LitElement {
    *
    * @param {Object} e app-state-update event object
   */
-  renderSelectedState(e) {
+  renderSelectedState(e) {    
     this.appState = e;
 
     if( !e ) {
@@ -214,12 +217,27 @@ export default class AppLeafletMap extends LitElement {
 
     // Latlngs must be formatted as Arrays for the polyline in dddArrowHead()
     this.latlngs = [link.coordinates.src, link.coordinates.dst];
-    this.addArrowHead();    
+
+    this.addArrowHead();
   }
 
+  /** TODO: Discuss w/Justin
+   * *
+   * http://localhost:3000/map/jop/connection/wHzHGZig
+   * http://localhost:3000/map/jop/connection/s1j1ditp
+   *  - position of arrowhead can appear incorrect at outermost zoom level
+   *    until you zoom in closer
+   * http://localhost:3000/map/jop/connection/wHzHGZig
+   *  - Position of arrowhead correct
+   */
   addArrowHead() {
+    // Remove any existing arrowHead
+    if ( Object.keys(this.arrow).length > 0 ) {
+      this.map.removeLayer(this.arrow);
+    }
+
     // Create the polyline
-    let polyline  = L.polyline(this.latlngs, { stroke: false }).addTo(this.map);
+    let polyline  = L.polyline(this.latlngs, { stroke: false });
     let decorator = L.polylineDecorator(polyline, {
       patterns: [
         { 
@@ -239,7 +257,13 @@ export default class AppLeafletMap extends LitElement {
           })
         }
       ]
-    }).addTo(this.map);
+    });
+
+    let layerGroup = L.layerGroup([polyline, decorator]);
+
+    layerGroup.addTo(this.map);
+    layerGroup.id = 'polyline-decorator';
+    this.arrow = layerGroup;
 
     // zoom the map into the polyline
     this.map.fitBounds(polyline.getBounds());
@@ -629,7 +653,7 @@ export default class AppLeafletMap extends LitElement {
     }, 100);
   }
 
-  _updateLinks() {
+  _updateLinks() {   
     for( let id in this.linkLayers ) {
       this.map.removeLayer(this.linkLayers[id]);
     }
