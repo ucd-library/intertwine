@@ -15,7 +15,8 @@ export default class AppLeafletMap extends LitElement {
         attribute: 'info-open'
       },
       connectionName : { type: String },
-      arrow: { type: Object }
+      arrow: { type: Object },
+      stopZoomBounds: { type: Boolean }
     }
   }
 
@@ -30,9 +31,10 @@ export default class AppLeafletMap extends LitElement {
     this.nodes = {};
     this.updateLinksTimer = -1;
     this.firstRender = true;
-    this.connectionName = '';
+    this.connectionName = '';  
 
     this.arrow = {};
+    this.stopZoomBounds = false;
 
     window.addEventListener('resize', () => {
       if( !this.active ) return;
@@ -103,7 +105,7 @@ export default class AppLeafletMap extends LitElement {
     this.map.on('zoomend', () => {
       this.repositionSelectedNode();
       this.repositionSelectedLink();
-      this.updateLinks();
+      this.updateLinks();     
 
       if( this.appState && this.appState.selectedNode && this.appState.selectedNode.type === 'cluster' ) {
         this.findAndRenderSelectedCluster(this.appState.selectedNode.latlng, this.appState.selectedNode.zoom);
@@ -230,17 +232,15 @@ export default class AppLeafletMap extends LitElement {
    * http://localhost:3000/map/jop/connection/wHzHGZig
    *  - Position of arrowhead correct
    */
-  addArrowHead(latlng) {
+  addArrowHead() {
     // Remove any existing arrowHead
     if ( Object.keys(this.arrow).length > 0 ) {
       this.map.removeLayer(this.arrow);
     }
 
-    //if ( latlng ) this.latlngs = latlng;
-
     // Create the polyline
     let polyline  = L.polyline(this.latlngs, { 
-      stroke: true, 
+      stroke: true,
       color: this.lineColor 
     });
 
@@ -270,13 +270,13 @@ export default class AppLeafletMap extends LitElement {
     layerGroup.id = 'polyline-decorator';
     this.arrow = layerGroup;
 
-    if ( this.firstRender ) {      
+    if ( !this.stopZoomBounds ) {
       // zoom the map into the polyline
       this.map.fitBounds(polyline.getBounds());
 
-      // Reset the firstRender to false otherwise it'll
-      // reset the fitBounds on the map every time you + zoom levels
-      this.firstRender = false;
+      // Set this otherwise fitBounds() will fire every time you 
+      // adjust zoom levels and won't let you zoom in properly
+      this.stopZoomBounds = true;
     }
   }
 
@@ -491,16 +491,20 @@ export default class AppLeafletMap extends LitElement {
 
   repositionSelectedLink() {
     if( !this.selectedNodeLayer || !this.selectedLineIcon ) return;
+    
+    this.addArrowHead(this.stopZoomBounds);
+
     let ll = this._getMidPoint(
       this.selectedNodeIcon.src.getLatLng(),
       this.selectedNodeIcon.dst.getLatLng()
     );
     this.selectedLineIcon.setLatLng(ll);
 
-    this.addArrowHead([
-      [this.selectedNodeIcon.src.getLatLng().lat,this.selectedNodeIcon.src.getLatLng().lng],
-      [this.selectedNodeIcon.dst.getLatLng().lat,this.selectedNodeIcon.dst.getLatLng().lng]
-    ]);
+    this.arrow.eachLayer(layer => {
+      if ( typeof layer.setLatLngs === undefined ) {
+        layer.setLatLngs(ll);
+      }
+    });
   }
 
   repositionSelectedNode() {
