@@ -13,7 +13,7 @@
   "author": "jrmerz@ucdavis.edu",
   "license": "MIT",
   "devDependencies": {
-    "@ucd-lib/cork-app-build": "^0.1.5",
+    "@ucd-lib/cork-app-build": "^0.2.0",
     "@ucd-lib/cork-icon-set-generator": "git+https://github.com/UCDavisLibrary/cork-icon-set-generator.git",
     "nodemon": "^1.18.10",
     "webpack": "^4.41.2",
