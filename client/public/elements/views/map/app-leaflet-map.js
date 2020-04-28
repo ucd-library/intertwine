@@ -168,7 +168,7 @@ export default class AppLeafletMap extends LitElement {
     } else if( e.selectedNode.type === 'connection' ) {
       this.selectLink(e.selectedNode.id);
     }
-
+    
     // make sure our links are rendered correctly
     this.updateLinks();
   }
@@ -230,14 +230,22 @@ export default class AppLeafletMap extends LitElement {
    * http://localhost:3000/map/jop/connection/wHzHGZig
    *  - Position of arrowhead correct
    */
-  addArrowHead() {
+  addArrowHead(latlng) {
     // Remove any existing arrowHead
     if ( Object.keys(this.arrow).length > 0 ) {
       this.map.removeLayer(this.arrow);
     }
 
+    if ( latlng ) this.latlngs = latlng;
+
     // Create the polyline
-    let polyline  = L.polyline(this.latlngs, { stroke: false });
+    let polyline  = L.polyline(this.latlngs, { 
+      stroke: true, 
+      color: this.lineColor 
+    });
+
+    console.log('P: ', this.latlngs)
+
     let decorator = L.polylineDecorator(polyline, {
       patterns: [
         { 
@@ -252,7 +260,7 @@ export default class AppLeafletMap extends LitElement {
               weight: 4,
               color: this.lineColor,
               opacity: 1.0,
-              className: 'arrow'
+              className: 'intertwine-arrow'
             }
           })
         }
@@ -260,7 +268,6 @@ export default class AppLeafletMap extends LitElement {
     });
 
     let layerGroup = L.layerGroup([polyline, decorator]);
-
     layerGroup.addTo(this.map);
     layerGroup.id = 'polyline-decorator';
     this.arrow = layerGroup;
@@ -292,6 +299,9 @@ export default class AppLeafletMap extends LitElement {
       this.map.removeLayer(this.layerLabel);
       this.layerLabel = null;
     }
+
+    // If there is an arrow present from a connection get rid of it
+    this.map.removeLayer(this.arrow);
 
     // find the marker layer based on id in the cluster
     let layer = this.clusters
@@ -482,13 +492,19 @@ export default class AppLeafletMap extends LitElement {
       this.selectedNodeIcon.dst.getLatLng()
     );
     this.selectedLineIcon.setLatLng(ll);
+
+    this.addArrowHead([
+      [this.selectedNodeIcon.src.getLatLng().lat,this.selectedNodeIcon.src.getLatLng().lng],
+      [this.selectedNodeIcon.dst.getLatLng().lat,this.selectedNodeIcon.dst.getLatLng().lng]
+    ]);
   }
 
   repositionSelectedNode() {
     if( !this.selectedNodeLayer || !this.selectedNodeIcon ) return;
+
     for( let type in this.selectedNodeLayer ) {
       let layer = this.clusters.getVisibleParent(this.selectedNodeLayer[type]) || this.selectedNodeLayer[type];
-      this.selectedNodeIcon[type].setLatLng(layer.getLatLng());
+      this.selectedNodeIcon[type].setLatLng(layer.getLatLng());  
 
       if( layer.inertWineId ) {
         this.selectedNodeIcon[type].getElement().firstChild.classList.add('point');
