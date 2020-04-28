@@ -92,7 +92,7 @@ export default class AppLeafletMap extends LitElement {
 
     this.map.addLayer(this.clusters);
     this.map.zoomControl.setPosition('bottomright');
-    
+  
     // wire up layer and map events
     this.clusters.on('clusterclick', e => this.onClusterClicked(e));
     this.clusters.on('clustermouseover', e => this.onClusterMouseOver(e));
@@ -236,15 +236,13 @@ export default class AppLeafletMap extends LitElement {
       this.map.removeLayer(this.arrow);
     }
 
-    if ( latlng ) this.latlngs = latlng;
+    //if ( latlng ) this.latlngs = latlng;
 
     // Create the polyline
     let polyline  = L.polyline(this.latlngs, { 
       stroke: true, 
       color: this.lineColor 
     });
-
-    console.log('P: ', this.latlngs)
 
     let decorator = L.polylineDecorator(polyline, {
       patterns: [
@@ -272,8 +270,14 @@ export default class AppLeafletMap extends LitElement {
     layerGroup.id = 'polyline-decorator';
     this.arrow = layerGroup;
 
-    // zoom the map into the polyline
-    this.map.fitBounds(polyline.getBounds());
+    if ( this.firstRender ) {      
+      // zoom the map into the polyline
+      this.map.fitBounds(polyline.getBounds());
+
+      // Reset the firstRender to false otherwise it'll
+      // reset the fitBounds on the map every time you + zoom levels
+      this.firstRender = false;
+    }
   }
 
   getMarkerLabelIcon(id){
