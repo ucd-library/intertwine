@@ -220,19 +220,15 @@ export default class AppLeafletMap extends LitElement {
     // Latlngs must be formatted as Arrays for the polyline in dddArrowHead()
     this.latlngs = [link.coordinates.src, link.coordinates.dst];
 
-    this.addArrowHead();
+    this.getArrowHead();
   }
 
-  /** TODO: Discuss w/Justin
-   * *
-   * http://localhost:3000/map/jop/connection/wHzHGZig
-   * http://localhost:3000/map/jop/connection/s1j1ditp
-   *  - position of arrowhead can appear incorrect at outermost zoom level
-   *    until you zoom in closer
-   * http://localhost:3000/map/jop/connection/wHzHGZig
-   *  - Position of arrowhead correct
-   */
-  addArrowHead() {
+  /**
+   * @method getArrowHead
+   * @description generate an arrow head for the connection lines
+   *
+  */
+  getArrowHead() {
     // Remove any existing arrowHead
     if ( Object.keys(this.arrow).length > 0 ) {
       this.map.removeLayer(this.arrow);
@@ -241,7 +237,8 @@ export default class AppLeafletMap extends LitElement {
     // Create the polyline
     let polyline  = L.polyline(this.latlngs, { 
       stroke: true,
-      color: this.lineColor 
+      color: this.lineColor,
+      className: 'connection-arrow-polyline'
     });
 
     let decorator = L.polylineDecorator(polyline, {
@@ -258,17 +255,17 @@ export default class AppLeafletMap extends LitElement {
               weight: 4,
               color: this.lineColor,
               opacity: 1.0,
-              className: 'intertwine-arrow'
+              className: 'connection-arrow'
             }
           })
         }
       ]
     });
 
-    let layerGroup = L.layerGroup([polyline, decorator]);
-    layerGroup.addTo(this.map);
-    layerGroup.id = 'polyline-decorator';
-    this.arrow = layerGroup;
+    let featureGroup = L.featureGroup([polyline, decorator]);
+    featureGroup.addTo(this.map);
+
+    this.arrow = featureGroup;
 
     if ( !this.stopZoomBounds ) {
       // zoom the map into the polyline
@@ -492,7 +489,7 @@ export default class AppLeafletMap extends LitElement {
   repositionSelectedLink() {
     if( !this.selectedNodeLayer || !this.selectedLineIcon ) return;
     
-    this.addArrowHead(this.stopZoomBounds);
+    this.getArrowHead(this.stopZoomBounds);
 
     let ll = this._getMidPoint(
       this.selectedNodeIcon.src.getLatLng(),
