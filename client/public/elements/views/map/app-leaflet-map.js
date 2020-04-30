@@ -217,10 +217,26 @@ export default class AppLeafletMap extends LitElement {
     this.map.addLayer(this.selectedLineIcon);
     this.selectedLineIcon.setZIndexOffset(5000);
 
-    // Latlngs must be formatted as Arrays for the polyline in dddArrowHead()
+    // Latlngs must be formatted as Arrays for the polyline in addArrowHead()
     this.latlngs = [link.coordinates.src, link.coordinates.dst];
 
+    this.getPolylineLength();
     this.getArrowHead();
+  }
+
+
+  /**
+   * @method getPolylineLength
+   * @description Calculate the line length
+   *
+  */
+  getPolylineLength() {
+    let srcxy = this.map.latLngToContainerPoint(this.latlngs[0]);
+    let dstxy = this.map.latLngToContainerPoint(this.latlngs[1]);
+
+    let length = Math.sqrt(Math.pow((srcxy.x - dstxy.x), 2) + Math.pow((srcxy.y - dstxy.y), 2));
+
+    this.polylineLength = length;
   }
 
   /**
@@ -234,13 +250,17 @@ export default class AppLeafletMap extends LitElement {
       this.map.removeLayer(this.arrow);
     }
 
+    console.log('this.polylineLength: ', this.polylineLength);
+
     // Create the polyline
     let polyline  = L.polyline(this.latlngs, { 
       stroke: true,
+      weight: 2,
       color: this.lineColor,
       className: 'connection-arrow-polyline'
     });
 
+    // Set offset to length of line - 20    
     let decorator = L.polylineDecorator(polyline, {
       patterns: [
         { 
