@@ -102,6 +102,8 @@ export default class AppLeafletMap extends LitElement {
     this.clusters.on('mouseover', e => this.onMarkerMouseOver(e));
     this.clusters.on('mouseout', e  => this.onMarkerMouseOut(e));
 
+    console.log(this.map)
+
     this.map.on('zoomend', () => {
       this.repositionSelectedNode();
       this.repositionSelectedLink();
@@ -239,6 +241,21 @@ export default class AppLeafletMap extends LitElement {
     this.polylineLength = length;
   }
 
+   /**
+   * @method calculateOffset
+   * @description Returns the distance between two geographical coordinates according to the map's CRS.
+                  By default this measures distance in meters
+   *
+  */
+  calculateOffset() {    
+    let len       = L.latLng(this.latlngs[0]).distanceTo(this.latlngs[1])
+    let m_center  = this.map.latLngToContainerPoint(this.latlngs[1]);
+    let m_edge    = [m_center.x + 20, m_center.y];
+    let m_len     = L.latLng(this.latlngs[1]).distanceTo(this.map.containerPointToLatLng(m_edge));
+    let offset    = 100 * (len - m_len) / len;
+    return offset;
+  }
+
   /**
    * @method getArrowHead
    * @description generate an arrow head for the connection lines
@@ -250,7 +267,7 @@ export default class AppLeafletMap extends LitElement {
       this.map.removeLayer(this.arrow);
     }
 
-    console.log('this.polylineLength: ', this.polylineLength);
+    //console.log(this.map.getZoom())
 
     // Create the polyline
     let polyline  = L.polyline(this.latlngs, { 
@@ -264,7 +281,7 @@ export default class AppLeafletMap extends LitElement {
     let decorator = L.polylineDecorator(polyline, {
       patterns: [
         { 
-          offset: '100%',
+          offset: this.calculateOffset() + '%',
           repeat: 0, 
           symbol: L.Symbol.arrowHead({ 
             polygon: false,
