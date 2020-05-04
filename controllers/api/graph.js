@@ -12,6 +12,7 @@ router.get('/:id', (req, res) => {
         const response = await fetch(url);
         if ( response.status !== 200 ) {
           console.error('Error status code: ', response.status);
+          
           res.status(response.status).json({
             error: true,
             message: response.message

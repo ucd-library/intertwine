@@ -102,8 +102,6 @@ export default class AppLeafletMap extends LitElement {
     this.clusters.on('mouseover', e => this.onMarkerMouseOver(e));
     this.clusters.on('mouseout', e  => this.onMarkerMouseOut(e));
 
-    console.log(this.map)
-
     this.map.on('zoomend', () => {
       this.repositionSelectedNode();
       this.repositionSelectedLink();
