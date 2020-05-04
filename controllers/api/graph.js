@@ -1,7 +1,5 @@
 var router   = require('express').Router();
 const fetch  = require('node-fetch');
-const https  = require('https');
-
 const config   = require('../../config');
 const endpoint = config.server.endpoint;
 
@@ -12,27 +10,22 @@ router.get('/:id', (req, res) => {
     const getData = async url => {
       try {
         const response = await fetch(url);
-        const json = await response.json();
-        res.json(json);
+        if ( response.status !== 200 ) {
+          console.error('Error status code: ', response.status);
+          res.status(response.status).json({
+            error: true,
+            message: response.message
+          });
+        } else {
+          const json = await response.json();
+          res.json(json);
+        }       
       } catch (e) {
-        res.status(400).json({
-          error: true,
-          message: e.message
-        });
+        console.error('E: ', e);
       }
     };
-
-    // Check for top level error from server
-    var req = https.get(url, (res) => {      
-      if ( res.statusCode !== 200 ) {
-        console.log('statusCode: ', res.statusCode);
-        console.log('statusMessage: ', res.statusMessage);
-        res.on('data', (d) => process.stdout.write(d));
-        return;
-      }
-      
-      getData(url);
-    });
+    
+    getData(url);
   }
 });
 
