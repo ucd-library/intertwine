@@ -110,12 +110,9 @@ export default class AppStory extends Mixin(LitElement)
     const handler = (entries) => {
       // Entries is an array of observed DOM nodes
       if ( entries[0].isIntersecting ) {
-        this.floatBtn.style.visibility = "hidden";
-        this.floatBtn.style.opacity    = 0;
-        this.floatBtn.style.transition = "visibility 0s .5s, opacity .5s ease";
+        this.floatBtn.classList.add("hidden");
       } else {
-        this.floatBtn.style.visibility = "visible";
-        this.floatBtn.style.opacity    = 1;
+        this.floatBtn.classList.remove("hidden");
       }
     }
 

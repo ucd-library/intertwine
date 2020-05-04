@@ -71,6 +71,12 @@ export default function render() {
         position: relative;
       }
 
+      .hidden {
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s .5s, opacity .5s ease; 
+      }
+
       header {
         margin: 0 auto;
         width: 100%;
