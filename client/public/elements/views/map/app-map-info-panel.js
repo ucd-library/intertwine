@@ -259,7 +259,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
           }
         });
       }
-
     }
 
     if( node.type === 'connection' ) {
@@ -319,9 +318,9 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       function formatString(string, substring) {
         let regex = new RegExp(substring, 'g');
         if ( regex.test(string) ) {
-          return string.replace(regex, '<b>' + substring + '</b>');
+          return '<b><em>' + substring + '</em></b>&nbsp;' + string.replace(substring, '');
         } else {
-          return '<b>' + substring + '</b>&nbsp;' + string;
+          return '<b><em>' + substring + '</em></b>&nbsp;' + string;
         }
       }
 
