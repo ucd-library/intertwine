@@ -301,7 +301,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
       connections.map(connection => {
         if ( Array.isArray(connection.link.name) ) {
-          let string    = connection.link.name[0];
+          let string    = connection.link.name[0].replace(this.title, '');
           let substring = connection.link.name[1];
 
           connection.link.formattedConnection = formatString(string, substring);
