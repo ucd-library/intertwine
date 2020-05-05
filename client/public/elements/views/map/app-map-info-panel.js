@@ -318,7 +318,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       function formatString(string, substring) {
         let regex = new RegExp(substring, 'g');
         if ( regex.test(string) ) {
-          return '<b><em>' + substring + '</em></b>&nbsp;' + string.replace(substring, '');
+          return '<b><em>' + substring + '</em></b>&nbsp;' + string.replace(substring, '').trim();
         } else {
           return '<b><em>' + substring + '</em></b>&nbsp;' + string;
         }
