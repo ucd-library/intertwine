@@ -121,7 +121,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
   renderState(moment) {
     if( moment ) {
-      this.momentGraph = moment;
+      this.momentGraph = moment;     
 
       // TODO: Need to add entryPoint to data in Trello
       // This is a TEMPORARY FIX to display the entryPoint data on the info-panel
@@ -229,8 +229,10 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     // TODO: Some of the descriptions are like this: description: @id: http://link.com
     //       So weeding those out by testing to see if they're strings first
     //       Otherwise markdown breaks
-    if ( node.description !== false && typeof node.description === 'string' ) {
-      this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');
+    if ( node.description !== false && node.description !== undefined && typeof node.description === 'string' ) {
+      this.descriptionEle.innerHTML = markdown.toHTML(node.description);
+    } else {
+      this.descriptionEle.innerHTML = markdown.toHTML('');
     }
 
     if ( node.thumbnail ) {
@@ -301,8 +303,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
       connections.map(connection => {
         if ( Array.isArray(connection.link.name) ) {
-          let string    = connection.link.name[0].replace(this.title, '');
-          let substring = connection.link.name[1];
+          // TODO: May need to massage this data more in Trello to get it to display properly
+          let splitTitle  = this.title.replace(/\s|-/gi, '|');
+          let newRegex    = new RegExp(splitTitle, 'gi');
+          let string      = connection.link.name[0].replace(newRegex, '').trim();
+          let substring   = connection.link.name[1];
 
           connection.link.formattedConnection = formatString(string, substring);
         }
@@ -320,7 +325,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         if ( regex.test(string) ) {
           return '<b><em>' + substring + '</em></b>&nbsp;' + string.replace(substring, '').trim();
         } else {
-          return '<b><em>' + substring + '</em></b>&nbsp;' + string;
+          return '<b><em>' + substring + '</em></b>&nbsp;' + string.trim();
         }
       }
 
