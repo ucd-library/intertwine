@@ -11,7 +11,7 @@ class MomentModel extends BaseModel {
 
     this.EventBus.on('app-state-update', async (e) => {
       let state = await this.get(e.moment);
-      
+
       // TODO: Error displays correctly here, but how to pass this data over to AppStateModel????
       if ( state.state === 'error' ) console.log();
 
@@ -31,7 +31,7 @@ class MomentModel extends BaseModel {
       }
     } catch(err) {
       // handle network error here if you want to handle in model
-      // but error state should be capture by store and UI elements 
+      // but error state should be capture by store and UI elements
       // should react to the error state event
     };
 
@@ -185,9 +185,9 @@ class MomentModel extends BaseModel {
             lookup[id]['image'][key] = getBNode(lookup[id]['image'][key]);
           }
         }
-        
+
         let label = lookup[id]['label'].replace(/\s|story:/gi, '').toLowerCase();
-        
+
         if ( label === 'text' ) {
           counter++;
           label = 'paragraph';
@@ -198,7 +198,7 @@ class MomentModel extends BaseModel {
         }
       }
     }
-            
+
     // Links
     for ( let id in links ) {
       let item = links[id];
