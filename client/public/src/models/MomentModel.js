@@ -45,7 +45,7 @@ class MomentModel extends BaseModel {
    * @returns {Object} nodes & links
    */
   transformLinks(data) {
-    let links = {}, nodes = {}, lookup = {}, story = {};
+    let links = {}, nodes = {}, lookup = {}, story = {}, reverses = {};
 
     // Helper Functions - START
     /**
@@ -136,6 +136,7 @@ class MomentModel extends BaseModel {
     // Create lookup table
     for ( let id in lookup ) {
       let container = lookup[id];
+
       for ( let attr in container ) {
         if ( lookup[attr] ) {
           let link = lookup[attr];
@@ -144,6 +145,13 @@ class MomentModel extends BaseModel {
           link.isLink = true;
           links[link['@id']] = link;
         }
+      }
+    }
+
+    // Reverses
+    for ( let id in lookup ) {
+      if ( lookup[id]['@id'].includes(':_rev') ) {
+        reverses[lookup[id]['@id']] = lookup[id];
       }
     }
 
@@ -213,7 +221,7 @@ class MomentModel extends BaseModel {
       }
     }
 
-    return { nodes, links, story }
+    return { nodes, links, story, reverses }
   }
 }
 

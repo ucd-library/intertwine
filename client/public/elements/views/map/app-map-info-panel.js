@@ -282,55 +282,42 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       }
 
     } else {
-      // find connections
-      let connections = [];
-      let link;
-      for( let id in this.graph.links ) {
+      let connections = [], link = {};
+      
+      for ( let id in this.graph.links ) {
         link = this.graph.links[id];
-
         if ( link.src === node['@id'] ) {
           connections.push({
-            link,
-            node: this.graph.nodes[link.src]
+            id: link['@id'],
+            connection: link['@type'][1].replace('ucdlib:',''),
+            dst: link.dst,
+            src: link.src
           });
         } else if ( link.dst === node['@id'] ) {
-          connections.push({
-            link,
-            node: this.graph.nodes[link.dst]
-          });
+          for ( let attr in this.graph.nodes[link.src] ) {
+            if ( this.graph.nodes[link.src][attr] === link.dst ) {
+              connections.push({
+                id: attr,
+                connection: this.graph.reverses[attr + ':_rev'].name,
+                name: this.graph.nodes[link.src].name,
+                type: this.graph.nodes[link.src].type
+              });
+            }
+          }
         }
       }
 
-      connections.map(connection => {
-        if ( Array.isArray(connection.link.name) ) {
-          // TODO: May need to massage this data more in Trello to get it to display properly
-          let splitTitle  = this.title.replace(/\s|-/gi, '|');
-          let newRegex    = new RegExp(splitTitle, 'gi');
-          let string      = connection.link.name[0].replace(newRegex, '').trim();
-          let substring   = connection.link.name[1];
-
-          connection.link.formattedConnection = formatString(string, substring);
+      connections.forEach(connection => {        
+        for ( let id in this.graph.nodes ) {
+          if ( this.graph.nodes[id]['@id'] === connection.dst ) {
+            connection.name = this.graph.nodes[id].name;   
+            connection.type = this.graph.nodes[id].type;
+          }
         }
       });
 
-      /**
-       * @method formatString
-       * @description this function identifies the connection type and bolds it.
-       *
-       * @param {String} string the complete connection string
-       * @param {String} substring the word/phrase you're looking to bold
-      */
-      function formatString(string, substring) {
-        let regex = new RegExp(substring, 'g');
-        if ( regex.test(string) ) {
-          return '<b><em>' + substring + '</em></b>&nbsp;' + string.replace(substring, '').trim();
-        } else {
-          return '<b><em>' + substring + '</em></b>&nbsp;' + string.trim();
-        }
-      }
-
-      // Alphabetize the connections
-      connections.sort((a, b) => (a.node.name > b.node.name) ? 1 : -1);
+      // Sort the connections by type
+      connections.sort((a, b) => (a.type > b.type) ? 1 : -1);
 
       this.connections = connections;
     }

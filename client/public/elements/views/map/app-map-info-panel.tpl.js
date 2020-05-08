@@ -376,14 +376,11 @@ return html`
               ${this.connections.map(connection => html`
                 <div class="dot-list">
                   <div class="dot-wrapper">
-                    <div class="dot" type="${connection.node.type}"></div>
+                    <div class="dot" type="${connection.type}"></div>
                   </div>
                   <div>
-                    <a class="internal" href="/map/${this.moment}/connection/${connection.link['@id']}">
-                    ${connection.link.formattedConnection ?
-                      html`${unsafeHTML(connection.link.formattedConnection)}` :
-                      html`<strong><em>${connection.link.name}</em></strong>&nbsp;${connection.node.name}`
-                    }
+                    <a class="internal" href="/map/${this.moment}/connection/${connection.id}">
+                      <strong><em>${connection.connection}</em></strong>&nbsp;${connection.name}
                     </a>
                   </div>
                 </div>
