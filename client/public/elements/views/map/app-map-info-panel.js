@@ -289,9 +289,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         if ( link.src === node['@id'] ) {
           connections.push({
             id: link['@id'],
-            connection: link['@type'][1].replace('ucdlib:',''),
+            connection: link['@type'][1].replace('ucdlib:','').replace('_', ' '),
             dst: link.dst,
-            src: link.src
+            src: link.src,
+            name: this.graph.nodes[link.dst].name,
+            type: this.graph.nodes[link.dst].type
           });
         } else if ( link.dst === node['@id'] ) {
           for ( let attr in this.graph.nodes[link.src] ) {
@@ -306,15 +308,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
           }
         }
       }
-
-      connections.forEach(connection => {        
-        for ( let id in this.graph.nodes ) {
-          if ( this.graph.nodes[id]['@id'] === connection.dst ) {
-            connection.name = this.graph.nodes[id].name;   
-            connection.type = this.graph.nodes[id].type;
-          }
-        }
-      });
 
       // Sort the connections by type
       connections.sort((a, b) => (a.type > b.type) ? 1 : -1);
