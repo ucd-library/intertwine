@@ -75,7 +75,8 @@ export default class AppStory extends Mixin(LitElement)
       } else {
         this.headerImgUrl = story.graph.story.entrypoint.thumbnail;
       }
-                       
+      
+      this.sources = [];
       for (let key in this.story.sources.publication) {
         let arr = this.story.sources.publication[key].split(/\[|\]/);
         let obj = {
