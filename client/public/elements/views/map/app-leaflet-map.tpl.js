@@ -54,6 +54,10 @@ return html`
       background-color: var(--app-color-grape);
     }
 
+    .connection-arrow {
+      fill-opacity: 1.0;
+    }
+
     .intertwine-arrow {
       width: 0;
       height: 0;

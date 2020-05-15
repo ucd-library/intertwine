@@ -269,8 +269,8 @@ export default class AppLeafletMap extends LitElement {
 
     // Create the polyline
     let polyline  = L.polyline(this.latlngs, { 
-      stroke: true,
-      weight: 2,
+      stroke: false,
+      weight: 0,
       color: this.lineColor,
       className: 'connection-arrow-polyline'
     });
@@ -282,12 +282,12 @@ export default class AppLeafletMap extends LitElement {
           offset: this.calculateOffset() + '%',
           repeat: 0, 
           symbol: L.Symbol.arrowHead({ 
-            polygon: false,
-            pixelSize: 15,
+            polygon: true,
+            pixelSize: 10,
             headAngle: 60,
             pathOptions: {
               stroke: true,
-              weight: 4,
+              weight: 1,
               color: this.lineColor,
               opacity: 1.0,
               className: 'connection-arrow'
