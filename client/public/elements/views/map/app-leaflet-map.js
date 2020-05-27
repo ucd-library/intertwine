@@ -243,7 +243,6 @@ export default class AppLeafletMap extends LitElement {
    * @method calculateOffset
    * @description Returns the distance between two geographical coordinates according to the map's CRS.
                   By default this measures distance in meters
-   *
   */
   calculateOffset() {    
     let len       = L.latLng(this.latlngs[0]).distanceTo(this.latlngs[1])
@@ -264,8 +263,6 @@ export default class AppLeafletMap extends LitElement {
     if ( Object.keys(this.arrow).length > 0 ) {
       this.map.removeLayer(this.arrow);
     }
-
-    //console.log(this.map.getZoom())
 
     // Create the polyline
     let polyline  = L.polyline(this.latlngs, { 
