@@ -25,19 +25,20 @@ module.exports = (app) => {
         headers: {'Accept': 'application/ld+json; profile="http://www.w3.org/ns/json-ld#flattened"'}
       });
       const json = await response.json();
-      
+
       let payload = json['@graph'][0]['contains'];
-      let data = payload.filter(x => !x.includes('.fin'));
+      let data = payload.filter(x => x.includes('.json'));
 
       config.server.moments = data.map(d => {
         let array = d.split('/');
-        return array[array.length - 1];
+        let moment = array[array.length - 1].split('.')[0];
+        return moment;
       });
     } catch (e) {
       console.log('Error: ', e);
     }
   }
-  
+
   fetchMoments(config.server.endpoint);
 
   /**

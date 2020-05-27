@@ -74,7 +74,7 @@ export default function render() {
       .hidden {
         visibility: hidden;
         opacity: 0;
-        transition: visibility 0s .5s, opacity .5s ease; 
+        transition: visibility 0s .5s, opacity .5s ease;
       }
 
       header {
@@ -148,7 +148,7 @@ export default function render() {
 
       section.text-blocks:nth-of-type(even) {
         background-color: var(--app-color-smoke);
-      }      
+      }
 
       .text-image-pairing {
         display: flex;
@@ -357,8 +357,8 @@ export default function render() {
         }
       }
     </style>
-    
-    <div id="container" class="container" role="main">      
+
+    <div id="container" class="container" role="main">
       <header>
         <div class="header-image" style="background-image: url('${this.headerImgUrl}');"></div>
         <div class="story-header">
@@ -377,7 +377,7 @@ export default function render() {
                     ${this.story.quote.publication}
                   </li>
                 </ul>
-              </div>`:html``}              
+              </div>`:html``}
             </li>
           </ul>
         </div>
@@ -391,25 +391,25 @@ export default function render() {
         html`<section class="text-blocks">
           <div class="text-blocks">
             <h1 ?hidden="${!this.story.paragraph1.headline}">${this.story.paragraph1.headline}</h1>
-            ${Array.isArray(this.story.paragraph1.text) ? 
-                html`${this.story.paragraph1.text.map((p) => html`<p>${p}</p>`)}` : 
+            ${Array.isArray(this.story.paragraph1.text) ?
+                html`${this.story.paragraph1.text.map((p) => html`<p>${p}</p>`)}` :
                 html`<p>${this.story.paragraph1.text}</p>`}
           </div>
-        </section>`:html``}  
-        
+        </section>`:html``}
+
       ${this.story['image/text']?
         html`<section class="text-image-pairing">
-        ${this.story['image/text'].thumbnail ? 
+        ${this.story['image/text'].thumbnail ?
           html`<div class="image" style="background-image: url(${this.endpoint}/${this.moment}/${this.story[`image/text`].thumbnail});">
             <span>${this.story['image/text'].caption}</span>
-          </div>` : 
+          </div>` :
           html`<div class="image" style="background-image: url('${this.story[`image/text`].src}');">
             <span>${this.story['image/text'].caption}</span>
-          </div>`}            
+          </div>`}
           <div class="text-blocks">
             <h1 ?hidden="${!this.story['image/text'].headline}">${this.story[`image/text`].headline}</h1>
-            ${Array.isArray(this.story['image/text'].text) ? 
-              html`${this.story['image/text'].text.map((p) => html`<p>${p}</p>`)}` : 
+            ${Array.isArray(this.story['image/text'].text) ?
+              html`${this.story['image/text'].text.map((p) => html`<p>${p}</p>`)}` :
               html`<p>${this.story['image/text'].text}</p>`}
           </div>
         </section>`:html``}
@@ -417,8 +417,8 @@ export default function render() {
       ${this.paragraphs.map(p => html`<section class="text-blocks">
         <div class="text-blocks">
           <h1 ?hidden="${!p.headline}">${p.headline}</h1>
-          ${Array.isArray(p.text) ? 
-            html`${p.text.map((i) => html`<p>${i}</p>`)}` : 
+          ${Array.isArray(p.text) ?
+            html`${p.text.map((i) => html`<p>${i}</p>`)}` :
             html`<p>${p.text}</p>`}
         </div>
       </section>`)}
@@ -426,8 +426,8 @@ export default function render() {
       ${this.story.triptych && this.story.triptych[`@id`]?
         html`
           <div class="triptych">
-          ${repeat(this.story.triptych && this.story.triptych.image, (i) => html`            
-            <div style="background-image: url('${this.endpoint}/${this.moment}/triptych/${this.story.triptych[`@id`]}/${i.contentUrl}');">
+          ${repeat(this.story.triptych && this.story.triptych.image, (i) => html`
+            <div style="background-image: url('${this.endpoint}/${this.moment}/${this.story.triptych[`@id`]}/${i.contentUrl}');">
               <span>${i.caption}</span>
             </div>`)}
           </div>
@@ -440,13 +440,13 @@ export default function render() {
               </div>
             `)}
           </div>`}
-  
+
       ${this.story['text/image']?
-        html`<section class="text-image-pairing">            
+        html`<section class="text-image-pairing">
           <div class="text-blocks">
             <h1 ?hidden="${!this.story['text/image'].headline}">${this.story[`text/image`].headline}</h1>
-            ${Array.isArray(this.story['text/image'].text) ? 
-                html`${this.story['text/image'].text.map((p) => html`<p>${p}</p>`)}` : 
+            ${Array.isArray(this.story['text/image'].text) ?
+                html`${this.story['text/image'].text.map((p) => html`<p>${p}</p>`)}` :
                 html`<p>${this.story['text/image'].text}</p>`}
           </div>
           <div class="image" style="background-image: url('${this.endpoint}/${this.moment}/${this.story[`text/image`].thumbnail}');">
@@ -476,7 +476,7 @@ export default function render() {
         ${this.story.sources?
           html`<div class="bottom-content">
             <h6>Sources</h6>
-            <ol>                 
+            <ol>
             ${this.sources.map(source => html`
               <li>
                 <em>
@@ -487,7 +487,7 @@ export default function render() {
             `)}
             </ol>
           </div>`:html``
-        }        
+        }
       </footer>
   </div>
 `}

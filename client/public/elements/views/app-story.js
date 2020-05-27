@@ -61,21 +61,23 @@ export default class AppStory extends Mixin(LitElement)
 
     let payload = await this.MomentModel.get(this.moment);
     this.renderStory(payload.payload);
-  }   
+  }
 
   renderStory(story) {
     if ( !story ) return;
-    
+
     if ( Object.keys(story.graph.story).length !== 0) {
       this.story = story.graph.story;
       this.title = story.graph.story.entrypoint.name;
-      
+
       if ( story.graph.story.entrypoint.thumbnail.match(/^https?:\/\//g) === null ) {
         this.headerImgUrl = this.endpoint + '/' + this.moment + '/' + story.graph.story.entrypoint.thumbnail;
+        console.log('X: ', this.headerImgUrl);
       } else {
         this.headerImgUrl = story.graph.story.entrypoint.thumbnail;
+        console.log("y: ", this.headerImgUrl)
       }
-      
+
       this.sources = [];
       for (let key in this.story.sources.publication) {
         let arr = this.story.sources.publication[key].split(/\[|\]/);
@@ -86,10 +88,10 @@ export default class AppStory extends Mixin(LitElement)
         }
         this.sources.push(obj);
       }
-    } 
+    }
 
     // More temp functionality while using mocked data
-    if ( this.jsonData.moments[this.moment] ) {  
+    if ( this.jsonData.moments[this.moment] ) {
       this.story = this.jsonData.moments[this.moment];
       this.title = this.story.entrypoint.name;
       this.headerImgUrl = this.story.entrypoint.thumbnail;
