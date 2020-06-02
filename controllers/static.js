@@ -27,6 +27,7 @@ module.exports = (app) => {
       const json = await response.json();
 
       let payload = json['@graph'][0]['contains'];
+
       let data = payload.filter(x => x.includes('.json'));
 
       config.server.moments = data.map(d => {
