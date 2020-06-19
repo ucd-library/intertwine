@@ -26,9 +26,9 @@ module.exports = (app) => {
       });
       const json = await response.json();
 
-      let payload = json['@graph'][0]['contains'];
+      let payload = json['@graph'][0]['keywords'];
 
-      let data = payload.filter(x => x.includes('.json'));
+      let data = payload.map(x => x.toLowerCase());
 
       config.server.moments = data.map(d => {
         let array = d.split('/');
