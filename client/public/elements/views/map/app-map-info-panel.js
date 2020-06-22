@@ -4,9 +4,6 @@ import {markdown} from "markdown"
 
 import "@polymer/iron-icons"
 
-// TODO: This is temporary and can be replaced once we have a live source for the data
-let jsonData = require('../../../../../mock/story_json.json');
-
 export default class AppMapInfoPanel extends Mixin(LitElement)
   .with(LitCorkUtils) {
 
@@ -123,13 +120,9 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     if( moment ) {
       this.momentGraph = moment;     
 
-      // TODO: Need to add entryPoint to data in Trello
-      // This is a TEMPORARY FIX to display the entryPoint data on the info-panel
       let momentEntryPoint;
       if ( Object.keys(this.momentGraph.graph.story).length !== 0 ) {
         momentEntryPoint = this.momentGraph.graph.story.entrypoint;
-      } else {
-        momentEntryPoint = jsonData.moments[this.moment].entrypoint;
       }
 
       if( momentEntryPoint ) {

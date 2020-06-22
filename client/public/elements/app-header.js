@@ -6,9 +6,6 @@ import "./views/app-about"
 import "./views/app-home"
 import "./views/app-story"
 
-// TODO: This is temporary and will be replaced once we have a live source for the data
-let jsonData = require('../../../mock/story_json.json');
-
 export default class AppHeader extends Mixin(LitElement)
   .with(LitCorkUtils){
 
@@ -16,7 +13,6 @@ export default class AppHeader extends Mixin(LitElement)
     return {
       baseUrl: { type: String },
       subtitle: { type: String },
-      jsonData: { type: Object },
       moments: { type: Array }
     }
   }
@@ -25,7 +21,6 @@ export default class AppHeader extends Mixin(LitElement)
     super();
     this.baseUrl = window.location.protocol + '//' + window.location.host;
     this.subtitle = '';
-    this.jsonData = jsonData; // temp while using mock data
     this.moments = [];
 
     this.render = render.bind(this);
@@ -54,8 +49,6 @@ export default class AppHeader extends Mixin(LitElement)
   _setSubtitle(data) {
     if ( Object.keys(data.graph.story).length !== 0 ) {
       this.subtitle = data.graph.story.entrypoint.name;
-    } else { // TEMP while using mock data
-      this.subtitle = this.jsonData.moments[this.moment].entrypoint.name;
     }
   }
 

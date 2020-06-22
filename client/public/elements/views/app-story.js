@@ -1,9 +1,6 @@
 import { LitElement } from 'lit-element';
 import render from './app-story.tpl.js'
 
-// TODO: This is temporary and can be replaced once we have a live source for the data
-let jsonData = require('../../../../mock/story_json.json');
-
 export default class AppStory extends Mixin(LitElement)
   .with(LitCorkUtils) {
 
@@ -15,8 +12,7 @@ export default class AppStory extends Mixin(LitElement)
       paragraphs: { type: Array },
       story: { type: Object },
       sources: { type: Array },
-      title: { type: String },
-      jsonData: { type: Object }
+      title: { type: String }
     }
   }
 
@@ -31,8 +27,6 @@ export default class AppStory extends Mixin(LitElement)
     this.sources = [];
     this.paragraphs = [];
     this.title = '';
-
-    this.jsonData = jsonData; // temp
 
     this._injectModel('AppStateModel', 'MomentModel');
   }
@@ -60,22 +54,21 @@ export default class AppStory extends Mixin(LitElement)
     this.moment = e.moment;
 
     let payload = await this.MomentModel.get(this.moment);
+
     this.renderStory(payload.payload);
   }
 
   renderStory(story) {
     if ( !story ) return;
-
+    
     if ( Object.keys(story.graph.story).length !== 0) {
       this.story = story.graph.story;
       this.title = story.graph.story.entrypoint.name;
 
       if ( story.graph.story.entrypoint.thumbnail.match(/^https?:\/\//g) === null ) {
         this.headerImgUrl = this.endpoint + '/' + this.moment + '/' + story.graph.story.entrypoint.thumbnail;
-        console.log('X: ', this.headerImgUrl);
       } else {
         this.headerImgUrl = story.graph.story.entrypoint.thumbnail;
-        console.log("y: ", this.headerImgUrl)
       }
 
       this.sources = [];
@@ -88,14 +81,6 @@ export default class AppStory extends Mixin(LitElement)
         }
         this.sources.push(obj);
       }
-    }
-
-    // More temp functionality while using mocked data
-    if ( this.jsonData.moments[this.moment] ) {
-      this.story = this.jsonData.moments[this.moment];
-      this.title = this.story.entrypoint.name;
-      this.headerImgUrl = this.story.entrypoint.thumbnail;
-      this.sources = this.story.sources;
     }
 
     this.paragraphs = [];
