@@ -66,7 +66,7 @@ export default class AppStory extends Mixin(LitElement)
       this.title = story.graph.story.entrypoint.name;
 
       if ( !story.graph.story.entrypoint.thumbnail ) {
-        this.headerImgUrl = this.endpont + '/' + this.moment + '/thumbnail.jpg';
+        this.headerImgUrl = this.endpoint + '/' + this.moment + '/thumbnail.jpg';
       } else {
         if ( story.graph.story.entrypoint.thumbnail.match(/^https?:\/\//g) === null ) {
           this.headerImgUrl = this.endpoint + '/' + this.moment + '/' + story.graph.story.entrypoint.thumbnail;
