@@ -370,12 +370,9 @@ export default function render() {
 
             <li>
               ${this.story.quote? html`<div class="quote">
-                ${this.story.quote.description}
+                ${this.story.quote.description[1]}
                 <ul class="credit">
-                  <li>
-                    ${this.story.quote.author}<br />
-                    ${this.story.quote.publication}
-                  </li>
+                  <li>${this.story.quote.description[0]}</li>
                 </ul>
               </div>`:html``}
             </li>

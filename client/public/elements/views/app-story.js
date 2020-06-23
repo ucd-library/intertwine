@@ -65,24 +65,32 @@ export default class AppStory extends Mixin(LitElement)
       this.story = story.graph.story;
       this.title = story.graph.story.entrypoint.name;
 
-      if ( story.graph.story.entrypoint.thumbnail.match(/^https?:\/\//g) === null ) {
-        this.headerImgUrl = this.endpoint + '/' + this.moment + '/' + story.graph.story.entrypoint.thumbnail;
+      if ( !story.graph.story.entrypoint.thumbnail ) {
+        this.headerImgUrl = this.endpont + '/' + this.moment + '/thumbnail.jpg';
       } else {
-        this.headerImgUrl = story.graph.story.entrypoint.thumbnail;
+        if ( story.graph.story.entrypoint.thumbnail.match(/^https?:\/\//g) === null ) {
+          this.headerImgUrl = this.endpoint + '/' + this.moment + '/' + story.graph.story.entrypoint.thumbnail;
+        } else {
+          this.headerImgUrl = story.graph.story.entrypoint.thumbnail;
+        }
       }
 
-      this.sources = [];
-      for (let key in this.story.sources.publication) {
-        let arr = this.story.sources.publication[key].split(/\[|\]/);
-        let obj = {
-          "text": arr[0],
-          "link": arr[1],
-          "href": (arr[2] ? arr[2].replace(/\(|\)/,'') : '')
+      if ( this.story.sources ) {
+        this.sources = [];
+        for (let key in this.story.sources.publication) {
+          let arr = this.story.sources.publication[key].split(/\[|\]/);
+          let obj = {
+            "text": arr[0],
+            "link": arr[1],
+            "href": (arr[2] ? arr[2].replace(/\(|\)/,'') : '')
+          }
+          this.sources.push(obj);
         }
-        this.sources.push(obj);
-      }
+      }      
     }
 
+    console.log(this.story)
+    
     this.paragraphs = [];
     for ( let key in this.story ) {
       if ( key.includes('paragraph') && !key.includes('1')) {
