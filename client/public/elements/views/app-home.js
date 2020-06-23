@@ -24,21 +24,31 @@ export default class AppHome extends Mixin(LitElement)
 
   loadMoments(data) {
     if ( !data ) {
-      this.moment  = APP_CONFIG.moments[0];
+      this.moment = APP_CONFIG.moments[0];
     } else {
       this.moments.push(data);
       this.requestUpdate();
     }
   }
 
-  async firstUpdated(e) {   
-    let state = await this.MomentModel.get(this.moment);
+  async firstUpdated(e) {
+    let state, data;
 
-    if ( state.error ) return;
-    
-    let data  = state.payload.graph.story;
-    data.entrypoint.thumbnail = APP_CONFIG.endpoint + '/' + this.moment + '/' + data.entrypoint.thumbnail;
-    this.loadMoments(state.payload.graph.story);
+    for (let i=0; i < APP_CONFIG.moments.length; i++) {
+      state = await this.MomentModel.get(APP_CONFIG.moments[i]); 
+      
+      if ( state.error ) continue;
+
+      data = state.payload.graph.story;
+
+      if ( !data.entrypoint.thumbnail ) {
+        data.entrypoint.thumbnail = APP_CONFIG.endpoint + '/' + APP_CONFIG.moments[i] + '/thumbnail.jpg';
+      } else {
+        data.entrypoint.thumbnail = APP_CONFIG.endpoint + '/' + APP_CONFIG.moments[i] + '/' + data.entrypoint.thumbnail
+      }      
+      
+      this.loadMoments(state.payload.graph.story);
+    }
   }
 
   /**

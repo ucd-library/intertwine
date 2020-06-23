@@ -194,8 +194,18 @@ class MomentModel extends BaseModel {
           }
         }
 
-        let label = lookup[id]['label'].replace(/\s|story:/gi, '').toLowerCase();
+        let _label = '';
+        if ( Array.isArray(lookup[id]['label']) ) {          
+          for (let i=0; i < lookup[id]['label'].length; i++) {
+            if (lookup[id]['label'][i].match(/\Story:/)) {
+              _label = lookup[id]['label'][i]; 
+            }
+          }     
+        } else {
+          _label = lookup[id]['label'];        
+        }
 
+        let label = _label.replace(/\s|story:/gi, '').toLowerCase();        
         if ( label === 'text' ) {
           counter++;
           label = 'paragraph';
