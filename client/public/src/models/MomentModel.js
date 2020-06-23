@@ -13,7 +13,7 @@ class MomentModel extends BaseModel {
       let state = await this.get(e.moment);
 
       // TODO: Error displays correctly here, but how to pass this data over to AppStateModel????
-      if ( state.state === 'error' ) console.log();
+      if ( state.state === 'error' ) console.log('Error!');
 
       if( e.page === 'map' ) this.get(e.moment);
     });

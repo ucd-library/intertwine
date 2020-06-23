@@ -88,8 +88,6 @@ export default class AppStory extends Mixin(LitElement)
         }
       }      
     }
-
-    console.log(this.story)
     
     this.paragraphs = [];
     for ( let key in this.story ) {

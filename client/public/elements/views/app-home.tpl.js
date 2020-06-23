@@ -310,7 +310,9 @@ export default function render() {
         ${this.moments.map((moment) => html`
           <div>
             <div class="card">
-              <div class="feature-img" style="background-image: url('${moment.entrypoint.thumbnail}');"></div>
+              <div class="feature-img" 
+                @click="${e => this._onReadStoryClick(moment.entrypoint.story)}" 
+                style="cursor: pointer; background-image: url('${moment.entrypoint.thumbnail}');"></div>
               <div class="content">
                 <h4>${moment.entrypoint.name}</h4>
                 <em>${moment.entrypoint.temporal}</em>
