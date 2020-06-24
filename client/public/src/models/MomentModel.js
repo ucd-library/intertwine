@@ -125,7 +125,7 @@ class MomentModel extends BaseModel {
         delete data[i]['schema:latitude'];
       }
 
-      // Replace significantlink(s) with connection
+      // Replace significantlink(s) with connection   
       if ( data[i].type.includes('significantlink') ) {
         data[i].type = 'connection';
       }
