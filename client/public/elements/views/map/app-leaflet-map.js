@@ -56,7 +56,7 @@ export default class AppLeafletMap extends LitElement {
   /**
    * @method initMap
    * @description called when the element is first rendered.  Sets up the map
-   * and the clister laters.  Checks if there is a pending view state and sets the
+   * and the cluster layers. Checks if there is a pending view state and sets the
    * map to that location, otherwise renders at 0,0
   */
   initMap() {
@@ -137,6 +137,11 @@ export default class AppLeafletMap extends LitElement {
       }
 
       // reset state, remove current markers
+      if ( this.selectedLineIcon ) {
+        this.map.removeLayer(this.selectedLineIcon);
+        this.selectedLineIcon = null;
+      }
+      
       if( this.selectedNodeIcon ) {
         for ( let type in this.selectedNodeIcon ) {
           this.map.removeLayer(this.selectedNodeIcon[type]);
@@ -157,6 +162,7 @@ export default class AppLeafletMap extends LitElement {
       this.selectedNodeIcon  = null;
       this.selectedNodeLayer = null;
     }
+
     if( this.selectedLineIcon ) {
       this.map.removeLayer(this.selectedLineIcon);
       this.selectedLineIcon = null;
@@ -204,6 +210,7 @@ export default class AppLeafletMap extends LitElement {
       this.selectedNodeIcon.dst.getLatLng()
     );
     
+    // TODO: Work layer 2
     //  The Trello board moments have link names that are 2 item Arrays w/the
     //  short word being stored in the second slot
     let connectionName = (Array.isArray(link.name) ? link.name[1] : link.name);
@@ -386,7 +393,7 @@ export default class AppLeafletMap extends LitElement {
         }
       }
 
-      // grab the two div's and setup location classes
+      // grab the two divs and setup location classes
       let markerEle = this.selectedNodeIcon[type].getElement().firstChild;
       let arrow = this.selectedNodeIcon[type].getElement().children[1];
       if( bottom ) {
@@ -454,9 +461,6 @@ export default class AppLeafletMap extends LitElement {
     requestAnimationFrame(() => {
       if ( !this.layerLabel ) return;
 
-      // TODO: Figure out how to handle a situation where a
-      // pop-upped label is overlapping an already displayed marker label
-
       let labelEle = this.layerLabel.getElement().firstChild;
       let labelArrow = this.layerLabel.getElement().children[1];
 
@@ -519,9 +523,12 @@ export default class AppLeafletMap extends LitElement {
   }
 
   repositionSelectedLink() {
+    // Leigh work area
     if( !this.selectedNodeLayer || !this.selectedLineIcon ) return;
-    
+   
     this.getArrowHead(this.stopZoomBounds);
+
+    if ( !this.selectedNodeIcon ) return;
 
     let ll = this._getMidPoint(
       this.selectedNodeIcon.src.getLatLng(),
@@ -777,7 +784,7 @@ export default class AppLeafletMap extends LitElement {
    * @method redraw
    * @description buffered call to map.invalidateSize();
    */
-  redraw() {
+  redraw() {    
     if( this.redrawTimer ) clearTimeout(this.redrawTimer);    
     this.redrawTimer = setTimeout(() => {
       this.redrawTimer = -1;
