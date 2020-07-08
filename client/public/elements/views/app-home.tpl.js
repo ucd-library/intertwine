@@ -87,21 +87,14 @@ export default function render() {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: space-evenly;
       }
 
       main > div {
-        width: 48%;
+        margin-left: 7.5px;
+        margin-right: 7.5px;
         max-width: 600px;
         margin-bottom: 30px;
-      }
-
-      main > div:first-of-type {
-        margin-right: 15px;
-      }
-
-      main > div:last-of-type {
-        margin-left: 15px;
       }
 
       .card {
@@ -202,18 +195,10 @@ export default function render() {
       .card .footer iron-icon {
         font-size: 30px;
       }
-
+      
       @media(max-width: 800px) {
         main > div {
           width: 100%;
-        }
-
-        main > div:first-of-type {
-          margin-right: 0px;
-        }
-
-        main > div:last-of-type {
-          margin-left: 0px;
         }
       }
 
@@ -224,14 +209,6 @@ export default function render() {
 
         main > div {
           width: 100%;
-        }
-
-        main > div:first-of-type {
-          margin-right: 0px;
-        }
-
-        main > div:last-of-type {
-          margin-left: 0px;
         }
       }
 
