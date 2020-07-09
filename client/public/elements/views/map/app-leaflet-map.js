@@ -125,7 +125,7 @@ export default class AppLeafletMap extends LitElement {
    *
    * @param {Object} e app-state-update event object
   */
-  renderSelectedState(e) {    
+  renderSelectedState(e) {
     this.appState = e;
 
     if( !e ) {
@@ -523,7 +523,6 @@ export default class AppLeafletMap extends LitElement {
   }
 
   repositionSelectedLink() {
-    // Leigh work area
     if( !this.selectedNodeLayer || !this.selectedLineIcon ) return;
    
     this.getArrowHead(this.stopZoomBounds);

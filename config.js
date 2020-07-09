@@ -8,7 +8,7 @@ let localDev = 'http://localhost:3001';
 module.exports = {
   server : {
     assets : (env === 'prod') ? 'dist' : 'public',
-    endpoint : process.env.ENDPOINT_URL || moments + '/fcrepo/rest/collection/intertwine/moments',
+    endpoint : process.env.ENDPOINT_URL || localDev + '/fcrepo/rest/collection/intertwine/moments',
     appRoutes : ['about', 'home', 'map', 'story'],
     port : process.env.APP_PORT || process.env.PORT || 3000
   },
