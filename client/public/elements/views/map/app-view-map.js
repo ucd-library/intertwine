@@ -39,6 +39,12 @@ export default class AppViewMap extends Mixin(LitElement)
     this.render = render.bind(this);
     this.infoPanelOpen = true;
     this._injectModel('AppStateModel', 'MomentModel');
+
+    window.addEventListener('keydown', (e) => {
+      if ( e.key === 'Escape' ) {
+        this.openInfoPanel();
+      }
+    });
   }
 
   firstUpdated() {
