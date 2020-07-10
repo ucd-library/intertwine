@@ -86,7 +86,12 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
    */
   _onMomentGraphUpdate(e) {
     if( e.state !== 'loaded' ) return;
-    this.renderState(e.payload);
+
+    /** TODO: Related to Issue #54 */
+    if ( this.moment === e.id ) {
+      this.renderState(e.payload);
+    }
+    
   }
 
   async _onAppStateUpdate(e) {
