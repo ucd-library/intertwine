@@ -64,7 +64,7 @@ export default class AppViewMap extends Mixin(LitElement)
     this.moment   = e.moment;
     this.selected = e.selectedNode;
 
-    let state = await this.MomentModel.get(this.moment);   
+    let state = await this.MomentModel.get(this.moment); 
 
     if ( state.state === 'error' ) return;
 
@@ -81,14 +81,17 @@ export default class AppViewMap extends Mixin(LitElement)
    *
    * @param {*} e
    */
-  _onMomentGraphUpdate(e) {
+  _onMomentGraphUpdate(e) {    
     if ( e.state !== 'loaded' ) return;
-
-    this.data = e.payload.graph;
-    this.mapEle.setData(e.payload.graph);
-
-    if( this.appState && this.appState.selectedNode ) this.mapEle.renderSelectedState(this.appState);
-    else this.mapEle.renderSelectedState();
+    
+    /* TODO: Related to error #54 */
+    if ( this.moment === e.id ) {
+      this.data = e.payload.graph;
+      this.mapEle.setData(e.payload.graph);
+      
+      if( this.appState && this.appState.selectedNode ) this.mapEle.renderSelectedState(this.appState);
+      else this.mapEle.renderSelectedState();
+    }
   }
 
   /**
