@@ -137,24 +137,32 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.isNode = false;
     this.isMoment = false;
 
-    /*
-     Reset the thumbnails and background images so if
-     the user has navigated to a new item the old image
-     isn't displayed.
-    */
-    this.thumbnail = '';
-    this.singleImage.style.backgroundImage = 'initial';
-    this.connectionSrcImg.style.backgroundImage = 'initial';
-    this.connectionDstImg.style.backgroundImage = 'initial';
-    this.imageCreditLink  = '';
-    this.imageCreditTitle = '';
-
     if( !this.selected ) {
       this.renderEmpty();
       return;
     }
 
     if( !this.graph ) return;
+
+    /** TODO: This checker may become unnecessary once I 
+     * figure out the problems w/the mulitiple moments all 
+     * loading at the same time */
+    
+    /** Compare the current URL location to the current 
+      selected id to make sure we're on the same page */
+    let locArray = window.location.pathname.split('/');
+    let _id = locArray[locArray.length - 1];
+    if ( _id !== this.selected.id ) {
+      /** Reset the thumbnails and background images so if
+      the user has navigated to a new item the old image
+      isn't displayed. */
+      this.thumbnail = '';
+      this.singleImage.style.backgroundImage = 'initial';
+      this.connectionSrcImg.style.backgroundImage = 'initial';
+      this.connectionDstImg.style.backgroundImage = 'initial';
+      this.imageCreditLink  = '';
+      this.imageCreditTitle = '';
+    }    
 
     this.type = this.selected.type;
 
@@ -228,7 +236,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       this.descriptionEle.innerHTML = markdown.toHTML('');
     }
 
-    if ( node.thumbnail ) {
+    if ( node.thumbnail ) {     
       this.thumbnail = this.endpoint + '/' + this.moment + '/' + node.thumbnail.replace('z:', '');
       this.singleImage.style.backgroundImage = 'url(' + this.thumbnail + ')';
     }
