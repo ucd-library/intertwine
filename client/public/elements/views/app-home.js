@@ -46,7 +46,7 @@ export default class AppHome extends Mixin(LitElement)
       } else {
         data.entrypoint.thumbnail = APP_CONFIG.endpoint + '/' + APP_CONFIG.moments[i] + '/' + data.entrypoint.thumbnail
       }
-            
+
       this.loadMoments(state.payload.graph.story);
     }
   }
