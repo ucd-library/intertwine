@@ -130,7 +130,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         momentEntryPoint = this.momentGraph.graph.story.entrypoint;
       }
 
-      if( momentEntryPoint ) {
+      if ( momentEntryPoint ) {
         this.momentEntryPoint = momentEntryPoint;
         this.momentDescEle.innerHTML = markdown.toHTML(momentEntryPoint.description);
       }

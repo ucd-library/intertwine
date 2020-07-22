@@ -29,6 +29,7 @@ export default class AppLeafletMap extends LitElement {
     this.layerLabel = '';
     this.links = {};
     this.nodes = {};
+    this.reverses = {};
     this.updateLinksTimer = -1;
     this.firstRender = true;
     this.connectionName = '';  
@@ -209,11 +210,10 @@ export default class AppLeafletMap extends LitElement {
       this.selectedNodeIcon.src.getLatLng(),
       this.selectedNodeIcon.dst.getLatLng()
     );
-    
-    // TODO: Work layer 2
-    //  The Trello board moments have link names that are 2 item Arrays w/the
-    //  short word being stored in the second slot
-    let connectionName = (Array.isArray(link.name) ? link.name[1] : link.name);
+
+    // Connection Label - the label that appears when a connection is clicked
+    let connectionName = this.reverses[link['@id'] + ':_rev'].name;
+
     // create the line label
     let icon = L.divIcon({
       className: `leaflet-intertwine-connection-label`,
@@ -662,6 +662,7 @@ export default class AppLeafletMap extends LitElement {
     this.nodes = data.nodes;
     this.nodeLayers = {};
     this.links = data.links;
+    this.reverses = data.reverses;
 
     this.clusters.clearLayers();
 

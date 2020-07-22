@@ -305,7 +305,7 @@ return html`
             Explore
           </div>
 
-          <h1 style="margin-bottom: 3px" class="inverse">${this.momentEntryPoint.title}</h1>
+          <h1 style="margin-bottom: 3px" class="inverse">${this.momentEntryPoint.name}</h1>
           <h2 style="margin: 0 0 14px 0" class="inverse">${this.momentEntryPoint.temporal}</h2>
           <div>
             Select a subject on the map to learn about their
