@@ -212,7 +212,8 @@ export default class AppLeafletMap extends LitElement {
     );
 
     // Connection Label - the label that appears when a connection is clicked
-    let connectionName = this.reverses[link['@id'] + ':_rev'].name;
+    // As far as I can tell, the correct label is ALWAYS in the [0] slot, lets hope that holds true!
+    let connectionName = link.name[0];
 
     // create the line label
     let icon = L.divIcon({
@@ -251,9 +252,12 @@ export default class AppLeafletMap extends LitElement {
    * @description Returns the distance between two geographical coordinates according to the map's CRS.
                   By default this measures distance in meters
   */
-  calculateOffset() {    
-    let len       = L.latLng(this.latlngs[0]).distanceTo(this.latlngs[1])
+  calculateOffset() {
+    let len       = L.latLng(this.latlngs[0]).distanceTo(this.latlngs[1]);
+
+    // Controls direction the arrow head is pointing in.
     let m_center  = this.map.latLngToContainerPoint(this.latlngs[1]);
+
     let m_edge    = [m_center.x + 20, m_center.y];
     let m_len     = L.latLng(this.latlngs[1]).distanceTo(this.map.containerPointToLatLng(m_edge));
     let offset    = 100 * (len - m_len) / len;
