@@ -124,8 +124,8 @@ export default function render() {
       header > .story-header > ul > li > .quote > ul.credit {
         margin: 0;
         padding: 0;
-        font-size: 1.0rem;
-        list-style-type: '-';
+        font-size: 13px;
+        list-style-type: "\\2013";
         list-style-position: outside;
       }
       header > .story-header > ul > li > .quote > ul.credit > li {
@@ -133,7 +133,7 @@ export default function render() {
         padding: 20px 0 0 10px;
       }
 
-      section.text-blocks {
+      section.text-blocks > .text-blocks {
         margin: 0 auto;
         padding: 75px;
         max-width: 750px;
@@ -154,7 +154,7 @@ export default function render() {
         display: flex;
         flex-direction: row;
         align-items: stretch;
-        background-color: var(--app-color-smoke);
+        /* background-color: var(--app-color-smoke); */
       }
       .text-image-pairing > div {
         padding: 75px;
@@ -169,6 +169,9 @@ export default function render() {
       .text-image-pairing > .text-blocks {
         padding: 75px;
       }
+      .text-image-pairing > .text-blocks > p {
+        max-width: 550px;
+      }
       .text-image-pairing > .image {
         padding: 75px;
         min-height: 700px;
@@ -178,25 +181,28 @@ export default function render() {
         background-position: center center;
       }
       .text-image-pairing > .image > span {
-        padding: 10px 20px;
+        padding: 5px 10px;
         position: absolute;
         bottom: 0;
         left: 0;
+        font-size: 14px;
         color: var(--app-color-white);
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.65);
       }
 
       .triptych {
         display: flex;
         width: 100%;
+        padding: 10px 0;
         justify-content: center;
         align-items: flex-end;
         flex-direction: row;
+        background-color: var(--app-color-white);
       }
       .triptych div {
         display: flex;
         align-items: flex-end;
-        padding-top: 33%;
+        padding-top: 18.5%;
         width: 33%;
         max-height: 200px;
 
@@ -370,7 +376,7 @@ export default function render() {
 
             <li>
               ${this.story.quote? html`<div class="quote">
-                ${this.story.quote.description[1]}
+                <em>${this.story.quote.description[1]}</em>
                 <ul class="credit">
                   <li>${this.story.quote.description[0]}</li>
                 </ul>
