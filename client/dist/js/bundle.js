@@ -1,4 +1,4 @@
-!function(t){function e(e){for(var i,o,r=e[0],s=e[1],a=0,h=[];a<r.length;a++)o=r[a],Object.prototype.hasOwnProperty.call(n,o)&&n[o]&&h.push(n[o][0]),n[o]=0;for(i in s)Object.prototype.hasOwnProperty.call(s,i)&&(t[i]=s[i]);for(l&&l(e);h.length;)h.shift()()}var i={},n={1:0};function o(e){if(i[e])return i[e].exports;var n=i[e]={i:e,l:!1,exports:{}};return t[e].call(n.exports,n,n.exports,o),n.l=!0,n.exports}o.e=function(t){var e=[],i=n[t];if(0!==i)if(i)e.push(i[2]);else{var r=new Promise((function(e,o){i=n[t]=[e,o]}));e.push(i[2]=r);var s,a=document.createElement("script");a.charset="utf-8",a.timeout=120,o.nc&&a.setAttribute("nonce",o.nc),a.src=function(t){return o.p+""+({0:"intersection-observer-polyfill"}[t]||t)+"-f302815d783f10e4a289.bundle.js"}(t);var l=new Error;s=function(e){a.onerror=a.onload=null,clearTimeout(h);var i=n[t];if(0!==i){if(i){var o=e&&("load"===e.type?"missing":e.type),r=e&&e.target&&e.target.src;l.message="Loading chunk "+t+" failed.\n("+o+": "+r+")",l.name="ChunkLoadError",l.type=o,l.request=r,i[1](l)}n[t]=void 0}};var h=setTimeout((function(){s({type:"timeout",target:a})}),12e4);a.onerror=a.onload=s,document.head.appendChild(a)}return Promise.all(e)},o.m=t,o.c=i,o.d=function(t,e,i){o.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:i})},o.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},o.t=function(t,e){if(1&e&&(t=o(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var i=Object.create(null);if(o.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var n in t)o.d(i,n,function(e){return t[e]}.bind(null,n));return i},o.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return o.d(e,"a",e),e},o.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},o.p="",o.oe=function(t){throw console.error(t),t};var r=window.webpackJsonp=window.webpackJsonp||[],s=r.push.bind(r);r.push=e,r=r.slice();for(var a=0;a<r.length;a++)e(r[a]);var l=s;o(o.s=79)}([function(t,e,i){"use strict";i.d(e,"a",(function(){return n}));
+!function(t){function e(e){for(var i,o,r=e[0],s=e[1],a=0,h=[];a<r.length;a++)o=r[a],Object.prototype.hasOwnProperty.call(n,o)&&n[o]&&h.push(n[o][0]),n[o]=0;for(i in s)Object.prototype.hasOwnProperty.call(s,i)&&(t[i]=s[i]);for(l&&l(e);h.length;)h.shift()()}var i={},n={1:0};function o(e){if(i[e])return i[e].exports;var n=i[e]={i:e,l:!1,exports:{}};return t[e].call(n.exports,n,n.exports,o),n.l=!0,n.exports}o.e=function(t){var e=[],i=n[t];if(0!==i)if(i)e.push(i[2]);else{var r=new Promise((function(e,o){i=n[t]=[e,o]}));e.push(i[2]=r);var s,a=document.createElement("script");a.charset="utf-8",a.timeout=120,o.nc&&a.setAttribute("nonce",o.nc),a.src=function(t){return o.p+""+({0:"intersection-observer-polyfill"}[t]||t)+"-b5c5109a11ef3be52915.bundle.js"}(t);var l=new Error;s=function(e){a.onerror=a.onload=null,clearTimeout(h);var i=n[t];if(0!==i){if(i){var o=e&&("load"===e.type?"missing":e.type),r=e&&e.target&&e.target.src;l.message="Loading chunk "+t+" failed.\n("+o+": "+r+")",l.name="ChunkLoadError",l.type=o,l.request=r,i[1](l)}n[t]=void 0}};var h=setTimeout((function(){s({type:"timeout",target:a})}),12e4);a.onerror=a.onload=s,document.head.appendChild(a)}return Promise.all(e)},o.m=t,o.c=i,o.d=function(t,e,i){o.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:i})},o.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},o.t=function(t,e){if(1&e&&(t=o(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var i=Object.create(null);if(o.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var n in t)o.d(i,n,function(e){return t[e]}.bind(null,n));return i},o.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return o.d(e,"a",e),e},o.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},o.p="",o.oe=function(t){throw console.error(t),t};var r=window.webpackJsonp=window.webpackJsonp||[],s=r.push.bind(r);r.push=e,r=r.slice();for(var a=0;a<r.length;a++)e(r[a]);var l=s;o(o.s=79)}([function(t,e,i){"use strict";i.d(e,"a",(function(){return n}));
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -2769,8 +2769,8 @@ const Rt=(t,e)=>{const i=t.startNode.parentNode,n=void 0===e?t.endNode:e.startNo
       header > .story-header > ul > li > .quote > ul.credit {
         margin: 0;
         padding: 0;
-        font-size: 1.0rem;
-        list-style-type: '-';
+        font-size: 13px;
+        list-style-type: "\\2013";
         list-style-position: outside;
       }
       header > .story-header > ul > li > .quote > ul.credit > li {
@@ -2778,7 +2778,7 @@ const Rt=(t,e)=>{const i=t.startNode.parentNode,n=void 0===e?t.endNode:e.startNo
         padding: 20px 0 0 10px;
       }
 
-      section.text-blocks {
+      section.text-blocks > .text-blocks {
         margin: 0 auto;
         padding: 75px;
         max-width: 750px;
@@ -2799,7 +2799,7 @@ const Rt=(t,e)=>{const i=t.startNode.parentNode,n=void 0===e?t.endNode:e.startNo
         display: flex;
         flex-direction: row;
         align-items: stretch;
-        background-color: var(--app-color-smoke);
+        /* background-color: var(--app-color-smoke); */
       }
       .text-image-pairing > div {
         padding: 75px;
@@ -2814,6 +2814,9 @@ const Rt=(t,e)=>{const i=t.startNode.parentNode,n=void 0===e?t.endNode:e.startNo
       .text-image-pairing > .text-blocks {
         padding: 75px;
       }
+      .text-image-pairing > .text-blocks > p {
+        max-width: 550px;
+      }
       .text-image-pairing > .image {
         padding: 75px;
         min-height: 700px;
@@ -2823,25 +2826,28 @@ const Rt=(t,e)=>{const i=t.startNode.parentNode,n=void 0===e?t.endNode:e.startNo
         background-position: center center;
       }
       .text-image-pairing > .image > span {
-        padding: 10px 20px;
+        padding: 5px 10px;
         position: absolute;
         bottom: 0;
         left: 0;
+        font-size: 14px;
         color: var(--app-color-white);
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.65);
       }
 
       .triptych {
         display: flex;
         width: 100%;
+        padding: 10px 0;
         justify-content: center;
         align-items: flex-end;
         flex-direction: row;
+        background-color: var(--app-color-white);
       }
       .triptych div {
         display: flex;
         align-items: flex-end;
-        padding-top: 33%;
+        padding-top: 18.5%;
         width: 33%;
         max-height: 200px;
 
@@ -3015,7 +3021,7 @@ const Rt=(t,e)=>{const i=t.startNode.parentNode,n=void 0===e?t.endNode:e.startNo
 
             <li>
               ${this.story.quote?V`<div class="quote">
-                ${this.story.quote.description[1]}
+                <em>${this.story.quote.description[1]}</em>
                 <ul class="credit">
                   <li>${this.story.quote.description[0]}</li>
                 </ul>
