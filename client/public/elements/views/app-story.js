@@ -90,11 +90,14 @@ export default class AppStory extends Mixin(LitElement)
     }
     
     this.paragraphs = [];
+    let ordered={};
     for ( let key in this.story ) {
       if ( key.includes('paragraph') && !key.includes('1')) {
-        this.paragraphs.push(this.story[key]);
+         ordered[this.story[key].position]=this.story[key]; 
       }
     }
+    Object.keys(ordered).sort().forEach(function(key) {
+       this.paragraphs.push(this.story[ordered[key]]);});
   }
 
   _initIntersectionObserver() {
