@@ -133,7 +133,7 @@ export default function render() {
         padding: 20px 0 0 10px;
       }
 
-      section.text-blocks > .text-blocks {
+      section.text > .text-blocks {
         margin: 0 auto;
         padding: 75px;
         max-width: 750px;
@@ -142,21 +142,23 @@ export default function render() {
         font-weight: regular;
       }
 
-      section.text-blocks:nth-of-type(odd) {
+      section.text:nth-of-type(odd) {
         background-color: var(--app-color-white);
       }
 
-      section.text-blocks:nth-of-type(even) {
+      section.text:nth-of-type(even) {
         background-color: var(--app-color-smoke);
       }
 
-      .text-image-pairing {
+      .textimage,
+      .imagetext {
         display: flex;
         flex-direction: row;
         align-items: stretch;
         /* background-color: var(--app-color-smoke); */
       }
-      .text-image-pairing > div {
+      .textimage > div,
+      .imagetext > div {
         padding: 75px;
         width: 50%;
         position: relative;
@@ -166,13 +168,16 @@ export default function render() {
         background-position: center center;
         /* sets reference point to scale from */
       }
-      .text-image-pairing > .text-blocks {
+      .textimage > .text-blocks,
+      .imagetext > .text-blocks {
         padding: 75px;
       }
-      .text-image-pairing > .text-blocks > p {
+      .textimage > .text-blocks > p,
+      .imagetext > .text-blocks > p {
         max-width: 550px;
       }
-      .text-image-pairing > .image {
+      .textimage > .image,
+      .imagetext > .image {
         padding: 75px;
         min-height: 700px;
         position: relative;
@@ -180,7 +185,8 @@ export default function render() {
         background-repeat: no-repeat;
         background-position: center center;
       }
-      .text-image-pairing > .image > span {
+      .textimage > .image > span,
+      .imagetext > .image > span {
         padding: 5px 10px;
         position: absolute;
         bottom: 0;
@@ -190,7 +196,7 @@ export default function render() {
         background: rgba(0, 0, 0, 0.65);
       }
 
-      .triptych {
+      div.triptych {
         display: flex;
         width: 100%;
         padding: 10px 0;
@@ -199,7 +205,7 @@ export default function render() {
         flex-direction: row;
         background-color: var(--app-color-white);
       }
-      .triptych div {
+      div.triptych > div {
         display: flex;
         align-items: flex-end;
         padding-top: 18.5%;
@@ -214,11 +220,11 @@ export default function render() {
         background-repeat: no-repeat;
         background-position: center center;
       }
-      .triptych div:nth-of-type(2),
-      .triptych div:nth-of-type(3) {
+      div.triptych > div:nth-of-type(2),
+      div.triptych > div:nth-of-type(3) {
         margin: 0 0 0 10px;
       }
-      .triptych div span {
+      div.triptych > div > span {
         padding: 10px 20px;
         color: var(--app-color-white);
         background: rgba(0, 0, 0, 0.5);
@@ -291,10 +297,13 @@ export default function render() {
       }
 
       @media screen and (min-width: 700px) and (max-width: 999px) {
-        section.text-blocks,
-        .text-image-pairing > div,
-        .text-image-pairing > .text-blocks,
-        .text-image-pairing > .image,
+        section.text,
+        .textimage > div,
+        .textimage > .text-blocks,
+        .textimage > .image,
+        .imagetext > div,
+        .imagetext > .text-blocks,
+        .imagetext > .image,
         footer > .map-wrapper > .map,
         footer > .map-wrapper > .explore-map {
           padding: 50px;
@@ -320,36 +329,41 @@ export default function render() {
           max-width: 100%;
         }
 
-        section.text-blocks,
-        .text-image-pairing > div,
-        .text-image-pairing > .text-blocks,
-        .text-image-pairing > .image,
+        section.text,
+        .textimage > div,
+        .textimage > .text,
+        .textimage > .image,
+        .imagetext > div,
+        .imagetext > .text,
+        .imagetext > .image,
         footer > .map-wrapper > .map,
         footer > .map-wrapper > .explore-map {
           padding: 20px;
         }
 
-        .text-image-pairing {
+        .textimage,
+        .imagetext {
           flex-direction: column;
         }
-        .text-image-pairing > div {
+        .textimage > div,
+        .imagetext > div {
           width: 100%;
         }
 
-        .triptych {
+        div.triptych {
           height: initial;
           flex-direction: column;
           align-items: stretch;
         }
-        .triptych div {
+        div.triptych > div {
           padding-top: 56.25%;
           width: 100%;
         }
-        .triptych div:first-of-type,
-        .triptych div:nth-of-type(2) {
+        div.triptych > div:first-of-type,
+        div.triptych > div:nth-of-type(2) {
           margin: 0 0 10px 0;
         }
-        .triptych div:nth-of-type(3) {
+        div.triptych > div:nth-of-type(3) {
           margin: 0;
         }
 
@@ -375,12 +389,12 @@ export default function render() {
             </li>
 
             <li>
-              ${this.story.quote? html`<div class="quote">
+              ${this.story.quote ? html`<div class="quote">
                 <em>${this.story.quote.description[1]}</em>
                 <ul class="credit">
                   <li>${this.story.quote.description[0]}</li>
                 </ul>
-              </div>`:html``}
+              </div>` : html``}
             </li>
           </ul>
         </div>
@@ -390,72 +404,41 @@ export default function render() {
         <app-story-float-btn id="floatBtn" @click="${this._launchMap}"></app-story-float-btn>
       </div>
 
-      ${this.story.paragraph1?
-        html`<section class="text-blocks">
-          <div class="text-blocks">
-            <h1 ?hidden="${!this.story.paragraph1.headline}">${this.story.paragraph1.headline}</h1>
-            ${Array.isArray(this.story.paragraph1.text) ?
-                html`${this.story.paragraph1.text.map((p) => html`<p>${p}</p>`)}` :
-                html`<p>${this.story.paragraph1.text}</p>`}
-          </div>
-        </section>`:html``}
+      ${this.orderedStory.map(p => html`
+        <section class="${p.label}">
+          ${p.label === 'text' ? html`
+            <div class="text-blocks">
+              <h1 ?hidden="${!p.headline}">${p.headline}</h1>
+              ${Array.isArray(p.text) ? html`${p.text.map((p) => html`<p>${p}</p>`)}` : html`${p.text}`}
+            </div>` : html ``}
 
-      ${this.story['image/text']?
-        html`<section class="text-image-pairing">
-        ${this.story['image/text'].thumbnail ?
-          html`<div class="image" style="background-image: url(${this.endpoint}/${this.moment}/${this.story[`image/text`].thumbnail});">
-            <span>${this.story['image/text'].caption}</span>
-          </div>` :
-          html`<div class="image" style="background-image: url('${this.story[`image/text`].src}');">
-            <span>${this.story['image/text'].caption}</span>
-          </div>`}
-          <div class="text-blocks">
-            <h1 ?hidden="${!this.story['image/text'].headline}">${this.story[`image/text`].headline}</h1>
-            ${Array.isArray(this.story['image/text'].text) ?
-              html`${this.story['image/text'].text.map((p) => html`<p>${p}</p>`)}` :
-              html`<p>${this.story['image/text'].text}</p>`}
-          </div>
-        </section>`:html``}
-
-      ${this.paragraphs.map(p => html`<section class="text-blocks">
-        <div class="text-blocks">
-          <h1 ?hidden="${!p.headline}">${p.headline}</h1>
-          ${Array.isArray(p.text) ?
-            html`${p.text.map((i) => html`<p>${i}</p>`)}` :
-            html`<p>${p.text}</p>`}
-        </div>
-      </section>`)}
-
-      ${this.story.triptych && this.story.triptych[`@id`]?
-        html`
-          <div class="triptych">
-          ${repeat(this.story.triptych && this.story.triptych.image, (i) => html`
-            <div style="background-image: url('${this.endpoint}/${this.moment}/${this.story.triptych[`@id`]}/${i.contentUrl}');">
-              <span>${i.caption}</span>
-            </div>`)}
-          </div>
-        `:html`<div class="triptych">
-            ${this.story.triptych && this.story.triptych.image.map(i => html`
-              <div style="background-image: url('${i.contentUrl}');">
-                <span>
-                  ${i.caption}
-                </span>
-              </div>
-            `)}
-          </div>`}
-
-      ${this.story['text/image']?
-        html`<section class="text-image-pairing">
-          <div class="text-blocks">
-            <h1 ?hidden="${!this.story['text/image'].headline}">${this.story[`text/image`].headline}</h1>
-            ${Array.isArray(this.story['text/image'].text) ?
-                html`${this.story['text/image'].text.map((p) => html`<p>${p}</p>`)}` :
-                html`<p>${this.story['text/image'].text}</p>`}
-          </div>
-          <div class="image" style="background-image: url('${this.endpoint}/${this.moment}/${this.story[`text/image`].thumbnail}');">
-            <span>${this.story['text/image'].caption}</span>
-          </div>
-        </section>`:html`<div class="spacer"></div>`}
+          ${p.label === 'imagetext' ? html`
+            ${p.thumbnail ? html`<div class="image" style="background-image: url('${this.endpoint}/${this.moment}/${p.thumbnail}');">
+              <span>${p.caption}</span>
+            </div>` : html`<div class="image" style="background-image: url('${p.src}');"><span>${p.caption}</span></div>`}
+            <div class="text-blocks">
+              <h1 ?hidden="${!p.headline}">${p.headline}</h1>
+              ${Array.isArray(p.text) ? html`${p.text.map((p) => html`<p>${p}</p>`)}` : html`<p>${p.text}</p>`}
+            </div>` : html``}
+          
+          ${p.label === 'textimage' ? html`
+            <div class="text-blocks">
+              <h1 ?hidden="${!p.headline}">${p.headline}</h1>
+              ${Array.isArray(p.text) ? html`${p.text.map((p) => html`<p>${p}</p>`)}`:html`<p>${p.text}</p>`}
+            </div>
+            <div class="image" style="background-image: url('${this.endpoint}/${this.moment}/${p.thumbnail}');">
+              <span>${p.caption}</span>
+            </div>` : html``}
+          
+          ${p.label === 'triptych' && p[`@id`] ? html`
+            <div class="triptych">
+              ${repeat(p.image, (i) => html`
+                <div style="background-image: url('${this.endpoint}/${this.moment}/${p[`@id`]}/${i.contentUrl}');">
+                  <span>${i.caption}</span>
+                </div>`)}
+            </div>` : html``}
+        </section>
+      `)}     
 
       <footer>
         <div class="map-wrapper">
@@ -476,20 +459,20 @@ export default function render() {
           </div>
         </div>
 
-        ${this.story.sources?
+        ${this.story.sources ? 
           html`<div class="bottom-content">
             <h6>Sources</h6>
             <ol>
-            ${this.sources.map(source => html`
+            ${this.sources.map((source) => html`
               <li>
                 <em>
                   ${source.text}
-                  <a ?hidden="${!source.link}" href="${source.href}">"${source.link}"</a>
+                  <a ?hidden="${!source.link}" href="${source.href}">${source.link}</a>
                 </em>
               </li>
             `)}
             </ol>
-          </div>`:html``
+          </div>` : html``
         }
       </footer>
   </div>
