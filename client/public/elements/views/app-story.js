@@ -71,7 +71,7 @@ export default class AppStory extends Mixin(LitElement)
       for (let key in this.story) {
         this.orderedStory.push(this.story[key]);
       }
-      
+
       this.orderedStory.sort((a,b) => {
         return a['schema:position'] - b['schema:position'];
       });
@@ -101,7 +101,7 @@ export default class AppStory extends Mixin(LitElement)
           }
           this.sources.push(obj);
         }
-      }      
+      }
     }
   }
 
