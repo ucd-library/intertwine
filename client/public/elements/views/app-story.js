@@ -10,6 +10,7 @@ export default class AppStory extends Mixin(LitElement)
       headerImgUrl: { type: String },
       moment: { type: String },
       paragraphs: { type: Array },
+      orderedStory: { type: Array },
       story: { type: Object },
       sources: { type: Array },
       title: { type: String }
@@ -26,6 +27,7 @@ export default class AppStory extends Mixin(LitElement)
     this.story = {};
     this.sources = [];
     this.paragraphs = [];
+    this.orderedStory = [];
     this.title = '';
 
     this._injectModel('AppStateModel', 'MomentModel');
@@ -58,20 +60,33 @@ export default class AppStory extends Mixin(LitElement)
     this.renderStory(payload.payload);
   }
 
-  renderStory(story) {
-    if ( !story ) return;
-    
-    if ( Object.keys(story.graph.story).length !== 0) {
-      this.story = story.graph.story;
-      this.title = story.graph.story.entrypoint.name;
+  renderStory(payload) {
+    if ( !payload ) return;
 
-      if ( !story.graph.story.entrypoint.thumbnail ) {
+    if ( Object.keys(payload.graph.story).length !== 0) {
+      this.story = payload.graph.story;
+      this.title = payload.graph.story.entrypoint.name;
+
+      this.orderedStory = [];
+      for (let key in this.story) {
+        this.orderedStory.push(this.story[key]);
+      }
+
+      this.orderedStory.sort((a,b) => {
+        return a['schema:position'] - b['schema:position'];
+      });
+
+      for (let i=0; i < this.orderedStory.length; i++) {
+        this.orderedStory[i].label = this.orderedStory[i].label.replace(/\s|\/|story:/gi, '').toLowerCase();
+      }
+
+      if ( !payload.graph.story.entrypoint.thumbnail ) {
         this.headerImgUrl = this.endpoint + '/' + this.moment + '/thumbnail.jpg';
       } else {
-        if ( story.graph.story.entrypoint.thumbnail.match(/^https?:\/\//g) === null ) {
-          this.headerImgUrl = this.endpoint + '/' + this.moment + '/' + story.graph.story.entrypoint.thumbnail;
+        if ( payload.graph.story.entrypoint.thumbnail.match(/^https?:\/\//g) === null ) {
+          this.headerImgUrl = this.endpoint + '/' + this.moment + '/' + payload.graph.story.entrypoint.thumbnail;
         } else {
-          this.headerImgUrl = story.graph.story.entrypoint.thumbnail;
+          this.headerImgUrl = payload.graph.story.entrypoint.thumbnail;
         }
       }
 
@@ -86,18 +101,8 @@ export default class AppStory extends Mixin(LitElement)
           }
           this.sources.push(obj);
         }
-      }      
-    }
-    
-    this.paragraphs = [];
-    let ordered={};
-    for ( let key in this.story ) {
-      if ( key.includes('paragraph') && !key.includes('1')) {
-         ordered[this.story[key].position]=this.story[key]; 
       }
     }
-    Object.keys(ordered).sort().forEach(function(key) {
-       this.paragraphs.push(this.story[ordered[key]]);});
   }
 
   _initIntersectionObserver() {

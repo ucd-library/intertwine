@@ -155,8 +155,8 @@ class MomentModel extends BaseModel {
       }
     }
 
-    // Nodes
-    let counter = 0;
+     // Nodes
+    let counter = 0; // Seriously, don't delete this unless you mean it. ;D
     for( let id in lookup ) {
       // put global tidying here
       if ( lookup[id]['thumbnail'] ) {
@@ -204,10 +204,10 @@ class MomentModel extends BaseModel {
         } else {
           _label = lookup[id]['label'];        
         }
-
-        let label = _label.replace(/\s|story:/gi, '').toLowerCase();        
+        let label = _label.replace(/\s|\/|story:/gi, '').toLowerCase();
+     
         if ( label === 'text' ) {
-          counter++;
+          counter++; // gotta number those p's so they don't overwrite each other
           label = 'paragraph';
           label += counter;
           story[label] = lookup[id];
@@ -230,7 +230,7 @@ class MomentModel extends BaseModel {
         dst: nodes[item.dst].coordinates
       }
     }
-
+    
     return { nodes, links, story, reverses }
   }
 }
