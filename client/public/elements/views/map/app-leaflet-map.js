@@ -32,7 +32,10 @@ export default class AppLeafletMap extends LitElement {
     this.reverses = {};
     this.updateLinksTimer = -1;
     this.firstRender = true;
-    this.connectionName = '';  
+    this.connectionName = '';
+
+    // TODO: variable that needs to change depending on whether or not the arrow is pointing at a cluster or a point.
+    this.distance = 20; 
 
     this.arrow = {};
     this.stopZoomBounds = false;
@@ -110,7 +113,7 @@ export default class AppLeafletMap extends LitElement {
 
       if( this.appState && this.appState.selectedNode && this.appState.selectedNode.type === 'cluster' ) {
         this.findAndRenderSelectedCluster(this.appState.selectedNode.latlng, this.appState.selectedNode.zoom);
-      }
+      }     
     });
 
     // grab the css color defined by our custom variable
@@ -199,7 +202,7 @@ export default class AppLeafletMap extends LitElement {
     if( !link ) {
       this.pendingLinkSelect = id;
       return;
-    }
+    }   
 
     // set our source and destination node labels
     this.selectNode(link.src, 'src');
@@ -245,7 +248,7 @@ export default class AppLeafletMap extends LitElement {
     let length = Math.sqrt(Math.pow((srcxy.x - dstxy.x), 2) + Math.pow((srcxy.y - dstxy.y), 2));
 
     this.polylineLength = length;
-  }
+  }  
 
    /**
    * @method calculateOffset
@@ -258,9 +261,10 @@ export default class AppLeafletMap extends LitElement {
     // Controls direction the arrow head is pointing in.
     let m_center  = this.map.latLngToContainerPoint(this.latlngs[1]);
 
-    let m_edge    = [m_center.x + 20, m_center.y];
+    let m_edge    = [m_center.x + this.distance, m_center.y];
     let m_len     = L.latLng(this.latlngs[1]).distanceTo(this.map.containerPointToLatLng(m_edge));
     let offset    = 100 * (len - m_len) / len;
+
     return offset;
   }
 
@@ -375,6 +379,8 @@ export default class AppLeafletMap extends LitElement {
     // graph the visible marker, either the cluster marker or the layer itself
     layer = this.clusters.getVisibleParent(layer) || layer;
 
+    this.getRenderedLayerType(layer);
+
     // render the icon
     let icon = this.getMarkerLabelIcon(id);
     this.selectedNodeIcon[type] = L.marker(layer.getLatLng(), {
@@ -430,6 +436,16 @@ export default class AppLeafletMap extends LitElement {
         }
       }
     });
+  }
+
+  /**
+   * @method getRenderedLayerType(id)
+   * @description determines whether a layer is a cluster or a point.
+   * Point markers have inertWineIds
+  */
+  getRenderedLayerType(layer) {
+    if ( layer.inertWineId ) this.distance = 0;
+    else this.distance = 10;
   }
 
   /**
@@ -729,7 +745,7 @@ export default class AppLeafletMap extends LitElement {
       if ( item.weblink ) continue;
 
       let src = this.getMarkerLatLng(item.src);
-      let dst = this.getMarkerLatLng(item.dst);     
+      let dst = this.getMarkerLatLng(item.dst); 
 
       let selected = false;
       if( this.selectedNodeLayer && this.selectedNodeLayer.src && this.selectedNodeLayer.dst ) {
