@@ -83,14 +83,17 @@ export default function render() {
       }
 
       main {
+        margin: 0 auto;
         padding: 0px 25px;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-evenly;
+        max-width: 1500px;
       }
 
       main > div {
+        display: block;
         margin-left: 7.5px;
         margin-right: 7.5px;
         max-width: 600px;
@@ -199,6 +202,7 @@ export default function render() {
       @media(max-width: 800px) {
         main > div {
           width: 100%;
+          border: 10px solid pink;
         }
       }
 
