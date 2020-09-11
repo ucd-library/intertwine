@@ -200,11 +200,12 @@ export default function render() {
       .textimage div.text-blocks {
         display: flex;
         flex-direction: column;
+        justify-content: flex-end;
       }
 
       .textimage div.text-blocks > p,
       .textimage div.text-blocks > h1 {
-        //TODO:
+        border: 1px solid red;
       }
 
       div.triptych {
