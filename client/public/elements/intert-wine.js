@@ -16,6 +16,8 @@ import "@polymer/iron-pages"
 import "./intert-wine-icons"
 import "./app-header"
 import "./views/map/app-view-map"
+import "./views/app-home"
+import "./views/app-story"
 
 export default class IntertWine extends Mixin(LitElement)
   .with(LitCorkUtils) {
@@ -23,18 +25,20 @@ export default class IntertWine extends Mixin(LitElement)
   static get properties() {
     return {
       view : { type: String },
-      appRoutes : { type: Array }
+      appRoutes : { type: Array },
+      offline : { type: Boolean }
     }
   }
 
   constructor() {
     super();
 
-    this.view = 'map';
+    this.offline = false;
+    this.view = '';
     this.appRoutes = APP_CONFIG.appRoutes;
 
     this.render = render.bind(this);
-
+    
     this._injectModel('AppStateModel');
   }
 

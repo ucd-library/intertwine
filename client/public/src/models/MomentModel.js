@@ -9,31 +9,51 @@ class MomentModel extends BaseModel {
     this.store   = MomentStore;
     this.service = MomentService;
 
-    this.EventBus.on('app-state-update', e => {
+    this.EventBus.on('app-state-update', async (e) => {
+      let state = await this.get(e.moment);
+
+      // TODO: Error displays correctly here, but how to pass this data over to AppStateModel????
+      if ( state.state === 'error' ) console.log('Error!');
+
       if( e.page === 'map' ) this.get(e.moment);
-    })
+    });
 
     this.register('MomentModel');
   }
 
   async get(moment) {
     let state = this.store.data[moment] || {};
-
     try {
       if( state.request ) {
         await state.request;
       } else if( state.state !== 'loaded' ) {
         await this.service.get(moment, this.transformLinks);
       }
-    } catch(e) { console.error(e) };
+    } catch(err) {
+      // handle network error here if you want to handle in model
+      // but error state should be capture by store and UI elements
+      // should react to the error state event
+    };
 
     return this.store.data[moment];
   }
 
+  /**
+   * @method transformLinks
+   * @description prepare the raw json to be used by the app
+   * @param {Object} data => the data object
+   * @returns {Object} nodes & links
+   */
   transformLinks(data) {
-    let links = {}, nodes = {}, lookup = {};
+    let links = {}, nodes = {}, lookup = {}, story = {}, reverses = {};
 
     // Helper Functions - START
+    /**
+     * @method cleanType
+     * @description take the default type and strip unnecessary characters from the string(s)
+     * @param {*} type
+     * @returns {String}
+    */
     function cleanType(type) {
       let newType;
       if ( Array.isArray(type) ) {
@@ -42,6 +62,10 @@ class MomentModel extends BaseModel {
           // and convert them to the description to objects
           if ( type[t].toLowerCase().includes('thing') ) {
             type[t] = 'object';
+          }
+
+          if ( type[t].toLowerCase().includes('animal') ) {
+            type[t] = 'person';
           }
         }
 
@@ -57,8 +81,14 @@ class MomentModel extends BaseModel {
       }
     }
 
-    function getLocation(id) {
-      /* Possible Layouts:
+    /**
+     * @method getBNode
+     * @description Locate and return a record matching the provided id
+     * @param {String} id
+     * @returns {Object}
+     */
+    function getBNode(id) {
+      /* Possible json layouts we'll have to contend with:
         Jop:
           "spatial" : [
             "Saint-Julien-Beychevelle, France",
@@ -95,7 +125,7 @@ class MomentModel extends BaseModel {
         delete data[i]['schema:latitude'];
       }
 
-      // Replace significantlink(s) with connection
+      // Replace significantlink(s) with connection   
       if ( data[i].type.includes('significantlink') ) {
         data[i].type = 'connection';
       }
@@ -106,6 +136,7 @@ class MomentModel extends BaseModel {
     // Create lookup table
     for ( let id in lookup ) {
       let container = lookup[id];
+
       for ( let attr in container ) {
         if ( lookup[attr] ) {
           let link = lookup[attr];
@@ -117,22 +148,33 @@ class MomentModel extends BaseModel {
       }
     }
 
-    // Nodes
+    // Reverses
+    for ( let id in lookup ) {
+      if ( lookup[id]['@id'].includes(':_rev') ) {
+        reverses[lookup[id]['@id']] = lookup[id];
+      }
+    }
+
+     // Nodes
+    let counter = 0; // Seriously, don't delete this unless you mean it. ;D
     for( let id in lookup ) {
-      // Can't be a link or a connection
-      if( !lookup[id].isLink && lookup[id]['type'] !== 'connection' ) {
+      // put global tidying here
+      if ( lookup[id]['thumbnail'] ) {
+        lookup[id]['thumbnail'] = lookup[id]['thumbnail'].replace('z:', '');
+      }
+
+      // Can't be a link or a connection OR a Story
+      if( !lookup[id].isLink && lookup[id]['type'] !== 'connection' && lookup[id]['type'] !== 'story' ) {
         let location;
 
-        /**
-         * Weed out the _:b items, which won't be needed in the final display
-        */
+        // Weed out the _:b items, which won't be needed in the final display
         const regex = new RegExp(/^_:b*/g);
         if ( !regex.test(lookup[id]["@id"]) ) {
 
           if ( lookup[id]['spatial'] ) {
-            location = getLocation(lookup[id]['spatial']);
+            location = getBNode(lookup[id]['spatial']);
           } else if ( lookup[id]['type'] === 'place' ) {
-            location = getLocation(lookup[id]['@id']);
+            location = getBNode(lookup[id]['@id']);
           }
 
           if ( location === undefined ) continue;
@@ -144,6 +186,33 @@ class MomentModel extends BaseModel {
           ];
 
           nodes[lookup[id]['@id']] = lookup[id];
+        }
+      } else if ( lookup[id]['type'] === 'story' ) {
+        if ( lookup[id]['image'] ) {
+          for ( let key in lookup[id]['image'] ) {
+            lookup[id]['image'][key] = getBNode(lookup[id]['image'][key]);
+          }
+        }
+
+        let _label = '';
+        if ( Array.isArray(lookup[id]['label']) ) {          
+          for (let i=0; i < lookup[id]['label'].length; i++) {
+            if (lookup[id]['label'][i].match(/\Story:/)) {
+              _label = lookup[id]['label'][i]; 
+            }
+          }     
+        } else {
+          _label = lookup[id]['label'];        
+        }
+        let label = _label.replace(/\s|\/|story:/gi, '').toLowerCase();
+     
+        if ( label === 'text' ) {
+          counter++; // gotta number those p's so they don't overwrite each other
+          label = 'paragraph';
+          label += counter;
+          story[label] = lookup[id];
+        } else {
+          story[label] = lookup[id];
         }
       }
     }
@@ -161,10 +230,8 @@ class MomentModel extends BaseModel {
         dst: nodes[item.dst].coordinates
       }
     }
-
-    //console.log("nodes: ", nodes, " links: ", links);
-
-    return { nodes, links }
+    
+    return { nodes, links, story, reverses }
   }
 }
 

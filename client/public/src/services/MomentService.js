@@ -16,7 +16,6 @@ class MomentService extends BaseService {
         this.store.onGraphLoading(moment, request)
       },
       onLoad : resp => {
-        //resp.body.graph = transform(resp.body.graph);
         resp.body.graph = transform(resp.body['@graph']);
         this.store.onGraphLoaded(moment, resp.body);
       },

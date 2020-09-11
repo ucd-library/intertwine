@@ -1,29 +1,30 @@
-var router  = require('express').Router();
-let fs      = require('fs');
-let path    = require('path');
-let fetch   = require('node-fetch');
-
+var router   = require('express').Router();
+const fetch  = require('node-fetch');
 const config   = require('../../config');
 const endpoint = config.server.endpoint;
 
-router.get('/:id', (req, res) => {
-  // TODO: Ask Justin, better way to filter this?  
-  if ( req.params.id !== 'undefined' ) {
-    const moment = req.params.id;
-    
-    const url = endpoint + '/' + moment + '/' + moment + '.json';
-
-    const getData = async url => {
-      try {
-        const response = await fetch(url);
-        const json = await response.json();
-        res.json(json);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    
-    getData(url);
+router.get('/:id', async (req, res) => {
+  const moment = req.params.id;
+  const url = endpoint + '/' + moment + '/' + moment + '.json';
+  
+  try {
+    const response = await fetch(url);
+    if ( response.status !== 200 ) {
+      console.error('Error status code: ', response.status);
+      
+      res.status(response.status).json({
+        error: true,
+        message: response.message
+      });
+    } else {
+      res.json(await response.json());
+    }
+  } catch (e) {
+    console.error('E: ', e);
+    res.status(500).json({
+      error: true,
+      message: e.message
+    });
   }
 });
 

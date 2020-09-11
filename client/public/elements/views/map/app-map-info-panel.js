@@ -4,8 +4,6 @@ import {markdown} from "markdown"
 
 import "@polymer/iron-icons"
 
-import "../../app-moments-dropdown"
-
 export default class AppMapInfoPanel extends Mixin(LitElement)
   .with(LitCorkUtils) {
 
@@ -16,12 +14,14 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         reflect: true
       },
       moment : {type: String},
-      momentInfo : {type: Object},
+      momentEntryPoint : { type: Object },
       momentEntryPointUrl : {type: String},
       endpoint: { type: String },
       type : {type : String},
-      srctype : {type: String},
-      dsttype : {type: String},
+      srctype : { type: String },
+      srcthumb: { type: String },
+      dsttype : { type: String },
+      dstthumb: { type: String },
       view : {type : String},
       title : {type : String},
       date : {type : String},
@@ -31,9 +31,10 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       isLink : {type: Boolean},
       isMoment : {type: Boolean},
       relatedLinks: { type: Array },
+      imageCreditLink: { type: String },
+      imageCreditTitle: { type: String },
       selectedIndex: { type: Number },
       hasConnections: { type: Boolean },
-      shortConnection: { type: Boolean },
       connectionSubjects : {type: Array},
       clusterSubjects : {type: Object},
       clusterSubjectTypes : {type: Array}
@@ -51,17 +52,20 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.description = '';
     this.thumbnail = '';
     this.srctype = '';
+    this.srcthumb = '';
     this.dsttype = '';
+    this.dstthumb = '';
     this.connections = [];
     this.isLink = false;
     this.isNode = false;
     this.isMoment = false;
     this.moment = '';
-    this.momentInfo = {};
+    this.momentEntryPoint = {};
     this.momentEntryPointUrl = '';
     this.relatedLinks = [];
-    this.events       = [];
-    this.shortConnection = false;
+    this.imageCreditLink  = '';
+    this.imageCreditTitle = '';
+    this.events  = [];
 
     this.endpoint = APP_CONFIG.endpoint;
 
@@ -82,61 +86,53 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
    */
   _onMomentGraphUpdate(e) {
     if( e.state !== 'loaded' ) return;
-    this.renderState(e.payload);
+
+    /** TODO: Related to Issue #54 */
+    if ( this.moment === e.id ) {
+      this.renderState(e.payload);
+    }
+    
   }
 
-  _onAppStateUpdate(e) {
-    this.moment   = e.moment;
-    this.selected = e.selected;
+  async _onAppStateUpdate(e) {
+    if ( this.moment === e.moment && this.selected === e.selectedNode ) {
+      return;
+    }
 
-    this.renderState();
+    this.moment   = e.moment;
+    this.selected = e.selectedNode;
+
+    let state = await this.MomentModel.get(this.moment);
+
+    this.renderState(state.payload);
   }
 
   firstUpdated() {
     this.descriptionEle = this.shadowRoot.querySelector('#description');
     this.momentDescEle  = this.shadowRoot.querySelector('#momentDescription');
+    this.singleImage    = this.shadowRoot.querySelector('#singleImage');
+    this.connectionSrcImg = this.shadowRoot.querySelector('#connection-src-image');
+    this.connectionDstImg = this.shadowRoot.querySelector('#connection-dst-image');
   }
 
   updated() {
     if ( this.isLink ) this.title = '';
-
     if ( this.connections.length > 0 ) this.hasConnections = true;
     else this.hasConnections = false;
   }
 
   renderState(moment) {
     if( moment ) {
-      this.momentInfo = moment;
-      this.momentDescEle.innerHTML = markdown.toHTML(moment.description || '');
-      this.momentEntryPointUrl = '';
+      this.momentGraph = moment;     
 
-      // TODO: Need to add entryPoint to data in Trello
-      /*
-      if( moment.entryPoint ) {
-        for( let id in moment.graph.nodes ) {
-          let node = moment.graph.nodes[id];
-          if( node['@id'] !== moment.entryPoint ) continue;
-          this.momentEntryPointUrl = `/map/${this.moment}/${node.type}/${node['@id']}`;
-          break;
-        }
-      }
-      */
-
-      // Temp entry point
-      this.events = [];
-      for ( let id in moment.graph.nodes ) {
-        if (moment.graph.nodes[id].type === 'event') {
-          this.events.push(moment.graph.nodes[id]);
-        }
+      let momentEntryPoint;
+      if ( Object.keys(this.momentGraph.graph.story).length !== 0 ) {
+        momentEntryPoint = this.momentGraph.graph.story.entrypoint;
       }
 
-      if ( this.events.length > 0 ) {
-        this.momentInfo.title    = this.events[0]['name'];
-        if ( this.events[0]['temporal'] ) {
-          this.momentInfo.date   = this.events[0]['temporal'].replace('/', ' - ');
-        }
-        this.momentEntryPoint    = this.events[0]['name'];
-        this.momentEntryPointUrl = `/map/${this.moment}/${this.events[0].type}/${this.events[0]['@id']}`;
+      if ( momentEntryPoint ) {
+        this.momentEntryPoint = momentEntryPoint;
+        this.momentDescEle.innerHTML = markdown.toHTML(momentEntryPoint.description);
       }
 
       this.graph = moment.graph;
@@ -152,6 +148,26 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     }
 
     if( !this.graph ) return;
+
+    /** TODO: This checker may become unnecessary once I 
+     * figure out the problems w/the mulitiple moments all 
+     * loading at the same time */
+    
+    /** Compare the current URL location to the current 
+      selected id to make sure we're on the same page */
+    let locArray = window.location.pathname.split('/');
+    let _id = locArray[locArray.length - 1];
+    if ( _id !== this.selected.id ) {
+      /** Reset the thumbnails and background images so if
+      the user has navigated to a new item the old image
+      isn't displayed. */
+      this.thumbnail = '';
+      this.singleImage.style.backgroundImage = 'initial';
+      this.connectionSrcImg.style.backgroundImage = 'initial';
+      this.connectionDstImg.style.backgroundImage = 'initial';
+      this.imageCreditLink  = '';
+      this.imageCreditTitle = '';
+    }    
 
     this.type = this.selected.type;
 
@@ -176,7 +192,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       this.type = 'empty';
       return;
     }
-
     this.type = 'moment';
     this.view = 'moment';
     this.isMoment = true;
@@ -190,7 +205,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       if( !this.clusterSubjects[node.type] ) return;
 
       this.clusterSubjects[node.type].enabled = true;
-
       this.clusterSubjects[node.type].nodes.push(node);
     });
 
@@ -201,10 +215,16 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   renderItem(node) {
-    this.view = 'item';
+    if ( !node ) return;
 
+    this.view = 'item';
     this.title = node.name || '';
-    this.location = node.location || '';
+
+    if ( node['schema:spatial'] ) {
+      this.location = node['schema:spatial'];
+    } else {
+      this.location = node.location || '';
+    }
 
     let temporal = '';
     if ( node.temporal !== undefined ) {
@@ -215,31 +235,39 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     // TODO: Some of the descriptions are like this: description: @id: http://link.com
     //       So weeding those out by testing to see if they're strings first
     //       Otherwise markdown breaks
-    if ( node.description !== false && typeof node.description === 'string' ) {
-      this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');
+    if ( node.description !== false && node.description !== undefined && typeof node.description === 'string' ) {
+      this.descriptionEle.innerHTML = markdown.toHTML(node.description);
+    } else {
+      this.descriptionEle.innerHTML = markdown.toHTML('');
     }
 
-    if ( node.thumbnail ) {
+    if ( node.thumbnail ) {     
       this.thumbnail = this.endpoint + '/' + this.moment + '/' + node.thumbnail.replace('z:', '');
+      this.singleImage.style.backgroundImage = 'url(' + this.thumbnail + ')';
     }
 
-    // TODO:
-    //    1. There should be associated page titles to display next to the url with the data from trello
-    this.relatedLinks = [];
-    if ( Array.isArray(node.relatedLink) ) {
-      this.relatedLinks = node.relatedLink;
-    } else if ( node.relatedLink !== undefined ) {
-      this.relatedLinks.push(node.relatedLink)
-    }
-
-    this.relatedLinks = this.relatedLinks.map(link => {
-      let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
-      let obj = {
-        'short': link.replace(re, '').split('/')[0],
-        'full': link
+    if ( node.creator ) {
+      if ( Array.isArray(node.creator) ) {
+        this.imageCreditLink  = node.creator.find(c => c['@id'] !== undefined);
+        this.imageCreditTitle = node.creator.find(c => c['@id'] === undefined);
+      } else {
+        // It's a string and there is no title present
+        this.imageCreditLink = node.creator;
       }
-      return obj;
-    });
+    }
+
+    if ( node.relatedLink ) {
+      if ( Array.isArray(node.relatedLink) ) {
+        let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
+        this.relatedLinks = node.relatedLink.map((v, i) => {
+          return {
+            fullLink: v,
+            shortLink: v.replace(re, '').split('/')[0],
+            title: node.relatedLinkText[i]
+          }
+        });
+      }
+    }
 
     if( node.type === 'connection' ) {
       this.connectionSubjects = [
@@ -248,50 +276,47 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       ];
       this.srctype = this.connectionSubjects[0].type;
       this.dsttype = this.connectionSubjects[1].type;
-    } else {
-      // find connections
-      let connections = [];
-      let link;
-      let check;
-      for( let id in this.graph.links ) {
-        link = this.graph.links[id];
 
+      if ( this.connectionSubjects[0].thumbnail ) {
+        this.srcthumb = this.endpoint + '/' + this.moment + '/' + this.connectionSubjects[0].thumbnail.replace('z:', '');
+        this.connectionSrcImg.style.backgroundImage = 'url(' + this.srcthumb + ')';
+      }
+
+      if ( this.connectionSubjects[1].thumbnail ) {
+        this.dstthumb =  this.endpoint + '/' + this.moment + '/' + this.connectionSubjects[1].thumbnail.replace('z:', '');
+        this.connectionDstImg.style.backgroundImage = 'url(' + this.dstthumb + ')';
+      }
+
+    } else {
+      let connections = [], link = {};
+      
+      for ( let id in this.graph.links ) {        
+        link = this.graph.links[id];
         if ( link.src === node['@id'] ) {
           connections.push({
-            link,
-            node: this.graph.nodes[link.src]
-          });
+            id: link['@id'],
+            connection: link['@type'][0].replace('ucdlib:','').replace('_', ' '),
+            dst: link.dst,
+            src: link.src,
+            name: this.graph.nodes[link.dst].name,
+            type: this.graph.nodes[link.dst].type
+          });          
         } else if ( link.dst === node['@id'] ) {
-          connections.push({
-            link,
-            node: this.graph.nodes[link.dst]
-          });
+          for ( let attr in this.graph.nodes[link.src] ) {
+            if ( this.graph.nodes[link.src][attr] === link.dst ) {
+              connections.push({
+                id: attr,
+                connection: this.graph.reverses[attr + ':_rev'].name,
+                name: this.graph.nodes[link.src].name,
+                type: this.graph.nodes[link.src].type
+              });
+            }
+          }
         }
       }
 
-      connections.map(connection => {
-        if ( Array.isArray(connection.link.name) ) {
-          let substring = connection.link.name[1];
-          let string    = connection.link.name[0];
-
-          connection.link.name = formatString(string, substring);
-
-          this.shortConnection = true;
-        }
-      });
-
-      function formatString(string, substring) {
-        let regex = new RegExp(substring, 'g');
-
-        if ( regex.test(string) ) {
-          return string.replace(regex, '<b>' + substring + '</b>');
-        } else {
-          return '<b>' + substring + '</b>&nbsp;' + string;
-        }
-      }
-
-      // Alphabetize the connections
-      connections.sort((a, b) => (a.node.name > b.node.name) ? 1 : -1);
+      // Sort the connections by type
+      connections.sort((a, b) => (a.type > b.type) ? 1 : -1);
 
       this.connections = connections;
     }
@@ -345,7 +370,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   _fireToggleEvent() {
     this.dispatchEvent(new CustomEvent('toggle'));
   }
-
 }
 
 customElements.define('app-map-info-panel', AppMapInfoPanel);

@@ -3,7 +3,8 @@ import render from "./app-header.tpl.js"
 
 import "./views/map/app-map-info-panel"
 import "./views/app-about"
-//import "./views/app-moments"
+import "./views/app-home"
+import "./views/app-story"
 
 export default class AppHeader extends Mixin(LitElement)
   .with(LitCorkUtils){
@@ -11,37 +12,50 @@ export default class AppHeader extends Mixin(LitElement)
   static get properties() {
     return {
       baseUrl: { type: String },
-      currentTopic: { type: String }
+      subtitle: { type: String },
+      moments: { type: Array }
     }
   }
 
   constructor() {
     super();
+    this.baseUrl = window.location.protocol + '//' + window.location.host;
+    this.subtitle = '';
+    this.moments = [];
+
     this.render = render.bind(this);
 
-    this.baseUrl = window.location.protocol + '//' + window.location.host;
-
-    this._injectModel('MomentModel', 'AppStateModel');
-  }
-
-  async firstUpdated() {
-    let _topic = await this.AppStateModel.get();
-    this.currentTopic = _topic.moment;
+    this._injectModel('AppStateModel', 'MomentModel');
   }
 
   /**
-   * @method _onMomentClick
-   * @description ...
+   * @method _onAppStateUpdate
+   * @description bound to AppStateModel app-state-update events
+   *
    * @param {Object} e
   */
-  _onMomentsClick() {
-    this.AppStateModel.setLocation('/moments/');
+  async _onAppStateUpdate(e) {
+    if ( e.page === 'home' || e.page === 'about' ) {
+      this.subtitle = 'California\'s Modern Wine Network';
+    } else {
+      this.moment = e.moment;
+
+      let payload = await this.MomentModel.get(this.moment);
+
+      this._setSubtitle(payload.payload);
+    }
+  }
+
+  _setSubtitle(data) {
+    if ( Object.keys(data.graph.story).length !== 0 ) {
+      this.subtitle = data.graph.story.entrypoint.name;
+    }
   }
 
   /**
    * @method _onAboutClick
-   * @description ...
-   * @param {Object} e
+   * @description send the user to the About page
+   * @param {*} e
   */
   _onAboutClick() {
     this.AppStateModel.setLocation('/about/');

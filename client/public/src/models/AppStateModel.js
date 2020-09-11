@@ -7,8 +7,17 @@ class AppStateModelImpl extends AppStateModel {
     super();
     this.store = AppStateStore;
 
-    this.EventBus.on(this.store.events.APP_STATE_UPDATE, () => this._sendGA());
-    this._sendGA();
+    this.DEFAULT_VIEW = 'home';
+
+    this.EventBus.on(this.store.events.APP_STATE_UPDATE, async (e) => {
+      let state = await this.get(e.moment);
+
+      if ( state.state === 'error' && e.page !== 'about' && e.page !== 'home' ) {
+        AppStateModel.setLocation('/');
+      }
+      
+      this._sendGA();
+    });
   }
 
   /**
@@ -16,17 +25,17 @@ class AppStateModelImpl extends AppStateModel {
    * @description when a cluster is selected in the UI, the center lat/lng and zoom
    * of the cluster will be set in the, this will be used by the map to figure out
    * the nodes in the cluster and set them
-   */
+  */
   setSelectedClusterIds(ids) {
     let state = this.store.data;
 
-    if( !state.selected ) {
+    if( !state.selectedNode ) {
       return console.warn('Attempting to set cluster ids, but no selected object');
     }
-    if( state.selected.type !== 'cluster' ) {
+    if( state.selectedNode.type !== 'cluster' ) {
       return console.warn('Attempting to set cluster ids, but selected object is not a cluster');
     }
-    state.selected.ids = ids;
+    state.selectedNode.ids = ids;
 
     return super.set(state);
   }
@@ -34,29 +43,32 @@ class AppStateModelImpl extends AppStateModel {
   set(state) {
     // parse out page
     if ( state.location ) {
-      let page = state.location.path ? state.location.path[0] : 'map';
-      state.page = page || 'map';
+      let page = state.location.path ? state.location.path[0] : this.DEFAULT_VIEW;      
+      state.page = page || this.DEFAULT_VIEW;
     }
-
+        
     // parse out selected object(s)
-    // TODO: selected => selectedNode
     if ( state.page === 'map' && state.location.path.length >= 1 ) {
       state.moment = state.location.path[1];
     }
 
+    if ( state.page === 'story' ) {
+      state.moment = state.location.path[1];
+    }
+
     if ( state.page === 'map' && state.location.path.length >= 3 ) {
-      state.selected = {
+      state.selectedNode = {
         type : state.location.path[2]
       }
 
       if( state.location.path[2] === 'cluster' ) {
-        state.selected.latlng = state.location.path[3].split(',').map(ll => parseFloat(ll));
-        state.selected.zoom = parseInt(state.location.path[4]);
+        state.selectedNode.latlng = state.location.path[3].split(',').map(ll => parseFloat(ll));
+        state.selectedNode.zoom = parseInt(state.location.path[4]);
       } else {
-        state.selected.id = state.location.path[3];
+        state.selectedNode.id = state.location.path[3];
       }
     } else {
-      state.selected = null;
+      state.selectedNode = null;
     }
 
     // Set a default moment if none has been set

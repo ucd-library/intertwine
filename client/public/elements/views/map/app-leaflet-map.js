@@ -3,16 +3,20 @@ import render from "./app-leaflet-map.tpl.js"
 
 import "leaflet"
 import "leaflet.markercluster"
+import "leaflet-polylinedecorator"
 
 export default class AppLeafletMap extends LitElement {
 
   static get properties() {
     return {
-      active : {type: Boolean},
+      active : { type: Boolean },
       infoOpen : {
         type: Boolean,
         attribute: 'info-open'
-      }
+      },
+      connectionName : { type: String },
+      arrow: { type: Object },
+      stopZoomBounds: { type: Boolean }
     }
   }
 
@@ -22,10 +26,19 @@ export default class AppLeafletMap extends LitElement {
 
     this.linkLayers = {};
     this.nodeLayers = {};
+    this.layerLabel = '';
     this.links = {};
     this.nodes = {};
+    this.reverses = {};
     this.updateLinksTimer = -1;
     this.firstRender = true;
+    this.connectionName = '';
+
+    // TODO: variable that needs to change depending on whether or not the arrow is pointing at a cluster or a point.
+    this.distance = 20; 
+
+    this.arrow = {};
+    this.stopZoomBounds = false;
 
     window.addEventListener('resize', () => {
       if( !this.active ) return;
@@ -38,15 +51,21 @@ export default class AppLeafletMap extends LitElement {
     this.initMap();
   }
 
+  updated(props) {
+    if( props.has('active') && this.active ) {
+      this.redraw();
+    }
+  }
+
   /**
    * @method initMap
    * @description called when the element is first rendered.  Sets up the map
-   * and the clister laters.  Checks if there is a pending view state and sets the
+   * and the cluster layers. Checks if there is a pending view state and sets the
    * map to that location, otherwise renders at 0,0
-   */
+  */
   initMap() {
     // create the leaflet map object
-    this.map = L.map(this.shadowRoot.querySelector('#map')).setView([0,0], 3, {animate: false});
+    this.map = L.map(this.shadowRoot.querySelector('#map')).setView([0,0], 3, { animate: false });
 
     // pending view state? use that lat/lng instead
     if( this.pendingView ) {
@@ -57,7 +76,7 @@ export default class AppLeafletMap extends LitElement {
     }
 
     L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
 
     // create the clulster layer
@@ -67,17 +86,34 @@ export default class AppLeafletMap extends LitElement {
       zoomToBoundsOnClick: false,
       removeOutsideVisibleBounds: false,
       maxClusterRadius : 25,
-      spiderfyOnMaxZoom : false
+      spiderfyOnMaxZoom : false,
+      iconCreateFunction: function(cluster) {
+        return L.divIcon({
+          html: '<div><span>' + cluster.getChildCount() + '</span></div>',
+          className: 'marker-cluster marker-cluster-small',
+          iconSize: L.point(40,40)
+        });
+      }
     });
+
     this.map.addLayer(this.clusters);
     this.map.zoomControl.setPosition('bottomright');
-
+  
     // wire up layer and map events
     this.clusters.on('clusterclick', e => this.onClusterClicked(e));
+    this.clusters.on('clustermouseover', e => this.onClusterMouseOver(e));
+    this.clusters.on('clustermouseout', e => this.onClusterMouseOut(e));
+    this.clusters.on('mouseover', e => this.onMarkerMouseOver(e));
+    this.clusters.on('mouseout', e  => this.onMarkerMouseOut(e));
+
     this.map.on('zoomend', () => {
       this.repositionSelectedNode();
       this.repositionSelectedLink();
-      this.updateLinks()
+      this.updateLinks();     
+
+      if( this.appState && this.appState.selectedNode && this.appState.selectedNode.type === 'cluster' ) {
+        this.findAndRenderSelectedCluster(this.appState.selectedNode.latlng, this.appState.selectedNode.zoom);
+      }     
     });
 
     // grab the css color defined by our custom variable
@@ -92,14 +128,33 @@ export default class AppLeafletMap extends LitElement {
    * to the current state
    *
    * @param {Object} e app-state-update event object
-   */
+  */
   renderSelectedState(e) {
+    this.appState = e;
+
     if( !e ) {
-      if( this.firstRender ) {
-        if( Object.keys(this.nodes).length === 0 ) this.zoomToClusters = true;
-        else this.map.fitBounds(this.clusters.getBounds());
+      if( Object.keys(this.nodes).length === 0 ) {
+        this.zoomToClusters = true;
+      } else {
+        this.map.invalidateSize({pan: false});
+        this.map.fitBounds(this.clusters.getBounds()); // Zooms the map to the clusters
       }
+
+      // reset state, remove current markers
+      if ( this.selectedLineIcon ) {
+        this.map.removeLayer(this.selectedLineIcon);
+        this.selectedLineIcon = null;
+      }
+      
+      if( this.selectedNodeIcon ) {
+        for ( let type in this.selectedNodeIcon ) {
+          this.map.removeLayer(this.selectedNodeIcon[type]);
+        }
+        this.selectedNodeIcon = null;
+      }
+
       this.firstRender = false;
+
       return;
     }
 
@@ -108,23 +163,24 @@ export default class AppLeafletMap extends LitElement {
       for( let type in this.selectedNodeIcon ) {
         this.map.removeLayer(this.selectedNodeIcon[type]);
       }
-      this.selectedNodeIcon = null;
+      this.selectedNodeIcon  = null;
       this.selectedNodeLayer = null;
     }
+
     if( this.selectedLineIcon ) {
       this.map.removeLayer(this.selectedLineIcon);
       this.selectedLineIcon = null;
     }
 
     // now render based on selected type
-    if( e.selected.type === 'cluster' ) {
-      this.selectCluster(e.selected.latlng, e.selected.zoom);
-    } else if( e.selected.type && e.selected.type !== 'connection' ) {
-      this.selectNode(e.selected.id, undefined, this.firstRender);
-    } else if( e.selected.type === 'connection' ) {
-      this.selectLink(e.selected.id);
+    if( e.selectedNode.type === 'cluster' ) {
+      this.selectCluster(e.selectedNode.latlng, e.selectedNode.zoom);
+    } else if( e.selectedNode.type && e.selectedNode.type !== 'connection' ) {
+      this.selectNode(e.selectedNode.id, undefined, this.firstRender);
+    } else if( e.selectedNode.type === 'connection' ) {
+      this.selectLink(e.selectedNode.id);
     }
-
+    
     // make sure our links are rendered correctly
     this.updateLinks();
   }
@@ -135,7 +191,7 @@ export default class AppLeafletMap extends LitElement {
    * the center connection line label
    *
    * @param {String} id connection id
-   */
+  */
   selectLink(id) {
     // get the link object
     let link = this.links[id];
@@ -146,7 +202,7 @@ export default class AppLeafletMap extends LitElement {
     if( !link ) {
       this.pendingLinkSelect = id;
       return;
-    }
+    }   
 
     // set our source and destination node labels
     this.selectNode(link.src, 'src');
@@ -158,15 +214,122 @@ export default class AppLeafletMap extends LitElement {
       this.selectedNodeIcon.dst.getLatLng()
     );
 
-    // creat the line label
+    // Connection Label - the label that appears when a connection is clicked
+    // As far as I can tell, the correct label is ALWAYS in the [0] slot, lets hope that holds true!
+    let connectionName = link.name[0];
+
+    // create the line label
     let icon = L.divIcon({
       className: `leaflet-intertwine-connection-label`,
       iconSize: [0, 0],
-      html : '<div>connection</div>'
+      html : '<div>' + connectionName + '</div>'
     });
     this.selectedLineIcon = L.marker(ll, {icon});
     this.map.addLayer(this.selectedLineIcon);
     this.selectedLineIcon.setZIndexOffset(5000);
+
+    // Latlngs must be formatted as Arrays for the polyline in addArrowHead()
+    this.latlngs = [link.coordinates.src, link.coordinates.dst];
+
+    this.getPolylineLength();
+    this.getArrowHead();
+  }
+
+
+  /**
+   * @method getPolylineLength
+   * @description Calculate the line length
+   *
+  */
+  getPolylineLength() {
+    let srcxy = this.map.latLngToContainerPoint(this.latlngs[0]);
+    let dstxy = this.map.latLngToContainerPoint(this.latlngs[1]);
+
+    let length = Math.sqrt(Math.pow((srcxy.x - dstxy.x), 2) + Math.pow((srcxy.y - dstxy.y), 2));
+
+    this.polylineLength = length;
+  }  
+
+   /**
+   * @method calculateOffset
+   * @description Returns the distance between two geographical coordinates according to the map's CRS.
+                  By default this measures distance in meters
+  */
+  calculateOffset() {
+    let len       = L.latLng(this.latlngs[0]).distanceTo(this.latlngs[1]);
+
+    // Controls direction the arrow head is pointing in.
+    let m_center  = this.map.latLngToContainerPoint(this.latlngs[1]);
+
+    let m_edge    = [m_center.x + this.distance, m_center.y];
+    let m_len     = L.latLng(this.latlngs[1]).distanceTo(this.map.containerPointToLatLng(m_edge));
+    let offset    = 100 * (len - m_len) / len;
+
+    return offset;
+  }
+
+  /**
+   * @method getArrowHead
+   * @description generate an arrow head for the connection lines
+   *
+  */
+  getArrowHead() {
+    // Remove any existing arrowHead
+    if ( Object.keys(this.arrow).length > 0 ) {
+      this.map.removeLayer(this.arrow);
+    }
+
+    // Create the polyline
+    let polyline  = L.polyline(this.latlngs, { 
+      stroke: false,
+      weight: 0,
+      color: this.lineColor,
+      className: 'connection-arrow-polyline'
+    });
+
+    // Set offset to length of line - 20    
+    let decorator = L.polylineDecorator(polyline, {
+      patterns: [
+        { 
+          offset: this.calculateOffset() + '%',
+          repeat: 0, 
+          symbol: L.Symbol.arrowHead({ 
+            polygon: true,
+            pixelSize: 10,
+            headAngle: 60,
+            pathOptions: {
+              stroke: true,
+              weight: 1,
+              color: this.lineColor,
+              opacity: 1.0,
+              className: 'connection-arrow'
+            }
+          })
+        }
+      ]
+    });
+
+    let featureGroup = L.featureGroup([polyline, decorator]);
+    featureGroup.addTo(this.map);
+
+    this.arrow = featureGroup;
+
+    if ( !this.stopZoomBounds ) {
+      // zoom the map into the polyline
+      this.map.fitBounds(polyline.getBounds());
+
+      // Set this otherwise fitBounds() will fire every time you 
+      // adjust zoom levels and won't let you zoom in properly
+      this.stopZoomBounds = true;
+    }
+  }
+
+  getMarkerLabelIcon(id){
+    return new L.divIcon({
+      className: `leaflet-intertwine-node-label`,
+      iconSize: [0, 0],
+      html : '<div>'+this.nodes[id].name+'</div><div class="intertwine-arrow"></div>'
+    });
   }
 
   /**
@@ -176,8 +339,18 @@ export default class AppLeafletMap extends LitElement {
    *
    * @param {String} id node id
    * @param {String} type either src|dst
-   */
+  */
   selectNode(id, type='src', firstRender=false) {
+    // If there is a layerLabel present for this item, we need to remove it
+    // or it conflicts w/the marker label created down below
+    if ( this.layerLabel ) {
+      this.map.removeLayer(this.layerLabel);
+      this.layerLabel = null;
+    }
+
+    // If there is an arrow present from a connection get rid of it
+    this.map.removeLayer(this.arrow);
+
     // find the marker layer based on id in the cluster
     let layer = this.clusters
       .getLayers()
@@ -206,15 +379,16 @@ export default class AppLeafletMap extends LitElement {
     // graph the visible marker, either the cluster marker or the layer itself
     layer = this.clusters.getVisibleParent(layer) || layer;
 
+    this.getRenderedLayerType(layer);
+
     // render the icon
-    let icon = L.divIcon({
-      className: `leaflet-intertwine-node-label`,
-      iconSize: [0, 0],
-      html : '<div>'+this.nodes[id].name+'</div><div class="intertwine-arrow"></div>'
+    let icon = this.getMarkerLabelIcon(id);
+    this.selectedNodeIcon[type] = L.marker(layer.getLatLng(), {
+      icon: icon,
+      inertWineId: id,
+      zIndexOffset: 5000
     });
-    this.selectedNodeIcon[type] = L.marker(layer.getLatLng(), {icon});
     this.map.addLayer(this.selectedNodeIcon[type]);
-    this.selectedNodeIcon[type].setZIndexOffset(5000);
 
     // we need to let the marker render so we can adjust the left offset based
     // on the marker width.  We will do a little bit of additional css work as well
@@ -229,7 +403,7 @@ export default class AppLeafletMap extends LitElement {
         }
       }
 
-      // grab the two div's and setup location classes
+      // grab the two divs and setup location classes
       let markerEle = this.selectedNodeIcon[type].getElement().firstChild;
       let arrow = this.selectedNodeIcon[type].getElement().children[1];
       if( bottom ) {
@@ -265,6 +439,91 @@ export default class AppLeafletMap extends LitElement {
   }
 
   /**
+   * @method getRenderedLayerType(id)
+   * @description determines whether a layer is a cluster or a point.
+   * Point markers have inertWineIds
+  */
+  getRenderedLayerType(layer) {
+    if ( layer.inertWineId ) this.distance = 0;
+    else this.distance = 10;
+  }
+
+  /**
+   * @method onMarkerMouseOver
+   * @description bound to marker mouseover event
+   * @param {Object} e event object
+  */
+  // TODO: is this the best way to accomplish this?
+  // RE: https://github.com/ucd-library/intertwine/issues/23
+  onMarkerMouseOver(e) {
+    let latlng = e.latlng;
+
+    // Don't show mouseover label if the node has already been selected
+    // and is displaying the label
+    if ( this.selectedNodeIcon ) {
+      if ( this.selectedNodeIcon.src._latlng.lat === latlng.lat &&
+           this.selectedNodeIcon.src._latlng.lng === latlng.lng ) return;
+    };
+
+    let id = e.sourceTarget.inertWineId;
+    let icon = this.getMarkerLabelIcon(id);
+    let layer = L.marker(latlng, {
+      icon: icon,
+      inertWineId: id,
+      zIndexOffset: 5000
+    });
+    this.layerLabel = layer;
+    this.layerLabel.inertWineId = id;
+    this.map.addLayer(this.layerLabel);
+
+    // We need to let the marker render so we can adjust the left offset based
+    // on the marker width.  We will do a little bit of additional css work as well
+    requestAnimationFrame(() => {
+      if ( !this.layerLabel ) return;
+
+      let labelEle = this.layerLabel.getElement().firstChild;
+      let labelArrow = this.layerLabel.getElement().children[1];
+
+      labelEle.classList.add('top','point');
+      labelArrow.classList.add('top','point');
+
+      let w = labelEle.offsetWidth;
+      if ( w > 150 ) {
+        labelEle.classList.add('fixed-width');
+      } else {
+        labelEle.style.left = (-1*(w/2))+'px';
+      }
+    });
+  }
+
+  /**
+   * @method onMarkerMouseOut
+   * @description bound to marker mouseout event
+   * @param {Object} e event object
+  */
+  onMarkerMouseOut(e) {
+    if ( this.layerLabel ) {
+      this.map.removeLayer(this.layerLabel);
+      this.layerLabel = null;
+    }
+  }
+
+  resetClusterStyles() {
+    // TODO: is this the best way to do this?
+    // Get all the markers & clear any instances of the class selectedCluster
+    this.map.eachLayer(layer => {
+      if ( layer._icon !== undefined ) {
+        if ( layer._icon.classList.contains('selected-cluster') ) {
+          layer._icon.classList.remove('selected-cluster');
+        }
+        if ( layer._icon.classList.contains('hover-cluster') ) {
+          layer._icon.classList.remove('hover-cluster');
+        }
+      }
+    });
+  }
+
+  /**
    * @method _getMidPoint
    * @description get the midpoint for a line by finding the screen (x, y) midpoint
    * then converting to lat/lng.  This is how lines are rendered and we need the
@@ -285,18 +544,30 @@ export default class AppLeafletMap extends LitElement {
 
   repositionSelectedLink() {
     if( !this.selectedNodeLayer || !this.selectedLineIcon ) return;
+   
+    this.getArrowHead(this.stopZoomBounds);
+
+    if ( !this.selectedNodeIcon ) return;
+
     let ll = this._getMidPoint(
       this.selectedNodeIcon.src.getLatLng(),
       this.selectedNodeIcon.dst.getLatLng()
     );
     this.selectedLineIcon.setLatLng(ll);
+
+    this.arrow.eachLayer(layer => {
+      if ( typeof layer.setLatLngs === undefined ) {
+        layer.setLatLngs(ll);
+      }
+    });
   }
 
   repositionSelectedNode() {
     if( !this.selectedNodeLayer || !this.selectedNodeIcon ) return;
+
     for( let type in this.selectedNodeLayer ) {
       let layer = this.clusters.getVisibleParent(this.selectedNodeLayer[type]) || this.selectedNodeLayer[type];
-      this.selectedNodeIcon[type].setLatLng(layer.getLatLng());
+      this.selectedNodeIcon[type].setLatLng(layer.getLatLng());  
 
       if( layer.inertWineId ) {
         this.selectedNodeIcon[type].getElement().firstChild.classList.add('point');
@@ -323,6 +594,19 @@ export default class AppLeafletMap extends LitElement {
       }
     }
 
+    let selectedCluster = this.findAndRenderSelectedCluster(latlng, zoom);
+    if( !selectedCluster ) return console.warn('no clusters found to selected');
+
+    let event = new CustomEvent('selected-cluster-ids', {
+      detail: selectedCluster.getAllChildMarkers().map(l => l.inertWineId)
+    })
+    this.dispatchEvent(event);
+  }
+
+  findAndRenderSelectedCluster(latlng, zoom) {
+    this.resetClusterStyles();
+    if( this.map.getZoom() !== zoom ) return;
+
     let clusterMarkers = this.clusters._featureGroup.getLayers();
     let closest = Number.MAX_SAFE_INTEGER;
     let selectedCluster = null;
@@ -340,24 +624,33 @@ export default class AppLeafletMap extends LitElement {
       }
     }
 
-    if( !selectedCluster ) return console.warn('no clusters found to selected');
+    if( !selectedCluster ) return;
 
-    let event = new CustomEvent('selected-cluster-ids', {
-      detail: selectedCluster.getAllChildMarkers().map(l => l.inertWineId)
-    })
-    this.dispatchEvent(event);
+    selectedCluster._icon.classList.add('selected-cluster');
+    return selectedCluster;
+  }
+
+  onClusterMouseOver(e) {
+    e.layer._icon.classList.add('hover-cluster');
+  }
+
+  onClusterMouseOut(e) {
+    e.layer._icon.classList.remove('hover-cluster');
   }
 
   /**
    * @method onClusterClicked
    * @description bound to cluster click event
-   */
+  */
   onClusterClicked(e) {
     let center = e.layer.getBounds().getCenter();
-    let event = new CustomEvent('cluster-click', {detail : {
-      latLng : [parseFloat(center.lat.toFixed(4)), parseFloat(center.lng.toFixed(4))],
-      zoom : this.map.getZoom()
-    }});
+    let event = new CustomEvent('cluster-click', {
+      detail : {
+        latLng : [parseFloat(center.lat.toFixed(4)), parseFloat(center.lng.toFixed(4))],
+        zoom : this.map.getZoom()
+      }
+    });
+
     this.dispatchEvent(event);
   }
 
@@ -369,6 +662,7 @@ export default class AppLeafletMap extends LitElement {
     let event = new CustomEvent('node-click', {detail : {
       id : e.target.inertWineId
     }});
+
     this.dispatchEvent(event);
   }
 
@@ -382,11 +676,13 @@ export default class AppLeafletMap extends LitElement {
   /**
    * @method setData
    * @description set node/link data, render map
-   */
+   * @param {Object} data
+  */
   setData(data) {
     this.nodes = data.nodes;
     this.nodeLayers = {};
     this.links = data.links;
+    this.reverses = data.reverses;
 
     this.clusters.clearLayers();
 
@@ -416,6 +712,7 @@ export default class AppLeafletMap extends LitElement {
       this.selectLink(this.pendingLinkSelect);
       this.pendingLinkSelect = null;
     } else if( this.zoomToClusters ) {
+      // Zooms the map to where the clusters are located
       this.map.fitBounds(this.clusters.getBounds());
       this.zoomToClusters = false;
     }
@@ -427,7 +724,7 @@ export default class AppLeafletMap extends LitElement {
    * @method updateLinks
    * @description redraw links from current cluster locations.  Should be
    * called whenever data changes or map zoom level changes
-   */
+  */
   updateLinks() {
     if( this.updateLinksTimer !== -1 ) clearTimeout(this.updateLinksTimer);
     this.updateLinksTimer = setTimeout(() => {
@@ -436,7 +733,7 @@ export default class AppLeafletMap extends LitElement {
     }, 100);
   }
 
-  _updateLinks() {
+  _updateLinks() {   
     for( let id in this.linkLayers ) {
       this.map.removeLayer(this.linkLayers[id]);
     }
@@ -448,7 +745,7 @@ export default class AppLeafletMap extends LitElement {
       if ( item.weblink ) continue;
 
       let src = this.getMarkerLatLng(item.src);
-      let dst = this.getMarkerLatLng(item.dst);
+      let dst = this.getMarkerLatLng(item.dst); 
 
       let selected = false;
       if( this.selectedNodeLayer && this.selectedNodeLayer.src && this.selectedNodeLayer.dst ) {
@@ -461,16 +758,17 @@ export default class AppLeafletMap extends LitElement {
       if( this.linkLayers[lid] ) {
         if( selected && !this.linkLayers[lid].selected ) {
           this.linkLayers[lid].selected = true;
-          this.linkLayers[lid].setStyle({opacity: 1, weight: 2});
+          this.linkLayers[lid].setStyle({ opacity: 1, weight: 2 });
         }
         continue;
       }
 
       this.linkLayers[lid] = L.polyline([src, dst], {
         color: this.lineColor,
-        weight: selected ? 2: 1,
+        weight: selected ? 2 : 1,
         opacity : selected ? 1 : 0.3
       }).addTo(this.map);
+
       this.linkLayers[lid].selected = selected;
     }
   }
@@ -502,18 +800,12 @@ export default class AppLeafletMap extends LitElement {
     return L.latLng(this.nodes[id].coordinates);
   }
 
-  updated(props) {
-    if( props.has('active') && this.active ) {
-      this.redraw();
-    }
-  }
-
   /**
    * @method redraw
    * @description buffered call to map.invalidateSize();
    */
-  redraw() {
-    if( this.redrawTimer ) clearTimeout(this.redrawTimer);
+  redraw() {    
+    if( this.redrawTimer ) clearTimeout(this.redrawTimer);    
     this.redrawTimer = setTimeout(() => {
       this.redrawTimer = -1;
       this.redrawNow();
@@ -528,7 +820,6 @@ export default class AppLeafletMap extends LitElement {
     if( !this.map ) return console.warn('attempting to redraw map, but map not initialized');
     this.map.invalidateSize({pan: false});
   }
-
 }
 
 customElements.define('app-leaflet-map', AppLeafletMap);

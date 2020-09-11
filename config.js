@@ -1,12 +1,15 @@
 let env = process.env.APP_ENV || 'dev';
 let clientPackage = require('./client/public/package.json');
 
+let sandbox  = 'https://sandbox.dams.library.ucdavis.edu';
+let moments  = 'https://moments.dams.library.ucdavis.edu';
+let localDev = 'http://localhost:3001';
+
 module.exports = {
   server : {
     assets : (env === 'prod') ? 'dist' : 'public',
-    endpoint : process.env.ENDPOINT_URL || 'https://sandbox.dams.library.ucdavis.edu/fcrepo/rest/collection/moments',
-    appRoutes : ['about', 'map', 'moment', 'moments'],
-    moments : ['chardonnay', 'jop'],
+    endpoint : process.env.ENDPOINT_URL || moments + '/fcrepo/rest/collection/intertwine/moments',
+    appRoutes : ['about', 'home', 'map', 'story'],
     port : process.env.APP_PORT || process.env.PORT || 3000
   },
   client : {
