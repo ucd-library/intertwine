@@ -185,6 +185,7 @@ export default function render() {
         background-repeat: no-repeat;
         background-position: center center;
       }
+
       .textimage > .image > span,
       .imagetext > .image > span {
         padding: 5px 10px;
@@ -196,6 +197,16 @@ export default function render() {
         background: rgba(0, 0, 0, 0.65);
       }
 
+      .textimage div.text-blocks {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .textimage div.text-blocks > p,
+      .textimage div.text-blocks > h1 {
+        //TODO:
+      }
+
       div.triptych {
         display: flex;
         width: 100%;
@@ -205,6 +216,7 @@ export default function render() {
         flex-direction: row;
         background-color: var(--app-color-white);
       }
+
       div.triptych > div {
         display: flex;
         align-items: flex-end;
