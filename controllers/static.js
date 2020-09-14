@@ -19,43 +19,38 @@ module.exports = (app) => {
 
   // Fetch an array of moment names from the server
   const fetchMoments = async url => {
-    return async function(req, res, next) {
-      try {
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {'Accept': 'application/ld+json; profile="http://www.w3.org/ns/json-ld#flattened"'}
-        });
-  
-        if ( response.status !== 200 ) {          
-          console.error('Error status code: ', response.status);
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {'Accept': 'application/ld+json; profile="http://www.w3.org/ns/json-ld#flattened"'}
+      });
 
-          res.status(response.status).json({
-            error: true,
-            message: response.message
-          });
-        } else {
-          const json = await response.json();  
-          let payload = json['@graph'][0]['keywords'];
-  
-          let data = payload.map(x => x.toLowerCase());
-  
-          config.server.moments = data.map(d => {
-            let array = d.split('/');
-            let moment = array[array.length - 1].split('.')[0];
-            return moment;
-          });
+      if ( response.status !== 200 ) {          
+        console.error('Error status code: ', response.status);
 
-          res.json(config.server.moments);
-          next();
-        }      
-      } catch (e) {
-        console.log('Error: ', e);
-        res.status(500).json({
+        res.status(response.status).json({
           error: true,
-          message: e.message
+          message: response.message
         });
-      }
-    }    
+      } else {
+        const json = await response.json();  
+        let payload = json['@graph'][0]['keywords'];
+
+        let data = payload.map(x => x.toLowerCase());
+
+        config.server.moments = data.map(d => {
+          let array = d.split('/');
+          let moment = array[array.length - 1].split('.')[0];
+          return moment;
+        });
+      }      
+    } catch (e) {
+      console.log('Error: ', e);
+      res.status(500).json({
+        error: true,
+        message: e.message
+      });
+    }
   }
 
   // Wait for the moments to load, otherwise on first load of app, moments array is null APP_CONFIG
