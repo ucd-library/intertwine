@@ -172,9 +172,11 @@ export default function render() {
       .imagetext > .text-blocks {
         padding: 75px;
       }
+      .textimage > .text-blocks > h1,
       .textimage > .text-blocks > p,
       .imagetext > .text-blocks > p {
-        max-width: 550px;
+        /*max-width: 550px;*/
+        width: 100%;
       }
       .textimage > .image,
       .imagetext > .image {
@@ -185,7 +187,6 @@ export default function render() {
         background-repeat: no-repeat;
         background-position: center center;
       }
-
       .textimage > .image > span,
       .imagetext > .image > span {
         padding: 5px 10px;
@@ -200,12 +201,10 @@ export default function render() {
       .textimage div.text-blocks {
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
       }
-
-      .textimage div.text-blocks > p,
-      .textimage div.text-blocks > h1 {
-        border: 1px solid red;
+      .textimage > .text-blocks > p,
+      .textimage > .text-blocks > h1 {
+        margin-left: auto;
       }
 
       div.triptych {
