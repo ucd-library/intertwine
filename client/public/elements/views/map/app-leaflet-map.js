@@ -340,7 +340,7 @@ export default class AppLeafletMap extends LitElement {
    * @param {String} id node id
    * @param {String} type either src|dst
   */
-  selectNode(id, type='src', firstRender=false) {
+  async selectNode(id, type='src', firstRender=false) {
     // If there is a layerLabel present for this item, we need to remove it
     // or it conflicts w/the marker label created down below
     if ( this.layerLabel ) {
@@ -379,7 +379,11 @@ export default class AppLeafletMap extends LitElement {
     // graph the visible marker, either the cluster marker or the layer itself
     layer = this.clusters.getVisibleParent(layer) || layer;
 
-    this.getRenderedLayerType(layer);
+    let layerType = await this.getRenderedPointType(layer);
+    if ( layerType === 'point' ) this.distance = 0;
+    else this.distance = 10; //cluster
+
+    console.log('X: ', this.distance);
 
     // render the icon
     let icon = this.getMarkerLabelIcon(id);
@@ -439,13 +443,17 @@ export default class AppLeafletMap extends LitElement {
   }
 
   /**
-   * @method getRenderedLayerType(id)
+   * @method getRenderedPointType(id)
    * @description determines whether a layer is a cluster or a point.
    * Point markers have inertWineIds
   */
-  getRenderedLayerType(layer) {
-    if ( layer.inertWineId ) this.distance = 0;
-    else this.distance = 10;
+  getRenderedPointType(layer) {
+    return new Promise((resolve, reject) => {
+      requestAnimationFrame(() => {
+        layer = this.clusters.getVisibleParent(layer) || layer;
+        resolve(layer.inertWineId ? 'point' : 'cluster');
+      });
+    });   
   }
 
   /**
