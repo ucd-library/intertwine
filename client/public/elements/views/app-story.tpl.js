@@ -55,6 +55,12 @@ export default function render() {
         text-transform: uppercase;
       }
 
+      p {
+        padding: 0;
+        font-size: 15px;
+        line-height: 22px;
+      }
+
       .capitalize {
         text-transform: capitalize;
       }
@@ -133,10 +139,24 @@ export default function render() {
         padding: 20px 0 0 10px;
       }
 
+
+      section.textimage,
+      section.imagetext,
+      section.text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+
+
+      section.textimage > .text-blocks,
+      section.textimage > .image,
+      section.imagetext > .text-blocks,
       section.text > .text-blocks {
         margin: 0 auto;
         padding: 75px;
-        max-width: 750px;
+        width: 50%;
         color: var(--app-color-charcoal);
         font-size: 15px;
         font-weight: regular;
@@ -172,9 +192,11 @@ export default function render() {
       .imagetext > .text-blocks {
         padding: 75px;
       }
+      .textimage > .text-blocks > h1,
       .textimage > .text-blocks > p,
       .imagetext > .text-blocks > p {
-        max-width: 550px;
+        /*max-width: 550px;*/
+        width: 100%;
       }
       .textimage > .image,
       .imagetext > .image {
@@ -185,7 +207,6 @@ export default function render() {
         background-repeat: no-repeat;
         background-position: center center;
       }
-
       .textimage > .image > span,
       .imagetext > .image > span {
         padding: 5px 10px;
@@ -197,15 +218,21 @@ export default function render() {
         background: rgba(0, 0, 0, 0.65);
       }
 
+      /* IMPORTANT - START */
       .textimage div.text-blocks {
         display: flex;
         flex-direction: column;
       }
-
-      .textimage div.text-blocks > p,
-      .textimage div.text-blocks > h1 {
-        //TODO:
+      .textimage > .text-blocks > h1 {
+        margin-top: 0;
+        margin-left: 0 auto;
+        margin-bottom: 14px;
       }
+      .textimage > .text-blocks > p {
+        margin-top: 0;
+        margin-left: 0 auto;
+      }
+      /* END */
 
       div.triptych {
         display: flex;
@@ -421,7 +448,7 @@ export default function render() {
           ${p.label === 'text' ? html`
             <div class="text-blocks">
               <h1 ?hidden="${!p.headline}">${p.headline}</h1>
-              ${Array.isArray(p.text) ? html`${p.text.map((p) => html`<p>${p}</p>`)}` : html`${p.text}`}
+              ${Array.isArray(p.text) ? html`${p.text.map((p) => html`<p>${p}</p>`)}` : html`<p>${p.text}</p>`}
             </div>` : html ``}
 
           ${p.label === 'imagetext' ? html`
