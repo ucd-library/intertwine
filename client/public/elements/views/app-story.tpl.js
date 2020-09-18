@@ -56,6 +56,7 @@ export default function render() {
       }
 
       p {
+        padding: 0;
         font-size: 15px;
         line-height: 22px;
       }
