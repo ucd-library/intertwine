@@ -139,20 +139,24 @@ export default function render() {
         padding: 20px 0 0 10px;
       }
 
+
       section.textimage,
       section.imagetext,
       section.text {
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 100%;
       }
 
+
       section.textimage > .text-blocks,
+      section.textimage > .image,
       section.imagetext > .text-blocks,
       section.text > .text-blocks {
         margin: 0 auto;
         padding: 75px;
-        max-width: 750px;
+        width: 50%;
         color: var(--app-color-charcoal);
         font-size: 15px;
         font-weight: regular;
