@@ -88,16 +88,14 @@ export default function render() {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-evenly;
+        justify-content: center;
         max-width: 1500px;
       }
 
       main > div {
         display: block;
-        margin-left: 7.5px;
-        margin-right: 7.5px;
+        margin: 0 15px 30px 15px;
         max-width: 600px;
-        margin-bottom: 30px;
       }
 
       .card {
