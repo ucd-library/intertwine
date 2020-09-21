@@ -26,6 +26,7 @@ export default class AppLeafletMap extends LitElement {
 
     this.linkLayers = {};
     this.nodeLayers = {};
+    this.layer = {};
     this.layerLabel = '';
     this.links = {};
     this.nodes = {};
@@ -374,17 +375,8 @@ export default class AppLeafletMap extends LitElement {
     if( !this.selectedNodeIcon ) {
       this.selectedNodeIcon = {};
     }
-    this.selectedNodeLayer[type] = layer;
-
-    // graph the visible marker, either the cluster marker or the layer itself
-    layer = this.clusters.getVisibleParent(layer) || layer;
-
-    let layerType = await this.getRenderedPointType(layer);
-    if ( layerType === 'point' ) this.distance = 0;
-    else this.distance = 10; //cluster
-
-    console.log('X: ', this.distance);
-
+    this.selectedNodeLayer[type] = layer;     
+    
     // render the icon
     let icon = this.getMarkerLabelIcon(id);
     this.selectedNodeIcon[type] = L.marker(layer.getLatLng(), {
@@ -393,6 +385,12 @@ export default class AppLeafletMap extends LitElement {
       zIndexOffset: 5000
     });
     this.map.addLayer(this.selectedNodeIcon[type]);
+
+    // graph the visible marker, either the cluster marker or the layer itself
+    this.layer = this.clusters.getVisibleParent(layer) || layer;
+    let layerType = await this.getRenderedPointType(this.layer);
+    if ( layerType === 'point' ) this.distance = 0;
+    else this.distance = 10; //cluster
 
     // we need to let the marker render so we can adjust the left offset based
     // on the marker width.  We will do a little bit of additional css work as well
