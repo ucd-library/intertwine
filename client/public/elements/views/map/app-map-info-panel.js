@@ -75,6 +75,10 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.resetClusterSubjects();
     this.render = render.bind(this);
 
+    window.addEventListener('keyup', (e) => {      
+      if ( e.key === 'Escape' ) this._returnToMainInfoPanel();
+    });
+
     this._injectModel('AppStateModel', 'MomentModel');
   }
 
@@ -354,12 +358,25 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   }
 
   /**
+   * @method _returnToMainInfoPanel(
+   * @description - 2 steps. 
+   *  1. hides label displayed on map
+   *  2. returns use to info panel home page for selected story
+  */
+  _returnToMainInfoPanel() {
+    this.AppStateModel.setLocation('/map/'+ this.moment +'/');
+  }
+
+  /**
    * @method _onToggleKeyUp
    * @description bound to toggle button key-up event
+   * TODO: we may be able to remove this
    */
   _onToggleKeyUp(e) {
+    /*
     if( e.which !== 13 ) return;
     this._fireToggleEvent();
+    */
   }
 
   /**
