@@ -14,6 +14,7 @@ return html`
 
     a.internal {
       display: inline;
+      margin-left: 12px;
     }
 
     .toggle {
