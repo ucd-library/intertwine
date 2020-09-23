@@ -83,13 +83,12 @@ export default function render() {
       }
 
       section {
+        display: block;
         height: 100%;
         overflow-y: auto;
       }
 
       main {
-        height: 100%;
-        overflow-y: auto;
         margin: 0 auto;
         padding: 0px 25px;
         display: flex;

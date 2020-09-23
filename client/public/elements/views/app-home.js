@@ -32,7 +32,7 @@ export default class AppHome extends Mixin(LitElement)
   }
 
   async firstUpdated(e) {
-    this.container = this.shadowRoot.querySelector('main');
+    this.container = this.shadowRoot.querySelector('section');
 
     let state, data;
 
