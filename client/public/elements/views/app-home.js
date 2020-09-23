@@ -32,6 +32,8 @@ export default class AppHome extends Mixin(LitElement)
   }
 
   async firstUpdated(e) {
+    this.container = this.shadowRoot.querySelector('section');
+
     let state, data;
 
     for (let i=0; i < APP_CONFIG.moments.length; i++) {
@@ -49,6 +51,16 @@ export default class AppHome extends Mixin(LitElement)
 
       this.loadMoments(state.payload.graph.story);
     }
+  }
+
+  /**
+   * @method _onAppStateUpdate
+   * @description bound to AppStateModel app-state-update events
+   *
+   * @param {Object} e
+  */
+  _onAppStateUpdate(e) {
+    this.container.scrollTo(0,0); // return to top of page
   }
 
   /**

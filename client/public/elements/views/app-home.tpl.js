@@ -82,6 +82,12 @@ export default function render() {
         border-left: 20px solid transparent;
       }
 
+      section {
+        display: block;
+        height: 100%;
+        overflow-y: auto;
+      }
+
       main {
         margin: 0 auto;
         padding: 0px 25px;
