@@ -11,4 +11,6 @@ gcloud beta run deploy $DEPLOYMENT_NAME \
   --image $IMAGE \
   --platform managed \
   --memory=1Gi \
+  --region=us-central1 \
   --set-env-vars=APP_ENV=prod
+  
