@@ -63,7 +63,16 @@ When making requests to Fedora be sure to include the following header in your g
 
 ### Deployment
 
+#### Linux
+
 ```bash
 npm run dist
+./deploy.sh
+```
+
+#### Windows
+
+```bash
+npm run dist-windows
 ./deploy.sh
 ```

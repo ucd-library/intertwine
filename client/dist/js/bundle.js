@@ -1,4 +1,4 @@
-!function(t){function e(e){for(var i,o,r=e[0],s=e[1],a=0,h=[];a<r.length;a++)o=r[a],Object.prototype.hasOwnProperty.call(n,o)&&n[o]&&h.push(n[o][0]),n[o]=0;for(i in s)Object.prototype.hasOwnProperty.call(s,i)&&(t[i]=s[i]);for(l&&l(e);h.length;)h.shift()()}var i={},n={1:0};function o(e){if(i[e])return i[e].exports;var n=i[e]={i:e,l:!1,exports:{}};return t[e].call(n.exports,n,n.exports,o),n.l=!0,n.exports}o.e=function(t){var e=[],i=n[t];if(0!==i)if(i)e.push(i[2]);else{var r=new Promise((function(e,o){i=n[t]=[e,o]}));e.push(i[2]=r);var s,a=document.createElement("script");a.charset="utf-8",a.timeout=120,o.nc&&a.setAttribute("nonce",o.nc),a.src=function(t){return o.p+""+({0:"intersection-observer-polyfill"}[t]||t)+"-f4c8cc56e537d9b1df4e.bundle.js"}(t);var l=new Error;s=function(e){a.onerror=a.onload=null,clearTimeout(h);var i=n[t];if(0!==i){if(i){var o=e&&("load"===e.type?"missing":e.type),r=e&&e.target&&e.target.src;l.message="Loading chunk "+t+" failed.\n("+o+": "+r+")",l.name="ChunkLoadError",l.type=o,l.request=r,i[1](l)}n[t]=void 0}};var h=setTimeout((function(){s({type:"timeout",target:a})}),12e4);a.onerror=a.onload=s,document.head.appendChild(a)}return Promise.all(e)},o.m=t,o.c=i,o.d=function(t,e,i){o.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:i})},o.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},o.t=function(t,e){if(1&e&&(t=o(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var i=Object.create(null);if(o.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var n in t)o.d(i,n,function(e){return t[e]}.bind(null,n));return i},o.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return o.d(e,"a",e),e},o.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},o.p="",o.oe=function(t){throw console.error(t),t};var r=window.webpackJsonp=window.webpackJsonp||[],s=r.push.bind(r);r.push=e,r=r.slice();for(var a=0;a<r.length;a++)e(r[a]);var l=s;o(o.s=79)}([function(t,e,i){"use strict";i.d(e,"a",(function(){return n}));
+!function(t){function e(e){for(var i,o,r=e[0],s=e[1],a=0,h=[];a<r.length;a++)o=r[a],Object.prototype.hasOwnProperty.call(n,o)&&n[o]&&h.push(n[o][0]),n[o]=0;for(i in s)Object.prototype.hasOwnProperty.call(s,i)&&(t[i]=s[i]);for(l&&l(e);h.length;)h.shift()()}var i={},n={1:0};function o(e){if(i[e])return i[e].exports;var n=i[e]={i:e,l:!1,exports:{}};return t[e].call(n.exports,n,n.exports,o),n.l=!0,n.exports}o.e=function(t){var e=[],i=n[t];if(0!==i)if(i)e.push(i[2]);else{var r=new Promise((function(e,o){i=n[t]=[e,o]}));e.push(i[2]=r);var s,a=document.createElement("script");a.charset="utf-8",a.timeout=120,o.nc&&a.setAttribute("nonce",o.nc),a.src=function(t){return o.p+""+({0:"intersection-observer-polyfill"}[t]||t)+"-ee45f763ef22426fe10d.bundle.js"}(t);var l=new Error;s=function(e){a.onerror=a.onload=null,clearTimeout(h);var i=n[t];if(0!==i){if(i){var o=e&&("load"===e.type?"missing":e.type),r=e&&e.target&&e.target.src;l.message="Loading chunk "+t+" failed.\n("+o+": "+r+")",l.name="ChunkLoadError",l.type=o,l.request=r,i[1](l)}n[t]=void 0}};var h=setTimeout((function(){s({type:"timeout",target:a})}),12e4);a.onerror=a.onload=s,document.head.appendChild(a)}return Promise.all(e)},o.m=t,o.c=i,o.d=function(t,e,i){o.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:i})},o.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},o.t=function(t,e){if(1&e&&(t=o(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var i=Object.create(null);if(o.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var n in t)o.d(i,n,function(e){return t[e]}.bind(null,n));return i},o.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return o.d(e,"a",e),e},o.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},o.p="",o.oe=function(t){throw console.error(t),t};var r=window.webpackJsonp=window.webpackJsonp||[],s=r.push.bind(r);r.push=e,r=r.slice();for(var a=0;a<r.length;a++)e(r[a]);var l=s;o(o.s=79)}([function(t,e,i){"use strict";i.d(e,"a",(function(){return n}));
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -1600,6 +1600,10 @@ Object(xt.a)({is:"iron-iconset-svg",properties:{name:{type:String,observer:"_nam
       border-radius: 8px;
     }
 
+    #explore-connections.dot-list > div > a {
+      margin-left: 5px;
+    }
+
     .related-links > .link-wrapper {
       display: flex;
       flex-direction: row;
@@ -1871,7 +1875,7 @@ Object(xt.a)({is:"iron-iconset-svg",properties:{name:{type:String,observer:"_nam
                 Explore Connections
               </h3>`:V``}
               ${this.connections.map(t=>V`
-                <div class="dot-list">
+                <div id="explore-connections" class="dot-list">
                   <div class="dot-wrapper">
                     <div class="dot" type="${t.type}"></div>
                   </div>
@@ -1919,7 +1923,7 @@ Object(xt.a)({is:"iron-iconset-svg",properties:{name:{type:String,observer:"_nam
           </div>
 
           ${this.imageCreditTitle?V`<div class="imageCredit">
-            Image Credit: <a href="${this.imageCreditLink["@id"]}">${this.imageCreditTitle}</a>
+            Image Credit: <a href="${this.imageCreditLink["@id"]}" target="_blank">${this.imageCreditTitle}</a>
           </div>`:V``}
         </div>
         <!-- END ITEM -->
@@ -2702,7 +2706,9 @@ const Rt=(t,e)=>{const i=t.startNode.parentNode,n=void 0===e?t.endNode:e.startNo
       }
 
       h1 {
-        font-size: 20px;
+        width: 100%;
+        max-width: 750px;
+        font-size: 20px;        
       }
 
       h2 {
@@ -2726,6 +2732,7 @@ const Rt=(t,e)=>{const i=t.startNode.parentNode,n=void 0===e?t.endNode:e.startNo
 
       p {
         padding: 0;
+        max-width: 750px;
         font-size: 15px;
         line-height: 22px;
       }
@@ -2808,16 +2815,19 @@ const Rt=(t,e)=>{const i=t.startNode.parentNode,n=void 0===e?t.endNode:e.startNo
         padding: 20px 0 0 10px;
       }
 
-
       section.textimage,
       section.imagetext,
       section.text {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 100%;
       }
 
+      section.text > .text-blocks {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
 
       section.textimage > .text-blocks,
       section.textimage > .image,
@@ -2863,8 +2873,7 @@ const Rt=(t,e)=>{const i=t.startNode.parentNode,n=void 0===e?t.endNode:e.startNo
       }
       .textimage > .text-blocks > h1,
       .textimage > .text-blocks > p,
-      .imagetext > .text-blocks > p {
-        /*max-width: 550px;*/
+      .imagetext > .text-blocks > p {        
         width: 100%;
       }
       .textimage > .image,
@@ -2891,11 +2900,12 @@ const Rt=(t,e)=>{const i=t.startNode.parentNode,n=void 0===e?t.endNode:e.startNo
       .textimage div.text-blocks {
         display: flex;
         flex-direction: column;
+        align-items: flex-end;
       }
       .textimage > .text-blocks > h1 {
         margin-top: 0;
         margin-left: 0 auto;
-        margin-bottom: 14px;
+        margin-bottom: 14px;        
       }
       .textimage > .text-blocks > p {
         margin-top: 0;

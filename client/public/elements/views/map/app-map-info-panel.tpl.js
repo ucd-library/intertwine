@@ -100,6 +100,10 @@ return html`
       border-radius: 8px;
     }
 
+    #explore-connections.dot-list > div > a {
+      margin-left: 5px;
+    }
+
     .related-links > .link-wrapper {
       display: flex;
       flex-direction: row;
@@ -375,7 +379,7 @@ return html`
                 Explore Connections
               </h3>` : html``}
               ${this.connections.map(connection => html`
-                <div class="dot-list">
+                <div id="explore-connections" class="dot-list">
                   <div class="dot-wrapper">
                     <div class="dot" type="${connection.type}"></div>
                   </div>
@@ -423,7 +427,7 @@ return html`
           </div>
 
           ${this.imageCreditTitle ? html`<div class="imageCredit">
-            Image Credit: <a href="${this.imageCreditLink['@id']}">${this.imageCreditTitle}</a>
+            Image Credit: <a href="${this.imageCreditLink['@id']}" target="_blank">${this.imageCreditTitle}</a>
           </div>` : html``}
         </div>
         <!-- END ITEM -->
