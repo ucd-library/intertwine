@@ -33,7 +33,9 @@ export default function render() {
       }
 
       h1 {
-        font-size: 20px;
+        width: 100%;
+        max-width: 750px;
+        font-size: 20px;        
       }
 
       h2 {
@@ -57,6 +59,7 @@ export default function render() {
 
       p {
         padding: 0;
+        max-width: 750px;
         font-size: 15px;
         line-height: 22px;
       }
@@ -139,16 +142,19 @@ export default function render() {
         padding: 20px 0 0 10px;
       }
 
-
       section.textimage,
       section.imagetext,
       section.text {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 100%;
       }
 
+      section.text > .text-blocks {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
 
       section.textimage > .text-blocks,
       section.textimage > .image,
@@ -194,8 +200,7 @@ export default function render() {
       }
       .textimage > .text-blocks > h1,
       .textimage > .text-blocks > p,
-      .imagetext > .text-blocks > p {
-        /*max-width: 550px;*/
+      .imagetext > .text-blocks > p {        
         width: 100%;
       }
       .textimage > .image,
@@ -222,11 +227,12 @@ export default function render() {
       .textimage div.text-blocks {
         display: flex;
         flex-direction: column;
+        align-items: flex-end;
       }
       .textimage > .text-blocks > h1 {
         margin-top: 0;
         margin-left: 0 auto;
-        margin-bottom: 14px;
+        margin-bottom: 14px;        
       }
       .textimage > .text-blocks > p {
         margin-top: 0;
