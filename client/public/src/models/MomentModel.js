@@ -200,7 +200,7 @@ class MomentModel extends BaseModel {
             if (lookup[id]['label'][i].match(/\Story:/)) {
               _label = lookup[id]['label'][i]; 
             }
-          }     
+          }
         } else {
           _label = lookup[id]['label'];        
         }
@@ -216,7 +216,6 @@ class MomentModel extends BaseModel {
         }
       }
     }
-
     // Links
     for ( let id in links ) {
       let item = links[id];

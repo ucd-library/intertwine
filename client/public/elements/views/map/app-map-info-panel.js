@@ -296,15 +296,20 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       
       for ( let id in this.graph.links ) {        
         link = this.graph.links[id];
-        if ( link.src === node['@id'] ) {
-          connections.push({
-            id: link['@id'],
-            connection: link['@type'][0].replace('ucdlib:','').replace('_', ' '),
-            dst: link.dst,
-            src: link.src,
-            name: this.graph.nodes[link.dst].name,
-            type: this.graph.nodes[link.dst].type
-          });          
+
+        if ( link.src === node['@id'] ) {   
+          if ( !this.graph.nodes[link.dst] ) { 
+            // TODO: Issue #63
+            //console.log(this.graph.nodes[link.src])
+            connections.push({
+              id: link['@id'],
+              connection: link['@type'][0].replace('ucdlib:','').replace('_', ' '),
+              dst: link.dst,
+              src: link.src,
+              name: this.graph.nodes[link.dst].name,
+              type: this.graph.nodes[link.dst].type
+            });          
+          }
         } else if ( link.dst === node['@id'] ) {
           for ( let attr in this.graph.nodes[link.src] ) {
             if ( this.graph.nodes[link.src][attr] === link.dst ) {
