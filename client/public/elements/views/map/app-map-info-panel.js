@@ -294,13 +294,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     } else {
       let connections = [], link = {};
       
-      for ( let id in this.graph.links ) {        
+      for ( let id in this.graph.links ) {
         link = this.graph.links[id];
 
-        if ( link.src === node['@id'] ) {   
-          if ( !this.graph.nodes[link.dst] ) { 
-            // TODO: Issue #63
-            //console.log(this.graph.nodes[link.src])
+        if ( link.src === node['@id'] ) {
+          if ( !this.graph.nodes[link.dst] ) {               
             connections.push({
               id: link['@id'],
               connection: link['@type'][0].replace('ucdlib:','').replace('_', ' '),
@@ -308,7 +306,17 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
               src: link.src,
               name: this.graph.nodes[link.dst].name,
               type: this.graph.nodes[link.dst].type
-            });          
+            });
+          } else {
+            // TODO: Issue #63
+            connections.push({
+              id: link['@id'],
+              connection: link['@type'][0].replace('ucdlib:','').replace('_', ' '),
+              dst: link.dst,
+              src: link.src,
+              name: this.graph.nodes[link.dst].name,
+              type: this.graph.nodes[link.dst].type
+            });
           }
         } else if ( link.dst === node['@id'] ) {
           for ( let attr in this.graph.nodes[link.src] ) {

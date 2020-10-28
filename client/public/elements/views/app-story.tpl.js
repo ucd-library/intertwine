@@ -483,7 +483,7 @@ export default function render() {
                 </div>`)}
             </div>` : html``}
         </section>
-      `)}     
+      `)}
 
       <footer>
         <div class="map-wrapper">
