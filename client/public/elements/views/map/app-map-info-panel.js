@@ -309,6 +309,10 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
             });
           } else {
             // TODO: Issue #63
+            /* Note for Justin -
+              Displays one of her two connections but I'm having trouble 
+              figuring out why the second one is not displaying
+            */      
             connections.push({
               id: link['@id'],
               connection: link['@type'][0].replace('ucdlib:','').replace('_', ' '),
