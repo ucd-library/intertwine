@@ -294,25 +294,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     } else {
       let connections = [], link = {};
       
-      for ( let id in this.graph.links ) {
+      for ( let id in this.graph.links ) {        
         link = this.graph.links[id];
 
         if ( link.src === node['@id'] ) {
           if ( !this.graph.nodes[link.dst] ) {               
-            connections.push({
-              id: link['@id'],
-              connection: link['@type'][0].replace('ucdlib:','').replace('_', ' '),
-              dst: link.dst,
-              src: link.src,
-              name: this.graph.nodes[link.dst].name,
-              type: this.graph.nodes[link.dst].type
-            });
-          } else {
-            // TODO: Issue #63
-            /* Note for Justin -
-              Displays one of her two connections but I'm having trouble 
-              figuring out why the second one is not displaying
-            */      
             connections.push({
               id: link['@id'],
               connection: link['@type'][0].replace('ucdlib:','').replace('_', ' '),
