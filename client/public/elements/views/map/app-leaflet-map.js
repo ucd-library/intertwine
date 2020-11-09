@@ -110,11 +110,11 @@ export default class AppLeafletMap extends LitElement {
     this.map.on('zoomend', () => {
       this.repositionSelectedNode();
       this.repositionSelectedLink();
-      this.updateLinks();     
+      this.updateLinks();   
 
       if( this.appState && this.appState.selectedNode && this.appState.selectedNode.type === 'cluster' ) {
         this.findAndRenderSelectedCluster(this.appState.selectedNode.latlng, this.appState.selectedNode.zoom);
-      }     
+      }  
     });
 
     // grab the css color defined by our custom variable
@@ -810,7 +810,7 @@ export default class AppLeafletMap extends LitElement {
    * @method redraw
    * @description buffered call to map.invalidateSize();
    */
-  redraw() {    
+  redraw() {  
     if( this.redrawTimer ) clearTimeout(this.redrawTimer);    
     this.redrawTimer = setTimeout(() => {
       this.redrawTimer = -1;

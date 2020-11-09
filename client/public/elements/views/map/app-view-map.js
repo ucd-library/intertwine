@@ -71,8 +71,17 @@ export default class AppViewMap extends Mixin(LitElement)
     this.data = state.payload.graph;
     this.mapEle.setData(state.payload.graph);
 
-    if( e.selectedNode ) this.mapEle.renderSelectedState(e);
-    else this.mapEle.renderSelectedState();
+    if( e.selectedNode ) {
+      this.mapEle.renderSelectedState(e);
+    } else {
+      /* This is what causes the page to reload.
+         I'm turning this off to see if this will fix some 
+         undesireable behavior that Kimmy wants changed. 
+         If this breaks something I'll figure out a different solution
+      */
+      //this.mapEle.renderSelectedState();
+    }
+
   }
 
   /**
@@ -88,7 +97,7 @@ export default class AppViewMap extends Mixin(LitElement)
     if ( this.moment === e.id ) {
       this.data = e.payload.graph;
       this.mapEle.setData(e.payload.graph);
-     
+
       if( this.appState && this.appState.selectedNode ) this.mapEle.renderSelectedState(this.appState);
       else this.mapEle.renderSelectedState();
     }
