@@ -298,7 +298,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         link = this.graph.links[id];
 
         if ( link.src === node['@id'] ) {
-          if ( !this.graph.nodes[link.dst] ) {               
+          if ( !this.graph.nodes[link.dst] ) {
             connections.push({
               id: link['@id'],
               connection: link['@type'][0].replace('ucdlib:','').replace('_', ' '),

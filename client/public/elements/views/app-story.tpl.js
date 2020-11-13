@@ -475,10 +475,10 @@ export default function render() {
               <span>${p.caption}</span>
             </div>` : html``}
           
-          ${p.label === 'triptych' && p[`@id`] ? html`
+          ${p.label === 'triptych' ? html`
             <div class="triptych">
               ${repeat(p.image, (i) => html`
-                <div style="background-image: url('${this.endpoint}/${this.moment}/${p[`@id`]}/${i.contentUrl}');">
+                <div style="background-image: url('${this.endpoint}/${this.moment}/${i.contentUrl}');">
                   <span>${i.caption}</span>
                 </div>`)}
             </div>` : html``}

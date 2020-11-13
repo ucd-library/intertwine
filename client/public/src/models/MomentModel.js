@@ -111,9 +111,12 @@ class MomentModel extends BaseModel {
     // Helper Functions - END
 
     for ( let i = 0; i < data.length; i++ ) {
-      if ( data[i]['@type'] === undefined ) continue;
+      if ( data[i]['@type'] === undefined ) continue;     
 
       data[i]['type'] = cleanType(data[i]['@type']);
+
+      // Step one for fixing Issue #84
+      data[i]['@id'] = data[i]['@id'].replace('#', '');
 
       if ( data[i]['schema:longitude'] ) {
         data[i]['longitude'] = data[i]['schema:longitude'];
@@ -141,7 +144,7 @@ class MomentModel extends BaseModel {
         if ( lookup[attr] ) {
           let link = lookup[attr];
           link.src = container['@id'];
-          link.dst = container[attr];
+          link.dst = container[attr].replace('#', '');
           link.isLink = true;
           links[link['@id']] = link;
         }
