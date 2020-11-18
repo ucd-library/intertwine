@@ -5,7 +5,8 @@ import "leaflet"
 import "leaflet.markercluster"
 import "leaflet-polylinedecorator"
 
-export default class AppLeafletMap extends LitElement {
+export default class AppLeafletMap extends Mixin(LitElement)
+  .with(LitCorkUtils) {
 
   static get properties() {
     return {
@@ -46,6 +47,8 @@ export default class AppLeafletMap extends LitElement {
       this.redraw();
     });
     this.redrawTimer = -1;
+
+    this._injectModel('AppStateModel');
   }
 
   firstUpdated() {
@@ -133,14 +136,17 @@ export default class AppLeafletMap extends LitElement {
   renderSelectedState(e) {
     this.appState = e;
 
-    if( !e ) {
+    if( !e ) {      
       if( Object.keys(this.nodes).length === 0 ) {
         this.zoomToClusters = true;
       } else {
-        this.map.invalidateSize({pan: false});
-        this.map.fitBounds(this.clusters.getBounds()); // Zooms the map to the clusters
+        // Issue #17 (https://github.com/ucd-library/intertwine/issues/17#issuecomment-700978982)
+        if ( this.layerLabel !== null ) {     
+          this.map.invalidateSize({pan: false});
+          this.map.fitBounds(this.clusters.getBounds()); // Zooms the map to the clusters
+        }        
       }
-
+      
       // reset state, remove current markers
       if ( this.selectedLineIcon ) {
         this.map.removeLayer(this.selectedLineIcon);
