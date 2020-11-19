@@ -252,7 +252,18 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
     if ( node.creator ) {
       if ( Array.isArray(node.creator) ) {
-        this.imageCreditLink  = node.creator.find(c => c['@id'] !== undefined);
+        /**
+         * Some of them aren't formatted properly, can't figure out why >:( 
+         * Might have something to do w/this link formatting: 
+         *  https://www.catconworldwide.com/gallery/#images-4
+         * Note the pound sign/hashtag in the link
+        */   
+        if ( node.creator.filter(e => e['@id'] !== undefined).length > 0 ) {
+          this.imageCreditLink = node.creator.find(c => c['@id']);
+        } else {
+          this.imageCreditLink = { '@id': 0 };
+        }        
+            
         this.imageCreditTitle = node.creator.find(c => c['@id'] === undefined);
       } else {
         // It's a string and there is no title present
@@ -260,9 +271,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       }
     }
 
-    if ( node.relatedLink ) {
-      if ( Array.isArray(node.relatedLink) ) {
-        let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
+    if ( node.relatedLink ) {      
+      this.relatedLinks = []; // Need to make sure this clears out between moments      
+      let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/; // regex for replace function
+
+      if ( Array.isArray(node.relatedLink) ) {        
         this.relatedLinks = node.relatedLink.map((v, i) => {
           return {
             fullLink: v,
@@ -270,6 +283,13 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
             title: node.relatedLinkText[i]
           }
         });
+      } else if ( typeof(node.relatedLink) === 'string' ) { 
+        let tempLink = {
+          fullLink: node.relatedLink,
+          shortLink: node.relatedLink.replace(re, '').split('/')[0],
+          title: node.relatedLinkText
+        };
+        this.relatedLinks.push(tempLink);
       }
     }
 
@@ -297,17 +317,15 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       for ( let id in this.graph.links ) {        
         link = this.graph.links[id];
 
-        if ( link.src === node['@id'] ) {
-          if ( !this.graph.nodes[link.dst] ) {
-            connections.push({
-              id: link['@id'],
-              connection: link['@type'][0].replace('ucdlib:','').replace('_', ' '),
-              dst: link.dst,
-              src: link.src,
-              name: this.graph.nodes[link.dst].name,
-              type: this.graph.nodes[link.dst].type
-            });
-          }
+        if ( link.src === node['@id'] && this.graph.nodes[link.dst] ) {
+          connections.push({
+            id: link['@id'],
+            connection: link['@type'][0].replace('ucdlib:','').replace('_', ' '),
+            dst: link.dst,
+            src: link.src,
+            name: this.graph.nodes[link.dst].name,
+            type: this.graph.nodes[link.dst].type
+          });
         } else if ( link.dst === node['@id'] ) {
           for ( let attr in this.graph.nodes[link.src] ) {
             if ( this.graph.nodes[link.src][attr] === link.dst ) {

@@ -141,7 +141,6 @@ export default class AppLeafletMap extends Mixin(LitElement)
         this.zoomToClusters = true;
       } else {
         // Issue #17 (https://github.com/ucd-library/intertwine/issues/17#issuecomment-700978982)
-        // TODO - add test for moment; if it switches to a new moment reload
         if ( this.layerLabel !== null ) {     
           this.map.invalidateSize({pan: false});
           this.map.fitBounds(this.clusters.getBounds()); // Zooms the map to the clusters
