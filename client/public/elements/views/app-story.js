@@ -73,11 +73,17 @@ export default class AppStory extends Mixin(LitElement)
       }    
 
       this.orderedStory.sort((a,b) => {
-        return a['schema:position'] - b['schema:position'];
+        return a['schema:position'] < b['schema:position'] ? -1 : 1;
       });
 
       for (let i=0; i < this.orderedStory.length; i++) {
         this.orderedStory[i].label = this.orderedStory[i].label.replace(/\s|\/|story:/gi, '').toLowerCase();
+
+        if( this.orderedStory[i].label === 'triptych' && this.orderedStory[i].image ) {
+          this.orderedStory[i].image.sort((a,b) => a['schema:position'] < b['schema:position'] ? -1 : 1)
+          console.log(this.orderedStory[i].image.map(item => item['schema:position']))
+        }
+        
       }
 
       if ( !payload.graph.story.entrypoint.thumbnail ) {

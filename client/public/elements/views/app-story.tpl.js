@@ -430,12 +430,12 @@ export default function render() {
           <ul>
             <li>
               <h4>moments in wine history</h4>
-              <h2 class="inverse capitalize">${this.title}</h2>
+              <h2 class="inverse">${this.title}</h2>
             </li>
 
             <li>
               ${this.story.quote ? html`<div class="quote">
-                <em>${this.story.quote.description[1]}</em>
+                <em>"${this.story.quote.description[1]}"</em>
                 <ul class="credit">
                   <li>${this.story.quote.description[0]}</li>
                 </ul>
