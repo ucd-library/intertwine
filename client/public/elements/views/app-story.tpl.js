@@ -264,9 +264,11 @@ export default function render() {
         background-repeat: no-repeat;
         background-position: center center;
       }
-      div.triptych > div:nth-of-type(2),
-      div.triptych > div:nth-of-type(3) {
+      div.triptych > div {
         margin: 0 0 0 10px;
+      }
+      div.triptych > div:first-child {
+        margin: 0;
       }
       div.triptych > div > span {
         padding: 10px 20px;
