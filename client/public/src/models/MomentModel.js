@@ -51,7 +51,12 @@ class MomentModel extends BaseModel {
     data.forEach(item => {
       ['@id', 'dst', 'src'].forEach(key => {
         if( item[key] ) item[key] = item[key].replace(/^#/, '');
-      })
+      });
+      for( let key in item ) {
+        if( key.match(/_rev$/) ) {
+          item[key] = item[key].replace(/^#/, '');
+        }
+      }
     });
 
     // Helper Functions - START
@@ -145,14 +150,17 @@ class MomentModel extends BaseModel {
       let container = lookup[id];
 
       for ( let attr in container ) {
-        if ( lookup[attr] ) {
-          container[attr] = container[attr].replace(/^#/, '');
+        if ( lookup[attr.replace(/^#/, '')] ) {
+          container[attr.replace(/^#/, '')] = container[attr].replace(/^#/, '');
           let link = lookup[attr];
-          link.src = container['@id'];
+          link.src = container['@id'].replace(/^#/, '');
           link.dst = container[attr];
           link.isLink = true;
           links[link['@id']] = link;
-        }
+        } 
+        // else if( lookup[container[attr].replace(/^#/, '')] ) {
+
+        // }
       }
     }
 

@@ -293,12 +293,13 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
     } else {
       let connections = [], link = {};
-      
+
       for ( let id in this.graph.links ) {        
         link = this.graph.links[id];
 
         if ( link.src === node['@id'] ) {
-          if ( !this.graph.nodes[link.dst] ) {               
+          // JM - not sure what this is, but causing link issues, see issue #63
+          // if ( !this.graph.nodes[link.dst] ) {               
             connections.push({
               id: link['@id'],
               connection: link['@type'][0].replace('ucdlib:','').replace('_', ' '),
@@ -307,7 +308,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
               name: this.graph.nodes[link.dst].name,
               type: this.graph.nodes[link.dst].type
             });
-          }
+          // }
         } else if ( link.dst === node['@id'] ) {
           for ( let attr in this.graph.nodes[link.src] ) {
             if ( this.graph.nodes[link.src][attr] === link.dst ) {
