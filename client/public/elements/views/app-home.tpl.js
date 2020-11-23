@@ -143,13 +143,10 @@ export default function render() {
 
       .card .footer {
         display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
         justify-content: center;
+        align-items: center;
 
         padding: 0 0 30px 0;
-        height: auto;
-        min-height: 100%;
 
         color: var(--app-color-interface-blue);
         font-weight: bold;
@@ -163,7 +160,6 @@ export default function render() {
         flex-direction: row;
         margin: 0;
         padding: 0;
-        height: 44px;
         cursor: pointer;
 
         text-transform: uppercase;

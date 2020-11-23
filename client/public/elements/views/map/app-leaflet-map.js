@@ -131,6 +131,7 @@ export default class AppLeafletMap extends LitElement {
    * @param {Object} e app-state-update event object
   */
   renderSelectedState(e) {
+
     this.appState = e;
 
     if( !e ) {
@@ -685,6 +686,8 @@ export default class AppLeafletMap extends LitElement {
    * @param {Object} data
   */
   setData(data) {
+    if( this.nodes === data.nodes && this.links === data.links ) return;
+
     this.nodes = data.nodes;
     this.nodeLayers = {};
     this.links = data.links;
@@ -724,6 +727,8 @@ export default class AppLeafletMap extends LitElement {
     }
 
     this.updateLinks();
+
+    this.renderSelectedState();
   }
 
   /**

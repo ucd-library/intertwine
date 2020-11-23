@@ -73,15 +73,7 @@ export default class AppViewMap extends Mixin(LitElement)
 
     if( e.selectedNode ) {
       this.mapEle.renderSelectedState(e);
-    } else {
-      /* This is what causes the page to reload.
-         I'm turning this off to see if this will fix some 
-         undesireable behavior that Kimmy wants changed. 
-         If this breaks something I'll figure out a different solution
-      */
-      //this.mapEle.renderSelectedState();
     }
-
   }
 
   /**

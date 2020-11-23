@@ -47,6 +47,13 @@ class MomentModel extends BaseModel {
   transformLinks(data) {
     let links = {}, nodes = {}, lookup = {}, story = {}, reverses = {};
 
+    // cleanup # from ids
+    data.forEach(item => {
+      ['@id', 'dst', 'src'].forEach(key => {
+        if( item[key] ) item[key] = item[key].replace(/^#/, '');
+      })
+    });
+
     // Helper Functions - START
     /**
      * @method cleanType
@@ -139,6 +146,7 @@ class MomentModel extends BaseModel {
 
       for ( let attr in container ) {
         if ( lookup[attr] ) {
+          container[attr] = container[attr].replace(/^#/, '');
           let link = lookup[attr];
           link.src = container['@id'];
           link.dst = container[attr];
