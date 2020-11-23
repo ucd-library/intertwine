@@ -67,23 +67,20 @@ export default class AppStory extends Mixin(LitElement)
       this.story = payload.graph.story;
       this.title = payload.graph.story.entrypoint.name;
 
-      this.orderedStory = [];
+      let orderedStory = [];
       for (let key in this.story) {
-        this.orderedStory.push(this.story[key]);
+        orderedStory.push(this.story[key]);
       }    
 
-      this.orderedStory.sort((a,b) => {
+      orderedStory.sort((a,b) => {
         return a['schema:position'] < b['schema:position'] ? -1 : 1;
       });
 
-      for (let i=0; i < this.orderedStory.length; i++) {
-        this.orderedStory[i].label = this.orderedStory[i].label.replace(/\s|\/|story:/gi, '').toLowerCase();
-
-        if( this.orderedStory[i].label === 'triptych' && this.orderedStory[i].image ) {
-          this.orderedStory[i].image.sort((a,b) => a['schema:position'] < b['schema:position'] ? -1 : 1)
-          console.log(this.orderedStory[i].image.map(item => item['schema:position']))
-        }
-        
+      for (let i=0; i < orderedStory.length; i++) {
+        orderedStory[i].label = orderedStory[i].label.replace(/\s|\/|story:/gi, '').toLowerCase();
+        if( orderedStory[i].label === 'triptych' && orderedStory[i].image ) {
+          orderedStory[i].image.sort((a,b) => a['schema:position'] < b['schema:position'] ? -1 : 1)
+        }        
       }
 
       if ( !payload.graph.story.entrypoint.thumbnail ) {
@@ -108,6 +105,8 @@ export default class AppStory extends Mixin(LitElement)
           this.sources.push(obj);
         }
       }
+
+      this.orderedStory = orderedStory;
     }
   }
 

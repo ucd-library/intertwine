@@ -246,7 +246,6 @@ export default function render() {
         padding: 10px 0;
         justify-content: center;
         align-items: flex-end;
-        flex-direction: row-reverse;
         background-color: var(--app-color-white);
       }
 
