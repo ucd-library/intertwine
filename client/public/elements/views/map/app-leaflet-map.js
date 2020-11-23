@@ -36,7 +36,7 @@ export default class AppLeafletMap extends LitElement {
     this.connectionName = '';
 
     // TODO: variable that needs to change depending on whether or not the arrow is pointing at a cluster or a point.
-    this.distance = 20; 
+    // this.distance = 20; 
 
     this.arrow = {};
     this.stopZoomBounds = false;
@@ -233,7 +233,6 @@ export default class AppLeafletMap extends LitElement {
     // Latlngs must be formatted as Arrays for the polyline in addArrowHead()
     this.latlngs = [link.coordinates.src, link.coordinates.dst];
 
-    this.getPolylineLength();
     this.getArrowHead();
   }
 
@@ -243,13 +242,13 @@ export default class AppLeafletMap extends LitElement {
    * @description Calculate the line length
    *
   */
-  getPolylineLength() {
+  getPolylineLength(dstLayer) {
     let srcxy = this.map.latLngToContainerPoint(this.latlngs[0]);
-    let dstxy = this.map.latLngToContainerPoint(this.latlngs[1]);
+    let dstxy = this.map.latLngToContainerPoint(dstLayer.getLatLng());
 
     let length = Math.sqrt(Math.pow((srcxy.x - dstxy.x), 2) + Math.pow((srcxy.y - dstxy.y), 2));
 
-    this.polylineLength = length;
+    return length;
   }  
 
    /**
@@ -257,43 +256,50 @@ export default class AppLeafletMap extends LitElement {
    * @description Returns the distance between two geographical coordinates according to the map's CRS.
                   By default this measures distance in meters
   */
-  calculateOffset() {
-    let len       = L.latLng(this.latlngs[0]).distanceTo(this.latlngs[1]);
+  // calculateOffset() {
+  //   let len       = L.latLng(this.latlngs[0]).distanceTo(this.latlngs[1]);
 
-    // Controls direction the arrow head is pointing in.
-    let m_center  = this.map.latLngToContainerPoint(this.latlngs[1]);
+  //   // Controls direction the arrow head is pointing in.
+  //   let m_center  = this.map.latLngToContainerPoint(this.latlngs[1]);
 
-    let m_edge    = [m_center.x + this.distance, m_center.y];
-    let m_len     = L.latLng(this.latlngs[1]).distanceTo(this.map.containerPointToLatLng(m_edge));
-    let offset    = 100 * (len - m_len) / len;
+  //   let m_edge    = [m_center.x + this.distance, m_center.y];
+  //   let m_len     = L.latLng(this.latlngs[1]).distanceTo(this.map.containerPointToLatLng(m_edge));
+  //   let offset    = 100 * (len - m_len) / len;
 
-    return offset;
-  }
+  //   return offset;
+  // }
 
   /**
    * @method getArrowHead
    * @description generate an arrow head for the connection lines
    *
   */
-  getArrowHead() {
+  async getArrowHead() {
     // Remove any existing arrowHead
     if ( Object.keys(this.arrow).length > 0 ) {
       this.map.removeLayer(this.arrow);
     }
 
+    let layer = this.selectedNodeLayer.dst;
+    layer = this.clusters.getVisibleParent(layer) || layer;
+    let lineLength = this.getPolylineLength(layer);
+    let layerType = await this.getRenderedPointType(layer);
+
     // Create the polyline
-    let polyline  = L.polyline(this.latlngs, { 
+    let polyline  = L.polyline([
+        this.latlngs[0],
+        layer.getLatLng()
+      ], { 
       stroke: false,
       weight: 0,
       color: this.lineColor,
       className: 'connection-arrow-polyline'
     });
 
-    // Set offset to length of line - 20    
     let decorator = L.polylineDecorator(polyline, {
       patterns: [
         { 
-          offset: this.calculateOffset() + '%',
+          offset: lineLength - (layerType === 'point' ? 8 : 19),
           repeat: 0, 
           symbol: L.Symbol.arrowHead({ 
             polygon: true,
@@ -389,9 +395,10 @@ export default class AppLeafletMap extends LitElement {
 
     // graph the visible marker, either the cluster marker or the layer itself
     this.layer = this.clusters.getVisibleParent(layer) || layer;
-    let layerType = await this.getRenderedPointType(this.layer);
-    if ( layerType === 'point' ) this.distance = 0;
-    else this.distance = 10; //cluster
+
+    // let layerType = await this.getRenderedPointType(this.layer);
+    // if ( layerType === 'point' ) this.distance = 0;
+    // else this.distance = 10; //cluster
 
     // we need to let the marker render so we can adjust the left offset based
     // on the marker width.  We will do a little bit of additional css work as well
