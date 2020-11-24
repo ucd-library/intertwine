@@ -2,3 +2,4 @@ node_modules
 .DS_Store
 loader
 client/public/js
+client/dist
