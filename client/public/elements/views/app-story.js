@@ -30,6 +30,8 @@ export default class AppStory extends Mixin(LitElement)
     this.orderedStory = [];
     this.title = '';
 
+    window.addEventListener('resize', e => this._updateHeroSize());
+
     this._injectModel('AppStateModel', 'MomentModel');
   }
 
@@ -93,6 +95,13 @@ export default class AppStory extends Mixin(LitElement)
         }
       }
 
+      let img = new Image();
+      img.onload = e => {
+        this.heroRatio = img.height / img.width;
+        this._updateHeroSize();
+      }
+      img.src = this.headerImgUrl;
+
       if ( this.story.sources ) {
         this.sources = [];
         for (let key in this.story.sources.publication) {
@@ -108,6 +117,11 @@ export default class AppStory extends Mixin(LitElement)
 
       this.orderedStory = orderedStory;
     }
+  }
+
+  _updateHeroSize() {
+    if( !this.heroRatio ) return;
+    this.shadowRoot.querySelector('.header-image').style.height = (window.innerWidth * this.heroRatio)+'px';
   }
 
   _initIntersectionObserver() {

@@ -87,13 +87,10 @@ export default function render() {
       }
 
       header {
-        margin: 0 auto;
-        width: 100%;
         background-color: var(--app-color-interface-blue);
       }
-      header > .header-image {
-        padding-top: 56.25%;
-        width: 100%;
+      header .header-image {
+        max-height: 750px;
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
@@ -150,19 +147,16 @@ export default function render() {
         justify-content: center;
       }
 
-      section.text > .text-blocks {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+      section.textimage > *,
+      section.imagetext > * {
+        flex: 1;
       }
 
       section.textimage > .text-blocks,
       section.textimage > .image,
       section.imagetext > .text-blocks,
       section.text > .text-blocks {
-        margin: 0 auto;
         padding: 75px;
-        width: 50%;
         color: var(--app-color-charcoal);
         font-size: 15px;
         font-weight: regular;
@@ -176,17 +170,17 @@ export default function render() {
         background-color: var(--app-color-smoke);
       }
 
-      .textimage,
+      /* .textimage,
       .imagetext {
         display: flex;
         flex-direction: row;
         align-items: stretch;
-        /* background-color: var(--app-color-smoke); */
-      }
+      } */
+
       .textimage > div,
       .imagetext > div {
         padding: 75px;
-        width: 50%;
+        /* width: 50%; */
         position: relative;
 
         background-size: cover;
@@ -198,11 +192,11 @@ export default function render() {
       .imagetext > .text-blocks {
         padding: 75px;
       }
-      .textimage > .text-blocks > h1,
+      /* .textimage > .text-blocks > h1,
       .textimage > .text-blocks > p,
       .imagetext > .text-blocks > p {        
         width: 100%;
-      }
+      } */
       .textimage > .image,
       .imagetext > .image {
         padding: 75px;
@@ -352,7 +346,16 @@ export default function render() {
         .imagetext > .image,
         footer > .map-wrapper > .map,
         footer > .map-wrapper > .explore-map {
-          padding: 50px;
+          padding: 50px !important;
+        }
+
+        section.text > .text-blocks {
+          padding: 50px !important;
+        }
+
+        section.imagetext > .text-blocks,
+        section.textimage > .text-blocks {
+          padding: 50px !important;
         }
       }
 
@@ -373,6 +376,11 @@ export default function render() {
         }
         header > .story-header > ul > li > .quote {
           max-width: 100%;
+          padding-right: 10px;
+        }
+
+        section.textimage, section.imagetext, section.text {
+          display: block;
         }
 
         section.text,
@@ -384,6 +392,20 @@ export default function render() {
         .imagetext > .image,
         footer > .map-wrapper > .map,
         footer > .map-wrapper > .explore-map {
+          padding: 20px;
+        }
+
+        section.textimage > .text-blocks, 
+        section.textimage > .image, 
+        section.imagetext > .text-blocks, 
+        section.text > .text-blocks {
+          width: 100%;
+          margin: initial;
+          padding: 0px;
+        } 
+
+        section.imagetext > .text-blocks,
+        section.textimage > .text-blocks {
           padding: 20px;
         }
 
