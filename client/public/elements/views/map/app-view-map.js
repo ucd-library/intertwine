@@ -151,6 +151,19 @@ export default class AppViewMap extends Mixin(LitElement)
     }, 200);
   }
 
+  /**
+   * @method _onLinkHover
+   * @description bound to link-hover event from app-map-info-panel
+   * Used to highlight link when hovered over in list
+   */
+  _onLinkHover(e) {
+    if( e.detail.hover ) {
+      this.mapEle.highlighLink(e.detail.link);
+    } else {
+      this.mapEle.unhighlightLink(e.detail.link);
+    }
+  }
+
 }
 
 customElements.define('app-view-map', AppViewMap);

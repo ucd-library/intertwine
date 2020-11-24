@@ -379,7 +379,11 @@ return html`
                 Explore Connections
               </h3>` : html``}
               ${this.connections.map(connection => html`
-                <div id="explore-connections" class="dot-list">
+                <div id="explore-connections" 
+                  class="dot-list" 
+                  @mouseover="${this._onLinkMouseOver}" 
+                  @mouseout="${this._onLinkMouseOut}" 
+                  cid="${connection.id}">
                   <div class="dot-wrapper">
                     <div class="dot" type="${connection.type}"></div>
                   </div>

@@ -391,6 +391,34 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   _fireToggleEvent() {
     this.dispatchEvent(new CustomEvent('toggle'));
   }
+
+  /**
+   * @method _onLinkMouseOver
+   * @description bound to mouseover events on Explore Connections list
+   */
+  _onLinkMouseOver(e) {
+    let id = e.currentTarget.getAttribute('cid');
+    this.dispatchEvent(new CustomEvent('link-hover', {
+      detail : {
+        hover: true,
+        link : id
+      }
+    }));
+  }
+
+  /**
+   * @method _onLinkMouseOut
+   * @description bound to mouseout events on Explore Connections list
+   */
+  _onLinkMouseOut(e) {
+    let id = e.currentTarget.getAttribute('cid');
+    this.dispatchEvent(new CustomEvent('link-hover', {
+      detail: {
+        hover: false,
+        link : id
+      }
+    }));
+  }
 }
 
 customElements.define('app-map-info-panel', AppMapInfoPanel);

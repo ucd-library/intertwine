@@ -38,7 +38,7 @@ export default class AppLeafletMap extends LitElement {
     // TODO: variable that needs to change depending on whether or not the arrow is pointing at a cluster or a point.
     // this.distance = 20; 
 
-    this.arrow = {};
+    this.arrow = null;
     this.stopZoomBounds = false;
 
     window.addEventListener('resize', () => {
@@ -236,6 +236,69 @@ export default class AppLeafletMap extends LitElement {
     this.getArrowHead();
   }
 
+  highlighLink(id) {
+    // get the link object
+    let link = this.links[id];
+
+    if( this.selectedLineIcon ) {
+      this.map.removeLayer(this.selectedLineIcon);
+      this.selectedLineIcon = null;
+      this.map.removeLayer(this.arrow);
+      this.arrow = null;
+    }
+
+    // find the screen midpoint of the line
+    let ll = this._getMidPoint(
+      link.coordinates.src,
+      link.coordinates.dst
+    );
+
+    // Connection Label - the label that appears when a connection is clicked
+    // As far as I can tell, the correct label is ALWAYS in the [0] slot, lets hope that holds true!
+    let connectionName = link.name[0];
+
+    // create the line label
+    let icon = L.divIcon({
+      className: `leaflet-intertwine-connection-label`,
+      iconSize: [0, 0],
+      html : '<div>' + connectionName + '</div>'
+    });
+    this.selectedLineIcon = L.marker(ll, {icon});
+    this.map.addLayer(this.selectedLineIcon);
+    this.selectedLineIcon.setZIndexOffset(5000);
+
+    // Latlngs must be formatted as Arrays for the polyline in addArrowHead()
+    this.latlngs = [link.coordinates.src, link.coordinates.dst];
+
+    let src = this.getMarkerLatLng(link.src);
+    let dst = this.getMarkerLatLng(link.dst); 
+    let lid = src.lat+'-'+src.lng+'-'+dst.lat+'-'+dst.lng;
+    if( this.linkLayers[lid] ) {
+      this.linkLayers[lid].setStyle({ opacity: 1, weight: 2 });
+    }
+
+    this.getArrowHead(this.nodeLayers[link.dst]);
+  }
+
+  unhighlightLink(id) {
+    let link = this.links[id];
+
+    let src = this.getMarkerLatLng(link.src);
+    let dst = this.getMarkerLatLng(link.dst); 
+    let lid = src.lat+'-'+src.lng+'-'+dst.lat+'-'+dst.lng;
+    if( this.linkLayers[lid] ) {
+      this.linkLayers[lid].setStyle({opacity: 0.3, weight: 1 });
+    }
+
+    if( this.selectedLineIcon ) {
+      this.map.removeLayer(this.selectedLineIcon);
+      this.selectedLineIcon = null;
+    }
+    if( this.arrow ) {
+      this.map.removeLayer(this.arrow);
+      this.arrow = null;
+    }
+  }
 
   /**
    * @method getPolylineLength
@@ -274,13 +337,9 @@ export default class AppLeafletMap extends LitElement {
    * @description generate an arrow head for the connection lines
    *
   */
-  async getArrowHead() {
-    // Remove any existing arrowHead
-    if ( Object.keys(this.arrow).length > 0 ) {
-      this.map.removeLayer(this.arrow);
-    }
+  async getArrowHead(dst) {
 
-    let layer = this.selectedNodeLayer.dst;
+    let layer = dst || this.selectedNodeLayer.dst;
     layer = this.clusters.getVisibleParent(layer) || layer;
     let lineLength = this.getPolylineLength(layer);
     let layerType = await this.getRenderedPointType(layer);
@@ -299,7 +358,7 @@ export default class AppLeafletMap extends LitElement {
     let decorator = L.polylineDecorator(polyline, {
       patterns: [
         { 
-          offset: lineLength - (layerType === 'point' ? 8 : 19),
+          offset: lineLength - (layerType === 'point' ? 8 : 16),
           repeat: 0, 
           symbol: L.Symbol.arrowHead({ 
             polygon: true,
@@ -320,16 +379,11 @@ export default class AppLeafletMap extends LitElement {
     let featureGroup = L.featureGroup([polyline, decorator]);
     featureGroup.addTo(this.map);
 
-    this.arrow = featureGroup;
-
-    if ( !this.stopZoomBounds ) {
-      // zoom the map into the polyline
-      this.map.fitBounds(polyline.getBounds());
-
-      // Set this otherwise fitBounds() will fire every time you 
-      // adjust zoom levels and won't let you zoom in properly
-      this.stopZoomBounds = true;
+    // Remove any existing arrowHead
+    if( this.arrow ) {
+      this.map.removeLayer(this.arrow);
     }
+    this.arrow = featureGroup;
   }
 
   getMarkerLabelIcon(id){
@@ -357,7 +411,10 @@ export default class AppLeafletMap extends LitElement {
     }
 
     // If there is an arrow present from a connection get rid of it
-    this.map.removeLayer(this.arrow);
+    if( this.arrow ) {
+      this.map.removeLayer(this.arrow);
+      this.arrow = null;
+    }
 
     // find the marker layer based on id in the cluster
     let layer = this.clusters
@@ -559,7 +616,8 @@ export default class AppLeafletMap extends LitElement {
   repositionSelectedLink() {
     if( !this.selectedNodeLayer || !this.selectedLineIcon ) return;
    
-    this.getArrowHead(this.stopZoomBounds);
+    // this.getArrowHead(this.stopZoomBounds);
+    this.getArrowHead();
 
     if ( !this.selectedNodeIcon ) return;
 
@@ -569,11 +627,14 @@ export default class AppLeafletMap extends LitElement {
     );
     this.selectedLineIcon.setLatLng(ll);
 
-    this.arrow.eachLayer(layer => {
-      if ( typeof layer.setLatLngs === undefined ) {
-        layer.setLatLngs(ll);
-      }
-    });
+    if( this.arrow ) {
+      this.arrow.eachLayer(layer => {
+        if ( typeof layer.setLatLngs === undefined ) {
+          layer.setLatLngs(ll);
+        }
+      });
+    }
+
   }
 
   repositionSelectedNode() {

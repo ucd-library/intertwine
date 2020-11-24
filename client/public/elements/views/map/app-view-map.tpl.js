@@ -67,7 +67,11 @@ return html`
     }
   </style>
 
-  <app-map-info-panel ?open="${this.infoPanelOpen}" @toggle="${this.toggleInfoPanel}"></app-map-info-panel>
+  <app-map-info-panel 
+    ?open="${this.infoPanelOpen}" 
+    @toggle="${this.toggleInfoPanel}"
+    @link-hover="${this._onLinkHover}">
+  </app-map-info-panel>
   <app-leaflet-map
     ?info-open="${this.infoPanelOpen}"
     ?active="${this.visible}"
