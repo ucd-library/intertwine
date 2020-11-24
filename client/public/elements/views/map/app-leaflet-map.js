@@ -141,8 +141,10 @@ export default class AppLeafletMap extends LitElement {
       if( dataReset ) {
         this.zoomToClusters = true;
       } else {
-        this.map.invalidateSize({pan: false});
-        this.map.fitBounds(this.clusters.getBounds()); // Zooms the map to the clusters
+        requestAnimationFrame(() => {
+          this.map.invalidateSize({pan: false});
+          this.map.fitBounds(this.clusters.getBounds()); // Zooms the map to the clusters
+        });
       }
 
       // reset state, remove current markers
