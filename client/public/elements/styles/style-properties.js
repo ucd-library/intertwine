@@ -46,7 +46,7 @@ body, html {
   background-color : var(--app-background-color);
   color            : var(--app-text-color);
   max-width        : 100vw;
-  overflow: hidden;
-  height: 100%;
+  overflow         : hidden;
+  height           : 100%;
 }
 `

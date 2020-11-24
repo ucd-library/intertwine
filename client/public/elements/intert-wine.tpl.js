@@ -7,7 +7,12 @@ return html`
   <style>
     :host {
       display: block;
-      min-height: 100vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      
       background-color: var(--app-color-smoke);
       background-image: url('/images/background.png');
       background-size: cover;
@@ -37,7 +42,8 @@ return html`
     }
 
     .layout {
-      min-height: 100vh;
+      /* min-height: 100vh; */
+      height: 100%;
       display: flex;
       flex-direction: column;
     }
