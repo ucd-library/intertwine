@@ -221,6 +221,9 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     for (let attr in this.clusterSubjects) {
       this.clusterSubjects[attr].nodes.sort((a, b) => (a.name > b.name) ? 1 : -1);
     }
+
+    this.thumbnail = '';
+    this.singleImage.style.backgroundImage = '';
   }
 
   renderItem(node) {
