@@ -116,6 +116,7 @@ export default function render() {
         width: 100%;
         max-width: 600px;
         max-height: 350px;
+        min-height: 70px;
 
         background-size: cover;
         background-repeat: no-repeat;
@@ -198,31 +199,29 @@ export default function render() {
       .card .footer iron-icon {
         font-size: 30px;
       }
-
-      // Large devices (desktops, less than 1200px)
-      @media(max-width: 1199.98px) {
-
-      }
-
-      // Medium devices (tablets, less than 992px)
-      @media(max-width: 991.98px) {
-
-      }
       
-      // Small devices (landscape phones, less than 768px)
+      @media(max-width: 1330px) {
+        main > div {
+          max-width: 400px;
+        }
+      }
+
       @media(max-width: 767.98px) {
         main > div {
           width: 100%;
+          margin: 0 0 15px 0;
+        }
+        main {
+          padding: 0 15px;
+        }
+        .card .content {
+          padding: 20px;
         }
       }
 
       @media (max-width: 575.98px) {
         header {
           background-image: initial;
-        }
-
-        main > div {
-          width: 100%;
         }
       }
 
