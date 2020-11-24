@@ -152,10 +152,7 @@ export default class AppLeafletMap extends LitElement {
         this.map.removeLayer(this.selectedLineIcon);
         this.selectedLineIcon = null;
       }
-      if( this.arrow ) {
-        this.map.removeLayer(this.arrow);
-        this.arrow = null;
-      }
+      this.removeArrowHead();
       
       if( this.selectedNodeIcon ) {
         for ( let type in this.selectedNodeIcon ) {
@@ -258,11 +255,10 @@ export default class AppLeafletMap extends LitElement {
     // get the link object
     let link = this.links[id];
 
-    if( this.selectedLineIcon ) {
-      this.map.removeLayer(this.selectedLineIcon);
-      this.selectedLineIcon = null;
-      this.map.removeLayer(this.arrow);
-      this.arrow = null;
+    if( this.highlightLineIcon ) {
+      this.map.removeLayer(this.highlightLineIcon);
+      this.highlightLineIcon = null;
+      this.removeArrowHead(true);
     }
 
     // find the screen midpoint of the line
@@ -281,9 +277,9 @@ export default class AppLeafletMap extends LitElement {
       iconSize: [0, 0],
       html : '<div>' + connectionName + '</div>'
     });
-    this.selectedLineIcon = L.marker(ll, {icon});
-    this.map.addLayer(this.selectedLineIcon);
-    this.selectedLineIcon.setZIndexOffset(5000);
+    this.highlightLineIcon = L.marker(ll, {icon});
+    this.map.addLayer(this.highlightLineIcon);
+    this.highlightLineIcon.setZIndexOffset(5000);
 
     // Latlngs must be formatted as Arrays for the polyline in addArrowHead()
     this.latlngs = [link.coordinates.src, link.coordinates.dst];
@@ -295,7 +291,7 @@ export default class AppLeafletMap extends LitElement {
       this.linkLayers[lid].setStyle({ opacity: 1, weight: 2 });
     }
 
-    this.getArrowHead(this.nodeLayers[link.dst]);
+    this.getArrowHead(this.nodeLayers[link.dst], true);
   }
 
   unhighlightLink(id) {
@@ -308,14 +304,12 @@ export default class AppLeafletMap extends LitElement {
       this.linkLayers[lid].setStyle({opacity: 0.3, weight: 1 });
     }
 
-    if( this.selectedLineIcon ) {
-      this.map.removeLayer(this.selectedLineIcon);
-      this.selectedLineIcon = null;
+    if( this.highlightLineIcon ) {
+      this.map.removeLayer(this.highlightLineIcon);
+      this.highlightLineIcon = null;
     }
-    if( this.arrow ) {
-      this.map.removeLayer(this.arrow);
-      this.arrow = null;
-    }
+
+    this.removeArrowHead(true);
   }
 
   /**
@@ -350,12 +344,23 @@ export default class AppLeafletMap extends LitElement {
   //   return offset;
   // }
 
+  removeArrowHead(hover) {
+    // Remove any existing arrowHead
+    let arrow = this[hover ? 'hoverArrow' : 'arrow']
+    if( arrow ) {
+      this.map.removeLayer(arrow);
+      this[hover ? 'hoverArrow' : 'arrow'] = null;
+    }
+  }
+
   /**
    * @method getArrowHead
    * @description generate an arrow head for the connection lines
    *
   */
-  async getArrowHead(dst) {
+  async getArrowHead(dst, hover) {
+    // remove is called twice do to async call for point type
+    this.removeArrowHead(hover);
 
     let layer = dst || this.selectedNodeLayer.dst;
     layer = this.clusters.getVisibleParent(layer) || layer;
@@ -394,14 +399,11 @@ export default class AppLeafletMap extends LitElement {
       ]
     });
 
+    this.removeArrowHead(hover);
+
     let featureGroup = L.featureGroup([polyline, decorator]);
     featureGroup.addTo(this.map);
-
-    // Remove any existing arrowHead
-    if( this.arrow ) {
-      this.map.removeLayer(this.arrow);
-    }
-    this.arrow = featureGroup;
+    this[hover ? 'hoverArrow' : 'arrow'] = featureGroup;
   }
 
   getMarkerLabelIcon(id){
@@ -429,10 +431,7 @@ export default class AppLeafletMap extends LitElement {
     }
 
     // If there is an arrow present from a connection get rid of it
-    if( this.arrow ) {
-      this.map.removeLayer(this.arrow);
-      this.arrow = null;
-    }
+    this.removeArrowHead();
 
     // find the marker layer based on id in the cluster
     let layer = this.clusters
@@ -632,11 +631,7 @@ export default class AppLeafletMap extends LitElement {
   }
 
   repositionSelectedLink() {
-    if( !this.selectedNodeLayer || !this.selectedLineIcon ) return;
-   
-    // this.getArrowHead(this.stopZoomBounds);
-    this.getArrowHead();
-
+    if( !this.selectedLineIcon ) return;
     if ( !this.selectedNodeIcon ) return;
 
     let ll = this._getMidPoint(
@@ -645,14 +640,14 @@ export default class AppLeafletMap extends LitElement {
     );
     this.selectedLineIcon.setLatLng(ll);
 
-    if( this.arrow ) {
-      this.arrow.eachLayer(layer => {
-        if ( typeof layer.setLatLngs === undefined ) {
-          layer.setLatLngs(ll);
-        }
-      });
-    }
-
+    // if( this.arrow ) {
+    //   this.arrow.eachLayer(layer => {
+    //     if ( typeof layer.setLatLngs === undefined ) {
+    //       layer.setLatLngs(ll);
+    //     }
+    //   });
+    // }
+    this.getArrowHead();
   }
 
   repositionSelectedNode() {
