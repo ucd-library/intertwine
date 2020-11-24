@@ -64,6 +64,7 @@ class AppStateModelImpl extends AppStateModel {
       if( state.location.path[2] === 'cluster' ) {
         state.selectedNode.latlng = state.location.path[3].split(',').map(ll => parseFloat(ll));
         state.selectedNode.zoom = parseInt(state.location.path[4]);
+        state.selectedNode.id = state.location.path[5];
       } else {
         state.selectedNode.id = state.location.path[3];
       }

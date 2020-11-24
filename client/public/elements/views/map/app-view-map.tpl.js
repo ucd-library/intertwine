@@ -78,7 +78,8 @@ return html`
     id="map"
     @node-click="${this._onNodeClick}"
     @cluster-click="${this._onClusterClick}"
-    @selected-cluster-ids="${this._onSelectedClusterIds}">
+    @selected-cluster-ids="${this._onSelectedClusterIds}"
+    @selected-cluster-zoom-change="${this._onSelectedClusterZoomChange}">
   </app-leaflet-map>
 
 `;}

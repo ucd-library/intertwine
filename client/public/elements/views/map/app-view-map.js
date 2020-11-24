@@ -49,6 +49,7 @@ export default class AppViewMap extends Mixin(LitElement)
 
   firstUpdated() {
     this.mapEle = this.shadowRoot.querySelector('#map');
+    this.infoEle = this.shadowRoot.querySelector('app-map-info-panel');
   }
 
   /**
@@ -61,19 +62,20 @@ export default class AppViewMap extends Mixin(LitElement)
     if ( e.page !== 'map' ) return;
     this.appState = e;
 
+    this.mapEle.renderSelectedState(e, this.moment !== e.moment);
+
     this.moment   = e.moment;
     this.selected = e.selectedNode;
 
     let state = await this.MomentModel.get(this.moment); 
 
-    if ( state.state === 'error' ) return;
+    if ( state.state === 'error' ) {
+      console.error('Failed to fetch moment');
+      return;
+    }
 
     this.data = state.payload.graph;
-    this.mapEle.setData(state.payload.graph);
-
-    if( e.selectedNode ) {
-      this.mapEle.renderSelectedState(e);
-    }
+    this.mapEle.setData(this.data);
   }
 
   /**
@@ -82,18 +84,16 @@ export default class AppViewMap extends Mixin(LitElement)
    *
    * @param {*} e
    */
-  _onMomentGraphUpdate(e) {    
-    if ( e.state !== 'loaded' ) return;
+  // _onMomentGraphUpdate(e) {    
+  //   if ( e.state !== 'loaded' ) return;
     
-    /* TODO: Related to error #54 */
-    if ( this.moment === e.id ) {
-      this.data = e.payload.graph;
-      this.mapEle.setData(e.payload.graph);
-
-      if( this.appState && this.appState.selectedNode ) this.mapEle.renderSelectedState(this.appState);
-      else this.mapEle.renderSelectedState();
-    }
-  }
+  //   /* TODO: Related to error #54 */
+  //   if ( this.moment === e.id && this.data !== e.payload.graph ) {
+  //     this.data = e.payload.graph;
+  //     this.mapEle.setData(e.payload.graph);
+  //     this.mapEle.renderSelectedState(this.appState);
+  //   }
+  // }
 
   /**
    * @method _onNodeClick
@@ -114,7 +114,7 @@ export default class AppViewMap extends Mixin(LitElement)
    */
   _onClusterClick(e) {
     this.AppStateModel.setLocation('/map/'+this.moment+'/cluster/'+
-      encodeURI(e.detail.latLng.join(','))+'/'+e.detail.zoom
+      e.detail.url
     );
   }
 
@@ -162,6 +162,10 @@ export default class AppViewMap extends Mixin(LitElement)
     } else {
       this.mapEle.unhighlightLink(e.detail.link);
     }
+  }
+
+  _onSelectedClusterZoomChange(e) {
+    this.infoEle.onSelectedClusterZoomChange(e.detail.clusterVisible);
   }
 
 }

@@ -113,7 +113,10 @@ export default class AppLeafletMap extends LitElement {
       this.updateLinks();   
 
       if( this.appState && this.appState.selectedNode && this.appState.selectedNode.type === 'cluster' ) {
-        this.findAndRenderSelectedCluster(this.appState.selectedNode.latlng, this.appState.selectedNode.zoom);
+        let cluster = this.findAndRenderSelectedCluster(this.appState.selectedNode.id);
+        this.dispatchEvent(new CustomEvent('selected-cluster-zoom-change', {
+          detail : { clusterVisible: cluster ? true : false}
+        }));
       }  
     });
 
@@ -130,12 +133,12 @@ export default class AppLeafletMap extends LitElement {
    *
    * @param {Object} e app-state-update event object
   */
-  renderSelectedState(e) {
-
+  renderSelectedState(e={}, dataReset=false) {
     this.appState = e;
 
-    if( !e ) {
-      if( Object.keys(this.nodes).length === 0 ) {
+    if( !e.selectedNode ) {
+      // if( Object.keys(this.nodes).length === 0 ) {
+      if( dataReset ) {
         this.zoomToClusters = true;
       } else {
         this.map.invalidateSize({pan: false});
@@ -147,6 +150,10 @@ export default class AppLeafletMap extends LitElement {
         this.map.removeLayer(this.selectedLineIcon);
         this.selectedLineIcon = null;
       }
+      if( this.arrow ) {
+        this.map.removeLayer(this.arrow);
+        this.arrow = null;
+      }
       
       if( this.selectedNodeIcon ) {
         for ( let type in this.selectedNodeIcon ) {
@@ -154,8 +161,6 @@ export default class AppLeafletMap extends LitElement {
         }
         this.selectedNodeIcon = null;
       }
-
-      this.firstRender = false;
 
       return;
     }
@@ -174,17 +179,21 @@ export default class AppLeafletMap extends LitElement {
       this.selectedLineIcon = null;
     }
 
+    this.resetClusterStyles();
+
     // now render based on selected type
     if( e.selectedNode.type === 'cluster' ) {
-      this.selectCluster(e.selectedNode.latlng, e.selectedNode.zoom);
+      this.selectCluster(e.selectedNode.latlng, e.selectedNode.zoom, e.selectedNode.id);
     } else if( e.selectedNode.type && e.selectedNode.type !== 'connection' ) {
       this.selectNode(e.selectedNode.id, undefined, this.firstRender);
     } else if( e.selectedNode.type === 'connection' ) {
       this.selectLink(e.selectedNode.id);
     }
-    
+
     // make sure our links are rendered correctly
     this.updateLinks();
+
+    this.firstRender = false;
   }
 
   /**
@@ -194,7 +203,7 @@ export default class AppLeafletMap extends LitElement {
    *
    * @param {String} id connection id
   */
-  selectLink(id) {
+  selectLink(id, firstRender=false) {
     // get the link object
     let link = this.links[id];
 
@@ -234,6 +243,13 @@ export default class AppLeafletMap extends LitElement {
     this.latlngs = [link.coordinates.src, link.coordinates.dst];
 
     this.getArrowHead();
+
+    if( firstRender || this.firstRender ) {
+      this.map.fitBounds(L.latLngBounds([
+        this.selectedNodeIcon.src.getLatLng(), 
+        this.selectedNodeIcon.dst.getLatLng()
+      ]));
+    }
   }
 
   highlighLink(id) {
@@ -419,7 +435,7 @@ export default class AppLeafletMap extends LitElement {
     // find the marker layer based on id in the cluster
     let layer = this.clusters
       .getLayers()
-      .find(layer => layer.inertWineId === id);
+      .find(layer => layer.intertWineId === id);
 
     // if not found, assume either graph hasn't loaded or the layer hasn't rendered
     // set the pendingNodeSelect attribute which will be cheched when the graph
@@ -445,7 +461,7 @@ export default class AppLeafletMap extends LitElement {
     let icon = this.getMarkerLabelIcon(id);
     this.selectedNodeIcon[type] = L.marker(layer.getLatLng(), {
       icon: icon,
-      inertWineId: id,
+      intertWineId: id,
       zIndexOffset: 5000
     });
     this.map.addLayer(this.selectedNodeIcon[type]);
@@ -481,9 +497,9 @@ export default class AppLeafletMap extends LitElement {
         arrow.classList.add('top');
       }
 
-      // the point markers have inertWineIds
+      // the point markers have intertWineIds
       // these have different label top/bottom offsets based on cluster vs point
-      if( layer.inertWineId ) {
+      if( layer.intertWineId ) {
         markerEle.classList.add('point');
         arrow.classList.add('point');
       }
@@ -508,13 +524,13 @@ export default class AppLeafletMap extends LitElement {
   /**
    * @method getRenderedPointType(id)
    * @description determines whether a layer is a cluster or a point.
-   * Point markers have inertWineIds
+   * Point markers have intertWineIds
   */
   getRenderedPointType(layer) {
     return new Promise((resolve, reject) => {
       requestAnimationFrame(() => {
         layer = this.clusters.getVisibleParent(layer) || layer;
-        resolve(layer.inertWineId ? 'point' : 'cluster');
+        resolve(layer.intertWineId ? 'point' : 'cluster');
       });
     });   
   }
@@ -536,15 +552,15 @@ export default class AppLeafletMap extends LitElement {
            this.selectedNodeIcon.src._latlng.lng === latlng.lng ) return;
     };
 
-    let id = e.sourceTarget.inertWineId;
+    let id = e.sourceTarget.intertWineId;
     let icon = this.getMarkerLabelIcon(id);
     let layer = L.marker(latlng, {
       icon: icon,
-      inertWineId: id,
+      intertWineId: id,
       zIndexOffset: 5000
     });
     this.layerLabel = layer;
-    this.layerLabel.inertWineId = id;
+    this.layerLabel.intertWineId = id;
     this.map.addLayer(this.layerLabel);
 
     // We need to let the marker render so we can adjust the left offset based
@@ -644,7 +660,7 @@ export default class AppLeafletMap extends LitElement {
       let layer = this.clusters.getVisibleParent(this.selectedNodeLayer[type]) || this.selectedNodeLayer[type];
       this.selectedNodeIcon[type].setLatLng(layer.getLatLng());  
 
-      if( layer.inertWineId ) {
+      if( layer.intertWineId ) {
         this.selectedNodeIcon[type].getElement().firstChild.classList.add('point');
         this.selectedNodeIcon[type].getElement().children[1].classList.add('point');
       } else {
@@ -654,55 +670,83 @@ export default class AppLeafletMap extends LitElement {
     }
   }
 
-  selectCluster(latlng, zoom) {
-    if( this.firstRender ) {
+  selectCluster(latlng, zoom, id, firstRender) {
+    if( firstRender || this.firstRender ) {
       this.setView(latlng, zoom);
 
       if( this.map ) {
         if( this.clusters.getLayers().length === 0 ) {
-          this.pendingClusterSelect = {latlng, zoom};
+          this.pendingClusterSelect = {latlng, zoom, id};
           return; // this will get fired on again on firstUpdate
         }
       } else {
-        this.pendingClusterSelect = {latlng, zoom};
+        this.pendingClusterSelect = {latlng, zoom, id};
         return; // this will get fired on again on firstUpdate
       }
     }
 
-    let selectedCluster = this.findAndRenderSelectedCluster(latlng, zoom);
+    let selectedCluster = this.findAndRenderSelectedCluster(id);
     if( !selectedCluster ) return console.warn('no clusters found to selected');
 
     let event = new CustomEvent('selected-cluster-ids', {
-      detail: selectedCluster.getAllChildMarkers().map(l => l.inertWineId)
+      detail: selectedCluster.getAllChildMarkers().map(l => l.intertWineId)
     })
     this.dispatchEvent(event);
   }
 
-  findAndRenderSelectedCluster(latlng, zoom) {
+  findAndRenderSelectedCluster(id) {
     this.resetClusterStyles();
-    if( this.map.getZoom() !== zoom ) return;
+
+    // if( this.map.getZoom() !== zoom ) return;
 
     let clusterMarkers = this.clusters._featureGroup.getLayers();
-    let closest = Number.MAX_SAFE_INTEGER;
+    // let closest = Number.MAX_SAFE_INTEGER;
     let selectedCluster = null;
 
     for( let layer of clusterMarkers ) {
       // HACK.  Is there better type checking for this?
-      if( layer.inertWineId ) continue;
+      if( layer.intertWineId ) continue;
       if( !layer._group ) continue;
 
-      let ll = layer.getBounds().getCenter();
-      let dist = Math.abs(ll.lat - latlng[0]) + Math.abs(ll.lng - latlng[1]);
-      if( closest > dist ) {
+      if( this.isClusterIdEqual(id, this.getClusterId(layer)) ) {
         selectedCluster = layer;
-        closest = dist;
+        break;
       }
+
+      // let ll = layer.getBounds().getCenter();
+      // let dist = Math.abs(ll.lat - latlng[0]) + Math.abs(ll.lng - latlng[1]);
+      // if( closest > dist ) {
+      //   selectedCluster = layer;
+      //   closest = dist;
+      // }
     }
 
     if( !selectedCluster ) return;
 
     selectedCluster._icon.classList.add('selected-cluster');
     return selectedCluster;
+  }
+
+  getClusterUrl(zoom, layer) {
+    let ll = layer.getBounds().getCenter();
+    return ll.lat.toFixed(4) + ',' +
+      ll.lng.toFixed(4) + '/' +
+      zoom + '/' + 
+      this.getClusterId(layer);
+  }
+
+  getClusterId(layer) {
+    return layer.getAllChildMarkers().map(l => l.intertWineId.substr(0, 3)).join('.');
+  }
+
+  isClusterIdEqual(id1, id2) {
+    if( typeof id1 === 'string' ) id1 = id1.split('.');
+    if( typeof id2 === 'string' ) id2 = id2.split('.');
+    if( id1.length !== id2.length ) return false;
+    for( let id of id1 ) {
+      if( !id2.includes(id) ) return false;
+    }
+    return true;
   }
 
   onClusterMouseOver(e) {
@@ -718,11 +762,9 @@ export default class AppLeafletMap extends LitElement {
    * @description bound to cluster click event
   */
   onClusterClicked(e) {
-    let center = e.layer.getBounds().getCenter();
     let event = new CustomEvent('cluster-click', {
       detail : {
-        latLng : [parseFloat(center.lat.toFixed(4)), parseFloat(center.lng.toFixed(4))],
-        zoom : this.map.getZoom()
+        url : this.getClusterUrl(this.map.getZoom(), e.layer)
       }
     });
 
@@ -735,7 +777,7 @@ export default class AppLeafletMap extends LitElement {
    */
   onNodeClicked(e) {
     let event = new CustomEvent('node-click', {detail : {
-      id : e.target.inertWineId
+      id : e.target.intertWineId
     }});
 
     this.dispatchEvent(event);
@@ -743,7 +785,7 @@ export default class AppLeafletMap extends LitElement {
 
   onLinkClicked(e) {
     let event = new CustomEvent('link-click', {detail : {
-      id : e.layer.inertWineId
+      id : e.layer.intertWineId
     }});
     this.dispatchEvent(event);
   }
@@ -772,13 +814,13 @@ export default class AppLeafletMap extends LitElement {
       let layer = L.marker(this.nodes[id].coordinates, {icon});
 
       layer.on('click', e => this.onNodeClicked(e));
-      layer.inertWineId = id;
+      layer.intertWineId = id;
       this.nodeLayers[id] = layer;
       this.clusters.addLayer(layer);
     }
 
     if( this.pendingClusterSelect ) {
-      this.selectCluster(this.pendingClusterSelect.latlng, this.pendingClusterSelect.zoom);
+      this.selectCluster(this.pendingClusterSelect.latlng, this.pendingClusterSelect.zoom, this.pendingClusterSelect.id, true);
       this.pendingClusterSelect = null;
     } else if( this.pendingNodeSelect ) {
       for( let type in this.pendingNodeSelect ) {
@@ -786,17 +828,16 @@ export default class AppLeafletMap extends LitElement {
       }
       this.pendingNodeSelect = null;
     } else if( this.pendingLinkSelect ) {
-      this.selectLink(this.pendingLinkSelect);
+      this.selectLink(this.pendingLinkSelect, true);
       this.pendingLinkSelect = null;
     } else if( this.zoomToClusters ) {
       // Zooms the map to where the clusters are located
+      this.map.invalidateSize({pan: false});
       this.map.fitBounds(this.clusters.getBounds());
       this.zoomToClusters = false;
     }
 
     this.updateLinks();
-
-    this.renderSelectedState();
   }
 
   /**
@@ -828,7 +869,7 @@ export default class AppLeafletMap extends LitElement {
 
       let selected = false;
       if( this.selectedNodeLayer && this.selectedNodeLayer.src && this.selectedNodeLayer.dst ) {
-        if( item.src === this.selectedNodeLayer.src.inertWineId && item.dst === this.selectedNodeLayer.dst.inertWineId ) {
+        if( item.src === this.selectedNodeLayer.src.intertWineId && item.dst === this.selectedNodeLayer.dst.intertWineId ) {
           selected = true;
         }
       }

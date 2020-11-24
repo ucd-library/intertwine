@@ -103,7 +103,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       return;
     }
 
-    this.moment   = e.moment;
+    this.moment = e.moment;
     this.selected = e.selectedNode;
 
     let state = await this.MomentModel.get(this.moment);
@@ -123,6 +123,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     if ( this.isLink ) this.title = '';
     if ( this.connections.length > 0 ) this.hasConnections = true;
     else this.hasConnections = false;
+  }
+
+  onSelectedClusterZoomChange(visible) {
+    if( visible ) this.renderState();
+    else this.renderEmpty();
   }
 
   renderState(moment) {
