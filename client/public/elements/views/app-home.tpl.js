@@ -190,10 +190,11 @@ export default function render() {
       }
 
       .card .footer .separator {
-        margin: 0 14px 0 10px;
+        margin: 0 10px;
         padding-top: 10px;
         height: 30px;
-        border: 1px solid var(--app-color-pewter);
+        background: var(--app-color-pewter);
+        width: 2px;
       }
 
       .card .footer iron-icon {
@@ -301,8 +302,7 @@ export default function render() {
           <div>
             <div class="card">
               <div class="feature-img" 
-                @click="${e => this._onReadStoryClick(moment.entrypoint.story)}" 
-                style="cursor: pointer; background-image: url('${moment.entrypoint.thumbnail}');"></div>
+                style="background-image: url('${moment.entrypoint.thumbnail}');"></div>
               <div class="content">
                 <h4>${moment.entrypoint.name}</h4>
                 <em>${moment.entrypoint.temporal}</em>
