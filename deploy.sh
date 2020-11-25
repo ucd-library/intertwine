@@ -5,6 +5,12 @@ CONTAINER_NAME=intert-wine-leigh
 DEPLOYMENT_NAME=intert-wine-leigh
 IMAGE=gcr.io/$PROJECT_ID/$CONTAINER_NAME
 
+BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+if [[ $BRANCH_NAME == 'master' ]]; then
+  CONTAINER_NAME=intert-wine
+  DEPLOYMENT_NAME=intert-wine
+fi
+
 npm run dist
 
 gcloud builds submit --tag $IMAGE
