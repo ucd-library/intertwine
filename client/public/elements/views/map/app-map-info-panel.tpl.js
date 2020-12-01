@@ -14,7 +14,6 @@ return html`
 
     a.internal {
       display: inline;
-      margin-left: 12px;
     }
 
     .toggle {
@@ -98,6 +97,10 @@ return html`
       width: 8px;
       vertical-align: middle;
       border-radius: 8px;
+    }
+
+    .dot-list-padding {
+      margin-left: 12px;
     }
 
     #explore-connections.dot-list > div > a {
@@ -343,7 +346,7 @@ return html`
                   <div class="dot-wrapper">
                     <div class="dot" type="${type}"></div>
                   </div>
-                  <div>
+                  <div class="dot-list-padding">
                     <a class="internal" href="/map/${this.moment}/${type}/${node['@id']}">
                       ${node.name}
                     </a>
@@ -387,7 +390,7 @@ return html`
                   <div class="dot-wrapper">
                     <div class="dot" type="${connection.type}"></div>
                   </div>
-                  <div>
+                  <div class="dot-list-padding">
                     <a class="internal" href="/map/${this.moment}/connection/${connection.id}">
                       <strong><em>${connection.connection}</em></strong>&nbsp;${connection.name}
                     </a>
@@ -402,7 +405,7 @@ return html`
                 <div class="dot-wrapper">
                   <div class="dot" type="${node.type}"></div>
                 </div>
-                <div>
+                <div class="dot-list-padding">
                   <a class="internal" href="/map/${this.moment}/${node.type}/${node['@id']}">
                     ${node.name}
                   </a>

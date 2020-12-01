@@ -13,6 +13,7 @@ fi
 
 npm run dist
 
+gcloud config set project digital-ucdavis-edu
 gcloud builds submit --tag $IMAGE
 
 gcloud beta run deploy $DEPLOYMENT_NAME \
