@@ -267,6 +267,9 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
         this.imageCreditLink = node.creator;
       }
     }
+    if( this.imageCreditLink && typeof this.imageCreditLink !== 'string' ) {
+      this.imageCreditLink = this.imageCreditLink['@id'];
+    }
 
     if ( node.relatedLink ) {
       if ( Array.isArray(node.relatedLink) ) {

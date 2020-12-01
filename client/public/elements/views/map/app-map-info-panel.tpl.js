@@ -431,7 +431,7 @@ return html`
           </div>
 
           ${this.imageCreditTitle ? html`<div class="imageCredit">
-            Image Credit: <a href="${this.imageCreditLink['@id']}" target="_blank">${this.imageCreditTitle}</a>
+            Image Credit: <a href="${this.imageCreditLink}" target="_blank">${this.imageCreditTitle}</a>
           </div>` : html``}
         </div>
         <!-- END ITEM -->
