@@ -272,16 +272,19 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     }
 
     if ( node.relatedLink ) {
-      if ( Array.isArray(node.relatedLink) ) {
-        let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
-        this.relatedLinks = node.relatedLink.map((v, i) => {
-          return {
-            fullLink: v,
-            shortLink: v.replace(re, '').split('/')[0],
-            title: node.relatedLinkText[i]
-          }
-        });
-      }
+      let links = node.relatedLink;
+      let linkText = node.relatedLinkText;
+      if( !Array.isArray(links) ) links = [links];
+      if( !Array.isArray(linkText) ) linkText = [linkText];
+
+      let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
+      this.relatedLinks = links.map((v, i) => {
+        return {
+          fullLink: v,
+          shortLink: v.replace(re, '').split('/')[0],
+          title: linkText[i]
+        }
+      });
     }
 
     if( node.type === 'connection' ) {
