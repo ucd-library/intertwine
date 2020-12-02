@@ -13,7 +13,7 @@ return html`
     }
 
     a.internal {
-      display: inline;
+      display: inline-block;
     }
 
     .toggle {

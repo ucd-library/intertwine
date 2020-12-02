@@ -53,8 +53,8 @@ export default html`
   a {
     cursor: pointer;
     font-size: 15px;
-    display: inline-flex;
-    align-items: center;
+    /* display: inline-flex; */
+    /* align-items: center; */
   }
 
   a.internal, a.internal:visited {
