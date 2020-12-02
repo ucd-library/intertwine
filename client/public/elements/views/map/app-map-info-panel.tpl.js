@@ -390,7 +390,7 @@ return html`
                   <div class="dot-wrapper">
                     <div class="dot" type="${connection.type}"></div>
                   </div>
-                  <div class="dot-list-padding">
+                  <div>
                     <a class="internal" href="/map/${this.moment}/connection/${connection.id}">
                       <strong><em>${connection.connection}</em></strong>&nbsp;${connection.name}
                     </a>
@@ -405,7 +405,7 @@ return html`
                 <div class="dot-wrapper">
                   <div class="dot" type="${node.type}"></div>
                 </div>
-                <div class="dot-list-padding">
+                <div>
                   <a class="internal" href="/map/${this.moment}/${node.type}/${node['@id']}">
                     ${node.name}
                   </a>
@@ -422,12 +422,12 @@ return html`
                 <div class="icon-wrapper">
                   <iron-icon class="external-link" icon="intert-wine-icons:link" type="${this.type}"></iron-icon>
                 </div>
-                <span>
+                <div>
                   <a class="external type-color" type="${this.type}" href="${link.fullLink}" target="_blank">
                     ${link.shortLink}
                   </a>
                   <span>&quot;${link.title}&quot;</span>
-                </span>
+                </div>
               </div>
             `)}
             </div>

@@ -255,7 +255,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
     if ( node.thumbnail ) {     
       this.thumbnail = this.endpoint + '/' + this.moment + '/' + node.thumbnail.replace('z:', '');
-      this.singleImage.style.backgroundImage = 'url(' + this.thumbnail + ')';
+      this.singleImage.style.backgroundImage = 'url("' + this.thumbnail + '")';
     }
 
     if ( node.creator ) {
