@@ -142,6 +142,12 @@ class MomentModel extends BaseModel {
         data[i].type = 'connection';
       }
 
+      if( data[i].relatedLink ) {
+        let rls = data[i].relatedLink;
+        if( !Array.isArray(rls) ) rls = [rls];
+        data[i].relatedLink = rls.map(rl => getBNode(rl));
+      }
+
       lookup[data[i]['@id'].replace(/.*:b/, 'b')] = data[i];
     }
 

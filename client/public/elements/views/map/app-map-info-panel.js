@@ -258,6 +258,8 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       this.singleImage.style.backgroundImage = 'url("' + this.thumbnail + '")';
     }
 
+    this.imageCreditTitle = '';
+    this.imageCreditLink = '';
     if ( node.creator ) {
       if ( Array.isArray(node.creator) ) {
         this.imageCreditLink  = node.creator.find(c => c['@id'] !== undefined);
@@ -272,17 +274,12 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     }
 
     if ( node.relatedLink ) {
-      let links = node.relatedLink;
-      let linkText = node.relatedLinkText;
-      if( !Array.isArray(links) ) links = [links];
-      if( !Array.isArray(linkText) ) linkText = [linkText];
-
       let re = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/;
-      this.relatedLinks = links.map((v, i) => {
+      this.relatedLinks = node.relatedLink.map((v, i) => {
         return {
-          fullLink: v,
-          shortLink: v.replace(re, '').split('/')[0],
-          title: linkText[i]
+          fullLink: v.url,
+          shortLink: v.url.replace(re, '').split('/')[0],
+          title: v.name
         }
       });
     }
