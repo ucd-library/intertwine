@@ -67,6 +67,8 @@ export default html`
   }
 
   button, .btn {
+    display: inline-block;
+    line-height: 44px;
     height: 44px;
     padding: 0 15px;
     color: var(--app-color-white);
