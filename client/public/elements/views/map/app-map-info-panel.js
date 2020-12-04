@@ -89,6 +89,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       this.singleImage.style.backgroundImage = 'initial';
       this.connectionSrcImg.style.backgroundImage = 'initial';
       this.connectionDstImg.style.backgroundImage = 'initial';
+      this.contentEle.scrollTo(0,0);
     }
     // this.events  = [];
 
@@ -155,6 +156,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.singleImage    = this.shadowRoot.querySelector('#singleImage');
     this.connectionSrcImg = this.shadowRoot.querySelector('#connection-src-image');
     this.connectionDstImg = this.shadowRoot.querySelector('#connection-dst-image');
+    this.contentEle = this.shadowRoot.querySelector('.content');
   }
 
   updated() {
