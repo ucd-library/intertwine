@@ -95,7 +95,7 @@ return html`
       <span class="title-extra">// ${this.subtitle}</span>
     </h1>
     <div class="about">
-      <a @click="${this._onAboutClick}">ABOUT</a>
+      <!-- <a @click="${this._onAboutClick}">ABOUT</a> -->
     </div>
     <a class="logo" href="https://www.library.ucdavis.edu/" title="UC Davis Library Home Page" target="_blank"></a>
   </header>
