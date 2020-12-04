@@ -1,4 +1,4 @@
-import { LitElement } from 'lit-element';
+import { LitElement, html } from 'lit-element';
 import render from './app-story.tpl.js'
 
 export default class AppStory extends Mixin(LitElement)
@@ -82,7 +82,13 @@ export default class AppStory extends Mixin(LitElement)
         orderedStory[i].label = orderedStory[i].label.replace(/\s|\/|story:/gi, '').toLowerCase();
         if( orderedStory[i].label === 'triptych' && orderedStory[i].image ) {
           orderedStory[i].image.sort((a,b) => a['schema:position'] < b['schema:position'] ? -1 : 1)
-        }        
+        }
+        if( orderedStory[i].text ) {
+          if( !Array.isArray(orderedStory[i].text) ) {
+            orderedStory[i].text = [orderedStory[i].text];
+          }
+          orderedStory[i].text = orderedStory[i].text.map(text => text.replace(/\n/g, '<br /><br />'));
+        }
       }
 
       if ( !payload.graph.story.entrypoint.thumbnail ) {

@@ -1,5 +1,6 @@
 import { html } from 'lit-element';
 import { repeat } from 'lit-html/directives/repeat';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import sharedStyles from './../styles/shared-styles'
 
 import '@polymer/iron-icon';
@@ -477,7 +478,7 @@ export default function render() {
           ${p.label === 'text' ? html`
             <div class="text-blocks">
               <h1 ?hidden="${!p.headline}">${p.headline}</h1>
-              ${Array.isArray(p.text) ? html`${p.text.map((p) => html`<p>${p}</p>`)}` : html`<p>${p.text}</p>`}
+              ${Array.isArray(p.text) ? html`${p.text.map((p) => html`<p>${unsafeHTML(p)}</p>`)}` : html`<p>${unsafeHTML(p.text)}</p>`}
             </div>` : html ``}
 
           ${p.label === 'imagetext' ? html`
@@ -486,13 +487,13 @@ export default function render() {
             </div>` : html`<div class="image" style="background-image: url('${p.src}');"><span>${p.caption}</span></div>`}
             <div class="text-blocks">
               <h1 ?hidden="${!p.headline}">${p.headline}</h1>
-              ${Array.isArray(p.text) ? html`${p.text.map((p) => html`<p>${p}</p>`)}` : html`<p>${p.text}</p>`}
+              ${Array.isArray(p.text) ? html`${p.text.map((p) => html`<p>${unsafeHTML(p)}</p>`)}` : html`<p>${unsafeHTML(p.text)}</p>`}
             </div>` : html``}
           
           ${p.label === 'textimage' ? html`
             <div class="text-blocks">
               <h1 ?hidden="${!p.headline}">${p.headline}</h1>
-              ${Array.isArray(p.text) ? html`${p.text.map((p) => html`<p>${p}</p>`)}`:html`<p>${p.text}</p>`}
+              ${Array.isArray(p.text) ? html`${p.text.map((p) => html`<p>${unsafeHTML(p)}</p>`)}`:html`<p>${unsafeHTML(p.text)}</p>`}
             </div>
             <div class="image" style="background-image: url('${this.endpoint}/${this.moment}/${p.thumbnail}');">
               <span>${p.caption}</span>
