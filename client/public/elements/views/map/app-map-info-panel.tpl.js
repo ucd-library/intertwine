@@ -399,7 +399,7 @@ return html`
               `)}
           </div>
           <div ?hidden="${!this.isLink}">
-            <h3>Connections Subjects</h3>
+            <h3>Connection Subjects</h3>
             ${this.connectionSubjects.map(node => html`
               <div class="dot-list">
                 <div class="dot-wrapper">

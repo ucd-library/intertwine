@@ -25,7 +25,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       view : {type : String},
       title : {type : String},
       date : {type : String},
-      events: { type: Array },
+      // events: { type: Array },
       connections : {type: Array},
       isNode : {type: Boolean},
       isLink : {type: Boolean},
@@ -44,7 +44,28 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
   constructor() {
     super();
 
+    this.moment = '';
+    this.momentEntryPoint = {};
+    this.momentEntryPointUrl = '';
     this.open = true;
+    this.resetUi();
+
+    this.endpoint = APP_CONFIG.endpoint;
+
+    this.hasConnections = false;
+    this.connectionSubjects = [];
+    this.clusterSubjectTypes = ['person', 'place', 'object', 'event'];
+
+    this.render = render.bind(this);
+
+    window.addEventListener('keyup', (e) => {      
+      if ( e.key === 'Escape' ) this._returnToMainInfoPanel();
+    });
+
+    this._injectModel('AppStateModel', 'MomentModel');
+  }
+
+  resetUi() {
     this.title = '';
     this.date = '';
     this.view = '';
@@ -59,27 +80,44 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.isLink = false;
     this.isNode = false;
     this.isMoment = false;
-    this.moment = '';
-    this.momentEntryPoint = {};
-    this.momentEntryPointUrl = '';
     this.relatedLinks = [];
     this.imageCreditLink  = '';
     this.imageCreditTitle = '';
-    this.events  = [];
 
-    this.endpoint = APP_CONFIG.endpoint;
+    // check elements have been loaded
+    if( this.singleImage ) {
+      this.singleImage.style.backgroundImage = 'initial';
+      this.connectionSrcImg.style.backgroundImage = 'initial';
+      this.connectionDstImg.style.backgroundImage = 'initial';
+    }
+    // this.events  = [];
 
-    this.hasConnections = false;
-    this.connectionSubjects = [];
-    this.clusterSubjectTypes = ['person', 'place', 'object', 'event'];
     this.resetClusterSubjects();
-    this.render = render.bind(this);
+  }
 
-    window.addEventListener('keyup', (e) => {      
-      if ( e.key === 'Escape' ) this._returnToMainInfoPanel();
-    });
-
-    this._injectModel('AppStateModel', 'MomentModel');
+  resetClusterSubjects() {
+    this.clusterSubjects = {
+      person : {
+        enabled : false,
+        label : 'People',
+        nodes : []
+      },
+      place : {
+        enabled : false,
+        label : 'Places',
+        nodes : []
+      },
+      object : {
+        enabled : false,
+        label : 'Objects',
+        nodes : []
+      },
+      event : {
+        enabled : false,
+        label : 'Events',
+        nodes : []
+      }
+    }
   }
 
   /**
@@ -147,9 +185,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       this.graph = moment.graph;
     }
 
-    this.isLink = false;
-    this.isNode = false;
-    this.isMoment = false;
+    this.resetUi();
 
     if( !this.selected ) {
       this.renderEmpty();
@@ -164,19 +200,19 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     
     /** Compare the current URL location to the current 
       selected id to make sure we're on the same page */
-    let locArray = window.location.pathname.split('/');
-    let _id = locArray[locArray.length - 1];
-    if ( _id !== this.selected.id ) {
-      /** Reset the thumbnails and background images so if
-      the user has navigated to a new item the old image
-      isn't displayed. */
-      this.thumbnail = '';
-      this.singleImage.style.backgroundImage = 'initial';
-      this.connectionSrcImg.style.backgroundImage = 'initial';
-      this.connectionDstImg.style.backgroundImage = 'initial';
-      this.imageCreditLink  = '';
-      this.imageCreditTitle = '';
-    }    
+    // let locArray = window.location.pathname.split('/');
+    // let _id = locArray[locArray.length - 1];
+    // if ( _id !== this.selected.id ) {
+    //   /** Reset the thumbnails and background images so if
+    //   the user has navigated to a new item the old image
+    //   isn't displayed. */
+    //   this.thumbnail = '';
+    //   this.singleImage.style.backgroundImage = 'initial';
+    //   this.connectionSrcImg.style.backgroundImage = 'initial';
+    //   this.connectionDstImg.style.backgroundImage = 'initial';
+    //   this.imageCreditLink  = '';
+    //   this.imageCreditTitle = '';
+    // }    
 
     this.type = this.selected.type;
 
@@ -208,7 +244,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
   renderCluster(nodes) {
     this.view = 'cluster';
-    this.resetClusterSubjects();
+    this.resetUi();
 
     nodes.forEach(node => {
       if( !this.clusterSubjects[node.type] ) return;
@@ -345,31 +381,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
     this.type = 'item'
     this.title = node.name;
     this.descriptionEle.innerHTML = markdown.toHTML(node.description || '');
-  }
-
-  resetClusterSubjects() {
-    this.clusterSubjects = {
-      person : {
-        enabled : false,
-        label : 'People',
-        nodes : []
-      },
-      place : {
-        enabled : false,
-        label : 'Places',
-        nodes : []
-      },
-      object : {
-        enabled : false,
-        label : 'Objects',
-        nodes : []
-      },
-      event : {
-        enabled : false,
-        label : 'Events',
-        nodes : []
-      }
-    }
   }
 
   /**
