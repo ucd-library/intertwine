@@ -244,7 +244,6 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
   renderCluster(nodes) {
     this.view = 'cluster';
-    this.resetUi();
 
     nodes.forEach(node => {
       if( !this.clusterSubjects[node.type] ) return;
