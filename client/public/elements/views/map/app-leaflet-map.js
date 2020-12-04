@@ -147,18 +147,14 @@ export default class AppLeafletMap extends LitElement {
         });
       }
 
-      // reset state, remove current markers
-      if ( this.selectedLineIcon ) {
-        this.map.removeLayer(this.selectedLineIcon);
-        this.selectedLineIcon = null;
-      }
-      this.removeArrowHead();
-      
+      this.resetSelectedLine();
+
       if( this.selectedNodeIcon ) {
         for ( let type in this.selectedNodeIcon ) {
           this.map.removeLayer(this.selectedNodeIcon[type]);
         }
         this.selectedNodeIcon = null;
+        this.selectedNodeLayer = null;
       }
 
       return;
@@ -173,11 +169,7 @@ export default class AppLeafletMap extends LitElement {
       this.selectedNodeLayer = null;
     }
 
-    if( this.selectedLineIcon ) {
-      this.map.removeLayer(this.selectedLineIcon);
-      this.selectedLineIcon = null;
-    }
-
+    this.resetSelectedLine();
     this.resetClusterStyles();
 
     // now render based on selected type
@@ -249,6 +241,26 @@ export default class AppLeafletMap extends LitElement {
         this.selectedNodeIcon.dst.getLatLng()
       ]));
     }
+  }
+
+  resetSelectedLine() {
+    // reset state, remove current markers
+    if ( this.selectedLineIcon ) {
+      this.map.removeLayer(this.selectedLineIcon);
+      this.selectedLineIcon = null;
+    }
+    if( this.highlightLineIcon ) {
+      this.map.removeLayer(this.highlightLineIcon);
+      this.highlightLineIcon = null;
+    }
+
+    for( let lid in this.linkLayers ) {
+      this.linkLayers[lid].setStyle({opacity: 0.3, weight: 1 });
+      this.linkLayers[lid].selected = false;
+    }
+
+    this.removeArrowHead();
+    this.removeArrowHead(true);
   }
 
   highlighLink(id) {
