@@ -148,6 +148,12 @@ class MomentModel extends BaseModel {
         data[i].relatedLink = rls.map(rl => getBNode(rl));
       }
 
+      if( data[i].creator ) {
+        let cs = data[i].creator;
+        if( !Array.isArray(cs) ) cs = [cs];
+        data[i].creator = cs.map(c => getBNode(c));
+      }
+
       lookup[data[i]['@id'].replace(/.*:b/, 'b')] = data[i];
     }
 
