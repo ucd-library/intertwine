@@ -5,10 +5,12 @@ let sandbox  = 'https://sandbox.dams.library.ucdavis.edu';
 let moments  = 'https://moments.dams.library.ucdavis.edu';
 let localDev = 'http://localhost:3001';
 
+let envEndpoint = (env === 'prod') ? moments : sandbox;
+
 module.exports = {
   server : {
     assets : (env === 'prod') ? 'dist' : 'public',
-    endpoint : process.env.ENDPOINT_URL || moments + '/fcrepo/rest/collection/intertwine/moments',
+    endpoint : (process.env.ENDPOINT_URL || envEndpoint) + '/fcrepo/rest/collection/intertwine/moments',
     appRoutes : ['about', 'home', 'map', 'story'],
     port : process.env.APP_PORT || process.env.PORT || 3000
   },
