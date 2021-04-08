@@ -3,8 +3,8 @@
 rm -rf dist
 mkdir dist
 
-cp -r public/images dist/
-cp -r public/loader dist/
+cp -r -L public/images dist/
+cp -r -L public/loader dist/
 
 cp public/index.html dist/
 cp public/ie.html dist/
