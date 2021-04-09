@@ -12,6 +12,7 @@ if [[ $BRANCH_NAME == 'main' ]]; then
   DEPLOYMENT_NAME=intert-wine
   APP_ENV=prod
   IMAGE=gcr.io/$PROJECT_ID/$CONTAINER_NAME
+  APP_ENV=prod
 fi
 
 npm run dist
