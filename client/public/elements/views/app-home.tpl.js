@@ -200,6 +200,11 @@ export default function render() {
       .card .footer iron-icon {
         font-size: 30px;
       }
+
+      [icon="intert-wine-icons:explore"],
+      [icon="intert-wine-icons:book"]  {
+        color: var(--app-color-interface-blue);
+      }
       
       @media(max-width: 1330px) {
         main > div {
@@ -305,7 +310,7 @@ export default function render() {
                 style="background-image: url('${moment.entrypoint.thumbnail}');"></div>
               <div class="content">
                 <h4>${moment.entrypoint.name}</h4>
-                <em>${moment.entrypoint.temporal}</em>
+                <em>${moment.entrypoint.temporal.replace(/\//g, '-')}</em>
                 <p>${moment.entrypoint.description}</p>
               </div>
               <div class="footer">
