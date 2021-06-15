@@ -58,6 +58,9 @@ return html`
     .leaflet-object-icon {
       background-color: var(--app-color-grape);
     }
+    .leaflet-organization-icon {
+      background-color: var(--app-color-gold);
+    }
 
     .connection-arrow {
       fill-opacity: 1.0;

@@ -234,6 +234,19 @@ return html`
       fill: var(--app-color-grape);
     }
 
+    .type-color[type="organization"] {
+      color: var(--app-color-gold);
+    }
+    .color-break[type="organization"],
+    iron-icon[type="organization"],
+    .dot[type="organization"] {
+      background-color: var(--app-color-gold);
+    }
+    iron-icon.external-link[type="organization"] {
+      background-color: transparent;
+      fill: var(--app-color-gold);
+    }
+
     .connection-image-layout {
       display: flex;
     }

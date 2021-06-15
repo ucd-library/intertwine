@@ -54,7 +54,7 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
 
     this.hasConnections = false;
     this.connectionSubjects = [];
-    this.clusterSubjectTypes = ['person', 'place', 'object', 'event'];
+    this.clusterSubjectTypes = ['person', 'place', 'organization', 'object', 'event'];
 
     this.render = render.bind(this);
 
@@ -101,6 +101,11 @@ export default class AppMapInfoPanel extends Mixin(LitElement)
       person : {
         enabled : false,
         label : 'People',
+        nodes : []
+      },
+      organization : {
+        enabled : false,
+        label : 'Organization',
         nodes : []
       },
       place : {

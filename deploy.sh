@@ -3,8 +3,8 @@
 PROJECT_ID=digital-ucdavis-edu
 GCR_PROJECT_ID=ucdlib-pubreg
 
-CONTAINER_NAME=intert-wine-leigh
-DEPLOYMENT_NAME=intert-wine-leigh
+CONTAINER_NAME=intert-wine-dev
+DEPLOYMENT_NAME=intert-wine-dev
 IMAGE=gcr.io/$GCR_PROJECT_ID/$CONTAINER_NAME
 APP_ENV=dev
 
