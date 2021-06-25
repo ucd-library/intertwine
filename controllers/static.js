@@ -55,6 +55,12 @@ module.exports = (app) => {
     getConfig : async (req, res, next) => {
       if ( !config.server.moments ) {
         config.server.moments = await fetchMoments(config.server.endpoint);
+      } else {
+        fetchMoments(config.server.endpoint)
+          .then(moments => {
+            if( moments ) config.server.moments = moments
+          })
+          .catch(e => console.error('Failed to update moments', e));
       }
 
       next({
